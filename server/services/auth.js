@@ -1,89 +1,111 @@
-var User = require('../db/UserModel.js');
-    Q = require('q');
-    jwt = require('jwt-simple');
+// This module combines a bunch of passport stuff into one super authentication
+// utility.
 
-var findUser = Q.nbind(User.findOne, User);
-var createUser = Q.nbind(User.create, User);
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var ensureAuth= require('connect-ensure-login');
+var bcrypt = require('bcrypt-node');
+var Promise = require('bluebird');
+var usersController = require('../controllers/usersController.js');
+
+// this creates our local strategy
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    usersController.getUser({username:username})
+    // found the user
+    .then(function (user) {
+      return Promise.promisify(bcrypt.compare)(password, user.password)
+      .then(function (match) {
+        // We nest these promises because we need to access both match and user.
+        if (match) {
+          // valid password
+          return done(null, user, {message: user.id});
+        } else {
+          // invalid password
+          return done(null, false, {message: 'Incorrect password.'});
+        }
+      });
+    })
+    // something happened
+    .catch(function (err){
+      if (err.message == 'User does not exist!') {
+        return(done(null, false, {message: 'User not found.'}));
+      } else {
+        return done(err);
+      }
+    });
+  }
+));
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  The
+// typical implementation of this is as simple as supplying the user ID when
+// serializing, and querying the user record by ID from the database when
+// deserializing.
+passport.serializeUser(function (user, cb) {
+  cb(null, user.username);
+});
+
+passport.deserializeUser(function (username, cb) {
+  usersController.getUser({username: username})
+  .then (function (user) {
+    var data = {
+      id: user.id,
+      username: user.username,
+    };
+    // data is set to request.user
+    cb(null, data);
+  })
+  .catch(function (error){
+    return cb(error);
+  });
+});
+
+// inputs:
+  // in data field:
+  //    user: 
+  //      username: the username
+  //      password: the password
+  // output:
+  // in data field:
+  //    message: if failure, reason for failure
+var createUser = function (req, res, next){
+  var user = {
+    username: req.body.username,
+    password: req.body.password
+  }
+
+  // hashing is not done by the model
+  Promise.promisify(bcrypt.hash)(user.password,null,null)
+  .then(function (data) {
+    user.password = data;
+    return usersController.addUser(user);
+  })
+  .then(function (user) {
+    // sign in the new user should be the next thing
+    return next();
+  })
+  .catch(function (error) {
+    console.log (error);
+    return next();
+  });
+};
+
+var signOut = function(req, res){
+  // call passport's log out functionality
+  req.logout();
+  res.redirect('/');
+};
 
 module.exports = {
-
-  // signin 
-  signin: function (req, res, next) {
-    console.log('user sign in', req.body);
-    var username = req.body.username;
-    var password = req.body.password;    
-
-    findUser({username: username})
-      .then(function (user) {
-        if (!user) {
-          next(new Error('User does not exist'));
-        } else {
-          return user.comparePasswords(password);
-            .then(function (foundUser) {
-              if (foundUser) {                
-                var token = jwt.encode(user, 'secret');
-                res.json({token: token, username: user.username});
-              } else {
-                return next(new Error('User was not found'));
-              }
-            });
-        }
-      })
-      .fail(function (error) {
-        next(error);
-      });
-  },
-
-  // sign up
-  signup: function (req, res, next) {
-    
-    var username = req.body.username;
-    var password = req.body.password;    
-    // check to see if user already exists 
-    
-    findUser({username: username})    
-      .then(function (user) {          
-        if (user) {
-          next(new Error('User already exist!'));
-        } else {          
-          // make a new user if not one
-          return createUser({
-            username: username,
-            password: password
-          });
-        }
-      })
-      .then(function (user) {                
-        // create token to send back for auth
-        var token = jwt.encode(user, 'secret');                   
-        res.json({token: token, username: user.username});
-      })
-      .fail(function (error) {
-        next(error);
-      });
-  },
-
-  checkAuth: function (req, res, next) {
-    // checking to see if the user is authenticated
-    // grab the token in the header if any
-    // then decode the token, which we end up being the user object
-    // check to see if that user exists in the database
-    var token = req.headers['x-access-token'];
-    if (!token) {
-      next(new Error('No token'));
-    } else {
-      var user = jwt.decode(token, 'secret');
-      findUser({username: user.username})
-        .then(function (foundUser) {
-          if (foundUser) {
-            res.send(200);
-          } else {
-            res.send(401);
-          }
-        })
-        .fail(function (error) {
-          next(error);
-        });
-    }
-  }
+  passport: passport,
+  authenticate: passport.authenticate('local', {}),
+  // ensuredLoggedIn is created by the guy who made Passport
+  // It's not ideal for checking REST API, but it works.
+  ensureLoggedIn: ensureAuth.ensureLoggedIn,
+  ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
+  createUser: createUser,
+  signOut: signOut
 };

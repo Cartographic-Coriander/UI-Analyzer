@@ -1,11 +1,17 @@
-var path = require('path');
-var bodyParser = require('body-parser');
-var authService = require('./services/auth.js');
+var auth = require('./services/auth');
 
-module.exports = function (app, express) {  
-
-  app.post('/signup', authService.signup);
-  app.post('/signin', authService.signin);
-  app.get('/signin', authController.checkAuth);
-
-};
+ // inputs:
+  // in data field:
+  //    user: 
+  //      username: the useraname
+  //      password: the password
+  // output:
+  // in data field:
+  //    message: if failure, reason for failure
+  app.post('/api/users/signin', auth.authenticate, function (req, res) {
+    res.json({ message: "Authenticated" });
+  });
+  app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
+    res.json({ message: "Authenticated" });
+  });
+  app.get('/signOut', auth.signOut);
