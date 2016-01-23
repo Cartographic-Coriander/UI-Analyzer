@@ -1,0 +1,19 @@
+{
+  "name": "ui-analyzer",
+  "version": "1.0.0",
+  "description": "Track user behavior, receive feedback and optimize your website's UI/UX",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jotakwak/UI-Analyzer.git"
+  },
+  "author": "Egan Tamashiro, Max Cudich, Youngjun Kwak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jotakwak/UI-Analyzer/issues"
+  },
+  "homepage": "https://github.com/jotakwak/UI-Analyzer#readme"
+}
