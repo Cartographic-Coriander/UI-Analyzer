@@ -16,7 +16,7 @@ var createComment = function (comment) {
   return model.Comment.create(comment)
     .then(function (newComment) {
       return newComment;
-    })
+    });
 };
 
 // input should be of the following format:
@@ -33,7 +33,7 @@ var retrieveComment = function (comment) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -51,7 +51,7 @@ var updateComment = function (comment) {
     } else {
       return comment;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -68,7 +68,7 @@ var deleteComment = function (comment) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {

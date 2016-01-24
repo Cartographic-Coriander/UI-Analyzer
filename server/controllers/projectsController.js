@@ -28,13 +28,13 @@ var createProject = function (project) {
           } else {
             return newProject;
           }
-      })
+      });
     }
-  })
+  });
 };
 
 // input should be of the following format:
-// { name: 'abc' } 
+// { name: 'abc' }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
@@ -47,7 +47,7 @@ var retrieveProject = function (project) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -65,7 +65,7 @@ var updateProject = function (project) {
     } else {
       return project;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -82,7 +82,7 @@ var deleteProject = function (project) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {

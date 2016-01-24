@@ -15,7 +15,7 @@ var model = require('../db/model');
 // output shall be of the following format:
 // { id: 123, email: 'abc@abc.com', password: *null*, salt: *null*, etc }
 var createUser = function (user) {
-  params = { 
+  params = {
     email: user.email,
     password: user.password,
     salt: user.salt,
@@ -35,7 +35,7 @@ var createUser = function (user) {
       var returnObject = newUser.set({ password: null, salt: null });
       return returnObject;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -52,7 +52,7 @@ var retrieveUser = function (user) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -70,7 +70,7 @@ var updateUser = function (user) {
     } else {
       return user;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -87,7 +87,7 @@ var deleteUser = function (user) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {
@@ -110,4 +110,3 @@ module.exports = {
 //         console.log(deleted)
 //       })
 //   })
-  

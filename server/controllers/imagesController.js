@@ -14,7 +14,7 @@ var createImage = function (image) {
   return model.Image.create(image)
     .then(function (newImage) {
       return newImage;
-    })
+    });
 };
 
 // input should be of the following format:
@@ -31,7 +31,7 @@ var retrieveImage = function (image) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -49,6 +49,7 @@ var updateImage = function (image) {
     } else {
       return image;
     }
+  });
 };
 
 // input should be of the following format:
@@ -65,7 +66,7 @@ var deleteImage = function (image) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {

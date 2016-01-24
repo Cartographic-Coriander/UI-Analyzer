@@ -15,7 +15,7 @@ var createTest = function (test) {
   return model.Test.create(test)
     .then(function (newTest) {
       return newTest;
-    })
+    });
 };
 
 // input should be of the following format:
@@ -23,7 +23,7 @@ var createTest = function (test) {
 // output shall be of the following format:
 // { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 var retrieveTest = function (test) {
-  return.model.Test.findOne({
+  return model.Test.findOne({
     where: test
   })
   .then(function (result) {
@@ -32,7 +32,7 @@ var retrieveTest = function (test) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -50,7 +50,7 @@ var updateTest = function (test) {
     } else {
       return test;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -67,7 +67,7 @@ var deleteTest = function (test) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {

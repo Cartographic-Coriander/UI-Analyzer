@@ -15,7 +15,7 @@ var createMouseTracking = function (mouseTracking) {
   var params = { movement: mouseTracking.movement, clicks: mouseTracking.clicks, urlchange: mouseTracking.urlchange };
   return model.MouseTracking.create(params)
     .then(function (newMouseTracking) {
-      var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') }
+      var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') };
       model.MouseTrackingTest.create(params)
         .then(function (mouseTrackingTest) {
           if (mouseTrackingTest === null) {
@@ -23,8 +23,8 @@ var createMouseTracking = function (mouseTracking) {
           } else {
             return newMouseTracking;
           }
-        })
-    })
+        });
+    });
 };
 
 // input should be of the following format:
@@ -41,7 +41,7 @@ var retrieveMouseTracking = function (mouseTracking) {
     } else {
       return result;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -59,7 +59,7 @@ var updateMouseTracking = function (mouseTracking) {
     } else {
       return comment;
     }
-  })
+  });
 };
 
 // input should be of the following format:
@@ -76,7 +76,7 @@ var deleteMouseTracking = function (mouseTracking) {
     } else {
       return deleted;
     }
-  })
+  });
 };
 
 module.exports = {
