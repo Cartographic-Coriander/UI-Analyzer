@@ -90,8 +90,8 @@ module.exports = {
 };
 
 // TEST AREA
-model.init();
-createProject({ user_id: 1, name: 'abc', description: 'abc'})
-  .then(function (project) {
-    console.log(project.get());
-  })
+// model.init();
+// createProject({ user_id: 1, name: 'abc', description: 'abc'})
+//   .then(function (project) {
+//     console.log(project.get());
+//   })
