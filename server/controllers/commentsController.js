@@ -15,7 +15,7 @@ var model = require('../db/model');
 var createComment = function (comment) {
   return model.Comment.create(comment)
     .then(function (newComment) {
-
+      return newComment;
     })
 };
 
@@ -24,15 +24,36 @@ var createComment = function (comment) {
 // output shall be of the following format:
 // { name: 'abc' }
 var retrieveComment = function (comment) {
-  return model.Comment.
+  return model.Comment.findOne({
+    where: comment
+  })
+  .then(function (result) {
+    if (result === null) {
+      throw (new Error ('Error! Comment does not exist!'));
+    } else {
+      return result;
+    }
+  })
 };
 
 // input should be of the following format:
-// { name: 'abc' }
+// { id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 // output shall be of the following format:
-// { name: 'abc' }
+// { id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 var updateComment = function (comment) {
-  return model.Comment.
+  return model.Comment.update(comment, {
+    where: {
+      id: comment.id
+    },
+    limit: 1
+  })
+  .spread(function (updated) {
+    if (updated === 0) {
+      throw (new Error ('Error! Comment update failed!'));
+    } else {
+      return comment;
+    }
+  })
 };
 
 // input should be of the following format:

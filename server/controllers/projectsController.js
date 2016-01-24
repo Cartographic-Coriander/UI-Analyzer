@@ -39,11 +39,11 @@ var retrieveProject = function (project) {
   return model.Project.findOne({
     where: project
   })
-  .then(function (project) {
-    if (project === null) {
+  .then(function (result) {
+    if (result === null) {
       throw (new Error ('Error! Project does not exist!'));
     } else {
-      return project;
+      return result;
     }
   })
 };
@@ -51,7 +51,7 @@ var retrieveProject = function (project) {
 // input should be of the following format:
 // { name: 'abc', description: 'abc' }
 // output shall be of the following format:
-// PROMISE - { name: 'abc', description: 'abc'}
+// { name: 'abc', description: 'abc'}
 var updateProject = function (project) {
   return model.Project.update(project, {
     where: project.name,
@@ -59,7 +59,7 @@ var updateProject = function (project) {
   })
   .spread(function (updated) {
     if (updated === 0) {
-      throw (new Error ('Error! User update failed!'));
+      throw (new Error ('Error! Project update failed!'));
     } else {
       return project;
     }

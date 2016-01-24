@@ -3,7 +3,7 @@ var sequelize = new Sequelize(process.env.ENV_DB || 'uiAnalyzer', 'root', 'passw
 
 var User = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  username: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   salt: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   firstname: { type: Sequelize.STRING },
