@@ -1,9 +1,19 @@
 var model = require('../db/model');
 
+// var User = sequelize.define('user', {
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+//   email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+//   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+//   salt: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+//   firstname: { type: Sequelize.STRING },
+//   surname: { type: Sequelize.STRING },
+//   company: { type: Sequelize.STRING }
+// }, { timestamps: false });
+
 // input should be of the following format:
 // { email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', salt: '23423asfdsafsd', company: 'abc' || NULL, firstname: 'abc' || NULL, surname: 'abc' || NULL }
 // output shall be of the following format:
-// PROMISE - { id: 123, email: 'abc@abc.com', password: *null*, salt: *null*, etc }
+// { id: 123, email: 'abc@abc.com', password: *null*, salt: *null*, etc }
 var createUser = function (user) {
   params = { 
     email: user.email,
@@ -18,11 +28,11 @@ var createUser = function (user) {
     where: params,
     defaults: params
   })
-  .spread(function (user, created) {
+  .spread(function (newUser, created) {
     if (!created) {
       throw (new Error ('Error! User already exists!'));
     } else {
-      var returnObject = user.set({ password: null, salt: null });
+      var returnObject = newUser.set({ password: null, salt: null });
       return returnObject;
     }
   })
@@ -31,7 +41,7 @@ var createUser = function (user) {
 // input should be of the following format:
 // { email: 'abc@abc.com'}
 // output shall be of the following format:
-// PROMISE - { id: 123, email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
+// { id: 123, email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 var retrieveUser = function (user) {
   return model.User.findOne({
     where: user
@@ -46,15 +56,13 @@ var retrieveUser = function (user) {
 };
 
 // input should be of the following format:
-// { email: 'abc@abc.com', etc }
+// { id: 123 (optional), email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd' (optional), company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 // output shall be of the following format:
-// { email: 'abc@abc.com', etc }
+// { id: 123 (optional), email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd' (optional), company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 var updateUser = function (user) {
+  var params = { email: user.email };
   return model.User.update(user, {
-    where: {
-      email: user.email
-    },
-    limit: 1
+    where: params
   })
   .spread(function (updated) {
     if (updated === 0) {
@@ -66,15 +74,12 @@ var updateUser = function (user) {
 };
 
 // input should be of the following format:
-// { email: 'abc@abc.com' }
+// { id: 123 }
 // output shall be of the following format:
 // 1
 var deleteUser = function (user) {
   return model.User.destroy({
-    where: {
-      email: user.email
-    },
-    limit: 1
+    where: user
   })
   .then(function (deleted) {
     if (deleted === 0) {
@@ -105,3 +110,4 @@ module.exports = {
 //         console.log(deleted)
 //       })
 //   })
+  

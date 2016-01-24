@@ -1,9 +1,17 @@
 var model = require('../db/model');
 
+// var Comment = sequelize.define('comment', {
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+//   commentType: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+//   commentText: { type: Sequelize.STRING },
+//   x: { type: Sequelize.INTEGER },
+//   y: { type: Sequelize.INTEGER }
+// }, { timestamps: false });
+
 // input should be of the following format:
-// { commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 // output shall be of the following format:
-// { id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var createComment = function (comment) {
   return model.Comment.create(comment)
     .then(function (newComment) {
@@ -14,7 +22,7 @@ var createComment = function (comment) {
 // input should be of the following format:
 // { id: 123 }
 // output shall be of the following format:
-// { id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
   return model.Comment.findOne({
     where: comment
@@ -29,15 +37,13 @@ var retrieveComment = function (comment) {
 };
 
 // input should be of the following format:
-// { id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
+// { id: 123, project_id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 // output shall be of the following format:
-// { id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
+// { id: 123, project_id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 var updateComment = function (comment) {
+  var params = { id: comment.id };
   return model.Comment.update(comment, {
-    where: {
-      id: comment.id
-    },
-    limit: 1
+    where: params
   })
   .spread(function (updated) {
     if (updated === 0) {
@@ -54,8 +60,7 @@ var updateComment = function (comment) {
 // 1
 var deleteComment = function (comment) {
   return model.Comment.destroy({
-    where: comment,
-    limit: 1
+    where: comment
   })
   .then(function (deleted) {
     if (deleted === 0) {
