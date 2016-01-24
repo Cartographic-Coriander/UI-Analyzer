@@ -13,18 +13,22 @@ var model = require('../db/model');
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var createMouseTracking = function (mouseTracking) {
   var params = { movement: mouseTracking.movement, clicks: mouseTracking.clicks, urlchange: mouseTracking.urlchange };
-  return model.MouseTracking.create(params)
-    .then(function (newMouseTracking) {
-      var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') };
-      model.MouseTrackingTest.create(params)
-        .then(function (mouseTrackingTest) {
-          if (mouseTrackingTest === null) {
-            throw (new Error ('Error! Unable to create mousetracking_test join!'));
-          } else {
-            return newMouseTracking;
-          }
-        });
-    });
+
+  return model.sequelize.transaction(function (t) {
+    return model.MouseTracking.create(params, { transaction: t })
+      .then(function (newMouseTracking) {
+        var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') };
+
+        return model.MouseTrackingTest.create(params, { transaction: t })
+          .then(function (mouseTrackingTest) {
+            if (mouseTrackingTest === null) {
+              throw (new Error ('Error! Unable to create mousetracking_test join!'));
+            } else {
+              return newMouseTracking;
+            }
+          });
+      });
+  });
 };
 
 // input should be of the following format:

@@ -71,6 +71,7 @@ var init = function() {
 };
 
 module.exports = {
+  sequelize: sequelize,
   User: User,
   Project: Project,
   Test: Test,

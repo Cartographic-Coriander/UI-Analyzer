@@ -12,24 +12,21 @@ var model = require('../db/model');
 // { id: 123, name: 'abc', description: 'abc' }
 var createProject = function (project) {
   var params = { name: project.name, description: project.description };
-  return model.Project.findOrCreate({
-    where: params,
-    defaults: params
-  })
-  .spread(function (newProject, created) {
-    if (!created) {
-      throw (new Error ('Project already exists!'));
-    } else {
+
+  return model.sequelize.transaction(function (t) {
+    return model.Project.create(params, { transaction: t })
+    .then(function (newProject) {
       var params = { user_id: project.user_id, project_id: newProject.get('id'), role: 'Owner' };
-      return model.ProjectUser.create(params)
-        .then(function (projectUser) {
-          if (projectUser === null) {
-            throw (new Error ('Error! Unable to create project_user join!'));
-          } else {
-            return newProject;
-          }
+
+      return model.ProjectUser.create(params, { transaction: t })
+      .then(function (projectUser) {
+        if (projectUser === null) {
+          throw (new Error ('Error! Unable to create project_user join!'));
+        } else {
+          return newProject;
+        }
       });
-    }
+    });
   });
 };
 
@@ -93,8 +90,8 @@ module.exports = {
 };
 
 // TEST AREA
-// model.init();
-// createProject({ user_id: 1, name: 'abc', description: 'abc'})
-//   .then(function (project) {
-//     console.log(project.get());
-//   })
+model.init();
+createProject({ user_id: 1, name: 'abc', description: 'abc'})
+  .then(function (project) {
+    console.log(project.get());
+  })
