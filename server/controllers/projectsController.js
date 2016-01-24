@@ -69,7 +69,7 @@ var updateProject = function (project) {
 // input should be of the following format:
 // { name: 'abc' }
 // output shall be of the following format:
-// PROMISE - { name: 'abc' }
+// 1
 var deleteProject = function (project) {
   return model.Project.destroy({
     where: project,

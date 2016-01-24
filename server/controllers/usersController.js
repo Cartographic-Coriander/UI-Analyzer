@@ -1,12 +1,12 @@
 var model = require('../db/model');
 
 // input should be of the following format:
-// { username: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', salt: '23423asfdsafsd', company: 'abc' || NULL, firstname: 'abc' || NULL, surname: 'abc' || NULL }
+// { email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', salt: '23423asfdsafsd', company: 'abc' || NULL, firstname: 'abc' || NULL, surname: 'abc' || NULL }
 // output shall be of the following format:
-// PROMISE - { id: 123, username: 'abc@abc.com', password: *null*, salt: *null*, etc }
+// PROMISE - { id: 123, email: 'abc@abc.com', password: *null*, salt: *null*, etc }
 var createUser = function (user) {
   params = { 
-    username: user.username,
+    email: user.email,
     password: user.password,
     salt: user.salt,
     company: user.company,
@@ -29,9 +29,9 @@ var createUser = function (user) {
 };
 
 // input should be of the following format:
-// { username: 'abc@abc.com'}
+// { email: 'abc@abc.com'}
 // output shall be of the following format:
-// PROMISE - { id: 123, username: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
+// PROMISE - { id: 123, email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 var retrieveUser = function (user) {
   return model.User.findOne({
     where: user
@@ -46,13 +46,13 @@ var retrieveUser = function (user) {
 };
 
 // input should be of the following format:
-// { username: 'abc@abc.com', etc }
+// { email: 'abc@abc.com', etc }
 // output shall be of the following format:
-// { username: 'abc@abc.com', etc }
+// { email: 'abc@abc.com', etc }
 var updateUser = function (user) {
   return model.User.update(user, {
     where: {
-      username: user.username
+      email: user.email
     },
     limit: 1
   })
@@ -66,13 +66,13 @@ var updateUser = function (user) {
 };
 
 // input should be of the following format:
-// { username: 'abc@abc.com' }
+// { email: 'abc@abc.com' }
 // output shall be of the following format:
-// PROMISE - { username: 'abc@abc.com' }
+// 1
 var deleteUser = function (user) {
   return model.User.destroy({
     where: {
-      username: user.username
+      email: user.email
     },
     limit: 1
   })
@@ -94,13 +94,13 @@ module.exports = {
 
 // TEST AREA
 // model.init()
-// createUser({ username: 'max@max.com', password: 'abc123', salt: 'salty', firstname: null, surname: null, company: null })
-// // retrieveUser({ username: 'max@max.com' })
+// createUser({ email: 'max@max.com', password: 'abc123', salt: 'salty', firstname: null, surname: null, company: null })
+// // retrieveUser({ email: 'max@max.com' })
 //   .then(function(test) {
 //     console.log(test.get())
 //   })
 //   .then(function () {
-//     return deleteUser({username: 'max@max.com'})
+//     return deleteUser({email: 'max@max.com'})
 //       .then(function(deleted) {
 //         console.log(deleted)
 //       })
