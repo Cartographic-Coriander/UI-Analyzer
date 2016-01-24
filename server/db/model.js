@@ -3,9 +3,9 @@ var sequelize = new Sequelize(process.env.ENV_DB || 'uiAnalyzer', 'root', 'passw
 
 var User = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: Sequelize.STRING, unique: true, notNull: true },
-  password: { type: Sequelize.STRING, notNull: true },
-  salt: { type: Sequelize.STRING, notNull: true },
+  email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  salt: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   firstname: { type: Sequelize.STRING },
   surname: { type: Sequelize.STRING },
   company: { type: Sequelize.STRING }
@@ -13,49 +13,48 @@ var User = sequelize.define('user', {
 
 var Project = sequelize.define('project', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: Sequelize.STRING, unique: true, notNull: true },
-  description: { type: Sequelize.STRING, unique: true, notNull: true }
+  name: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  description: { type: Sequelize.STRING }
 }, { timestamps: false });
 
 var Test = sequelize.define('test', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: Sequelize.STRING, notNull: true },
-  url: { type: Sequelize.STRING, notNull: true },
-  prompt: { type: Sequelize.STRING, notNull: true }
+  name: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  url: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  prompt: { type: Sequelize.STRING, notNull: true, notEmpty: true }
 }, { timestamps: false });
 
 var Comment = sequelize.define('comment', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  dotLocation: { type: Sequelize.STRING, notNull: true },
-  dotType: { type: Sequelize.STRING, notNull: true },
-  noteText: { type: Sequelize.STRING, notNull: true },
-  noteLocation: { type: Sequelize.STRING, notNull: true }
+  commentType: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  commentText: { type: Sequelize.STRING },
+  x: { type: Sequelize.INTEGER },
+  y: { type: Sequelize.INTEGER },
 }, { timestamps: false });
 
 var Image = sequelize.define('image', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  image: { type: Sequelize.STRING, unique: true, notNull: true },
-  url: { type: Sequelize.STRING, notNull: true }
+  image: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  url: { type: Sequelize.STRING, notNull: true, notEmpty: true }
 }, { timestamps: false });
 
 var MouseTracking = sequelize.define('mousetracking', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  movement: { type: Sequelize.STRING, notNull: true },
+  movement: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   clicks: { type: Sequelize.STRING, notNull: true },
   urlchange: { type: Sequelize.STRING, notNull: true }
 }, { timestamps: false });
 
 var ProjectUser = sequelize.define('project_user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  role: { type: Sequelize.STRING, notNull: true },
-  project_id: { type: Sequelize.INTEGER, notNull: true },
-  user_id: { type: Sequelize.INTEGER, notNull: true }
+  role: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  // project_id: { type: Sequelize.INTEGER, notNull: true },
+  // user_id: { type: Sequelize.INTEGER, notNull: true }
 }, { timestamps: false });
 
 var MouseTrackingTest = sequelize.define('mousetracking_test', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  mousetracking_id: { type: Sequelize.INTEGER, notNull: true },
-  user_id: { type: Sequelize.INTEGER, notNull: true }
+  mousetracking_id: { type: Sequelize.INTEGER, notNull: true }
 }, { timestamps: false });
 
 var init = function() {
