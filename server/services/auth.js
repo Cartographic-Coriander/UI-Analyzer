@@ -9,7 +9,7 @@ var Promise = require("bluebird");
 var usersController = require("../controllers/usersController.js");
 
 // this creates our local strategy
-passport.use(new LocalStrategy( { usernameField: 'email' },
+passport.use(new LocalStrategy({ usernameField: 'email' },
   function (email, password, done) {
     usersController.retrieveUser({ email: email })
       // found the user
