@@ -3,7 +3,7 @@ import LandingPageContentComponent from './appComponents/LandingPageContent';
 
 export default React.createClass({
 
-  render: function() {
+  render() {
     return <div className = "AppContainer">
       <LandingPageContentComponent />
     </div>
