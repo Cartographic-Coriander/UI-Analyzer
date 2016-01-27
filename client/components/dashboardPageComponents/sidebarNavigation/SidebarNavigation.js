@@ -6,8 +6,8 @@ export default React.createClass({
 
   render() {
     return (
-
-      <div className = "SidebarNavigation">
+      <div className="SidebarNavigation">
+      'This is SidebarNavigation'
         <MyDashboardButton />
         <MyProjects />
       </div>

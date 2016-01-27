@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1357e1fef1e9fd4e2c19"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3a38a52e7fa2d3dc075b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -550,9 +550,7 @@
 
 	__webpack_require__(1);
 	__webpack_require__(74);
-	__webpack_require__(76);
-	(function webpackMissingModule() { throw new Error("Cannot find module \"dev\""); }());
-	(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/YoungjunKwak/Code/UI-Analyzer/server\""); }());
+	module.exports = __webpack_require__(76);
 
 
 /***/ },
@@ -27553,9 +27551,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LandingPageContent = __webpack_require__(235);
+	var _LandingPage = __webpack_require__(235);
 
-	var _LandingPageContent2 = _interopRequireDefault(_LandingPageContent);
+	var _LandingPage2 = _interopRequireDefault(_LandingPage);
+
+	var _DashboardPage = __webpack_require__(243);
+
+	var _DashboardPage2 = _interopRequireDefault(_DashboardPage);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27564,8 +27566,8 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'AppContainer' },
-	      _react2.default.createElement(_LandingPageContent2.default, null)
+	      null,
+	      _react2.default.createElement(_DashboardPage2.default, null)
 	    );
 	  }
 	});
@@ -27611,11 +27613,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'LandingPageContent',
+	  displayName: 'LandingPage.react',
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'AppContainer' },
+	      { className: 'LandingPage' },
 	      _react2.default.createElement(_Header2.default, null),
 	      _react2.default.createElement(_Login2.default, null),
 	      _react2.default.createElement(_Registration2.default, null),
@@ -27670,7 +27672,7 @@
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -27683,12 +27685,27 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'Login',
+	  displayName: "Login",
 	  render: function render() {
 	    return _react2.default.createElement(
-	      'h3',
+	      "div",
 	      null,
-	      'I am the login component'
+	      _react2.default.createElement(
+	        "h3",
+	        null,
+	        "I am the login component"
+	      ),
+	      _react2.default.createElement(
+	        "form",
+	        null,
+	        _react2.default.createElement("input", { type: "text", placeholder: "enter email here" }),
+	        _react2.default.createElement("input", { type: "text", placeholder: "password input here" }),
+	        _react2.default.createElement(
+	          "button",
+	          { type: "submit" },
+	          "submit"
+	        )
+	      )
 	    );
 	  }
 	});
@@ -27845,6 +27862,396 @@
 	};
 
 	exports.default = GroupMember;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SidebarNavigation = __webpack_require__(244);
+
+	var _SidebarNavigation2 = _interopRequireDefault(_SidebarNavigation);
+
+	var _Content = __webpack_require__(255);
+
+	var _Content2 = _interopRequireDefault(_Content);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'DashboardPage.react',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'DashboardPage' },
+	      '\'This is DashboardPage\'',
+	      _react2.default.createElement(_SidebarNavigation2.default, null)
+	    );
+	  }
+	});
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _MyDashboardButton = __webpack_require__(245);
+
+	var _MyDashboardButton2 = _interopRequireDefault(_MyDashboardButton);
+
+	var _MyProjects = __webpack_require__(246);
+
+	var _MyProjects2 = _interopRequireDefault(_MyProjects);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'SidebarNavigation',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'SidebarNavigation' },
+	      '\'This is SidebarNavigation\'',
+	      _react2.default.createElement(_MyDashboardButton2.default, null),
+	      _react2.default.createElement(_MyProjects2.default, null)
+	    );
+	  }
+	});
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "MyDashboardButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "MyDashboardButton" },
+	      "\"My Dashboard\""
+	    );
+	  }
+	});
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ProjectListEntry = __webpack_require__(247);
+
+	var _ProjectListEntry2 = _interopRequireDefault(_ProjectListEntry);
+
+	var _AddProjectButton = __webpack_require__(254);
+
+	var _AddProjectButton2 = _interopRequireDefault(_AddProjectButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'MyProjects',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(_ProjectListEntry2.default, null)
+	      ),
+	      _react2.default.createElement(_AddProjectButton2.default, null)
+	    );
+	  }
+	});
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ProjectButton = __webpack_require__(248);
+
+	var _ProjectButton2 = _interopRequireDefault(_ProjectButton);
+
+	var _Accordian = __webpack_require__(249);
+
+	var _Accordian2 = _interopRequireDefault(_Accordian);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'ProjectListEntry',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'ProjectListEntry' },
+	      _react2.default.createElement(_ProjectButton2.default, null),
+	      _react2.default.createElement(_Accordian2.default, null)
+	    );
+	  }
+	});
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "ProjectButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "ProjectButton" },
+	      "Project"
+	    );
+	  }
+	});
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _TestButton = __webpack_require__(250);
+
+	var _TestButton2 = _interopRequireDefault(_TestButton);
+
+	var _ReportsButton = __webpack_require__(251);
+
+	var _ReportsButton2 = _interopRequireDefault(_ReportsButton);
+
+	var _SettingsButton = __webpack_require__(252);
+
+	var _SettingsButton2 = _interopRequireDefault(_SettingsButton);
+
+	var _InviteTestersButton = __webpack_require__(253);
+
+	var _InviteTestersButton2 = _interopRequireDefault(_InviteTestersButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Accordian',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'Accordian' },
+	      _react2.default.createElement(_TestButton2.default, null),
+	      _react2.default.createElement(_ReportsButton2.default, null),
+	      _react2.default.createElement(_SettingsButton2.default, null),
+	      _react2.default.createElement(_InviteTestersButton2.default, null)
+	    );
+	  }
+	});
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "TestButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "TestButton" },
+	      "Test"
+	    );
+	  }
+	});
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "ReportsButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "ReportsButton" },
+	      "Reports"
+	    );
+	  }
+	});
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "SettingsButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "SettingsButton" },
+	      "Settings"
+	    );
+	  }
+	});
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "InviteTestersButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "InvteTestersButton" },
+	      "Invite Testers"
+	    );
+	  }
+	});
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "AddProjectButton",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "button",
+	      { className: "AddProjectButton" },
+	      "Add Project"
+	    );
+	  }
+	});
+
+/***/ },
+/* 255 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);

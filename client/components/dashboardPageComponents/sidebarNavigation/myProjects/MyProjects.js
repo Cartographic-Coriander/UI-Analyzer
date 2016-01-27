@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
-import AddProjectButton from './AddProjectButton';
+import AddProjectButton from './subComponents/AddProjectButton';
 
 export default React.createClass({
 

@@ -1,14 +1,13 @@
 import React from 'react';
-import LandingPageContentComponent from './appComponents/LandingPageContent';
+import LandingPageContentComponent from './pages/LandingPage.react';
 import DashboardPageComponent from './pages/DashboardPage.react' 
 
 export default React.createClass({
 
   render() {
-    return <div className = "AppContainer">
-      <LandingPageContentComponent />
+    return (<div>
       <DashboardPageComponent />
-    </div>
+    </div>)
   }
 
 });

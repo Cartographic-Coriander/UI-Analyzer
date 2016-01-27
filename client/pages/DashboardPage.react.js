@@ -7,8 +7,8 @@ export default React.createClass({
   render() {
     return (
       <div className = "DashboardPage">
+      'This is DashboardPage'
       <SidebarNavigation />
-      <Content />
       </div>
     )
   }
