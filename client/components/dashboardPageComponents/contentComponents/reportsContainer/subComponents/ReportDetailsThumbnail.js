@@ -4,7 +4,7 @@ export default React.createClass({
 
   render() {
     return (
-      <h3>I am the login component</h3>
+      <h3>I am the report details thumbnail component</h3>
     )
   }
 

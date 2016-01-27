@@ -1,5 +1,5 @@
 import React from 'react';
-import GroupMember from './aboutUsComponents/GroupMember';
+import GroupMember from './subComponents/GroupMember';
 
 const corianderMembers = ['Max', 'Jota', 'Egan'];
 
