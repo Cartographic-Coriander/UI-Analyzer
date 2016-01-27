@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
-    './client/public/components/index.jsx'
+    './client/components/index.jsx'
   ],
   output: {/*find the 'start' specified at entry and write the new bundle.js file to the directory below*/
     path: __dirname + '/client/public',
