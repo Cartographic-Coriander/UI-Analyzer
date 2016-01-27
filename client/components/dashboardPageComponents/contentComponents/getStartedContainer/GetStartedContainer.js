@@ -1,5 +1,5 @@
 import React from 'react';
-import EgansSexyVoice from './subComponents/EgansSexyVoice.js';
+import EgansSexyVoice from './subComponents/EgansSexyVoice';
 
 export default React.createClass({
 

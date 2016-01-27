@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateProjectContainer from './subComponents/CreateProjectContainer.js';
+import CreateProjectContainer from './subComponents/CreateProjectContainer';
 
 export default React.createClass({
 

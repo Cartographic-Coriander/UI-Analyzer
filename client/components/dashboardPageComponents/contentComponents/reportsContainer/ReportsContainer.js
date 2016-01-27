@@ -1,5 +1,5 @@
 import React from 'react';
-import ReportListEntry from './subComponents/ReportListEntry.js'
+import ReportListEntry from './subComponents/ReportListEntry'
 
 export default React.createClass({
 

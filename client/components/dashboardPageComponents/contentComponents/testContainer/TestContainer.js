@@ -1,5 +1,5 @@
 import React from 'react';
-import TestContainerEntry from './subComponents/TestContainerEntry.js';
+import TestContainerEntry from './subComponents/TestContainerEntry';
 
 export default React.createClass({
 

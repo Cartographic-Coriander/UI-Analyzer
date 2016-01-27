@@ -1,5 +1,5 @@
 import React from 'react';
-import ReportDetailsThumbnail from './ReportDetailsThumbnail.js';
+import ReportDetailsThumbnail from './ReportDetailsThumbnail';
 
 export default React.createClass({
 

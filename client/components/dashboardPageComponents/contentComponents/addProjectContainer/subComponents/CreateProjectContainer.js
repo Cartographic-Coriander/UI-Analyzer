@@ -1,7 +1,7 @@
 import React from 'react';
-import InviteTesters from './InviteTesters.js';
-import NewProjectButton from './NewProjectButton.js';
-import ProjectDescriptionInput from './ProjectDescriptionInput.js';
+import InviteTesters from './InviteTesters';
+import NewProjectButton from './NewProjectButton';
+import ProjectDescriptionInput from './ProjectDescriptionInput';
 import ProjectNameInput from './ProjectNameInput';
 
 export default React.createClass({

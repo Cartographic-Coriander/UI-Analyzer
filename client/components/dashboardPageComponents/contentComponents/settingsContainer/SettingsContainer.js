@@ -1,5 +1,5 @@
 import React from 'react';
-import EditSettingsContainer from './subComponents/EditSettingsContainer.js';
+import EditSettingsContainer from './subComponents/EditSettingsContainer';
 
 export default React.createClass({
 

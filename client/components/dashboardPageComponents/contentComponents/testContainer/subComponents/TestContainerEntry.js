@@ -1,7 +1,7 @@
 import React from 'react';
-import TestEntryDescription from './TestEntryDescription.js';
-import StartTestButton from './StartTestButton.js';
-import EditTestButton from './EditTestButton.js';
+import TestEntryDescription from './TestEntryDescription';
+import StartTestButton from './StartTestButton';
+import EditTestButton from './EditTestButton';
 
 export default React.createClass({
 

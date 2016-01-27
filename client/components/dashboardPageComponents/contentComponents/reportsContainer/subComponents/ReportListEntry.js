@@ -1,8 +1,8 @@
 import React from 'react';
-import TestEntryDescription from './TestEntryDescription.js';
-import CompareButton from './CompareButton.js';
-import MakeGithubIssueButton from './MakeGithubIssueButton.js';
-import ReportDetails from './ReportDetails.js';
+import TestEntryDescription from './TestEntryDescription';
+import CompareButton from './CompareButton';
+import MakeGithubIssueButton from './MakeGithubIssueButton';
+import ReportDetails from './ReportDetails';
 
 export default React.createClass({
 

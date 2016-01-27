@@ -1,8 +1,8 @@
 import React from 'react';
-import EditDescription from './EditDescription.js';
-import EditName from './EditName.js';
-import EditRoles from './EditRoles.js';
-import EditTests from './EditTests.js';
+import EditDescription from './EditDescription';
+import EditName from './EditName';
+import EditRoles from './EditRoles';
+import EditTests from './EditTests';
 
 export default React.createClass({
 
