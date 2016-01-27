@@ -1,19 +1,13 @@
 var express = require('express');
-var passport = require('passport');
-var cookieParser = require('cookieParser');
-var bodyParser = require('bodyParser');
-
 var app = express();
 
-app.configure(function(){
-  app.use(express.static('public'));
-  app.use(express.cookieParser());
-  app.use(express.bodyParser());
-  // passport config here
-  app.use(express.session({ secret: 'alhambra chateau von deutschland my lady'});
+// configure our server with all the middleware and routing
+require('./services/middleware.js')(app, express);
+require('./services/routes.js')(app, express);
 
-  // passport initialization
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(app.router);
-});
+// start listening to requests on port 8000
+app.listen(process.env.PORT || 8000);
+console.log('Listening to port: 8000');
+
+// export our app for testing and flexibility, required by index.js
+module.exports = app;

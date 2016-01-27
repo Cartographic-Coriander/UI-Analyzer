@@ -1,39 +1,39 @@
 // This module combines a bunch of passport stuff into one super authentication
 // utility.
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var ensureAuth= require('connect-ensure-login');
-var bcrypt = require('bcrypt-node');
-var Promise = require('bluebird');
-var usersController = require('../controllers/usersController.js');
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var ensureAuth= require("connect-ensure-login");
+var bcrypt = require("bcrypt-node");
+var Promise = require("bluebird");
+var usersController = require("../controllers/usersController.js");
 
 // this creates our local strategy
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-    usersController.getUser({username:username})
-    // found the user
-    .then(function (user) {
-      return Promise.promisify(bcrypt.compare)(password, user.password)
-      .then(function (match) {
-        // We nest these promises because we need to access both match and user.
-        if (match) {
-          // valid password
-          return done(null, user, {message: user.id});
+passport.use(new LocalStrategy({ usernameField: 'email' },
+  function (email, password, done) {
+    usersController.retrieveUser({ email: email })
+      // found the user
+      .then(function (user) {
+        return Promise.promisify(bcrypt.compare)(password, user.password)
+          .then(function (match) {
+            // We nest these promises because we need to access both match and user.
+            if (match) {
+              // valid password
+              return done(null, user, { message: user.id, email: user.email });
+            } else {
+              // invalid password
+              return done(null, false, { message: "Incorrect password." });
+            }
+          });
+      })
+      // something happened
+      .catch(function (err){
+        if (err.message == 'User does not exist!') {
+          return(done(null, false, { message: "User not found." }));
         } else {
-          // invalid password
-          return done(null, false, {message: 'Incorrect password.'});
+          return done(err);
         }
       });
-    })
-    // something happened
-    .catch(function (err){
-      if (err.message == 'User does not exist!') {
-        return(done(null, false, {message: 'User not found.'}));
-      } else {
-        return done(err);
-      }
-    });
   }
 ));
 
@@ -45,52 +45,57 @@ passport.use(new LocalStrategy(
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser(function (user, cb) {
-  cb(null, user.username);
+  cb(null, user.email);
 });
 
-passport.deserializeUser(function (username, cb) {
-  usersController.getUser({username: username})
-  .then (function (user) {
-    var data = {
-      id: user.id,
-      username: user.username,
-    };
-    // data is set to request.user
-    cb(null, data);
-  })
-  .catch(function (error){
-    return cb(error);
-  });
+passport.deserializeUser(function (email, cb) {
+  usersController.retrieveUser({ email: email })
+    .then (function (user) {
+      var data = {
+        id: user.id,
+        username: user.username,
+      };
+      // data is set to request.user
+      cb(null, data);
+    })
+    .catch(function (error){
+      return cb(error);
+    });
 });
 
 // inputs:
   // in data field:
-  //    user: 
-  //      username: the username
+  //    user:
+  //      username: the useraname
   //      password: the password
   // output:
   // in data field:
   //    message: if failure, reason for failure
-var createUser = function (req, res, next){
+var createUser = function (req, res, next) {
   var user = {
-    username: req.body.username,
-    password: req.body.password
-  }
+    email: req.body.email,
+    password: req.body.password,
+    salt: 'asdfasdfasdf',
+    company: req.body.company,
+    firstname: req.body.firstname,
+    surname: req.body.surname
+  };
 
-  // hashing is not done by the model
+  // hashing is not done by the model, though it probably should
   Promise.promisify(bcrypt.hash)(user.password,null,null)
-  .then(function (data) {
-    user.password = data;
-    return usersController.addUser(user);
-  })
-  .then(function (user) {
-    // sign in the new user should be the next thing
-    return next();
-  })
-  .catch(function (error) {
-    console.log (error);
-    return next();
-  });
+    .then(function (data) {
+      user.password = data;
+      return usersController.createUser(user);
+    })
+    .then(function (user) {
+      // sign in the new user should be the next thing
+      console.log('new user:', user);
+      return next();
+    })
+    .catch(function (error) {
+      console.log (error);
+      return next();
+    });
 };
 
 var signOut = function(req, res){
