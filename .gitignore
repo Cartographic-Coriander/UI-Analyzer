@@ -15,3 +15,6 @@ Dockerfile
 docker-compose.yml
 
 .DS_Store
+
+-###ignore the bundle
+-client/public/bundle.js
