@@ -10,7 +10,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className = "AppContainer">
+      <div className = "LandingPage">
         <Header />
         <Login />
         <Registration />
