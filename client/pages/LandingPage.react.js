@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from './landingPageContentComponents/Header';
-import Login from './landingPageContentComponents/Login';
-import Registration from './landingPageContentComponents/Registration';
-import ProductDescription from './landingPageContentComponents/ProductDescription';
-import Footer from './landingPageContentComponents/Footer';
-import AboutUs from './landingPageContentComponents/AboutUs';
+import Header from '../components/landingPageComponents/header/Header';
+import Login from '../components/landingPageComponents/Login';
+import Registration from '../components/landingPageComponents/Registration';
+import ProductDescription from '../components/landingPageComponents/ProductDescription';
+import Footer from '../components/landingPageComponents/Footer';
+import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 
 export default React.createClass({
 

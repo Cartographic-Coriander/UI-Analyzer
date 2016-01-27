@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingPageContentComponent from './appComponents/LandingPageContent';
+import LandingPageContentComponent from './pages/LandingPage.react';
 
 export default React.createClass({
 
