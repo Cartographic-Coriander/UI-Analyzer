@@ -1,0 +1,48 @@
+{
+  "name": "ui-analyzer",
+  "version": "1.0.0",
+  "description": "Track user behavior, receive feedback and optimize your website's UI/UX",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jotakwak/UI-Analyzer.git"
+  },
+  "author": "Egan Tamashiro, Max Cudich, Youngjun Kwak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jotakwak/UI-Analyzer/issues"
+  },
+  "homepage": "https://github.com/jotakwak/UI-Analyzer#readme",
+  "dependencies": {
+    "bcrypt-node": "^0.1.0",
+    "bluebird": "^3.1.2",
+    "body-parser": "^1.14.2",
+    "connect-ensure-login": "^0.1.1",
+    "express": "^4.13.4",
+    "morgan": "^1.6.1",
+    "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "sequelize": "^3.18.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
+}
