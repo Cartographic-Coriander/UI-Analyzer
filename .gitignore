@@ -16,6 +16,6 @@ docker-compose.yml
 
 .DS_Store
 
--###ignore the bundle
--client/public/bundle.js
+###ignore the bundle
+client/public/bundle.js
 client/public/*.hot-update.*
