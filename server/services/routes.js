@@ -22,7 +22,7 @@ module.exports = function (app, express) {
     res.json({ message: "Authenticated" });
   });
 
-  app.get('/signOut', auth.signOut);
+  app.get('/signout', auth.signout);
 
   // GET /api/items gets the items the user likes
   // inputs:
