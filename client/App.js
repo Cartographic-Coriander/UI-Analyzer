@@ -1,13 +1,14 @@
-import React from 'react';
-import LandingPageContentComponent from './pages/LandingPage.react';
-import DashboardPageComponent from './pages/DashboardPage.react' 
+import React, { Component } from 'react';
+import LandingPage from './pages/LandingPage.react';
+import DashboardPage from './pages/DashboardPage.react';
 
-export default React.createClass({
-
+export default class App extends Component {
   render() {
-    return (<div>
-      <DashboardPageComponent />
-    </div>)
+    return (
+      <div>
+        <DashboardPage />
+        <LandingPage />
+      </div>
+    )
   }
-
-});
+};

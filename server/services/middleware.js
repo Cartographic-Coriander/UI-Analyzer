@@ -8,10 +8,10 @@ module.exports = function (app, express) {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(session({ 
-    secret: 'keyboard cat', 
-    resave: false, 
-    saveUninitialized: false 
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
   }));
 
   // Initialize Passport and restore authentication state, if any, from the
