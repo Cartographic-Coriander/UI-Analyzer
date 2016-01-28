@@ -5,8 +5,8 @@ const corianderMembers = ['Max', 'Jota', 'Egan'];
 
 //state isnt used here (about us not going to be changing much, no need state)
 const memberList = () => {
-  const groupMembers = corianderMembers.map((member) => {
-    return <GroupMember name={member}/>
+  const groupMembers = corianderMembers.map((member, i) => {
+    return <GroupMember key = { i } name = { member }/>
   });
 
   return (
