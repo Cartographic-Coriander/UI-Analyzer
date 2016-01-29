@@ -10,20 +10,15 @@ let fakeState = [
     commentType: 'test comment type 1',  
     commentText: 'test comment text 1'
   },{
-    x: 400,
-    y: 400,
+    x: 200,
+    y: 200,
     commentType: 'test comment type 2',
     commentText: 'test comment text 2'
   },{
-    x: 700,
-    y: 700,
+    x: 400,
+    y: 400,
     commentType: 'test comment type 3',
     commentText: 'test comment text 3'
-  },{
-    x: 800,
-    y: 800,
-    commentType: 'test comment type 3',
-    commentText: 'test comment text 4'
   }
 ];
 
@@ -34,9 +29,10 @@ const allMessages = fakeState.map((comment) => {
 
 
 var divStyle = {
-  backgroundImage: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
-  height: 1000,
-  position: 'relative'
+  background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
+  position: 'relative',
+  height: '100vh',
+  backgroundSize: 'cover'
 };
 //find out how to use css to set the image size to original size
 
