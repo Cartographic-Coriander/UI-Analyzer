@@ -3,20 +3,23 @@ import GroupMember from './subComponents/GroupMember';
 
 const corianderMembers = ['Max', 'Jota', 'Egan'];
 
-//state isnt used here (about us not going to be changing much, no need state)
-const memberList = () => {
-  const groupMembers = corianderMembers.map((member, i) => {
-    return <GroupMember key = { i } name = { member }/>
-  });
 
-  return (
-    <div>
-      <h3>Cartographic Coriander</h3>
-      <ul>
-        {groupMembers}
-      </ul>
-    </div>
-  )
-}
+const groupMembers = corianderMembers.map((member) => {
+  return <GroupMember name={member} />
+});
 
-export default memberList;
+const AboutUs = React.createClass({
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {groupMembers}
+        </ul>
+      </div>
+    )
+  }
+
+});
+
+export default AboutUs;
