@@ -22,9 +22,9 @@ let fakeState = [
   }
 ];
 
-const allMessages = fakeState.map((comment) => {
-  return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />
-});
+// const allMessages = fakeState.map((comment) => {
+//   return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />
+// });
 
 var divStyle = {
   background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
@@ -75,12 +75,14 @@ class AddNotes extends Component {
       }
   }
 
-  render() {
-    return (
-      <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>      
-        {allMessages}
-      </div>
-      )
+  render(){ 
+    var createItem = function (comment) {
+      return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />;
+    };
+    return <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>
+      {/*when hooked up to redux, the line below will be changing via props*/}
+      {fakeState.map(createItem)}
+    </div>;
   }
 
 }
