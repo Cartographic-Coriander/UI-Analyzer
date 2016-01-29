@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
+import switchVisibility from '../redux/actions';
 
 let fakeState = [
   {
@@ -39,39 +40,49 @@ var divStyle = {
 };
 //find out how to use css to set the image size to original size
 
-//to get moust positions on click
-function findMousePosAndAddInput(e) {
-    var cursorX = e.pageX;
-    var cursorY = e.pageY;
-    var critiqueImage = document.getElementById('critiqueImage');
-    if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
-      //click must be within image boundry
-      if(document.getElementById('inputText') === null) {
-        //create input box where the click happened if there is no other input box on screen
-        var text = document.createElement('div');
-        text.style.top=cursorY+"px";
-        text.style.left=cursorX+"px";
-        text.style.position="absolute";
-        text.innerHTML = "<input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
-        document.getElementById('critiqueImage').appendChild(text);
-        document.getElementById('inputText').focus();
-        //this can be broken out to be more modular may be a little confusing here
-        $('#leaveCommentButton').on('click', function () {
-          var critique = $('#inputText').val();
-          alert(critique);
-        })
-      }
-    }
-}
 
-document.addEventListener("click", findMousePosAndAddInput);
-
+// document.addEventListener("click", findMousePosAndAddInput);
 
 class AddNotes extends Component {
 
+    findMousePosAndAddInput(event) {
+      var cursorX = event.pageX;
+      var cursorY = event.pageY;
+      var critiqueImage = document.getElementById('critiqueImage');
+      if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
+        
+        if(document.getElementById('inputText') === null) {
+          
+          var text = document.createElement('div');
+          text.style.top=cursorY+"px";
+          text.style.left=cursorX+"px";
+          text.style.position="absolute";
+          text.innerHTML = "<input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
+          document.getElementById('critiqueImage').appendChild(text);
+          document.getElementById('inputText').focus();
+          
+          $('#leaveCommentButton').on('click', function () {
+            var critique = $('#inputText').val();
+            var xCoordCritique = $('#inputText').parent().css('left').match(/\d/g).join('');
+            var yCoordCritique = $('#inputText').parent().css('top').match(/\d/g).join('');
+            var newCritiqueObj = {
+              x: xCoordCritique,
+              y: yCoordCritique,
+              commentText: critique,
+              commentType: 'scalding critique'
+            }
+            console.log(newCritiqueObj);
+            console.log('this is' , this)
+            this.props.dispatch(switchVisibility('not buttons'));
+            setTimeout(()=>{$('#critiqueImage').children().last().remove()},5);
+          }.bind(this))
+        }
+      }
+  }
+
   render() {
     return (
-      <div id='critiqueImage' style={divStyle}>      
+      <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>      
         {allMessages}
       </div>
       )
@@ -79,4 +90,8 @@ class AddNotes extends Component {
 
 }
 
-export default AddNotes;
+function mapStateToProps(state) {
+  return state
+}//return all of the state!!
+
+export default connect(mapStateToProps)(AddNotes);
