@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
 import AddProjectButton from './subComponents/AddProjectButton';
 
-export default React.createClass({
-
-  render() {
+export default class extends Component {
+  render () {
     return (
     <div>
       <li>
@@ -14,5 +13,4 @@ export default React.createClass({
     </div>
     )
   }
-
-});
+}

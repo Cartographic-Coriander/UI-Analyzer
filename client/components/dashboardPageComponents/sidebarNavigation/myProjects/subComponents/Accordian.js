@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TestButton from './TestButton';
 import ReportsButton from './ReportsButton';
 import SettingsButton from './SettingsButton';
 import InviteTestersButton from './InviteTestersButton';
 
-export default React.createClass({
-  
-  render() {
+export default class extends Component {
+  render () {
     return (
       <div className = "Accordian">
         <TestButton />
@@ -16,5 +15,4 @@ export default React.createClass({
       </div>
     )
   }
-
-});
+}

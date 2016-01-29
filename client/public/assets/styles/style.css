@@ -1,0 +1,15 @@
+.AddProject {
+  background-color: blue;
+}
+
+.Dashboard {
+  background-color: blue;
+}
+
+.hide {
+  background-color: red;
+}
+
+.hide * {
+  background-color: red;
+}

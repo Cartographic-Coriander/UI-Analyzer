@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReportDetailsThumbnail from './ReportDetailsThumbnail';
 
-export default React.createClass({
-
-  render() {
+export default class extends Component {
+  render () {
     return (
-      <h3>I am the report details component</h3>
-      <ReportDetailsThumbnail />
+      <div>
+        <h3>I am the report details component</h3>
+        <ReportDetailsThumbnail />
+      </div>
     )
   }
-
-});
+}

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default React.createClass({
-  
+export default class extends Component {
   render() {
     return (
       <button className = "SettingsButton">
@@ -9,5 +8,4 @@ export default React.createClass({
       </button>
     )
   }
-
-});
+}

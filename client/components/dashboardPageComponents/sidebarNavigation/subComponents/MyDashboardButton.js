@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleContentComponent } from '../../../../redux/actions';
 
-export default React.createClass({
-
-  render() {
+class MyDashboardButton extends Component {
+  handleClick () {
+    this.props.dispatch(toggleContentComponent('Dashboard'));
+  }
+  render () {
     return (
-    <button className = "MyDashboardButton">
-      "My Dashboard"
-    </button>
+      <button className = "MyDashboardButton" onClick = { this.handleClick.bind(this) }>
+        "My Dashboard"
+      </button>
     )
   }
+}
 
-});
+const select = (state) => state
+
+export default connect(select)(MyDashboardButton)
