@@ -9,14 +9,16 @@ class AddNotes extends Component {
       {/*checking to see that the click occurs within the image displayed*/}
       let cursorX = event.pageX;
       let cursorY = event.pageY;
+      let offset = $('#critiqueImage').offset();
+      console.log(offset);
       let critiqueImage = document.getElementById('critiqueImage');
-      if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
+      if (cursorY < critiqueImage.clientHeight+offset.top && cursorX < critiqueImage.clientWidth+offset.left) {
         {/*only render radio and input fields if they do not already exist*/}     
         if(document.getElementById('inputText') === null) {
           {/*create the div that will be appended over the image and set it's intial values*/}
           let text = document.createElement('div');
-          text.style.top=cursorY+"px";
-          text.style.left=cursorX+"px";
+          text.style.top=cursorY-offset.top+"px";
+          text.style.left=cursorX-offset.left+"px";
           text.style.position="absolute";
           text.innerHTML = "<input type='radio' name='sentiment' value='yay'>yay</br><input type='radio' name='sentiment' value='nay'>nay</br><input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
           document.getElementById('critiqueImage').appendChild(text);
@@ -25,13 +27,11 @@ class AddNotes extends Component {
           $('#leaveCommentButton').on('click', function () {
             {/*grab the values from the input field / radio field*/}
             let critique = $('#inputText').val();
-            let xCoordCritique = $('#inputText').parent().css('left').match(/\d/g).join('');
-            let yCoordCritique = $('#inputText').parent().css('top').match(/\d/g).join('');
             let commentType = $('input[name=sentiment]:checked').val();
             {/*create a new object per model specs*/}
             let newCritiqueObj = {
-              x: xCoordCritique,
-              y: yCoordCritique,
+              x: cursorX-offset.left,
+              y: cursorY-offset.top,
               commentText: critique,
               commentType: commentType
             }
