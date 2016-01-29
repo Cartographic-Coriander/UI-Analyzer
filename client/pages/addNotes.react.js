@@ -46,34 +46,36 @@ var divStyle = {
 class AddNotes extends Component {
 
     findMousePosAndAddInput(event) {
-      var cursorX = event.pageX;
-      var cursorY = event.pageY;
-      var critiqueImage = document.getElementById('critiqueImage');
+      let cursorX = event.pageX;
+      let cursorY = event.pageY;
+      let critiqueImage = document.getElementById('critiqueImage');
       if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
         
         if(document.getElementById('inputText') === null) {
           
-          var text = document.createElement('div');
+          let text = document.createElement('div');
           text.style.top=cursorY+"px";
           text.style.left=cursorX+"px";
           text.style.position="absolute";
-          text.innerHTML = "<input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
+          text.innerHTML = "<input type='radio' name='sentiment' value='yay'>yay</br><input type='radio' name='sentiment' value='nay'>nay</br><input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
           document.getElementById('critiqueImage').appendChild(text);
           document.getElementById('inputText').focus();
           
           $('#leaveCommentButton').on('click', function () {
-            var critique = $('#inputText').val();
-            var xCoordCritique = $('#inputText').parent().css('left').match(/\d/g).join('');
-            var yCoordCritique = $('#inputText').parent().css('top').match(/\d/g).join('');
-            var newCritiqueObj = {
+            let critique = $('#inputText').val();
+            let xCoordCritique = $('#inputText').parent().css('left').match(/\d/g).join('');
+            let yCoordCritique = $('#inputText').parent().css('top').match(/\d/g).join('');
+            let commentType = $('input[name=sentiment]:checked').val();
+            let newCritiqueObj = {
               x: xCoordCritique,
               y: yCoordCritique,
               commentText: critique,
-              commentType: 'scalding critique'
+              commentType: commentType
             }
             console.log(newCritiqueObj);
             console.log('this is' , this)
             this.props.dispatch(switchVisibility('not buttons'));
+          {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
             setTimeout(()=>{$('#critiqueImage').children().last().remove()},5);
           }.bind(this))
         }
