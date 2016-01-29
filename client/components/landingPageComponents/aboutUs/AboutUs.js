@@ -5,7 +5,7 @@ const corianderMembers = ['Max', 'Jota', 'Egan'];
 
 
 const groupMembers = corianderMembers.map((member) => {
-  return <GroupMember name={member} />
+  return <GroupMember key={member} name={member} />
 });
 
 const AboutUs = React.createClass({

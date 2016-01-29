@@ -10,7 +10,6 @@ class AddNotes extends Component {
       let cursorX = event.pageX;
       let cursorY = event.pageY;
       let offset = $('#critiqueImage').offset();
-      console.log(offset);
       let critiqueImage = document.getElementById('critiqueImage');
       if (cursorY < critiqueImage.clientHeight+offset.top && cursorX < critiqueImage.clientWidth+offset.left) {
         {/*only render radio and input fields if they do not already exist*/}     
@@ -65,7 +64,6 @@ class AddNotes extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapstate to props ', state);
   return {notes: state.notes}
 }//return all the state (for now....)
 
