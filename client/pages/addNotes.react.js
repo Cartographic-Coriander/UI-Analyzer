@@ -46,15 +46,20 @@ function findMousePosAndAddInput(e) {
     var critiqueImage = document.getElementById('critiqueImage');
     if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
       //click must be within image boundry
-      if(document.getElementById('commentBox') === null) {
+      if(document.getElementById('inputText') === null) {
         //create input box where the click happened if there is no other input box on screen
         var text = document.createElement('div');
         text.style.top=cursorY+"px";
         text.style.left=cursorX+"px";
         text.style.position="absolute";
-        text.innerHTML = "<form><input id='commentBox' type='text' /><button type='submit'>send</button></form>";
+        text.innerHTML = "<input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
         document.getElementById('critiqueImage').appendChild(text);
-        document.getElementById('commentBox').focus();
+        document.getElementById('inputText').focus();
+        //this can be broken out to be more modular may be a little confusing here
+        $('#leaveCommentButton').on('click', function () {
+          var critique = $('#inputText').val();
+          alert(critique);
+        })
       }
     }
 }
