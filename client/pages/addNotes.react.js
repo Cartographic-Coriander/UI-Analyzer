@@ -1,37 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import switchVisibility from '../redux/actions';
-
-let fakeState = [
-  {
-    x: 100,
-    y: 100,
-    commentType: 'test comment type 1',  
-    commentText: 'test comment text 1'
-  },{
-    x: 200,
-    y: 200,
-    commentType: 'test comment type 2',
-    commentText: 'test comment text 2'
-  },{
-    x: 300,
-    y: 300,
-    commentType: 'test comment type 3',
-    commentText: 'test comment text 3'
-  }
-];
-
-// const allMessages = fakeState.map((comment) => {
-//   return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />
-// });
-
-var divStyle = {
-  background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
-  position: 'relative',
-  height: '100vh',
-  backgroundSize: 'cover'
-};
+import addNote from '../redux/notesAction';
 
 class AddNotes extends Component {
 
@@ -66,7 +36,7 @@ class AddNotes extends Component {
               commentType: commentType
             }
             console.log(newCritiqueObj);
-            this.props.dispatch(switchVisibility('not buttons'));
+            this.props.dispatch(addNote(newCritiqueObj));
             {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
             setTimeout(()=>{$('#critiqueImage').children().last().remove()},5);
             {/*END TODO*/}
@@ -76,19 +46,27 @@ class AddNotes extends Component {
   }
 
   render(){ 
-    var createItem = function (comment) {
+    let divStyle = {
+      background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
+      position: 'relative',
+      height: '100vh',
+      backgroundSize: 'cover'
+    };
+
+    let createItem = function (comment) {
       return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />;
     };
     return <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>
       {/*when hooked up to redux, the line below will be changing via props*/}
-      {fakeState.map(createItem)}
+      {this.props.notes.map(createItem)}
     </div>;
   }
 
 }
 
 function mapStateToProps(state) {
-  return state
+  console.log('mapstate to props ', state);
+  return {notes: state.notes}
 }//return all the state (for now....)
 
 export default connect(mapStateToProps)(AddNotes);
