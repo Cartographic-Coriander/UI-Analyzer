@@ -1,7 +1,8 @@
 const initialState = {
   buttonOne: true,
   buttonTwo: true,
-  visibleContentComponent: 'Dashboard'
+  visibleContentComponent: 'Dashboard',
+  notes: []
 }
 
 export default function reducer (state = initialState, action) {
@@ -10,8 +11,12 @@ export default function reducer (state = initialState, action) {
     case 'SWITCH_VISIBILITY':
       return newState[action.button] = !newState[action.button];
     case 'TOGGLE_CONTENT_COMPONENT':
-      console.log('toggle content component', action)
       newState.visibleContentComponent = action.targetComponent;
+      return newState;
+    case 'ADD_NOTE':
+      var newComments = state['notes'].slice();
+      newComments.push(action.note);
+      newState['notes'] = newComments;
       return newState;
     default:
       return state;
