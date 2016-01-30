@@ -4,7 +4,7 @@ import TestContainerEntry from './subComponents/TestContainerEntry';
 
 class TestContainer extends Component {
   render () {
-    var className = () => this.props.visibleContentComponent === 'Test' ? 'Test' : 'hide';
+    var className = () => this.props.buttonReducer.visibleContentComponent === 'Test' ? 'Test' : 'hide';
     return (
       <div className = { className() }>
         <h3>I am the test container component</h3>

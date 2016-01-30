@@ -22,3 +22,17 @@ export function addNote (noteObj) {
     note: noteObj
   }
 }
+
+export function addProject (project) {
+  return {
+    type: 'ADD_PROJECT',
+    project: project
+  }
+}
+
+export function confirmProject (project) {
+  return {
+    type: 'CONFIRM_PROJECT',
+    project: project
+  }
+}

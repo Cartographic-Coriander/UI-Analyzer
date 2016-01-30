@@ -15,7 +15,7 @@ const validate = values => {
 };
 
 class CreateProjectContainer extends Component {
-  render() {
+  render () {
     const { fields: { projectName, projectDescription }, handleSubmit, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>

@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 
 class DashboardContainer extends Component {
   render () {
-    var className = () => this.props.visibleContentComponent === 'Dashboard' ? 'Dashboard' : 'hide'
-    console.log(this.props.visibleContentComponent, className())
+    var className = () => this.props.buttonReducer.visibleContentComponent === 'Dashboard' ? 'Dashboard' : 'hide'
     return (
       <div className = { className() }>
         This is the Dashboard Container component
