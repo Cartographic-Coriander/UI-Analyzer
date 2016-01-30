@@ -15,6 +15,6 @@ class MyDashboardButton extends Component {
   }
 }
 
-const select = (state) => state
+const select = (state) => state.buttonReducer
 
 export default connect(select)(MyDashboardButton)

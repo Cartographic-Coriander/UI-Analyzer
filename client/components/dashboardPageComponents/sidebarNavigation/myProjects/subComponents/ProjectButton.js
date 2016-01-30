@@ -4,7 +4,7 @@ import { toggleContentComponent } from '../../../../../redux/actions';
 
 class ProjectButton extends Component {
   handleClick () {
-    this.props.dispatch(toggleContentComponent('Project'));
+    this.props.dispatch(toggleAccordian());
   }
   render () {
     return (
@@ -15,6 +15,6 @@ class ProjectButton extends Component {
   }
 }
 
-const select = (state) => state
+const select = (state) => state.buttonReducer
 
 export default connect(select)(ProjectButton)

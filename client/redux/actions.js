@@ -15,3 +15,10 @@ export function toggleContentComponent (targetComponent) {
 export function inviteTesters () {
   type: 'TOGGLE_INVITE_USER'
 }
+
+export function addNote (noteObj) {
+  return {
+    type: 'ADD_NOTE',
+    note: noteObj
+  }
+}

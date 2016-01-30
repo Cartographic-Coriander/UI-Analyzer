@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import addNote from '../redux/notesAction';
+import { addNote } from '../redux/actions';
 
 class AddNotes extends Component {
 
@@ -11,7 +11,7 @@ class AddNotes extends Component {
       let cursorY = event.pageY;
       let critiqueImage = document.getElementById('critiqueImage');
       if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
-        {/*only render radio and input fields if they do not already exist*/}     
+        {/*only render radio and input fields if they do not already exist*/}
         if(document.getElementById('inputText') === null) {
           {/*create the div that will be appended over the image and set it's intial values*/}
           let text = document.createElement('div');
@@ -38,14 +38,14 @@ class AddNotes extends Component {
             console.log(newCritiqueObj);
             this.props.dispatch(addNote(newCritiqueObj));
             {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
-            setTimeout(()=>{$('#critiqueImage').children().last().remove()},5);
+            setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
             {/*END TODO*/}
           }.bind(this))
         }
       }
   }
 
-  render(){ 
+  render () {
     let divStyle = {
       background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
       position: 'relative',
@@ -66,7 +66,7 @@ class AddNotes extends Component {
 
 function mapStateToProps(state) {
   console.log('mapstate to props ', state);
-  return {notes: state.notes}
+  return {notes: state.noteReducer.notes}
 }//return all the state (for now....)
 
 export default connect(mapStateToProps)(AddNotes);
