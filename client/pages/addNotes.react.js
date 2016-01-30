@@ -9,6 +9,7 @@ class AddNotes extends Component {
       {/*checking to see that the click occurs within the image displayed*/}
       let cursorX = event.pageX;
       let cursorY = event.pageY;
+      {/*the offset is there so that critiqueImage can be found no matter where it loads on the page, it is used in the logic below*/}
       let offset = $('#critiqueImage').offset();
       let critiqueImage = document.getElementById('critiqueImage');
       if (cursorY < critiqueImage.clientHeight+offset.top && cursorX < critiqueImage.clientWidth+offset.left) {
@@ -27,7 +28,7 @@ class AddNotes extends Component {
             {/*grab the values from the input field / radio field*/}
             let critique = $('#inputText').val();
             let commentType = $('input[name=sentiment]:checked').val();
-            {/*create a new object per model specs*/}
+            {/*creates a new object per model specs*/}
             let newCritiqueObj = {
               x: cursorX-offset.left,
               y: cursorY-offset.top,
@@ -63,8 +64,34 @@ class AddNotes extends Component {
 
 }
 
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+I believe the commented out setup below will work for getting notes data from DB every time mapStatToProps is called
+just replace current mapStateToProps with the commented out one below 
+---for testing with DB---
+this also means that critique commment object above should be sent to the database, too :)  (not written yet)
+
+function getNotes(dispatch) {
+  $.ajax({
+    method: 'GET',
+    url: 'INSERT URL FOR GETTING NOTES HERE',
+    dataType: 'json'
+  }).success(function (data) {
+    return dispatch({
+      type: 'ADD_NOTE',
+      note: data
+    })
+  })
+}
+
+function mapStateToProps(dispatch) {
+  return {
+    notes : () => getNotes(dispatch)
+  };
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 function mapStateToProps(state) {
   return {notes: state.notes}
-}//return all the state (for now....)
+}
 
 export default connect(mapStateToProps)(AddNotes);
