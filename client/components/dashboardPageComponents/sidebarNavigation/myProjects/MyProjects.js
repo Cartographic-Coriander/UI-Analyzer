@@ -6,7 +6,7 @@ export default React.createClass({
 
   render() {
     return (
-    <div>
+    <div className="MyProjectsComponent">
       <li>
         <ProjectListEntry />
       </li>

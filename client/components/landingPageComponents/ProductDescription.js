@@ -4,7 +4,9 @@ export default React.createClass({
 
   render() {
     return (
-      <h3>I am the product description component</h3>
+      <div className="productDescHolder">
+        <h3>I am the product description component</h3>
+      </div>
     )
   }
 

@@ -12,7 +12,7 @@ import ButtonTwo from '../components/landingPageComponents/ButtonTwo';
 class LandingPage extends Component {
   render() {
     return (
-      <div className = "LandingPage">
+      <div className = "landingPage">
         <ButtonOne />
         <ButtonTwo />
         <Header />

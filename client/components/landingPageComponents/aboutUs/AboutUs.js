@@ -12,7 +12,7 @@ const AboutUs = React.createClass({
 
   render() {
     return (
-      <div>
+      <div className="groupMembersHolder">
         <ul>
           {groupMembers}
         </ul>

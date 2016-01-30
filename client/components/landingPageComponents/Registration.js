@@ -4,7 +4,9 @@ export default React.createClass({
 
   render() {
     return (
-      <h3>I am the registration component</h3>
+      <div className="registrationHolder">
+        <h3>I am the registration component</h3>
+      </div>
     )
   }
 
