@@ -5,7 +5,6 @@ import CreateProjectContainer from './subComponents/CreateProjectContainer';
 class AddProjectContainer extends Component {
   render() {
     var className = () => this.props.visibleContentComponent === 'AddProject' ? 'AddProject' : 'hide'
-    console.log(className())
     return (
       <div className = { className() }>
         <h3>I am the add project container component</h3>

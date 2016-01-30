@@ -15,10 +15,10 @@ class Content extends Component {
         <ProjectHeader />
         <DashboardContainer visibility = { this.props.visibleContentComponent }/>
         <AddProjectContainer visibility = { this.props.visibleContentComponent }/>
-        <GetStartedContainer />
-        <ReportsContainer />
-        <SettingsContainer />
-        <TestContainer />
+        <GetStartedContainer visibility = { this.props.visibleContentComponent }/>
+        <ReportsContainer visibility = { this.props.visibleContentComponent }/>
+        <SettingsContainer visibility = { this.props.visibleContentComponent }/>
+        <TestContainer visibility = { this.props.visibleContentComponent }/>
       </div>
     )
   }

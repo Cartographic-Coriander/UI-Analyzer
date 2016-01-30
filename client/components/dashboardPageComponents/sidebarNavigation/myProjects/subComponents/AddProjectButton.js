@@ -9,7 +9,7 @@ class AddProjectButton extends Component {
   render () {
     return (
       <button className = "AddProjectButton" onClick = { this.handleClick.bind(this) }>
-      Add Project
+        Add Project
       </button>
     )
   }

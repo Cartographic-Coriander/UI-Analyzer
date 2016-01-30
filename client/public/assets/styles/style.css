@@ -1,3 +1,39 @@
+.SidebarNavigation {
+  background-color: purple;
+}
+
+.MyProjects {
+  background-color: green;
+}
+
+.InvteTestersButton {
+  background-color: gray;
+}
+
+.ProjectButton {
+  background-color: orange;
+}
+
+.MyDashboardButton {
+  background-color: orange;
+}
+
+.AddProjectButton {
+  background-color: orange;
+}
+
+.SettingsButton {
+  background-color: orange;
+}
+
+.ReportsButton {
+  background-color: orange;
+}
+
+.TestButton {
+  background-color: orange;
+}
+
 .AddProject {
   background-color: blue;
 }
@@ -6,10 +42,22 @@
   background-color: blue;
 }
 
+.Test {
+  background-color: blue;
+}
+
+.Settings {
+  background-color: blue;
+}
+
+.Reports {
+  background-color: blue;
+}
+
 .hide {
-  background-color: red;
+  display: none;
 }
 
 .hide * {
-  background-color: red;
+  display: none;
 }

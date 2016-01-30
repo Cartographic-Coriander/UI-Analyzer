@@ -11,3 +11,7 @@ export function toggleContentComponent (targetComponent) {
     targetComponent: targetComponent
   }
 }
+
+export function inviteTesters () {
+  type: 'TOGGLE_INVITE_USER'
+}

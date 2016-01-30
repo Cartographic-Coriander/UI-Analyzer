@@ -9,7 +9,7 @@ class MyDashboardButton extends Component {
   render () {
     return (
       <button className = "MyDashboardButton" onClick = { this.handleClick.bind(this) }>
-        "My Dashboard"
+        My Dashboard
       </button>
     )
   }
