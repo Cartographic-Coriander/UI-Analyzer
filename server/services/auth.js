@@ -112,5 +112,5 @@ module.exports = {
   ensureLoggedIn: ensureAuth.ensureLoggedIn,
   ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
   createUser: createUser,
-  signOut: signOut
+  signout: signout
 };

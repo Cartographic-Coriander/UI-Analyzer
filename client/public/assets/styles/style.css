@@ -1,0 +1,71 @@
+.Accordian {
+  background-color: yellow;
+}
+
+.SidebarNavigation {
+  background-color: purple;
+}
+
+.ProjectConfirmation {
+  background-color: green;
+}
+
+.MyProjects {
+  background-color: green;
+}
+
+.InvteTestersButton {
+  background-color: gray;
+}
+
+.ProjectButton {
+  background-color: orange;
+}
+
+.MyDashboardButton {
+  background-color: orange;
+}
+
+.AddProjectButton {
+  background-color: orange;
+}
+
+.SettingsButton {
+  background-color: orange;
+}
+
+.ReportsButton {
+  background-color: orange;
+}
+
+.TestButton {
+  background-color: orange;
+}
+
+.AddProject {
+  background-color: blue;
+}
+
+.Dashboard {
+  background-color: blue;
+}
+
+.Test {
+  background-color: blue;
+}
+
+.Settings {
+  background-color: blue;
+}
+
+.Reports {
+  background-color: blue;
+}
+
+.hide {
+  display: none;
+}
+
+.hide * {
+  display: none;
+}

@@ -1,6 +1,38 @@
-export default function switchVisibility (button) {
+export function switchVisibility (button) {
   return {
     type: 'SWITCH_VISIBILITY',
     button: button
+  }
+}
+
+export function toggleContentComponent (targetComponent) {
+  return {
+    type: 'TOGGLE_CONTENT_COMPONENT',
+    targetComponent: targetComponent
+  }
+}
+
+export function inviteTesters () {
+  type: 'TOGGLE_INVITE_USER'
+}
+
+export function addNote (noteObj) {
+  return {
+    type: 'ADD_NOTE',
+    note: noteObj
+  }
+}
+
+export function addProject (project) {
+  return {
+    type: 'ADD_PROJECT',
+    project: project
+  }
+}
+
+export function confirmProject (project) {
+  return {
+    type: 'CONFIRM_PROJECT',
+    project: project
   }
 }

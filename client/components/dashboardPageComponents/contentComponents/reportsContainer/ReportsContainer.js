@@ -1,13 +1,19 @@
-import React from 'react';
-import ReportListEntry from './subComponents/ReportListEntry'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ReportListEntry from './subComponents/ReportListEntry';
 
-export default React.createClass({
-
-  render() {
+class ReportsContainer extends Component {
+  render () {
+    var className = () => this.props.buttonReducer.visibleContentComponent === 'Reports' ? 'Reports' : 'hide';
     return (
-      <h3>I am the reports container component</h3>
-      <ReportListEntry />
+      <div className = { className() }>
+        <h3>I am the reports container component</h3>
+        <ReportListEntry />
+      </div>
     )
   }
+}
 
-});
+const select = (state) => state
+
+export default connect(select)(ReportsContainer)

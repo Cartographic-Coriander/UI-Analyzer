@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import addNote from '../redux/notesAction';
+import { addNote } from '../redux/actions';
 
 class AddNotes extends Component {
 
@@ -13,7 +13,7 @@ class AddNotes extends Component {
       let offset = $('#critiqueImage').offset();
       let critiqueImage = document.getElementById('critiqueImage');
       if (cursorY < critiqueImage.clientHeight+offset.top && cursorX < critiqueImage.clientWidth+offset.left) {
-        {/*only render radio and input fields if they do not already exist*/}     
+        {/*only render radio and input fields if they do not already exist*/}
         if(document.getElementById('inputText') === null) {
           {/*create the div that will be appended over the image and set it's intial values*/}
           let text = document.createElement('div');
@@ -38,14 +38,14 @@ class AddNotes extends Component {
             console.log(newCritiqueObj);
             this.props.dispatch(addNote(newCritiqueObj));
             {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
-            setTimeout(()=>{$('#critiqueImage').children().last().remove()},5);
+            setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
             {/*END TODO*/}
           }.bind(this))
         }
       }
   }
 
-  render(){ 
+  render () {
     let divStyle = {
       background: 'url(http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg)',
       position: 'relative',
@@ -66,7 +66,7 @@ class AddNotes extends Component {
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 I believe the commented out setup below will work for getting notes data from DB every time mapStatToProps is called
-just replace current mapStateToProps with the commented out one below 
+just replace current mapStateToProps with the commented out one below
 ---for testing with DB---
 this also means that critique commment object above should be sent to the database, too :)  (not written yet)
 
@@ -91,7 +91,8 @@ function mapStateToProps(dispatch) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 function mapStateToProps(state) {
-  return {notes: state.notes}
-}
+  console.log('mapstate to props ', state);
+  return {notes: state.noteReducer.notes}
+}//return all the state (for now....)
 
 export default connect(mapStateToProps)(AddNotes);
