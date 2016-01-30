@@ -12,13 +12,8 @@ class AddNotes extends Component {
       {/*the offset is there so that critiqueImage can be found no matter where it loads on the page, it is used in the logic below*/}
       let offset = $('#critiqueImage').offset();
       let critiqueImage = document.getElementById('critiqueImage');
-<<<<<<< HEAD
-      if (cursorY < critiqueImage.clientHeight && cursorX < critiqueImage.clientWidth) {
-        {/*only render radio and input fields if they do not already exist*/}
-=======
       if (cursorY < critiqueImage.clientHeight+offset.top && cursorX < critiqueImage.clientWidth+offset.left) {
-        {/*only render radio and input fields if they do not already exist*/}     
->>>>>>> Cartographic-Coriander/dev
+        {/*only render radio and input fields if they do not already exist*/}
         if(document.getElementById('inputText') === null) {
           {/*create the div that will be appended over the image and set it's intial values*/}
           let text = document.createElement('div');
@@ -71,7 +66,7 @@ class AddNotes extends Component {
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 I believe the commented out setup below will work for getting notes data from DB every time mapStatToProps is called
-just replace current mapStateToProps with the commented out one below 
+just replace current mapStateToProps with the commented out one below
 ---for testing with DB---
 this also means that critique commment object above should be sent to the database, too :)  (not written yet)
 
@@ -96,13 +91,8 @@ function mapStateToProps(dispatch) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 function mapStateToProps(state) {
-<<<<<<< HEAD
   console.log('mapstate to props ', state);
   return {notes: state.noteReducer.notes}
 }//return all the state (for now....)
-=======
-  return {notes: state.notes}
-}
->>>>>>> Cartographic-Coriander/dev
 
 export default connect(mapStateToProps)(AddNotes);
