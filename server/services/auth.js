@@ -98,7 +98,7 @@ var createUser = function (req, res, next) {
     });
 };
 
-var signOut = function(req, res){
+var signout = function(req, res){
   // call passport's log out functionality
   req.logout();
   res.redirect('/');

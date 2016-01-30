@@ -18,3 +18,4 @@ docker-compose.yml
 
 ###ignore the bundle
 client/public/bundle.js
+client/public/*.hot-update.*
