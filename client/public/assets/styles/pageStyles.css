@@ -1,0 +1,75 @@
+.headerButton {
+  max-height: 40px;
+  align-self: center;
+}
+
+.headerHolder, .registrationHolder, .groupMembersHolder, .footerHolder, .productDescHolder{
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+
+  display: flex;
+  flex-direction: row;
+  border: 3px solid rgba(0,0,0,.2);
+  justify-content:center;
+}
+
+.headerComponent {
+  justify-content:flex-end;
+}
+
+.headerContent {
+  flex-grow: 3;
+  border: 3px solid rgba(0,0,0,.2);
+  text-align: center;
+}
+
+.landingPage {
+  background-color:purple;
+}
+
+.loginComponent {
+  text-align: center
+}
+
+.loginInputHolder {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 3px solid rgba(0,0,0,.2);
+}
+
+
+
+
+
+.DashboardPage {
+  background-color: yellow;
+}
+
+
+.SidebarNavigation, .Accordian, .MyProjectsComponent {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 3px solid rgba(0,0,0,.2);
+}
+
+.SidebarNavigation {
+  max-width: 20%;
+  height: 100vh;
+}
+
+.Accordian {
+  height: 50vh;
+}
+
+
+
+
+
