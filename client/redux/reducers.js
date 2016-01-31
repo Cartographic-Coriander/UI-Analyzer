@@ -13,10 +13,26 @@ const projectInitialState = {
   projects: []
 }
 
+const authenticationInitialState = {
+  authenticated: false
+}
+
+export function authReducer (state = authenticationInitialState, action) {
+  var newState = Object.assign({}, state)
+  switch (action.type) {
+    case 'AUTHENTICATED_USER':
+      console.log(state)
+      newState.authenticated = true
+      return newState;
+  }
+  return state
+}
+
 export function buttonReducer (state = buttonInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'SWITCH_VISIBILITY':
+    console.log(state)
       return newState[action.button] = !newState[action.button];
     case 'TOGGLE_CONTENT_COMPONENT':
       newState.visibleContentComponent = action.targetComponent;

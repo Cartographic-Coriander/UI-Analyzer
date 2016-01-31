@@ -36,3 +36,10 @@ export function confirmProject (project) {
     project: project
   }
 }
+
+export function authChecker (auth) {
+  return {
+    type: 'AUTHENTICATED_USER',
+    auth: auth
+  }
+}
