@@ -18,30 +18,27 @@ class LoginForm extends Component{
   render () {
   const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <div>
-      <h3>I am the registration component</h3>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>enter e-mail</label>
         <div>
-          <label>enter e-mail</label>
-          <div>
-            <input type="text" placeholder="enter e-mail" {...emailField}/>
-          </div>
-          {emailField.touched && emailField.error && <div>{emailField.error}</div>}
+          <input type="text" placeholder="enter e-mail" {...emailField}/>
         </div>
+        {emailField.touched && emailField.error && <div>{emailField.error}</div>}
+      </div>
+      <div>
+        <label>enter email</label>
         <div>
-          <label>enter email</label>
-          <div>
-            <input type="text" placeholder="(^^)--password-@~~(^^@_)" {...passwordField}/>
-          </div>
-          {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
+          <input type="text" placeholder="------password-----:)" {...passwordField}/>
         </div>
-        <div>
-          <button type="submit" disabled={submitting}>
-            {submitting ? <i/> : <i/>} login
-          </button>
-        </div>
-      </form>
-    </div>
+        {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
+      </div>
+      <div>
+        <button type="submit" disabled={submitting}>
+          {submitting ? <i/> : <i/>} login
+        </button>
+      </div>
+    </form>
     )
   }
 }
