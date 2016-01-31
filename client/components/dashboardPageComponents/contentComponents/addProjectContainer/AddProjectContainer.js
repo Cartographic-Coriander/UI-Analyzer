@@ -14,12 +14,15 @@ class AddProjectContainer extends Component {
     this.props.dispatch(addProject(project));
   }
   render () {
-    var className = () => this.props.buttonReducer.visibleContentComponent === 'AddProject' ? 'AddProject' : 'hide'
     return (
-      <div className = { className() }>
+      <div className = 'AddProject'>
         <h3>I am the add project container component</h3>
         <CreateProjectContainer onSubmit = { this.onSubmit.bind(this) }/>
-        <ProjectConfirmation project = { this.props.projectReducer.confirm } confirmProject = { this.onConfirm.bind(this) }/>
+        { (() => {
+          if (this.props.projectReducer.confirm.projectName !== null) {
+            return <ProjectConfirmation project = { this.props.projectReducer.confirm } confirmProject = { this.onConfirm.bind(this) }/>
+          }
+        })() }
       </div>
     )
   }

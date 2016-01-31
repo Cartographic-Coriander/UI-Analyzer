@@ -13,12 +13,22 @@ class Content extends Component {
     return (
       <div>
         <ProjectHeader />
-        <DashboardContainer visibility = { this.props.visibleContentComponent }/>
-        <AddProjectContainer visibility = { this.props.visibleContentComponent }/>
-        <GetStartedContainer visibility = { this.props.visibleContentComponent }/>
-        <ReportsContainer visibility = { this.props.visibleContentComponent }/>
-        <SettingsContainer visibility = { this.props.visibleContentComponent }/>
-        <TestContainer visibility = { this.props.visibleContentComponent }/>
+        { (() => {
+          switch (this.props.buttonReducer.activeContentComponent) {
+            case 'Reports':
+              return <ReportsContainer />;
+            case 'Dashboard':
+              return <DashboardContainer />;
+            case 'AddProject':
+              return <AddProjectContainer />;
+            case 'GetStarted':
+              return <GetStartedContainer />;
+            case 'Settings':
+              return <SettingsContainer />;
+            case 'Test':
+              return <TestContainer />;
+          }
+        })() }
       </div>
     )
   }

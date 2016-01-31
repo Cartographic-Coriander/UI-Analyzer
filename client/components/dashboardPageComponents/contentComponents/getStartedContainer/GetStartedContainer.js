@@ -4,9 +4,8 @@ import EgansSexyVoice from './subComponents/EgansSexyVoice';
 
 class GetStartedContainer extends Component {
   render () {
-    var className = () => this.props.buttonReducer.visibleContentComponent === 'GetStarted' ? 'GetStarted' : 'hide';
     return (
-      <div className = { className() }>
+      <div className = 'GetStarted'>
         <h3>I am the registration component</h3>
         <EgansSexyVoice />
       </div>

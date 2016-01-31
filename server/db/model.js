@@ -5,7 +5,6 @@ var User = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-  salt: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   firstname: { type: Sequelize.STRING },
   surname: { type: Sequelize.STRING },
   company: { type: Sequelize.STRING }
@@ -48,14 +47,10 @@ var MouseTracking = sequelize.define('mousetracking', {
 var ProjectUser = sequelize.define('project_user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   role: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-  // project_id: { type: Sequelize.INTEGER, notNull: true },
-  // user_id: { type: Sequelize.INTEGER, notNull: true }
 }, { timestamps: false });
 
 var MouseTrackingTest = sequelize.define('mousetracking_test', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  // mousetracking_id: { type: Sequelize.INTEGER, notNull: true },
-  // test_id: { type: Sequelize.INTEGER, notNull: true }
 }, { timestamps: false });
 
 var init = function() {

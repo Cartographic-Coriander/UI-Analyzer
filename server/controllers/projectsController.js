@@ -11,7 +11,10 @@ var model = require('../db/model');
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var createProject = function (project) {
-  var params = { name: project.name, description: project.description };
+  var params = {
+    name: project.name,
+    description: project.description
+  };
 
   return model.sequelize.transaction(function (t) {
     return model.Project.create(params, { transaction: t })
@@ -31,16 +34,19 @@ var createProject = function (project) {
 };
 
 // input should be of the following format:
-// { name: 'abc' }
+// { user_id: 123 }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
-  return model.Project.findOne({
-    where: project
+  return model.Project.findAll({
+    include: [{
+      model: ProjectUser,
+      where: [ project ]
+    }]
   })
   .then(function (result) {
     if (result === null) {
-      throw (new Error ('Error! Project does not exist!'));
+      throw (new Error ('Error! Projects do not exist!'));
     } else {
       return result;
     }
@@ -53,6 +59,7 @@ var retrieveProject = function (project) {
 // { id: 123, name: 'abc', description: 'abc' }
 var updateProject = function (project) {
   var params = { id: project.id };
+
   return model.Project.update(project, {
     where: params
   })

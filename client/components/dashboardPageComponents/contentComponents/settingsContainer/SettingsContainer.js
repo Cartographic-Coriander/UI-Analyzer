@@ -4,9 +4,8 @@ import EditSettingsContainer from './subComponents/EditSettingsContainer';
 
 class SettingsContainer extends Component {
   render () {
-    var className = () => this.props.buttonReducer.visibleContentComponent === 'Settings' ? 'Settings' : 'hide';
     return (
-      <div className = { className() }>
+      <div className = 'Settings'>
         <h3>I am the settings container component</h3>
         <EditSettingsContainer />
       </div>
