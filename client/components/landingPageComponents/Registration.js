@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-export const fields = ['emailField', 'passwordField'];
+export const fields = ['firstName', 'lastName', 'emailField', 'passwordField'];
 
 const validate = values => {
   const errors = {};
@@ -11,16 +11,36 @@ const validate = values => {
   if (!values.passwordField) {
     errors.passwordField = 'Required';
   }
+  if (!values.firstName) {
+    errors.firstName = 'Required';
+  }  
+  if (!values.lastName) {
+    errors.lastName = 'Required';
+  }
   return errors;
 };
 
-class LoginForm extends Component{
+class SignUpForm extends Component{
   render () {
-  const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
+  const { fields: { firstName, lastName, emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
     <div>
       <h3>I am the registration component</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
+        <div>
+          <label>first name</label>
+          <div>
+            <input type="text" placeholder="(-_-; ) first name" {...firstName}/>
+          </div>
+          {firstName.touched && firstName.error && <div>{firstName.error}</div>}
+        </div>
+        <div>
+          <label>last name</label>
+          <div>
+            <input type="text" placeholder="(+-_-) last name" {...lastName}/>
+          </div>
+          {lastName.touched && lastName.error && <div>{lastName.error}</div>}
+        </div>
         <div>
           <label>enter e-mail</label>
           <div>
@@ -37,7 +57,7 @@ class LoginForm extends Component{
         </div>
         <div>
           <button type="submit" disabled={submitting}>
-            {submitting ? <i/> : <i/>} login
+            {submitting ? <i/> : <i/>} sign up
           </button>
         </div>
       </form>
@@ -46,14 +66,14 @@ class LoginForm extends Component{
   }
 }
 
-LoginForm.propTypes = {
+SignUpForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 }
 
 export default reduxForm({
-  form: 'LoginForm',
+  form: 'SignUpForm',
   fields,
   validate
-})(LoginForm);
+})(SignUpForm);
