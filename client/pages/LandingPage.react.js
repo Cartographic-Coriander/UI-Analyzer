@@ -16,7 +16,6 @@ class LandingPage extends Component {
   }
 
   getAuthenticated (auth) {
-    console.log('getting authenticated ', auth)
     this.props.dispatch(authChecker(auth))
   }
 

@@ -38,6 +38,12 @@ export function confirmProject (project) {
 }
 
 export function authChecker (auth) {
+  if (auth === 'authenticated') {
+    console.log(auth);
+    auth = true;
+  } else {
+    auth = false;
+  }
   return {
     type: 'AUTHENTICATED_USER',
     auth: auth

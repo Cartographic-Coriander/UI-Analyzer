@@ -21,8 +21,7 @@ export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'AUTHENTICATED_USER':
-      console.log(state)
-      newState.authenticated = true
+      newState.authenticated = action.auth;
       return newState;
   }
   return state
