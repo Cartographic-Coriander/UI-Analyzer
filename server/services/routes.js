@@ -1,85 +1,278 @@
-// Routes
-var auth = require('./auth'); // ./auth does some stuff to set up passport
-// var itemsRequestHandler = require('../requestHandlers/itemsRequestHandler.js');
-// var associationsRequestHandler = require('../requestHandlers/associationsRequestHandler.js');
+var auth = require('./auth');
+var projectsController = require('../controllers/projectsController');
+var testsController = require('../controllers/testsController');
+var commentsController = require('../controllers/commentsController');
+var imagesController = require('../controllers/imagesController');
+var mousetrackingController = require('../controllers/mousetrackingController');
 
+// inputs:
+// in data field:
+//    user:
+//      email: the useraname
+//      password: the password
+// output:
+// in data field:
+//    message: if failure, reason for failure
 module.exports = function (app, express) {
-  // put routes in here
-
-  // inputs:
-  // in data field:
-  //    user:
-  //      username: the useraname
-  //      password: the password
-  // output:
-  // in data field:
-  //    message: if failure, reason for failure
   app.post('/api/users/signin', auth.authenticate, function (req, res) {
-    res.json({ message: "Authenticated" });
+    res.writeHead(200, req.token);
+    res.end();
   });
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
-    res.json({ message: "Authenticated" });
+    res.writeHead(200, req.token);
+    res.end();
   });
 
-  app.get('/signout', auth.signout);
+  app.get('/signOut', auth.signout);
 
-  // GET /api/items gets the items the user likes
-  // inputs:
-  // in session store:
-  //   userid: id of user with the list we want to see,
-  //     will use currently logged in user if userid is not
-  //     provided
-  // outputs:
-  // in data field:
-  //   items: list of item objects that the user likes
-  // app.get('/api/items', auth.ensureLoggedIn('/#/signin'), itemsRequestHandler.getAll);
+  app.route('/api/project')
+    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { user_id: req.decoded };
 
-  // POST /api/items adds items the user likes
-  // inputs:
-  // in data field:
-  //   items: items to add to the currently logged in user's list
-  //      will create item if item does not yet exist in the database
-  // outputs:
-  // in data field;
-  //   item: the new items that were created
-  // app.post('/api/items', auth.ensureLoggedIn('/#/signin'), itemsRequestHandler.add);
+      projectsController.retrieveProject(params)
+        .then(function (result) {
+          res.json(result)
+        })
+        .catch(function (error) {
+          console.log('/api/project GET Error!', error);
+          res.end('No projects found.');
+        });
+    })
+    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { user_id: req.decoded, name: req.body.name, description: req.body.description };
 
-  // DELETE /api/items/
-  // inputs:
-  // in data field:
-  //   name: name of the item to remove from this user's like list
-  // outputs:
-  //   none
-  // app.delete('/api/items', auth.ensureLoggedIn('/#/signin'), itemsRequestHandler.remove);
+      projectsController.createProject(params)
+        .then(function (result) {
+          res.end(result);
+        })
+        .catch(function (error) {
+          console.log('/api/project POST Error!', error);
+          res.end('Project already exists');
+        });
+    })
+    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id, name: req.body.name, description: req.body.description };
 
-  // GET /api/associations gets the top items a user might like
-  // inputs:
-  // in data field:
-  //   nothing
-  // outputs:
-  // in data field:
-  //   items: list of objects, each object will have a property "item"
-  //     and "strength". "item" will link to an item object,
-  //     "strength" will link to the item's association strength
-  // app.get('/api/associations', auth.ensureLoggedIn('/#/signin'), associationsRequestHandler.getAssociations);
+      projectsController.updateProject(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/project PUT Error!', error);
+          res.end('Project PUT Error!');
+        });
+    })
+    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
 
-  // BROKEN!
-  // POST /api/associations custom association query
-  // inputs:
-  // in data field:
-  //   items: (optional) [array] of items to check for associations,
-  //     if missing, association engine will be given logged in user's
-  //     interest list
-  //   maxItems: [integer] maximum number of items to return
-  //   minStrength: [float between 0 and 1] minimum association strength
-  //   maxStrength: [float between 0 and 1] maximum association strength
-  //   myList: [boolean] wether or not to include logged in user's list
-  //     of interests. Ignored if no items were passed
-  // outputs:
-  // in data field:
-  //   items: list of objects, each object will have a property "item"
-  //     and "strength". "item" will link to an item object,
-  //     "strength" will link to the item's association strength
-  // app.post('/api/associations', auth.ensureLoggedIn('/#/signin'), associationsRequestHandler.postAssociations);
+      projectsController.deleteProject(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/project DELETE Error!', error);
+          res.end('Project DELETE Error!');
+        });
+    });
+
+  app.route('/api/test')
+    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.decoded };
+
+      testsController.retrieveTest(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/test GET Error!', error);
+          res.end('Test GET Error!');
+        });
+    })
+    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { project_id: req.body.project_id, name: req.body.name, url: req.body.url, prompt: req.body.prompt };
+
+      testsController.createTest(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/test POST Error!', error);
+          res.end('Test POST Error!');
+        });
+    })
+    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id, name: req.body.name, url: req.body.url, prompt: req.body.prompt };
+
+      testsController.updateTest(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/test PUT Error!', error);
+          res.end('Test PUT Error!');
+        });
+    })
+    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
+
+      testController.deleteTest(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/test DELETE Error!', error);
+          res.end('Test DELETE Error!');
+        });
+    });
+
+  app.route('/api/comment')
+    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { userId: req.decoded, testId: req.body.testId };
+
+      testController.retrieveComment(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/comment GET Error!', error);
+          res.end('Test GET Error!');
+        });
+    })
+    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { project_id: req.body.project_id, commentType: req.body.commentType, commentText: req.body.commentText, x: req.body.x, y: req.body.y };
+
+      commentsController.createComment(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/comment POST Error!', error);
+          res.end('Test POST Error!');
+        });
+    })
+    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id, commentType: req.body.commentType, commentText: req.body.commentText, x: req.body.x, y: req.body.y };
+
+      commentsController.updateComment(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/comment PUT Error!', error);
+          res.end('Test PUT Error!');
+        });
+    })
+    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
+
+      commentsController.deleteComment(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/comment DELETE Error!', error);
+          res.end('Test DELETE Error!');
+        });
+    });
+
+  app.route('/api/image')
+    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { test_id: req.body.test_id };
+
+      imagesController.retrieveImage(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/image GET Error!', error);
+          res.end('Image GET Error!');
+        });
+    })
+    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { test_id: req.body.test_id, image: req.body.image, url: req.body.url };
+
+      imagesController.createImage(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/image POST Error!', error);
+          res.end('Image POST Error!');
+        });
+    })
+    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id, test_id: req.body.test_id, image: req.body.image, url: req.body.url };
+
+      imagesController.updateImage(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/image PUT Error!', error);
+          res.end('Image PUT Error!');
+        });
+    })
+    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
+
+      imagesController.deleteImage(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/image DELETE Error!', error);
+          res.end('Image DELETE Error!');
+        });
+    });
+
+  app.route('/api/mousetracking')
+    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
+
+      mousetrackingController.retrieveMouseTracking(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/mousetracking GET Error!', error);
+          res.end('Mousetracking GET Error!');
+        });
+    })
+    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { movement: req.body.movement, clicks: req.body.clicks, urlchange: req.body.urlchange };
+
+      mousetrackingController.retrieveMouseTracking(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/mousetracking POST Error!', error);
+          res.end('Mousetracking POST Error!');
+        });
+    })
+    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id, movement: req.body.movement, clicks: req.body.clicks, urlchange: req.body.urlchange };
+
+      mousetrackingController.updateTracking(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/mousetracking PUT Error!', error);
+          res.end('Mousetracking PUT Error!');
+        });
+    })
+    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+      var params = { id: req.body.id };
+
+      mousetrackingController.deleteMouseTracking(params)
+        .then(function (params) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/mousetracking DELETE Error!', error);
+          res.end('Mousetracking DELETE Error!');
+        });
+    });
 };

@@ -12,7 +12,11 @@ var model = require('../db/model');
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var createMouseTracking = function (mouseTracking) {
-  var params = { movement: mouseTracking.movement, clicks: mouseTracking.clicks, urlchange: mouseTracking.urlchange };
+  var params = {
+    movement: mouseTracking.movement,
+    clicks: mouseTracking.clicks,
+    urlchange: mouseTracking.urlchange
+  };
 
   return model.sequelize.transaction(function (t) {
     return model.MouseTracking.create(params, { transaction: t })
@@ -36,8 +40,11 @@ var createMouseTracking = function (mouseTracking) {
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var retrieveMouseTracking = function (mouseTracking) {
-  return model.MouseTracking.findOne({
-    where: mouseTracking
+  return model.MouseTracking.findAll({
+    include: [{
+      model: Test,
+      where: mousetracking
+    }]
   })
   .then(function (result) {
     if (result === null) {
@@ -54,6 +61,7 @@ var retrieveMouseTracking = function (mouseTracking) {
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var updateMouseTracking = function (mouseTracking) {
   var params = { id: mouseTracking.id };
+
   return model.MouseTracking.update(mouseTracking, {
     where: params
   })

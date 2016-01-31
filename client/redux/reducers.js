@@ -1,7 +1,7 @@
 const buttonInitialState = {
   buttonOne: true,
   buttonTwo: true,
-  visibleContentComponent: 'Dashboard',
+  activeContentComponent: 'Dashboard',
 }
 
 const noteInitialState = {
@@ -34,7 +34,7 @@ export function buttonReducer (state = buttonInitialState, action) {
     console.log(state)
       return newState[action.button] = !newState[action.button];
     case 'TOGGLE_CONTENT_COMPONENT':
-      newState.visibleContentComponent = action.targetComponent;
+      newState.activeContentComponent = action.targetComponent;
       return newState;
     default:
       return state;
