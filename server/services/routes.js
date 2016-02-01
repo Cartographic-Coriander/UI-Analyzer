@@ -127,9 +127,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/comment')
+    /*---------------------------to be removed
+    //uncomment this part to see the image below show up on page reload
+    //this commented part is the dummiest of dummy data
+    // .get( function (req, res) {
+    //   console.log('/api/comment path being hit');
+    //   res.send('http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg')
+    // })
+    ----------------------end to be removed*/
     .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
       var params = { userId: req.decoded, testId: req.body.testId };
-
       testController.retrieveComment(params)
         .then(function (params) {
           res.json(result);

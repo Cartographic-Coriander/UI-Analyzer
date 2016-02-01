@@ -1,3 +1,5 @@
+import { getImage } from './api'
+
 export function switchVisibility (button) {
   return {
     type: 'SWITCH_VISIBILITY',
@@ -39,7 +41,6 @@ export function confirmProject (project) {
 
 export function authChecker (auth) {
   if (auth === 'authenticated') {
-    console.log(auth);
     auth = true;
   } else {
     auth = false;
@@ -61,5 +62,22 @@ export function registerUser (user) {
   return {
     type: 'REGISTER_USER',
     user: user
+  }
+}
+
+export function getImageForNotes () {
+  return function (dispatch) {
+    return getImage().then(
+      function (image) {
+        dispatch(updateImageForNotes(image));
+      }
+    )
+  }
+}
+
+function updateImageForNotes (image) {
+  return {
+    type: 'UPDATE_IMAGE',
+    image: image
   }
 }
