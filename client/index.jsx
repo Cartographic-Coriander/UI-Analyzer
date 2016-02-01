@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
-import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer, loginReducer, registrationReducer } from './redux/reducers';
+import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer, loginReducer, registrationReducer, imageUpdateReducer  } from './redux/reducers';
 
 const reducers = {
   buttonReducer: buttonReducer,
@@ -15,12 +15,13 @@ const reducers = {
   authReducer: authReducer,
   logOutReducer: logOutReducer,
   loginReducer: loginReducer,
-  registrationReducer: registrationReducer
+  registrationReducer: registrationReducer,
+  imageUpdateReducer : imageUpdateReducer 
 };
 const combinedReducers = combineReducers(reducers);
 
-// const store = applyMiddleware(thunk)(createStore)(reducers);
-let store = createStore(combinedReducers)
+let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+let store = createStoreWithMiddleware(combinedReducers)
 
 ReactDOM.render(
   <Provider store={ store }>
