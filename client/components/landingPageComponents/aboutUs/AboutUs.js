@@ -1,7 +1,7 @@
 import React from 'react';
 import GroupMember from './subComponents/GroupMember';
 
-const corianderMembers = ['Max', 'Jota', 'Egan'];
+const corianderMembers = ['Max Cudich', 'Youngjun "Jota" Kwak', 'Egan Tamashiro'];
 
 
 const groupMembers = corianderMembers.map((member) => {
@@ -13,7 +13,7 @@ const AboutUs = React.createClass({
   render() {
     return (
       <div>
-        <ul>
+        <ul className="aboutUs">
           {groupMembers}
         </ul>
       </div>

@@ -23,8 +23,6 @@ class LandingPage extends Component {
   render () {
     return (
       <div className = "LandingPage">
-        <ButtonOne buttonOne={ this.props.buttonOne } clickHandler={ this.handleClick.bind(this) } />
-        <ButtonTwo buttonTwo={ this.props.buttonTwo } clickHandler={ this.handleClick.bind(this) } />
         <Header authenticateClick={ this.getAuthenticated.bind(this) } />
         <LoginForm />
         <Registration />

@@ -1,35 +1,25 @@
-html *
-{
-   font-size: 1em;
-   color: #000;
-   font-family: Arial;
-   padding: 0;
-   margin: 0;
-   background-color: white;
-}
+/*Landing Page Header*/
 
-.headerComponent {
-  background-color: #FF781C;
-  list-style-type: none;
+.Navbar {
   margin-top: -50px;
-  padding: 0;
-  overflow: hidden;
-  z-index: 10;
-  height: 100px;
+}
+.Nav {
+  margin-left: 70%;
 }
 
-.headerComponent li {
+/*.headerComponent li {
   float: left;
-  padding: 50px 10px 10px 10px;
+  padding: 50px 10px 15px 20px;
   border-radius: 5px;
 }
 
 .headerComponent li a {
   display: block;
   color: white;
-  background-color: transparent;
   text-decoration: none;
   font-weight: bold;
+  margin: -25px;
+  padding: 30px 10px 10px 10px;
 }
 
 .getStartedButton {
@@ -46,7 +36,25 @@ html *
   height: 20px;
   border-radius: 5;
   margin-left: 20px;
+}*/
+
+/*Landing Page About Us*/
+
+/*.aboutUs li {
+  display: inline;
+  display: block;
+  height: 100px;
+  width: 300px;
+  border-radius: 5px;
+  background-color: #FF781C;
+  float: left;
 }
+*/
+/*.memberName {
+  margin-top: 50px;
+  padding-left: 25px;
+}*/
+
 
 .Accordian {
   background-color: yellow;
