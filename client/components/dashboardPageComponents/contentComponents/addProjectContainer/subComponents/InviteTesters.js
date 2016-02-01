@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default React.createClass({
-
-  render() {
+export default class extends Component {
+  render () {
     return (
       <h3>I am the invite testers component</h3>
     )
   }
-
-});
+}

@@ -13,7 +13,7 @@ module.exports = {
   },
   devServer: {
     contentBase: './client/public',
-    hot: true
+    hot: false
   },
   module: { /*the below means that webpack will find jsx and js files and process both through babel*/
     loaders: [{

@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import EgansSexyVoice from './subComponents/EgansSexyVoice';
 
-export default React.createClass({
-
-  render() {
+class GetStartedContainer extends Component {
+  render () {
     return (
-      <h3>I am the registration component</h3>
-      <EgansSexyVoice />
+      <div className = 'GetStarted'>
+        <h3>I am the registration component</h3>
+        <EgansSexyVoice />
+      </div>
     )
   }
+}
 
-});
+const select = (state) => state
+
+export default connect(select)(GetStartedContainer)

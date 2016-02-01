@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ProjectButton from './ProjectButton';
 import Accordian from './Accordian';
 
-export default React.createClass({
-
-  render() {
+export default class extends Component {
+  render () {
     return (
       <div className = "ProjectListEntry">
         <ProjectButton />
@@ -12,5 +11,4 @@ export default React.createClass({
       </div>
     )
   }
-
-})
+}
