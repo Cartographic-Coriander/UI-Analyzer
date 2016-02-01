@@ -30,6 +30,10 @@ const registrationInitialState = {
   password: null
 }
 
+const imageUpdateInitialState = {
+  image: null
+}
+
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
@@ -108,6 +112,16 @@ export function registrationReducer (state = registrationInitialState, action) {
       newState.company = action.user.company;
       newState.email = action.user.emailField;
       newState.password = action.user.passwordField;
+      return newState;
+  }
+  return state;
+}
+
+export function imageUpdateReducer (state = imageUpdateInitialState, action) {
+  var newState = Object.assign({}, state);
+  switch (action.type) {
+    case 'UPDATE_IMAGE' :
+      newState.image = action.image.data;
       return newState;
   }
   return state;
