@@ -5,13 +5,15 @@ import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
-import { buttonReducer, noteReducer, projectReducer } from './redux/reducers';
+import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer } from './redux/reducers';
 
 const reducers = {
   buttonReducer: buttonReducer,
   noteReducer:noteReducer,
   projectReducer: projectReducer,
-  form: formReducer
+  form: formReducer,
+  authReducer: authReducer,
+  logOutReducer: logOutReducer
 };
 const combinedReducers = combineReducers(reducers);
 
