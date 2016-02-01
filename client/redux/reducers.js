@@ -18,16 +18,14 @@ const authenticationInitialState = {
 }
 
 const loginInitialState = {
-  email : null,
-  password : null
+  email : null
 }
 
 const registrationInitialState = {
   firstName: null,
   lastName: null,
   company: null,
-  email : null,
-  password: null
+  email : null
 }
 
 const imageUpdateInitialState = {
@@ -95,9 +93,7 @@ export function loginReducer (state = loginInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'USER_LOGIN':
-      newState.email = action.user.emailField;
-      newState.password = action.user.passwordField;
-      console.log('the new state: ', newState)
+      newState.email = action.email;
       return newState;
   }
   return state;
@@ -105,13 +101,13 @@ export function loginReducer (state = loginInitialState, action) {
 
 export function registrationReducer (state = registrationInitialState, action) {
   var newState = Object.assign({}, state)
+  console.log('logging from registration reduce ',action)
   switch (action.type) {
     case 'REGISTER_USER' :
       newState.firstName = action.user.firstName;
       newState.lastName = action.user.lastName;
       newState.company = action.user.company;
       newState.email = action.user.emailField;
-      newState.password = action.user.passwordField;
       return newState;
   }
   return state;

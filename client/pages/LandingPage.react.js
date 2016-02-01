@@ -8,7 +8,7 @@ import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 import ButtonOne from '../components/landingPageComponents/ButtonOne';
 import ButtonTwo from '../components/landingPageComponents/ButtonTwo';
-import { switchVisibility, authChecker, userLogin, registerUser } from '../redux/actions';
+import { switchVisibility, authChecker, authUser, registerUser, makeUser } from '../redux/actions';
 import LoginForm from '../components/landingPageComponents/LoginForm';
 
 class LandingPage extends Component {
@@ -21,11 +21,11 @@ class LandingPage extends Component {
   }
 
   onLogin (user) {
-    this.props.dispatch(userLogin(user));
+    this.props.dispatch(authUser(user));
   }
 
   onRegister (user) {
-    this.props.dispatch(registerUser(user));
+    this.props.dispatch(makeUser(user));
   }
 
   render () {

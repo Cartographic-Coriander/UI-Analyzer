@@ -14,6 +14,15 @@ var mousetrackingController = require('../controllers/mousetrackingController');
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
+
+  ////////////////////////////////for testing route, no database yet
+  // app.post('/api/users/signin', function (req, res) {
+  //   var fakeToken = 'jejejejeJEJEJEJEJjejejeje';
+  //   req.token = fakeToken;//attach le token fake
+  //   res.writeHead(200, req.token);
+  //   res.end();
+  // })
+  ////////////////////////////end for testing route, no database yet
   app.post('/api/users/signin', auth.authenticate);
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
