@@ -49,3 +49,17 @@ export function authChecker (auth) {
     auth: auth
   }
 }
+
+export function userLogin (user) {
+  return {
+    type : 'USER_LOGIN',
+    user: user
+  }
+}
+
+export function registerUser (user) {
+  return {
+    type: 'REGISTER_USER',
+    user: user
+  }
+}

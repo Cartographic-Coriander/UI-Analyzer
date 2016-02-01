@@ -17,6 +17,19 @@ const authenticationInitialState = {
   authenticated: false
 }
 
+const loginInitialState = {
+  email : null,
+  password : null
+}
+
+const registrationInitialState = {
+  firstName: null,
+  lastName: null,
+  company: null,
+  email : null,
+  password: null
+}
+
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
@@ -72,4 +85,30 @@ export function projectReducer (state = projectInitialState, action) {
       return state;
   }
   return state
+}
+
+export function loginReducer (state = loginInitialState, action) {
+  var newState = Object.assign({}, state)
+  switch (action.type) {
+    case 'USER_LOGIN':
+      newState.email = action.user.emailField;
+      newState.password = action.user.passwordField;
+      console.log('the new state: ', newState)
+      return newState;
+  }
+  return state;
+}
+
+export function registrationReducer (state = registrationInitialState, action) {
+  var newState = Object.assign({}, state)
+  switch (action.type) {
+    case 'REGISTER_USER' :
+      newState.firstName = action.user.firstName;
+      newState.lastName = action.user.lastName;
+      newState.company = action.user.company;
+      newState.email = action.user.emailField;
+      newState.password = action.user.passwordField;
+      return newState;
+  }
+  return state;
 }
