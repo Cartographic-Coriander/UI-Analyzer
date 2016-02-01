@@ -19,12 +19,18 @@ var createTest = function (test) {
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { user_id: 123 }
 // output shall be of the following format:
 // { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 var retrieveTest = function (test) {
-  return model.Test.findOne({
-    where: test
+  return model.Test.findAll({
+    include: [{
+      model: Project,
+      include: [{
+        model: User,
+        where: test
+      }]
+    }]
   })
   .then(function (result) {
     if (result === null) {

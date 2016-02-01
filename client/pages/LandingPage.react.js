@@ -8,16 +8,34 @@ import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 import ButtonOne from '../components/landingPageComponents/ButtonOne';
 import ButtonTwo from '../components/landingPageComponents/ButtonTwo';
+import { switchVisibility, authChecker, userLogin, registerUser } from '../redux/actions';
+import LoginForm from '../components/landingPageComponents/LoginForm';
 
 class LandingPage extends Component {
-  render() {
+  handleClick (button) {
+    this.props.dispatch(switchVisibility(button));
+  }
+
+  getAuthenticated (auth) {
+    this.props.dispatch(authChecker(auth))
+  }
+
+  onLogin (user) {
+    this.props.dispatch(userLogin(user));
+  }
+
+  onRegister (user) {
+    this.props.dispatch(registerUser(user));
+  }
+
+  render () {
     return (
       <div className = "LandingPage">
-        <ButtonOne />
-        <ButtonTwo />
-        <Header />
-        <Login />
-        <Registration />
+        <ButtonOne buttonOne={ this.props.buttonOne } clickHandler={ this.handleClick.bind(this) } />
+        <ButtonTwo buttonTwo={ this.props.buttonTwo } clickHandler={ this.handleClick.bind(this) } />
+        <Header authenticateClick={ this.getAuthenticated.bind(this) } />
+        <LoginForm onSubmit={ this.onLogin.bind(this) } />
+        <Registration onSubmit={ this.onRegister.bind(this) }/>
         <ProductDescription />
         <AboutUs />
         <Footer />
@@ -26,8 +44,6 @@ class LandingPage extends Component {
   }
 }
 
-function select (state) {
-  return state;
-}
+const select = (state) => state
 
 export default connect(select)(LandingPage)

@@ -20,12 +20,26 @@ var createComment = function (comment) {
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, testId: 123 }
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
-  return model.Comment.findOne({
-    where: comment
+  return model.Comment.findAll({
+    include: [{
+      model: User,
+      where: {
+        id: comment.userId
+      },
+      include: [{
+        model: Project,
+        include: [{
+          model: Test,
+          where: {
+            id: comment.testId
+          }
+        }]
+      }]
+    }]
   })
   .then(function (result) {
     if (result === null) {
@@ -42,6 +56,7 @@ var retrieveComment = function (comment) {
 // { id: 123, project_id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 var updateComment = function (comment) {
   var params = { id: comment.id };
+
   return model.Comment.update(comment, {
     where: params
   })

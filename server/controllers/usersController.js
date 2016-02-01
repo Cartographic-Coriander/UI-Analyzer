@@ -18,7 +18,6 @@ var createUser = function (user) {
   params = {
     email: user.email,
     password: user.password,
-    salt: user.salt,
     company: user.company,
     firstname: user.firstname,
     surname: user.surname
@@ -32,7 +31,7 @@ var createUser = function (user) {
     if (!created) {
       throw (new Error ('Error! User already exists!'));
     } else {
-      var returnObject = newUser.set({ password: null, salt: null });
+      var returnObject = newUser.set({ password: null });
       return returnObject;
     }
   });
@@ -61,6 +60,7 @@ var retrieveUser = function (user) {
 // { id: 123 (optional), email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd' (optional), company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 var updateUser = function (user) {
   var params = { email: user.email };
+
   return model.User.update(user, {
     where: params
   })

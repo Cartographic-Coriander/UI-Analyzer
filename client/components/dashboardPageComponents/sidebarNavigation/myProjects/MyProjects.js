@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
 import AddProjectButton from './subComponents/AddProjectButton';
+import { connect } from 'react-redux';
+import { toggleContentComponent } from '../../../../redux/actions';
 
-export default React.createClass({
-
-  render() {
+class MyProjects extends Component {
+  render () {
     return (
-    <div>
+    <div className = "MyProjects">
       <li>
         <ProjectListEntry />
       </li>
@@ -14,5 +15,8 @@ export default React.createClass({
     </div>
     )
   }
+}
 
-});
+const select = (state) => state
+
+export default connect(select)(MyProjects)
