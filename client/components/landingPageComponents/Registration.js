@@ -26,9 +26,7 @@ class SignUpForm extends Component{
     return (
     <div>
       <h3>I am the registration component</h3>
-      {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
       <form onSubmit={ handleSubmit }>
-      {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
         <div>
           <label>first name</label>
           <div>
@@ -58,7 +56,7 @@ class SignUpForm extends Component{
           {emailField.touched && emailField.error && <div>{emailField.error}</div>}
         </div>
         <div>
-          <label>enter email</label>
+          <label>enter password</label>
           <div>
             <input type="text" placeholder="(^^)--password-@~~(^^@_)" {...passwordField}/>
           </div>
