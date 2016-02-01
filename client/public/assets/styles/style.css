@@ -1,3 +1,53 @@
+html *
+{
+   font-size: 1em;
+   color: #000;
+   font-family: Arial;
+   padding: 0;
+   margin: 0;
+   background-color: white;
+}
+
+.headerComponent {
+  background-color: #FF781C;
+  list-style-type: none;
+  margin-top: -50px;
+  padding: 0;
+  overflow: hidden;
+  z-index: 10;
+  height: 100px;
+}
+
+.headerComponent li {
+  float: left;
+  padding: 50px 10px 10px 10px;
+  border-radius: 5px;
+}
+
+.headerComponent li a {
+  display: block;
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.getStartedButton {
+  background-color: #333;
+  width: 100px;
+  height: 20px;
+  border-radius: 5;
+  margin-left: 70%;
+}
+
+.loginButton {
+  background-color: #B64900;
+  width: 100px;
+  height: 20px;
+  border-radius: 5;
+  margin-left: 20px;
+}
+
 .Accordian {
   background-color: yellow;
 }
