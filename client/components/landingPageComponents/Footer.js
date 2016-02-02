@@ -3,7 +3,11 @@ import React from 'react';
 //footer not going to change much, no need state
 const Footer = () => {
   return (
-    <h3>I am the footer component</h3>
+    <div className="footer">
+      <div>
+      <p>© 2016 Cartographic Coriander. All rights reserved.<br/>Made with Love, Camaderie and a Good Sense of Humor</p>
+      </div>
+    </div>
   )
 }
 
