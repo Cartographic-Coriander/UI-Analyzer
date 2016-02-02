@@ -280,13 +280,13 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.token.iss,
-      //   imageId: req.query.imageId
-      // };
-      var params = { user: req.query.user, image: req.query.image }; /* for testing purposes */
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.token.iss,
+        imageId: req.query.imageId
+      };
+      // var params = { user: req.query.user, image: req.query.image }; /* for testing purposes */
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (result) {

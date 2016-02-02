@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getImage () {
-  return axios.get('/api/comment')
+  return axios.get('/api/image')
 }
 
 export function getAuthenticated (user) {
@@ -25,4 +25,9 @@ export function registerUser (user) {
   };
   // console.log('the object to send to databse ',loginUser);
   return axios.post('/api/users/signup', loginUser);
+}
+
+export function sendAllNotes (allNotes) {
+  //this is sending an array of notes {x:x position, y: y position, commentText, commentType}
+  return axios.post('/api/comment', allNotes);
 }

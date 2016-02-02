@@ -1,4 +1,4 @@
-import { getImage, getAuthenticated, registerUser } from './api'
+import { getImage, getAuthenticated, registerUser, sendAllNotes } from './api'
 
 export function switchVisibility (button) {
   return {
@@ -18,12 +18,29 @@ export function inviteTesters () {
   type: 'TOGGLE_INVITE_USER'
 }
 
+///////////////////////note part (adding comments to critique image)
+////////////////////////////////////adds note to array kept in state
 export function addNote (noteObj) {
   return {
     type: 'ADD_NOTE',
     note: noteObj
   }
 }
+
+////////////////////////////////////////sends note array to server
+export function sendNotes (notes) { 
+  return function (dispatch) {
+    return sendAllNotes (notes)
+      .then(function (success) {
+        console.log('successful in sending notes');
+      })
+      .catch(function (error) {
+        throw new Error(error);
+      })
+  }
+}
+
+///////////////////////////////end note part (comment for critiquing)
 
 export function addProject (project) {
   return {
@@ -59,10 +76,13 @@ export function authUser (user) {
         //
         //TOKEN AND OTHER DATA WILL BE ACCESSED BY RESPONSE.BODY <uncomment when needed (when it is set up) >
         //
-        //localStorage.setItem('le token', response.body);
+        //localStorage.setItem('Scrutinize.JWT.token', response.body);
         //
-        localStorage.setItem('le token', response.statusText);
+        localStorage.setItem('Scrutinize.JWT.token', response.statusText);
         dispatch(userLogin(user.emailField));
+      })
+      .catch(function (response) {
+        throw new Error(response);
       })
   }
 }
@@ -81,13 +101,16 @@ export function makeUser (user) {
   return function (dispatch) {
     return registerUser(user)
       .then(
+        function (response) {
         //
         //TOKEN AND OTHER DATA WIL BE ACCESSED BY RESPONSE.BODY <uncomment when needed (when it is set up) >
         //
-        //localStorage.setItem('le token', response.body);
+        //localStorage.setItem('Scrutinize.JWT.token', response.body);
         //
-        function (response) {
         dispatch(signUpUser(user));
+      })
+      .catch(function (error) {
+        throw new Error(error);
       })
   }
 }
@@ -98,7 +121,7 @@ export function signUpUser (user) {
     user: user
   }
 }
-/////////////////////end registering user ang grabbing JWT
+////////////////////////end registering user and grabbing JWT
 
 
 ////////////////////////////for making api call to grab image

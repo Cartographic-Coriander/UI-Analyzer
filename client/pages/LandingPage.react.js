@@ -6,8 +6,6 @@ import Registration from '../components/landingPageComponents/Registration';
 import ProductDescription from '../components/landingPageComponents/ProductDescription';
 import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
-import ButtonOne from '../components/landingPageComponents/ButtonOne';
-import ButtonTwo from '../components/landingPageComponents/ButtonTwo';
 import { switchVisibility, authChecker, authUser, registerUser, makeUser } from '../redux/actions';
 import LoginForm from '../components/landingPageComponents/LoginForm';
 
