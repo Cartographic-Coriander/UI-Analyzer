@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
+import { Navbar } from 'react-bootstrap';
+import { NavItem } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 
 class Header extends Component {
 
   render() {
     return (
-      <div className="headerComponent">
-        <h3>the header component</h3>
-        <button className="getStartedButton" onClick={ () => this.props.authenticateClick('authenticated') }>Get Started</button>
-        <button className="loginButton">Login</button>
-      </div>
+      <Navbar className="navbar-inverse landingPageHeader">
+        <a className="navbar-brand" href="#">Scrutinize</a>
+        <Nav className="navbar-nav navbar-right">
+          <NavItem onClick={ () => this.props.authenticateClick('authenticated') }> Get Started </NavItem>
+          <NavItem> Log In </NavItem>
+        </Nav>
+      </Navbar>
       )
   }
 }; 
 
 export default Header;
-
