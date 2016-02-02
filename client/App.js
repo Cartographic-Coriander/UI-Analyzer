@@ -16,7 +16,6 @@ class App extends Component {
             return (
               <div>
                 <DashboardPage />
-                <AddNotes />
               </div>
             )
           }

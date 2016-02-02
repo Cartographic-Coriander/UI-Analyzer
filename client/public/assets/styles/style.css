@@ -1,4 +1,5 @@
-/*Landing Page Header*/
+/*Landing Page*/
+
 .landingPageHeader {
   margin: 0 0 0 0;
 }
@@ -66,25 +67,22 @@
   -webkit-justify-content: space-around; /* Safari */
   justify-content:         space-around;
 }
-/*Landing Page About Us*/
-
-/*.aboutUs li {
-  display: inline;
-  display: block;
-  height: 100px;
-  width: 300px;
-  border-radius: 5px;
-  background-color: #FF781C;
-  float: left;
+/*Dashboard*/
+.DashboardPage {
+  margin-top: -21px;
+  height: 100%;
+  width: 100%;
 }
-*/
-/*.memberName {
-  margin-top: 50px;
-  padding-left: 25px;
-}*/
 
-
-.Accordian {
+.dashboardNav {
+  float:left;
+  height: 100%;
+  background-color: #2b3e50;;
+}
+.dashboardContent {
+  float:right;
+}
+/*.Accordian {
   background-color: yellow;
 }
 
@@ -109,7 +107,6 @@
 }
 
 .MyDashboardButton {
-  background-color: orange;
 }
 
 .AddProjectButton {
@@ -154,4 +151,4 @@
 
 .hide * {
   display: none;
-}
+}*/

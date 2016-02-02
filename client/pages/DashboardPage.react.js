@@ -3,6 +3,7 @@ import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavi
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
 import { authChecker } from '../redux/actions';
+import { Button } from 'react-bootstrap';
 
 export default class DashboardPage extends Component {
   handleLogout (goodBye) {
@@ -12,10 +13,11 @@ export default class DashboardPage extends Component {
   render () {
     return (
       <div className = "DashboardPage">
-        'This is DashboardPage'
-        <button onClick={ () => { this.handleLogout('leaving') } }>Logout</button>
+        <div className="dashboardNav btn-group-vertical">
+        <Button className="btn-primary" onClick={ () => { this.handleLogout('leaving') } }>Log Out</Button>
         <SidebarNavigation />
-        <Content />
+        </div>
+        <Content className= "dashboardContent"/>
       </div>
     )
   }

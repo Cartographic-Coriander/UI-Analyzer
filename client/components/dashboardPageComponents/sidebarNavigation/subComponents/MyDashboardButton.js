@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleContentComponent } from '../../../../redux/actions';
+import { Button } from 'react-bootstrap';
 
 class MyDashboardButton extends Component {
   handleClick () {
@@ -8,9 +9,9 @@ class MyDashboardButton extends Component {
   }
   render () {
     return (
-      <button className = "MyDashboardButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "MyDashboardButton btn-primary" onClick = { this.handleClick.bind(this) }>
         My Dashboard
-      </button>
+      </Button>
     )
   }
 }
