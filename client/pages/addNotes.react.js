@@ -33,7 +33,12 @@ class AddNotes extends Component {
         text.style.top=cursorY-offset.top+"px";
         text.style.left=cursorX-offset.left+"px";
         text.style.position="absolute";
-        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='yay'><label for='radio1'>YAY</label><input id='radio2' type='radio' name='sentiment' value='nay'><label for='radio2'>NAY</label></br><input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
+        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='yay'><span></span>"+
+                            "<label for='radio1'>YAY</label>"+
+                          "<input id='radio2' type='radio' name='sentiment' value='nay'><p id='invisibleP'></p>"+
+                            "<label for='radio2'>NAY</label></br>"+
+                          "<input id='inputText' type='text' />"+
+                            "<button id='leaveCommentButton' type='button'>send</button>";
         document.getElementById('critiqueImage').appendChild(text);
         document.getElementById('inputText').focus();
         {/*need to attach a function to be run whenever the input button is clicked*/}
