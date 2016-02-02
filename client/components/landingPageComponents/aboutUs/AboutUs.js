@@ -12,10 +12,8 @@ const AboutUs = React.createClass({
 
   render() {
     return (
-      <div>
-        <ul className="aboutUs">
-          {groupMembers}
-        </ul>
+      <div className="aboutUs">
+        <p>{groupMembers}</p>
       </div>
     )
   }

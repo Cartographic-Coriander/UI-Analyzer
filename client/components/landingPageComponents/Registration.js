@@ -27,7 +27,6 @@ class SignUpForm extends Component{
     return (
     <Modal>
     <div>
-      <h3>I am the registration component</h3>
       {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
       <form onSubmit={ handleSubmit }>
       {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}

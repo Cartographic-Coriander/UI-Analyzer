@@ -1,43 +1,62 @@
 /*Landing Page Header*/
-
-.Navbar {
-  margin-top: -50px;
-}
-.Nav {
-  margin-left: 70%;
+.landingPageHeader {
+  margin: 0 0 0 0;
 }
 
-/*.headerComponent li {
-  float: left;
-  padding: 50px 10px 15px 20px;
-  border-radius: 5px;
+.landingPage-Jumbotron {
+  padding: 0 0 0 0;
+  margin: 0 0 30px 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.headerComponent li a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  margin: -25px;
-  padding: 30px 10px 10px 10px;
+.getStartedBtn-lg {
+  margin-left: 80%;
 }
 
-.getStartedButton {
-  background-color: #333;
-  width: 100px;
-  height: 20px;
-  border-radius: 5;
-  margin-left: 70%;
+.landingPageVideo {
+  position:"fixed";
+  width: 100%;
+  height: 100%;
+  z-index: -50;
+  opacity: 0.15;
 }
 
-.loginButton {
-  background-color: #B64900;
-  width: 100px;
-  height: 20px;
-  border-radius: 5;
-  margin-left: 20px;
-}*/
+#landingPageText {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  padding: 10px 10px 10px 10px;
+}
 
+.productExampleContainer {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.productExample {
+  width: 400px;
+  height: 300px;
+}
+
+.aboutUs {
+  margin-top: 30px;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.authorProfile {
+  width: 350px;
+  height: 200px;
+}
 /*Landing Page About Us*/
 
 /*.aboutUs li {
