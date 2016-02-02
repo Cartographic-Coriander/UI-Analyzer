@@ -74,6 +74,9 @@ var init = function() {
   // User:MouseTracking 1:m relationship
   User.hasMany(MouseTracking, { foreignKey: 'userId' });
   MouseTracking.belongsTo(User, { foreignKey: 'userId' });
+  // Image:MouseTracking 1:m relationship
+  Image.hasMany(MouseTracking, { foreignKey: 'imageId' });
+  MouseTracking.belongsTo(Image, { foreignKey: 'imageId' });
 
   sequelize.sync();
   console.log('Database initialized!');

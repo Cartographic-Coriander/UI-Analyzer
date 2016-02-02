@@ -41,9 +41,21 @@ var createMouseTracking = function (mouseTracking) {
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var retrieveMouseTracking = function (mouseTracking) {
   return model.MouseTracking.findAll({
+    where: mouseTracking.image,
     include: [{
-      model: Test,
-      where: mousetracking
+      model: model.User,
+      where: mouseTracking.user,
+      attributes: [ 'id', 'email' ],
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.Test,
+          include: [{
+            model: model.Image,
+            where: { id: mouseTracking.image.imageId }
+          }]
+        }]
+      }]
     }]
   })
   .then(function (result) {

@@ -23,7 +23,18 @@ var createImage = function (image) {
 // [{ id: 123, image: (stringified png file), url: 'abc' }, ..., { id: 123, image: (stringified png file), url: 'abc' }]
 var retrieveImage = function (image) {
   return model.Image.findAll({
-    where: image
+    where: image.test,
+    include: [{
+      model: model.Test,
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.User,
+          where: image.user,
+          attributes: [ 'id', 'email' ]
+        }]
+      }]
+    }]
   })
   .then(function (result) {
     if (result === null) {
