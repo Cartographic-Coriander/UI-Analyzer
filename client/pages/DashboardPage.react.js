@@ -10,7 +10,7 @@ export default class DashboardPage extends Component {
   }
 
   handleClick () {
-    this.props.dispatch(showImagePage());
+    this.props.dispatch(showImagePage('show_image'));
   }
 
   render () {

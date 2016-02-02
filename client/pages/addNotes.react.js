@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import { addNote, sendNotes, getImageForNotes } from '../redux/actions';
+import { addNote, sendNotes, getImageForNotes, showImagePage } from '../redux/actions';
 
 class AddNotes extends Component {
 
-  //for sending array of notes to the server
   handleSendingNotes () {
+    //for sending array of notes to the server
     this.props.dispatch(sendNotes(this.props.notes));
+    //because the button also returns the user to the dashboard page
+    this.props.dispatch(showImagePage('returnToDashboard'));
   }
 
   //this runs on initialization
   componentDidMount() {
-    this.props.dispatch(getImageForNotes())
+    this.props.dispatch(getImageForNotes());
   }
 
   //this is the click handler that runs when the image to critique is clicked on

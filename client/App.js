@@ -14,7 +14,6 @@ class App extends Component {
               case 'not_authenticated':
                 return <LandingPage />;
               case 'authenticated':
-                console.log('whats happening')
                 return <DashboardPage />;
               case 'Image_Appear':
                 return <AddNotes />

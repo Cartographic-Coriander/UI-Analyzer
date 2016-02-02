@@ -144,13 +144,20 @@ function updateImageForNotes (image) {
 ///////////////////////end for making api call to grab image
 
 
-///////////////button handler for show image from dashboard page
-export function showImagePage () {
-  console.log('showimagepage called')
+///////////////button handler for show image to and from dashboard page
+
+export function showImagePage (type) {
+  var auth = 'not_authenticated';
+  if(type === 'show_image') {
+    auth = 'Image_Appear';
+  }
+  if(type === 'returnToDashboard') {
+    auth = 'authenticated';
+  }
   return {
     type: 'AUTHENTICATED_USER',
-    auth: 'Image_Appear'
+    auth: auth
   }
 }
 
-//////////////////////////////////end show image from dashboard
+//////////////////////////////////end show image to and from dashboard
