@@ -57,6 +57,15 @@
   width: 350px;
   height: 200px;
 }
+
+.footer {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
 /*Landing Page About Us*/
 
 /*.aboutUs li {
