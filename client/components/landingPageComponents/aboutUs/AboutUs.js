@@ -13,7 +13,7 @@ const AboutUs = React.createClass({
   render() {
     return (
       <div className="aboutUs">
-        <p>{groupMembers}</p>
+        {groupMembers}
       </div>
     )
   }
