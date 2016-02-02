@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import { addNote, getImageForNotes } from '../redux/actions';
+import { addNote, sendNotes, getImageForNotes } from '../redux/actions';
 
 class AddNotes extends Component {
 
+  //for sending array of notes to the server
+  handleSendingNotes () {
+    this.props.dispatch(sendNotes(this.props.notes));
+  }
+
+  //this runs on initialization
   componentDidMount() {
-    //what to pass in here??
     this.props.dispatch(getImageForNotes())
   }
 
+  //this is the click handler that runs when the image to critique is clicked on
   findMousePosAndAddInput(event) {
     {/*checking to see that the click occurs within the image displayed*/}
     let cursorX = event.pageX;
@@ -38,9 +44,9 @@ class AddNotes extends Component {
             x: cursorX-offset.left,
             y: cursorY-offset.top,
             commentText: critique,
-            commentType: commentType
+            commentType: commentType,
+            id: this.props.notes.length
           }
-          console.log(newCritiqueObj);
           this.props.dispatch(addNote(newCritiqueObj));
           {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
           setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
@@ -58,48 +64,29 @@ class AddNotes extends Component {
       backgroundSize: 'cover'
     };
 
+    {/*each note is mapped to one createItem upon rendering*/}
     let createItem = function (comment) {
-      return <Note key={ comment.commentText } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />;
+      {/*key that has been chosen is NOT OPTIMAL. if the comments have exactly the same y values, the latest will not be posted. ideally, it would be something totally unique*/}
+      return <Note key={ comment.id } x={ comment.x } y={ comment.y } commentText={ comment.commentText } commentType={ comment.commentType } />;
     };
-    return <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>
-      {/*when hooked up to redux, the line below will be changing via props*/}
-      {this.props.notes.map(createItem)}
-    </div>;
+    return (
+      <div>
+        <div id='critiqueImage' style={divStyle} onClick={this.findMousePosAndAddInput.bind(this)}>
+          {/*when hooked up to redux, the line below will be changing via props*/}
+          {this.props.notes.map(createItem)}
+       </div>
+        <button onClick={ this.handleSendingNotes.bind(this) }>COMPLETE-O</button>
+      </div>
+    )
   }
 
 }
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-I believe the commented out setup below will work for getting notes data from DB every time mapStatToProps is called
-just replace current mapStateToProps with the commented out one below
----for testing with DB---
-this also means that critique commment object above should be sent to the database, too :)  (not written yet)
-
-function getNotes(dispatch) {
-  $.ajax({
-    method: 'GET',
-    url: 'INSERT URL FOR GETTING NOTES HERE',
-    dataType: 'json'
-  }).success(function (data) {
-    return dispatch({
-      type: 'ADD_NOTE',
-      note: data
-    })
-  })
-}
-
-function mapStateToProps(dispatch) {
-  return {
-    notes : () => getNotes(dispatch)
-  };
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 function mapStateToProps(state) {
   return {
     notes: state.noteReducer.notes,
     image: state.imageUpdateReducer.image
   }
-}//return all the state (for now....)
+}
 
 export default connect(mapStateToProps)(AddNotes);
