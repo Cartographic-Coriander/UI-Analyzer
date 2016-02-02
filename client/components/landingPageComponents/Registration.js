@@ -26,10 +26,7 @@ class SignUpForm extends Component{
   const { fields: { firstName, lastName, company, emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
     <Modal>
-    <div>
-      {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
       <form onSubmit={ handleSubmit }>
-      {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
         <div>
           <label>first name</label>
           <div>
@@ -71,7 +68,6 @@ class SignUpForm extends Component{
           </button>
         </div>
       </form>
-    </div>
     </Modal>
     )
   }

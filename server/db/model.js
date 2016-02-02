@@ -3,7 +3,7 @@ var sequelize = new Sequelize(process.env.ENV_DB || 'uiAnalyzer', 'root', 'passw
 
 var User = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  email: { type: Sequelize.STRING, isEmail: true, unique: true, notNull: true, notEmpty: true },
   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   firstname: { type: Sequelize.STRING },
   surname: { type: Sequelize.STRING },
@@ -49,20 +49,34 @@ var ProjectUser = sequelize.define('project_user', {
   role: { type: Sequelize.STRING, notNull: true, notEmpty: true },
 }, { timestamps: false });
 
-var MouseTrackingTest = sequelize.define('mousetracking_test', {
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-}, { timestamps: false });
+// var MouseTrackingTest = sequelize.define('mousetracking_test', {
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+// }, { timestamps: false });
 
 var init = function() {
   User.belongsToMany(Project, { through: 'project_user', foreignKey: 'user_id' });
   Project.belongsToMany(User, { through: 'project_user', foreignKey: 'project_id' });
-  MouseTracking.belongsToMany(Test, { through: 'mousetracking_test', foreignKey: 'mousetracking_id' });
-  Test.belongsToMany(MouseTracking, { through: 'mousetracking_test', foreignKey: 'test_id' });
-  MouseTracking.belongsTo(User, { foreignKey: 'user_id' });
-  Image.belongsTo(Test, { foreignKey: 'test_id' });
-  Comment.belongsTo(User, { foreignKey: 'user_id' });
-  Test.belongsTo(Project, { foreignKey: 'project_id' });
+  // MouseTracking.belongsToMany(Test, { through: 'mousetracking_test', foreignKey: 'mousetracking_id' });
+  // Test.belongsToMany(MouseTracking, { through: 'mousetracking_test', foreignKey: 'test_id' });
+
+  // Project:Test 1:m relationship
+  Test.belongsTo(Project, { foreignKey: 'projectId' });
+  Project.hasMany(Test, { foreignKey: 'projectId' });
+  // Test:Image 1:m relationship
+  Test.hasMany(Image, { foreignKey: 'testId' });
+  Image.belongsTo(Test, { foreignKey: 'testId' });
+  // User:Comment 1:m relationship
+  User.hasMany(Comment, { foreignKey: 'userId' });
+  Comment.belongsTo(User, { foreignKey: 'userId' });
+  // Image:Comment 1:m relationship
+  Image.hasMany(Comment, { foreignKey: 'imageId' });
+  Comment.belongsTo(Image, { foreignKey: 'imageId' });
+  // User:MouseTracking 1:m relationship
+  User.hasMany(MouseTracking, { foreignKey: 'userId' });
+  MouseTracking.belongsTo(User, { foreignKey: 'userId' });
+
   sequelize.sync();
+  console.log('Database initialized!');
 };
 
 module.exports = {
@@ -74,6 +88,6 @@ module.exports = {
   Image: Image,
   MouseTracking: MouseTracking,
   ProjectUser: ProjectUser,
-  MouseTrackingTest: MouseTrackingTest,
+  // MouseTrackingTest: MouseTrackingTest,
   init: init
 };

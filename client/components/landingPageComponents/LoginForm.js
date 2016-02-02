@@ -17,9 +17,7 @@ const validate = values => {
 
 class LoginForm extends Component{
   render () {
-  {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
   const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
-  {/*HANDLESUBMIT NEEDS TO BE DEFINED AND PASSED IN FROM PARENT CONTAINER*/}
     return (
     <Modal>
       <form onSubmit={ handleSubmit }>

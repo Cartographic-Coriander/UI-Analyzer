@@ -14,21 +14,27 @@ var mousetrackingController = require('../controllers/mousetrackingController');
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
-  app.post('/api/users/signin', auth.authenticate, function (req, res) {
-    res.writeHead(200, req.token);
-    res.end();
-  });
 
-  app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
-    res.writeHead(200, req.token);
-    res.end();
-  });
+  ////////////////////////////////for testing route, no database yet
+  // app.post('/api/users/signin', function (req, res) {
+  //   var fakeToken = 'jejejejeJEJEJEJEJjejejeje';
+  //   req.token = fakeToken;//attach le token fake
+  //   res.writeHead(200, req.token);
+  //   res.end();
+  // })
+  ////////////////////////////end for testing route, no database yet
+  app.post('/api/users/signin', auth.authenticate);
+
+  app.post('/api/users/signup', auth.createUser, auth.authenticate);
 
   app.get('/signOut', auth.signout);
 
   app.route('/api/project')
-    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
-      var params = { user_id: req.decoded };
+    // retrieves array of project objects
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = { id: req.decoded };
+      // var params = req.query /* for testing purposes */
 
       projectsController.retrieveProject(params)
         .then(function (result) {
@@ -39,7 +45,7 @@ module.exports = function (app, express) {
           res.end('No projects found.');
         });
     })
-    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .post(auth.decode, function (req, res) {
       var params = { user_id: req.decoded, name: req.body.name, description: req.body.description };
 
       projectsController.createProject(params)
@@ -51,7 +57,7 @@ module.exports = function (app, express) {
           res.end('Project already exists');
         });
     })
-    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .put(auth.decode, function (req, res) {
       var params = { id: req.body.id, name: req.body.name, description: req.body.description };
 
       projectsController.updateProject(params)
@@ -63,7 +69,7 @@ module.exports = function (app, express) {
           res.end('Project PUT Error!');
         });
     })
-    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .delete(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       projectsController.deleteProject(params)
@@ -77,8 +83,13 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/test')
-    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
-      var params = { id: req.decoded };
+    // GET request input should be of the following format:
+    // 
+    // .get(auth.decode, function (req, res) {
+    .get(function (req, res) {
+      // var params = { id: req.decoded };
+      // var params = { user: { id: req.query.user }, project: { projectId: req.query.project } }; 
+      console.log(req.query, params)
 
       testsController.retrieveTest(params)
         .then(function (result) {
@@ -89,7 +100,7 @@ module.exports = function (app, express) {
           res.end('Test GET Error!');
         });
     })
-    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .post(auth.decode, function (req, res) {
       var params = { project_id: req.body.project_id, name: req.body.name, url: req.body.url, prompt: req.body.prompt };
 
       testsController.createTest(params)
@@ -101,7 +112,7 @@ module.exports = function (app, express) {
           res.end('Test POST Error!');
         });
     })
-    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .put(auth.decode, function (req, res) {
       var params = { id: req.body.id, name: req.body.name, url: req.body.url, prompt: req.body.prompt };
 
       testsController.updateTest(params)
@@ -113,7 +124,7 @@ module.exports = function (app, express) {
           res.end('Test PUT Error!');
         });
     })
-    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .delete(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       testController.deleteTest(params)
@@ -127,11 +138,21 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/comment')
-    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
-      var params = { userId: req.decoded, testId: req.body.testId };
+    /*---------------------------to be removed
+    //uncomment this part to see the image below show up on page reload
+    //this commented part is the dummiest of dummy data
+    // .get( function (req, res) {
+    //   console.log('/api/comment path being hit');
+    //   res.send('http://orig04.deviantart.net/4055/f/2015/040/b/6/rebel_symbol_wallpaper_at_1920x1080_by_chris_alvarez-d8hf47u.jpg')
+    // })
+    ----------------------end to be removed*/
+    // .get(auth.decode, function (req, res) {
+    .get(function (req, res) {
+      // var params = { userId: req.decoded, testId: req.query.testId };
+      var params = { userId: req.query.user, testId: req.query.test };
 
-      testController.retrieveComment(params)
-        .then(function (params) {
+      commentsController.retrieveComment(params)
+        .then(function (result) {
           res.json(result);
         })
         .catch(function (error) {
@@ -139,7 +160,7 @@ module.exports = function (app, express) {
           res.end('Test GET Error!');
         });
     })
-    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .post(auth.decode, function (req, res) {
       var params = { project_id: req.body.project_id, commentType: req.body.commentType, commentText: req.body.commentText, x: req.body.x, y: req.body.y };
 
       commentsController.createComment(params)
@@ -151,7 +172,7 @@ module.exports = function (app, express) {
           res.end('Test POST Error!');
         });
     })
-    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .put(auth.decode, function (req, res) {
       var params = { id: req.body.id, commentType: req.body.commentType, commentText: req.body.commentText, x: req.body.x, y: req.body.y };
 
       commentsController.updateComment(params)
@@ -163,7 +184,7 @@ module.exports = function (app, express) {
           res.end('Test PUT Error!');
         });
     })
-    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .delete(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       commentsController.deleteComment(params)
@@ -177,7 +198,7 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/image')
-    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .get(auth.decode, function (req, res) {
       var params = { test_id: req.body.test_id };
 
       imagesController.retrieveImage(params)
@@ -189,7 +210,7 @@ module.exports = function (app, express) {
           res.end('Image GET Error!');
         });
     })
-    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .post(auth.decode, function (req, res) {
       var params = { test_id: req.body.test_id, image: req.body.image, url: req.body.url };
 
       imagesController.createImage(params)
@@ -201,7 +222,7 @@ module.exports = function (app, express) {
           res.end('Image POST Error!');
         });
     })
-    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .put(auth.decode, function (req, res) {
       var params = { id: req.body.id, test_id: req.body.test_id, image: req.body.image, url: req.body.url };
 
       imagesController.updateImage(params)
@@ -213,7 +234,7 @@ module.exports = function (app, express) {
           res.end('Image PUT Error!');
         });
     })
-    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .delete(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       imagesController.deleteImage(params)
@@ -227,7 +248,7 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    .get(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .get(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       mousetrackingController.retrieveMouseTracking(params)
@@ -239,7 +260,7 @@ module.exports = function (app, express) {
           res.end('Mousetracking GET Error!');
         });
     })
-    .post(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .post(auth.decode, function (req, res) {
       var params = { movement: req.body.movement, clicks: req.body.clicks, urlchange: req.body.urlchange };
 
       mousetrackingController.retrieveMouseTracking(params)
@@ -251,7 +272,7 @@ module.exports = function (app, express) {
           res.end('Mousetracking POST Error!');
         });
     })
-    .put(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .put(auth.decode, function (req, res) {
       var params = { id: req.body.id, movement: req.body.movement, clicks: req.body.clicks, urlchange: req.body.urlchange };
 
       mousetrackingController.updateTracking(params)
@@ -263,7 +284,7 @@ module.exports = function (app, express) {
           res.end('Mousetracking PUT Error!');
         });
     })
-    .delete(auth.ensureLoggedIn('/signin'), auth.decode, function (req, res) {
+    .delete(auth.decode, function (req, res) {
       var params = { id: req.body.id };
 
       mousetrackingController.deleteMouseTracking(params)

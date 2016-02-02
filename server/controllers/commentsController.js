@@ -22,21 +22,18 @@ var createComment = function (comment) {
 // input should be of the following format:
 // { userId: 123, testId: 123 }
 // output shall be of the following format:
-// { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { id: 123, user_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
+  console.log('input params', comment)
   return model.Comment.findAll({
     include: [{
-      model: User,
-      where: {
-        id: comment.userId
-      },
+      model: model.User,
+      where: { id: comment.userId },
+      attributes: [ 'id', 'email' ],
       include: [{
-        model: Project,
+        model: model.Project,
         include: [{
-          model: Test,
-          where: {
-            id: comment.testId
-          }
+          model: model.Test
         }]
       }]
     }]
