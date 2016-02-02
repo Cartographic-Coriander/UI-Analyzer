@@ -7,7 +7,7 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { test_id: 123, image: (stringified png file), url: 'abc' }
+// { userId: 123, testId: 123, image: (stringified png file), url: 'abc' }
 // output shall be of the following format:
 // {id: 123, image: (stringified png file), url: 'abc' }
 var createImage = function (image) {
@@ -18,19 +18,19 @@ var createImage = function (image) {
 };
 
 // input should be of the following format:
-// { test_id: 123 }
+// { testId: 123, userId: 123 }
 // output shall be of the following format:
 // [{ id: 123, image: (stringified png file), url: 'abc' }, ..., { id: 123, image: (stringified png file), url: 'abc' }]
 var retrieveImage = function (image) {
   return model.Image.findAll({
-    where: image.test,
+    where: { testId: image.testId },
     include: [{
       model: model.Test,
       include: [{
         model: model.Project,
         include: [{
           model: model.User,
-          where: image.user,
+          where: { id: image.userId },
           attributes: [ 'id', 'email' ]
         }]
       }]

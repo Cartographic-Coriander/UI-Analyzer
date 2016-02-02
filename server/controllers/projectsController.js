@@ -7,7 +7,7 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { user_id: 123, name: 'abc', description: 'abc' }
+// { userId: 123, name: 'abc', description: 'abc' }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var createProject = function (project) {
@@ -18,31 +18,31 @@ var createProject = function (project) {
 
   return model.sequelize.transaction(function (t) {
     return model.Project.create(params, { transaction: t })
-    .then(function (newProject) {
-      var params = { user_id: project.user_id, project_id: newProject.get('id'), role: 'Owner' };
+      .then(function (newProject) {
+        var params = { userId: project.userId, projectId: newProject.get('id'), role: 'owner' };
 
-      return model.ProjectUser.create(params, { transaction: t })
-      .then(function (projectUser) {
-        if (projectUser === null) {
-          throw (new Error ('Error! Unable to create project_user join!'));
-        } else {
-          return newProject;
-        }
+        return model.ProjectUser.create(params, { transaction: t })
+          .then(function (projectUser) {
+            if (projectUser === null) {
+              throw (new Error ('Error! Unable to create project_user join!'));
+            } else {
+              return newProject;
+            }
+          });
       });
-    });
   });
 };
 
 // input should be of the following format:
-// { user_id: 123 }
+// { userId: 123 }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
   console.log('project:', project)
   return model.Project.findAll({
     include: [{
-      where: project,
       model: model.User,
+      where: { id: project.userId },
       attributes: [ 'id', 'email' ]
     }]
   })

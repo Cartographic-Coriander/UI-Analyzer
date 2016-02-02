@@ -14,15 +14,6 @@ var mousetrackingController = require('../controllers/mousetrackingController');
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
-
-  ////////////////////////////////for testing route, no database yet
-  // app.post('/api/users/signin', function (req, res) {
-  //   var fakeToken = 'jejejejeJEJEJEJEJjejejeje';
-  //   req.token = fakeToken;//attach le token fake
-  //   res.writeHead(200, req.token);
-  //   res.end();
-  // })
-  ////////////////////////////end for testing route, no database yet
   app.post('/api/users/signin', auth.authenticate);
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
@@ -33,7 +24,7 @@ module.exports = function (app, express) {
     // retrieves array of project objects
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
-      var params = { id: req.decoded.token.iss };
+      var params = { userId: req.decoded.token.iss };
       // var params = req.query /* for testing purposes */
 
       projectsController.retrieveProject(params)
@@ -94,7 +85,7 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        user: req.decoded,
+        userId: req.decoded.token.iss,
         projectId: req.query.projectId
       };
       // var params = { user: { id: req.query.user }, project: { projectId: req.query.project } }; /* for testing purposes */
@@ -160,7 +151,7 @@ module.exports = function (app, express) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.token.iss,
-        image: { imageId: req.query.testId }
+        imageId: req.query.imageId
       };
       // var params = { user: { id: req.query.user }, imageId: req.query.image, imageId: { id: req.query.image } }; /* for testing purposes */
 
@@ -227,8 +218,8 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        user: { id: req.decoded.token.iss },
-        test: { testId: req.body.testId }
+        userId: req.decoded.token.iss,
+        testId: req.body.testId
       };
       // var params = { user: { id: req.query.user }, test: { testId: req.query.test } }; /* for testing purposes */
 
@@ -261,7 +252,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
       var params = {
         id: req.body.id,
-        testId: req.body.test_id,
+        testId: req.body.testId,
         image: req.body.image,
         url: req.body.url
       };
@@ -291,8 +282,11 @@ module.exports = function (app, express) {
   app.route('/api/mousetracking')
     // .get(auth.decode, function (req, res) {
     .get(function (req, res) { /* for testing purposes */
-      // var params = { id: req.body.id };
-      var params = { user: { id: req.query.user }, imageId: req.query.image, image: { id: req.query.image } }; /* for testing purposes */
+      // var params = {
+      //   userId: req.decoded.token.iss,
+      //   imageId: req.query.imageId
+      // };
+      var params = { user: req.query.user, image: req.query.image }; /* for testing purposes */
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (result) {
@@ -306,6 +300,7 @@ module.exports = function (app, express) {
     .post(auth.decode, function (req, res) {
       var params = {
         userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
         movement: req.body.movement,
         clicks: req.body.clicks,
         urlchange: req.body.urlchange

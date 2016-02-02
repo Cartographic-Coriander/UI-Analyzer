@@ -19,18 +19,18 @@ var createTest = function (test) {
 };
 
 // input should be of the following format:
-// { id: 123 ( user id ), projectId: 123 }
+// { userId: 123 ( user id ), projectId: 123 }
 // output shall be of the following format:
 // { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
-var retrieveTest = function (user) {
+var retrieveTest = function (test) {
   return model.Test.findAll({
-    where: user.project,
+    where: { projectId: test.projectId },
     include: [{
       model: model.Project,
       include: [{
         attributes: ['id', 'email'],
         model: model.User,
-        where: user.user
+        where: { id: test.userId }
       }]
     }]
   })

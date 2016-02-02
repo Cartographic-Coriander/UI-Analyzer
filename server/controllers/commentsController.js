@@ -9,7 +9,7 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { userId: 123, imageId: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var createComment = function (comment) {
@@ -25,10 +25,10 @@ var createComment = function (comment) {
 // { id: 123, user_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
   return model.Comment.findAll({
-    where: comment.image,
+    where: { imageId: comment.imageId },
     include: [{
       model: model.User,
-      where: comment.user,
+      where: { id: comment.userId },
       attributes: [ 'id', 'email' ],
       include: [{
         model: model.Project,
@@ -36,7 +36,7 @@ var retrieveComment = function (comment) {
           model: model.Test,
           include: [{
             model: model.Image,
-            where: { id: comment.image.imageId }
+            where: { id: comment.imageId }
           }]
         }]
       }]
