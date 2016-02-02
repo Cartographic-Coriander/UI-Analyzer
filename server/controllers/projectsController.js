@@ -38,10 +38,12 @@ var createProject = function (project) {
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
+  console.log('project:', project)
   return model.Project.findAll({
     include: [{
-      model: ProjectUser,
-      where: [ project ]
+      where: project,
+      model: model.User,
+      attributes: [ 'id', 'email' ]
     }]
   })
   .then(function (result) {

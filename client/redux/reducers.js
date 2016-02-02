@@ -17,6 +17,21 @@ const authenticationInitialState = {
   authenticated: false
 }
 
+const loginInitialState = {
+  email : null
+}
+
+const registrationInitialState = {
+  firstName: null,
+  lastName: null,
+  company: null,
+  email : null
+}
+
+const imageUpdateInitialState = {
+  image: null
+}
+
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
@@ -72,4 +87,38 @@ export function projectReducer (state = projectInitialState, action) {
       return state;
   }
   return state
+}
+
+export function loginReducer (state = loginInitialState, action) {
+  var newState = Object.assign({}, state)
+  switch (action.type) {
+    case 'USER_LOGIN':
+      newState.email = action.email;
+      return newState;
+  }
+  return state;
+}
+
+export function registrationReducer (state = registrationInitialState, action) {
+  var newState = Object.assign({}, state)
+  console.log('logging from registration reduce ',action)
+  switch (action.type) {
+    case 'REGISTER_USER' :
+      newState.firstName = action.user.firstName;
+      newState.lastName = action.user.lastName;
+      newState.company = action.user.company;
+      newState.email = action.user.emailField;
+      return newState;
+  }
+  return state;
+}
+
+export function imageUpdateReducer (state = imageUpdateInitialState, action) {
+  var newState = Object.assign({}, state);
+  switch (action.type) {
+    case 'UPDATE_IMAGE' :
+      newState.image = action.image.data;
+      return newState;
+  }
+  return state;
 }
