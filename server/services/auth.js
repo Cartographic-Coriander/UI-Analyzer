@@ -3,13 +3,14 @@
 
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-var ensureAuth= require("connect-ensure-login");
+var ensureAuth = require("connect-ensure-login");
 var bcrypt = require("bcrypt-node");
 var jwt = require('jwt-simple');
+var moment = require('moment');
 var Promise = require("bluebird");
 var usersController = require("../controllers/usersController.js");
 
-var tokenSecret = 'shhhh baby es ok';
+var tokenSecret = 'shhhh bby es ok';
 
 // this creates our local strategy
 passport.use(new LocalStrategy({ usernameField: 'email' },
@@ -56,7 +57,7 @@ passport.deserializeUser(function (email, cb) {
     .then (function (user) {
       var data = {
         id: user.id,
-        username: user.username,
+        email: user.email,
       };
       // data is set to request.user
       cb(null, data);
@@ -67,6 +68,7 @@ passport.deserializeUser(function (email, cb) {
 });
 
 var authenticate = function(req, res, next) {
+  //user has authenticated correctly thus we create a JWT token
   passport.authenticate('local',
     function(err, user, info) {
       if (err) {
@@ -76,18 +78,41 @@ var authenticate = function(req, res, next) {
         return res.json(401, { error: 'message' });
       }
 
-      console.log('user:', user, 'info:', info)
+      user.password = null;
 
-      //user has authenticated correctly thus we create a JWT token
-      req.token = jwt.encode({ username: user.id }, tokenSecret);
-      next()
+      var expires = moment().add('days', 7).valueOf();
+      var token = jwt.encode({
+        iss: user.id,
+        exp: expires
+      }, tokenSecret);
+
+      res.json({
+        token : token,
+        expires: expires,
+        user: user.toJSON()
+      });
     })(req, res, next);
   }
 
 var decode = function(req, res, next) {
-    req.decoded = jwt.decode(req.body.token, tokenSecret);
-    console.log('req token!!!!!!!!!!!!!!!!',req.decoded);
-    next();
+  var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
+
+  try {
+    try {
+      var decoded = jwt.decode(req.headers.token, tokenSecret);
+    } finally {
+      if (decoded.exp <= Date.now()) {
+        throw new Error ('[Error: Token expired]')
+      }
+    }
+  } catch (e) {
+    console.log('Error!:', e);
+    res.end('Error!', 400);
+  }
+
+  console.log(decoded);
+  req.decoded = decoded;
+  next();
 }
 
 // inputs:
