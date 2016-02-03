@@ -14,7 +14,12 @@ const projectInitialState = {
 }
 
 const authenticationInitialState = {
-  authenticated: false
+  appState: 'not_authenticated'
+}
+
+const modalInitialState = {
+  login: false,
+  getStarted: false
 }
 
 const loginInitialState = {
@@ -32,14 +37,28 @@ const imageUpdateInitialState = {
   image: null
 }
 
+const initialImageState = {
+  appState: 'not_authenticated'
+}
+
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'AUTHENTICATED_USER':
-      newState.authenticated = action.auth;
+      newState.appState = action.auth;
       return newState;
   }
   return state
+}
+
+export function showImageReducer (state = initialImageState, action) {
+  var newState = Object.assign({}, state);
+  switch (action.type) {
+    case 'SHOW_TEST_IMAGE':
+      newState.appState = action.auth;
+      return newState;
+  }
+  return state;
 }
 
 export function buttonReducer (state = buttonInitialState, action) {
@@ -118,6 +137,32 @@ export function imageUpdateReducer (state = imageUpdateInitialState, action) {
   switch (action.type) {
     case 'UPDATE_IMAGE' :
       newState.image = action.image.data;
+      return newState;
+  }
+  return state;
+}
+
+export function modalStateReducer (state = modalInitialState, action) {
+  var newState = Object.assign({}, state);
+  console.log(action)
+  switch(action.type) {
+    case 'SHOW_LOGIN':
+      newState.login = true;
+      newState.getStarted = false;
+      return newState;
+    case 'SHOW_GET_STARTED':
+      newState.getStarted = true;
+      newState.login = false;
+      return newState;
+    case 'HIDE_LOGIN':
+      newState.login = false;
+      return newState;
+    case 'HIDE_GET_STARTED':
+      newState.getStarted = false;
+      return newState;
+    case 'MODAL_RESET':
+      newState.login = false;
+      newState.getStarted = false;
       return newState;
   }
   return state;

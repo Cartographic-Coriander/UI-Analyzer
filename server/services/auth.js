@@ -69,6 +69,7 @@ passport.deserializeUser(function (email, cb) {
 
 var authenticate = function(req, res, next) {
   //user has authenticated correctly thus we create a JWT token
+  console.log('wheres my JWT')
   passport.authenticate('local',
     function(err, user, info) {
       if (err) {
@@ -92,7 +93,7 @@ var authenticate = function(req, res, next) {
         user: user.toJSON()
       });
     })(req, res, next);
-  }
+  };
 
 var decode = function(req, res, next) {
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
@@ -102,18 +103,18 @@ var decode = function(req, res, next) {
       var decoded = jwt.decode(req.headers.token, tokenSecret);
     } finally {
       if (decoded.exp <= Date.now()) {
-        throw new Error ('[Error: Token expired]')
+        throw new Error ('[Error: Token expired]');
       }
     }
   } catch (e) {
     console.log('Error!:', e);
-    res.end('Error!', 400);
+    res.status(400).end('Error! Unable to decode token.');
   }
 
   console.log(decoded);
   req.decoded = decoded;
   next();
-}
+};
 
 // inputs:
   // in data field:
@@ -145,7 +146,7 @@ var createUser = function (req, res, next) {
     })
     .catch(function (error) {
       console.log (error);
-      return next();
+      res.status(409).end('Username already exists!');
     });
 };
 
@@ -159,8 +160,6 @@ module.exports = {
   passport: passport,
   authenticate: authenticate,
   decode: decode,
-  // ensuredLoggedIn is created by the guy who made Passport
-  // It's not ideal for checking REST API, but it works.
   ensureLoggedIn: ensureAuth.ensureLoggedIn,
   ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
   createUser: createUser,
