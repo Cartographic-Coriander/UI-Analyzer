@@ -69,6 +69,7 @@ passport.deserializeUser(function (email, cb) {
 
 var authenticate = function(req, res, next) {
   //user has authenticated correctly thus we create a JWT token
+  console.log('wheres my JWT')
   passport.authenticate('local',
     function(err, user, info) {
       if (err) {
@@ -145,7 +146,7 @@ var createUser = function (req, res, next) {
     })
     .catch(function (error) {
       console.log (error);
-      return next();
+      res.status(400).end();
     });
 };
 

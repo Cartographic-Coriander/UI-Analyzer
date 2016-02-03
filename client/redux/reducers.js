@@ -17,6 +17,11 @@ const authenticationInitialState = {
   appState: 'not_authenticated'
 }
 
+const modalInitialState = {
+  login: false,
+  getStarted: false
+}
+
 const loginInitialState = {
   email : null
 }
@@ -132,6 +137,25 @@ export function imageUpdateReducer (state = imageUpdateInitialState, action) {
   switch (action.type) {
     case 'UPDATE_IMAGE' :
       newState.image = action.image.data;
+      return newState;
+  }
+  return state;
+}
+
+export function modalStateReducer (state = modalInitialState, action) {
+  var newState = Object.assign({}, state);
+  switch(action.type) {
+    case 'SHOW_LOGIN':
+      newState.login = true;
+      return newState;
+    case 'SHOW_GET_STARTED':
+      newState.getStarted = true;
+      return newState;
+    case 'HIDE_LOGIN':
+      newState.login = false;
+      return newState;
+    case 'HIDE_GET_STARTED':
+      newState.getStarted = false;
       return newState;
   }
   return state;
