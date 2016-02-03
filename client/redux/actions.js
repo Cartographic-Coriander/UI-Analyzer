@@ -1,4 +1,4 @@
-import { getImage, getAuthenticated, registerUser, sendAllNotes } from './api'
+import { getImage, getAuthenticated, registerUser, sendAllNotes, getStarted, logIn } from './api'
 
 export function switchVisibility (button) {
   return {
@@ -17,6 +17,21 @@ export function toggleContentComponent (targetComponent) {
 export function inviteTesters () {
   type: 'TOGGLE_INVITE_USER'
 }
+
+//////////////////////////////modal state
+export function showLoginModal () {
+  return {
+    type: 'SHOW_LOGIN',
+    
+  }
+}
+
+
+
+
+
+//////////////////////////end modal state
+
 
 ///////////////////////note part (adding comments to critique image)
 ////////////////////////////////////adds note to array kept in state
@@ -42,6 +57,8 @@ export function sendNotes (notes) {
 
 ///////////////////////////////end note part (comment for critiquing)
 
+
+
 export function addProject (project) {
   return {
     type: 'ADD_PROJECT',
@@ -56,17 +73,58 @@ export function confirmProject (project) {
   }
 }
 
+
+///////////this below is being called from landing page get started button, may have to change name later, or attach to submit button in modal
 export function authChecker (auth) {
-  if (auth === 'authenticated') {
-    auth = 'authenticated';
-  } else {
-    auth = 'not_authenticated';
-  }
-  return {
+  var userAuthObject = {
     type: 'AUTHENTICATED_USER',
-    auth: auth
+    auth: 'not_authenticated'
+  }
+  if (auth === 'authenticate_me') {
+    return function (dispatch) {
+      //request from landing page to make new user, make request to db
+      return getStarted ()
+        .then(function (response) {
+          localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+          //we have set token in localstorage, set auth to authenticated and dispatch
+          userAuthObject.auth = 'authenticated';
+          dispatch(userAuthObject)
+        }, function (error) {
+          //handling errors
+          console.log('error :', error);
+          //dispatch not authenticated auth status
+          dispatch(userAuthObject);
+        })
+      }
+  } else {
+      return function (dispatch) {
+      //dispatch not authenticated auth status
+      dispatch(userAuthObject);
+    }
   }
 }
+
+///////////////this below is being called from landin page login button, may have to change to be called from form in modal later
+export function loggingIn () {
+  var userAuthObject = {
+    type: 'AUTHENTICATED_USER',
+    auth : 'not_authenticated'
+  }
+  return function (dispatch) {
+    logIn()
+      .then(function (response) {
+        localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+        //we have set token in localstorage, set auth to authenticated and dispatch
+        userAuthObject.auth = 'authenticated';
+        dispatch(userAuthObject);
+      }, function (error) {
+        console.log('error ', error);
+        dispatch(userAuthObject);
+      })
+  }
+}
+
+
 
 ///////////////for making api call to auth and grab user JWT
 export function authUser (user) {
@@ -94,6 +152,7 @@ export function userLogin (email) {
   }
 }
 ///////////end for making api call to auth and grab user JWT
+
 
 
 ////////////////////////registering user and getting user JWT
@@ -124,6 +183,7 @@ export function signUpUser (user) {
 ////////////////////////end registering user and grabbing JWT
 
 
+
 ////////////////////////////for making api call to grab image
 export function getImageForNotes () {
   return function (dispatch) {
@@ -142,6 +202,8 @@ function updateImageForNotes (image) {
   }
 }
 ///////////////////////end for making api call to grab image
+
+
 
 
 ///////////////button handler for show image to and from dashboard page
