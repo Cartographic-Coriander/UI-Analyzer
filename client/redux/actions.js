@@ -150,6 +150,7 @@ export function authUser (user) {
       }, function (error) {
         throw new Error(error)
       })
+  }
 }
 
 export function userLogin (email) {
@@ -166,14 +167,13 @@ export function userLogin (email) {
 export function makeUser (user) {
   return function (dispatch) {
     return registerUser(user)
-      .then(
-        function (response) {
-        localStorage.setItem('Scrutinize.JWT.token', response.statusText);
-        dispatch(signUpUser(user));
-        dispatch({
-          type: 'AUTHENTICATED_USER',
-          auth: 'authenticated'
-        })
+      .then(function (response) {
+          localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+          dispatch(signUpUser(user));
+          dispatch({
+            type: 'AUTHENTICATED_USER',
+            auth: 'authenticated'
+          })
       }, function (error) {
         throw new Error(error);
       })
