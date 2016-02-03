@@ -7,7 +7,7 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { test_id: 123, image: (stringified png file), url: 'abc' }
+// { userId: 123, testId: 123, image: (stringified png file), url: 'abc' }
 // output shall be of the following format:
 // {id: 123, image: (stringified png file), url: 'abc' }
 var createImage = function (image) {
@@ -18,12 +18,23 @@ var createImage = function (image) {
 };
 
 // input should be of the following format:
-// { test_id: 123 }
+// { testId: 123, userId: 123 }
 // output shall be of the following format:
 // [{ id: 123, image: (stringified png file), url: 'abc' }, ..., { id: 123, image: (stringified png file), url: 'abc' }]
 var retrieveImage = function (image) {
   return model.Image.findAll({
-    where: image
+    where: { testId: image.testId },
+    include: [{
+      model: model.Test,
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.User,
+          where: { id: image.userId },
+          attributes: [ 'id', 'email' ]
+        }]
+      }]
+    }]
   })
   .then(function (result) {
     if (result === null) {
@@ -39,32 +50,75 @@ var retrieveImage = function (image) {
 // output shall be of the following format:
 // { id: 123, test_id: 123, image: (stringified png file), url: 'abc' }
 var updateImage = function (image) {
-  var params = { id: image.id };
-  return model.Image.update(image, {
-    where: params
+  return model.Image.findOne({
+    where: { id: image.imageId, testId: image.testId },
+    include: [{
+      model: model.Test,
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.User,
+          where: { id: image.userId },
+          attributes: [ 'id', 'email' ]
+        }]
+      }]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Image update failed!'));
+  .then(function (result) {
+    if (result.test.project.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: image.imageId };
+
+      return model.Image.update(image.update, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Image update failed!'));
+        } else {
+          return image;
+        }
+      });
     } else {
-      return image;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, testId: 123, imageId: 123 }
 // output shall be of the following format:
 // 1
 var deleteImage = function (image) {
-  return model.Image.destroy({
-    where: image
+  return model.Image.findOne({
+    where: { id: image.imageId, testId: image.testId },
+    include: [{
+      model: model.Test,
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.User,
+          where: { id: image.userId },
+          attributes: [ 'id', 'email' ]
+        }]
+      }]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Image delete failed!'));
+  .then(function (result) {
+    if (result.test.project.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: image.imageId };
+
+      return model.Image.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Image delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
