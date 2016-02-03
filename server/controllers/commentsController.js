@@ -56,18 +56,46 @@ var retrieveComment = function (comment) {
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 var updateComment = function (comment) {
-  var params = { id: comment.id };
+  var params = { id: comment.commentId };
 
-  return model.Comment.update(comment, {
-    where: params
+  return model.Image.findOne({
+    where: { id: comment.imageId },
+    include: [{
+      model: model.Comment,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: comment.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: comment.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Comment update failed!'));
+  .then(function (result) {
+    if (result.comments[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.Comment.update(comment.update, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Comment update failed!'));
+        } else {
+          return updated;
+        }
+      });
     } else {
-      return comment;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
-  });
+  })
 };
 
 // input should be of the following format:
@@ -75,16 +103,47 @@ var updateComment = function (comment) {
 // output shall be of the following format:
 // 1
 var deleteComment = function (comment) {
-  return model.Comment.destroy({
-    where: comment
+  var params = { id: comment.commentId };
+
+  return model.Image.findOne({
+    where: { id: comment.imageId },
+    include: [{
+      model: model.Comment,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: comment.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: comment.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Comment delete failed!'));
+  .then(function (result) {
+    if (result.comments[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.Comment.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Comment delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
-  });
+  })
+
 };
 
 module.exports = {

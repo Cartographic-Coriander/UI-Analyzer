@@ -21,8 +21,8 @@ var createMouseTracking = function (mouseTracking) {
   };
 
   return model.MouseTracking.create(params)
-    .then(function (newMouseTracking) {
-      var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') };
+    .then(function (mouseTracking) {
+      return mouseTracking;
     });
 };
 
@@ -32,12 +32,11 @@ var createMouseTracking = function (mouseTracking) {
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 
 var retrieveMouseTracking = function (mouseTracking) {
-  console.log('mouse tracking input:', mouseTracking)
   return model.MouseTracking.findAll({
-    where: { imageId: mouseTracking.image },
+    where: { imageId: mouseTracking.imageId },
     include: [{
       model: model.User,
-      where: { id: mouseTracking.user },
+      where: { id: mouseTracking.userId },
       attributes: [ 'id', 'email' ],
       include: [{
         model: model.Project,
@@ -45,7 +44,7 @@ var retrieveMouseTracking = function (mouseTracking) {
           model: model.Test,
           include: [{
             model: model.Image,
-            where: { id: mouseTracking.image }
+            where: { id: mouseTracking.imageId }
           }]
         }]
       }]
@@ -65,71 +64,81 @@ var retrieveMouseTracking = function (mouseTracking) {
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var updateMouseTracking = function (mouseTracking) {
-  var params = { id: mouseTracking.id };
+  var params = { id: mouseTracking.mouseTrackingId };
 
-  return model.MouseTracking.findAll({
-    where: { id: mouseTracking.image },
+  return model.Image.findOne({
+    where: { id: mouseTracking.imageId },
     include: [{
-      model: model.User,
-      where: { id: mouseTracking.user },
-      attributes: [ 'id', 'email' ],
+      model: model.MouseTracking,
+      where: params,
       include: [{
-        model: model.Project,
+        model: model.User,
+        where: { id: mouseTracking.userId },
+        attributes: [ 'id', 'email' ],
         include: [{
-          model: model.Test,
+          model: model.Project,
           include: [{
-            model: model.Image,
-            where: { id: mouseTracking.image }
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: mouseTracking.imageId }
+            }]
           }]
         }]
       }]
     }]
   })
-  .spread(function (result) {
-    if (result.user.projects[0].projectUser.get('role') === 'owner') {
-      return model.MouseTracking.update(mouseTracking, {
+  .then(function (result) {
+    if (result.mousetrackings[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.MouseTracking.update(mouseTracking.update, {
         where: params
       })
       .spread(function (updated) {
         if (updated === 0) {
-          throw (new Error ('Error! Comment update failed!'));
+          throw (new Error ('Error! Mouse tracking update failed!'));
         } else {
-          return comment;
+          return updated;
         }
       });
     } else {
-      throw (new Error ('Error! Insufficient permissions to modify this entry!'))
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, imageId: 123 }
 // output shall be of the following format:
 // 1
 var deleteMouseTracking = function (mouseTracking) {
-  return model.MouseTracking.findAll({
-    where: { id: mouseTracking.image },
+  var params = { id: mouseTracking.mouseTrackingId };
+
+  return model.Image.findOne({
+    where: { id: mouseTracking.imageId },
     include: [{
-      model: model.User,
-      where: { id: mouseTracking.user },
-      attributes: [ 'id', 'email' ],
+      model: model.MouseTracking,
+      where: params,
       include: [{
-        model: model.Project,
+        model: model.User,
+        where: { id: mouseTracking.userId },
+        attributes: [ 'id', 'email' ],
         include: [{
-          model: model.Test,
+          model: model.Project,
           include: [{
-            model: model.Image,
-            where: { id: mouseTracking.image }
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: mouseTracking.imageId }
+            }]
           }]
         }]
       }]
     }]
   })
-  .spread(function (result) {
-    if (result.user.projects[0].projectUser.get('role') === 'owner') {
+  .then(function (result) {
+    if (result.mousetrackings[0].user.projects[0].projectUser.get('role') === 'owner') {
       return model.MouseTracking.destroy({
-        where: mouseTracking
+        where: params
       })
       .then(function (deleted) {
         if (deleted === 0) {
@@ -139,7 +148,7 @@ var deleteMouseTracking = function (mouseTracking) {
         }
       });
     } else {
-      throw (new Error ('Error! Insufficient permissions to modify this entry!'))
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };

@@ -38,7 +38,6 @@ var createProject = function (project) {
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
-  console.log('project:', project)
   return model.Project.findAll({
     include: [{
       model: model.User,
@@ -60,16 +59,30 @@ var retrieveProject = function (project) {
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var updateProject = function (project) {
-  var params = { id: project.id };
+  var params = { id: project.projectId };
 
-  return model.Project.update(project, {
-    where: params
+  return model.Project.findOne({
+    where: params,
+    include: [{
+      model: model.User,
+      where: { id: project.userId },
+      attributes: [ 'id', 'email' ]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Project update failed!'));
+  .then(function (result) {
+    if (result.users[0].projectUser.get('role') === 'owner') {
+      return model.Project.update(project, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Project update failed!'));
+        } else {
+          return project;
+        }
+      });
     } else {
-      return project;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
@@ -79,16 +92,35 @@ var updateProject = function (project) {
 // output shall be of the following format:
 // 1
 var deleteProject = function (project) {
-  return model.Project.destroy({
-    where: project
+  var params = { id: project.projectId };
+
+  return model.Project.findOne({
+    where: params,
+    include: [{
+      model: model.User,
+      where: { id: project.userId },
+      attributes: [ 'id', 'email' ]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Project delete failed!'));
+  .then(function (result) {
+    if (result.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: project.projectId };
+
+      return model.Project.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Project delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
+
 };
 
 module.exports = {

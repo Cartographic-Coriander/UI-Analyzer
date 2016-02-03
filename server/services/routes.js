@@ -25,11 +25,11 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = { userId: req.decoded.token.iss };
-      // var params = req.query /* for testing purposes */
+      // var params = { userId: req.query.userId }; /* for testing purposes */
 
       projectsController.retrieveProject(params)
         .then(function (result) {
-          res.json(result)
+          res.json(result);
         })
         .catch(function (error) {
           console.log('/api/project GET Error!', error);
@@ -53,11 +53,23 @@ module.exports = function (app, express) {
         });
     })
     .put(auth.decode, function (req, res) {
+    // .put(function (req, res) { /* for testing purposes */
       var params = {
-        id: req.body.id,
-        name: req.body.name,
-        description: req.body.description
+        userId: req.decoded.token.iss,
+        projectId: req.body.projectId,
+        update: {
+          name: req.body.name,
+          description: req.body.description
+        }
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   projectId: req.query.projectId,
+      //   update: {
+      //     name: req.query.name,
+      //     description: req.query.description
+      //   }
+      // };
 
       projectsController.updateProject(params)
         .then(function (result) {
@@ -69,7 +81,15 @@ module.exports = function (app, express) {
         });
     })
     .delete(auth.decode, function (req, res) {
-      var params = { id: req.body.id };
+    // .delete(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.token.iss,
+        projectId: req.body.projectId
+      };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   projectId: req.query.projectId
+      // };
 
       projectsController.deleteProject(params)
         .then(function (result) {
@@ -88,7 +108,10 @@ module.exports = function (app, express) {
         userId: req.decoded.token.iss,
         projectId: req.query.projectId
       };
-      // var params = { user: { id: req.query.user }, project: { projectId: req.query.project } }; /* for testing purposes */
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   projectId: req.query.projectId
+      // };
 
       testsController.retrieveTest(params)
         .then(function (result) {
@@ -100,12 +123,21 @@ module.exports = function (app, express) {
         });
     })
     .post(auth.decode, function (req, res) {
+    // .post(function (req, res) {
       var params = {
+        userId: req.decoded.token.iss,
         projectId: req.body.projectId,
         name: req.body.name,
         url: req.body.url,
         prompt: req.body.prompt
       };
+      // var params = {
+      //   userId: req.query.userId,
+      //   projectId: req.query.projectId,
+      //   name: req.query.name,
+      //   url: req.query.url,
+      //   prompt: req.query.prompt
+      // };
 
       testsController.createTest(params)
         .then(function (result) {
@@ -117,12 +149,27 @@ module.exports = function (app, express) {
         });
     })
     .put(auth.decode, function (req, res) {
+    // .put(function (req, res) { /* for testing purposes */
       var params = {
-        id: req.body.id,
-        name: req.body.name,
-        url: req.body.url,
-        prompt: req.body.prompt
+        userId: req.decoded.token.iss,
+        testId: req.body.testId,
+        projectId: req.body.projectId,
+        update: {
+          name: req.body.name,
+          url: req.body.url,
+          prompt: req.body.prompt
+        }
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   testId: req.query.testId,
+      //   projectId: req.query.projectId,
+      //   update: {
+      //     name: req.query.name,
+      //     url: req.query.url,
+      //     prompt: req.query.prompt
+      //   }
+      // };
 
       testsController.updateTest(params)
         .then(function (result) {
@@ -134,9 +181,19 @@ module.exports = function (app, express) {
         });
     })
     .delete(auth.decode, function (req, res) {
-      var params = { id: req.body.id };
+    // .delete(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.token.iss,
+        testId: req.body.testId,
+        projectId: req.body.projectId
+      };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   testId: req.query.testId,
+      //   projectId: req.query.projectId
+      // };
 
-      testController.deleteTest(params)
+      testsController.deleteTest(params)
         .then(function (result) {
           res.json(result);
         })
@@ -153,7 +210,10 @@ module.exports = function (app, express) {
         userId: req.decoded.token.iss,
         imageId: req.query.imageId
       };
-      // var params = { user: { id: req.query.user }, imageId: req.query.image, imageId: { id: req.query.image } }; /* for testing purposes */
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       commentsController.retrieveComment(params)
         .then(function (result) {
@@ -184,13 +244,29 @@ module.exports = function (app, express) {
         });
     })
     .put(auth.decode, function (req, res) {
+    // .put(function (req, res) { /* for testing purposes */
       var params = {
-        id: req.body.id,
-        commentType: req.body.commentType,
-        commentText: req.body.commentText,
-        x: req.body.x,
-        y: req.body.y
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
+        commentId: req.body.id,
+        update: {
+          commentType: req.body.commentType,
+          commentText: req.body.commentText,
+          x: req.body.x,
+          y: req.body.y
+        }
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   commentId: req.query.commentId,
+      //   update: {
+      //     commentType: req.query.commentType,
+      //     commentText: req.query.commentText,
+      //     x: req.query.x,
+      //     y: req.query.y
+      //   }
+      // };
 
       commentsController.updateComment(params)
         .then(function (result) {
@@ -202,7 +278,17 @@ module.exports = function (app, express) {
         });
     })
     .delete(auth.decode, function (req, res) {
-      var params = { id: req.body.id };
+    // .delete(function (req, res) {
+      var params = {
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
+        commentId: req.body.commentId
+      };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   commentId: req.query.commentId
+      // };
 
       commentsController.deleteComment(params)
         .then(function (result) {
@@ -221,7 +307,10 @@ module.exports = function (app, express) {
         userId: req.decoded.token.iss,
         testId: req.body.testId
       };
-      // var params = { user: { id: req.query.user }, test: { testId: req.query.test } }; /* for testing purposes */
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   testId: req.query.testId
+      // };
 
       imagesController.retrieveImage(params)
         .then(function (result) {
@@ -250,12 +339,25 @@ module.exports = function (app, express) {
         });
     })
     .put(auth.decode, function (req, res) {
+    // .put(function (req, res) { /* for testing purposes */
       var params = {
-        id: req.body.id,
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
         testId: req.body.testId,
-        image: req.body.image,
-        url: req.body.url
+        update: {
+          image: req.body.image,
+          url: req.body.url
+        }
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   testId: req.query.testId,
+      //   update: {
+      //     image: req.query.image,
+      //     url: req.query.url
+      //   }
+      // };
 
       imagesController.updateImage(params)
         .then(function (result) {
@@ -267,7 +369,17 @@ module.exports = function (app, express) {
         });
     })
     .delete(auth.decode, function (req, res) {
-      var params = { id: req.body.id };
+    // .delete(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
+        testId: req.body.testId,
+      };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   testId: req.query.testId,
+      // };
 
       imagesController.deleteImage(params)
         .then(function (result) {
@@ -286,7 +398,10 @@ module.exports = function (app, express) {
         userId: req.decoded.token.iss,
         imageId: req.query.imageId
       };
-      // var params = { user: req.query.user, image: req.query.image }; /* for testing purposes */
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (result) {
@@ -316,14 +431,29 @@ module.exports = function (app, express) {
         });
     })
     .put(auth.decode, function (req, res) {
+    // .put(function (req, res) { /* for testing purposes */
       var params = {
-        id: req.body.id,
-        movement: req.body.movement,
-        clicks: req.body.clicks,
-        urlchange: req.body.urlchange
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
+        mouseTrackingId: req.body.mouseTrackingId,
+        update: {
+          movement: req.body.movement,
+          clicks: req.body.clicks,
+          urlchange: req.body.urlchange
+        }
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   mouseTrackingId: req.query.mouseTrackingId,
+      //   update: {
+      //     movement: req.query.movement,
+      //     clicks: req.query.clicks,
+      //     urlchange: req.query.urlchange
+      //   }
+      // };
 
-      mousetrackingController.updateTracking(params)
+      mousetrackingController.updateMouseTracking(params)
         .then(function (result) {
           res.json(result);
         })
@@ -333,7 +463,17 @@ module.exports = function (app, express) {
         });
     })
     .delete(auth.decode, function (req, res) {
-      var params = { id: req.body.id };
+    // .delete(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.token.iss,
+        imageId: req.body.imageId,
+        mouseTrackingId: req.body.mouseTrackingId
+      };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId,
+      //   mouseTrackingId: req.query.mouseTrackingId
+      // };
 
       mousetrackingController.deleteMouseTracking(params)
         .then(function (result) {

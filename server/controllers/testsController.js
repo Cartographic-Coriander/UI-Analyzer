@@ -8,20 +8,41 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
+// { userId: 123, projectId: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 // output shall be of the following format:
-// { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
+// { id: 123, projectId: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 var createTest = function (test) {
-  return model.Test.create(test)
-    .then(function (newTest) {
-      return newTest;
-    });
+  return model.Project.findOne({
+    where: { id: test.projectId },
+    include: [{
+      attributes: ['id', 'email'],
+      model: model.User,
+      where: { id: test.userId }
+    }]
+  })
+  .then(function (result) {
+    if (result.users[0].projectUser.get('role') === 'owner') {
+      var params = {
+        projectId: test.testId,
+        name: test.name,
+        url: test.url,
+        prompt: test.prompt
+      };
+
+      return model.Test.create(params)
+        .then(function (newTest) {
+          return newTest;
+        });
+    } else {
+      throw (new Error ('Error! Insufficient permissions to create this entry!'));
+    }
+  });
 };
 
 // input should be of the following format:
 // { userId: 123 ( user id ), projectId: 123 }
 // output shall be of the following format:
-// { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
+// { id: 123, projectId: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 var retrieveTest = function (test) {
   return model.Test.findAll({
     where: { projectId: test.projectId },
@@ -44,36 +65,73 @@ var retrieveTest = function (test) {
 };
 
 // input should be of the following format:
-// { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
+// { userId: 123, testId: 123, projectId: 123, update: { name: 'abc', url: 'abc', prompt: 'abc' } }
 // output shall be of the following format:
-// { id: 123, project_id: 123, name: 'abc', url: 'abc', prompt: 'abc' }
+// { userId: 123, testId: 123, projectId: 123, update: { name: 'abc', url: 'abc', prompt: 'abc' } }
 var updateTest = function (test) {
-  var params = { id: test.id };
-  return model.Test.update(test, {
-    where: params
+  return model.Test.findOne({
+    where: { id: test.testId, projectId: test.projectId },
+    include: [{
+      model: model.Project,
+      include: [{
+        attributes: ['id', 'email'],
+        model: model.User,
+        where: { id: test.userId }
+      }]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Test update failed!'));
+  .then(function (result) {
+    if (result.project.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: test.testId };
+
+      return model.Test.update(test.update, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Test update failed!'));
+        } else {
+          return test;
+        }
+      });
     } else {
-      return test;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, testId: 123, projectId: 123 }
 // output shall be of the following format:
 // 1
 var deleteTest = function (test) {
-  return model.Test.destroy({
-    where: test
+  return model.Test.findOne({
+    where: { id: test.testId, projectId: test.projectId },
+    include: [{
+      model: model.Project,
+      include: [{
+        attributes: ['id', 'email'],
+        model: model.User,
+        where: { id: test.userId }
+      }]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Test delete failed!'));
+  .then(function (result) {
+    if (result.project.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: test.testId };
+
+      return model.Test.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Test delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
