@@ -7,7 +7,7 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { user_id: 123, name: 'abc', description: 'abc' }
+// { userId: 123, name: 'abc', description: 'abc' }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var createProject = function (project) {
@@ -18,31 +18,30 @@ var createProject = function (project) {
 
   return model.sequelize.transaction(function (t) {
     return model.Project.create(params, { transaction: t })
-    .then(function (newProject) {
-      var params = { user_id: project.user_id, project_id: newProject.get('id'), role: 'Owner' };
+      .then(function (newProject) {
+        var params = { userId: project.userId, projectId: newProject.get('id'), role: 'owner' };
 
-      return model.ProjectUser.create(params, { transaction: t })
-      .then(function (projectUser) {
-        if (projectUser === null) {
-          throw (new Error ('Error! Unable to create project_user join!'));
-        } else {
-          return newProject;
-        }
+        return model.ProjectUser.create(params, { transaction: t })
+          .then(function (projectUser) {
+            if (projectUser === null) {
+              throw (new Error ('Error! Unable to create project_user join!'));
+            } else {
+              return newProject;
+            }
+          });
       });
-    });
   });
 };
 
 // input should be of the following format:
-// { user_id: 123 }
+// { userId: 123 }
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var retrieveProject = function (project) {
-  console.log('project:', project)
   return model.Project.findAll({
     include: [{
-      where: project,
       model: model.User,
+      where: { id: project.userId },
       attributes: [ 'id', 'email' ]
     }]
   })
@@ -60,16 +59,30 @@ var retrieveProject = function (project) {
 // output shall be of the following format:
 // { id: 123, name: 'abc', description: 'abc' }
 var updateProject = function (project) {
-  var params = { id: project.id };
+  var params = { id: project.projectId };
 
-  return model.Project.update(project, {
-    where: params
+  return model.Project.findOne({
+    where: params,
+    include: [{
+      model: model.User,
+      where: { id: project.userId },
+      attributes: [ 'id', 'email' ]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Project update failed!'));
+  .then(function (result) {
+    if (result.users[0].projectUser.get('role') === 'owner') {
+      return model.Project.update(project, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Project update failed!'));
+        } else {
+          return project;
+        }
+      });
     } else {
-      return project;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
@@ -79,16 +92,35 @@ var updateProject = function (project) {
 // output shall be of the following format:
 // 1
 var deleteProject = function (project) {
-  return model.Project.destroy({
-    where: project
+  var params = { id: project.projectId };
+
+  return model.Project.findOne({
+    where: params,
+    include: [{
+      model: model.User,
+      where: { id: project.userId },
+      attributes: [ 'id', 'email' ]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Project delete failed!'));
+  .then(function (result) {
+    if (result.users[0].projectUser.get('role') === 'owner') {
+      var params = { id: project.projectId };
+
+      return model.Project.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Project delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
+
 };
 
 module.exports = {
