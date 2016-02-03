@@ -6,7 +6,7 @@ import Registration from '../components/landingPageComponents/Registration';
 import ProductDescription from '../components/landingPageComponents/ProductDescription';
 import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
-import { switchVisibility, authChecker, authUser, registerUser, makeUser } from '../redux/actions';
+import { switchVisibility, authChecker, authUser, registerUser, makeUser, revealRegistrationModal } from '../redux/actions';
 import LoginForm from '../components/landingPageComponents/LoginForm';
 
 class LandingPage extends Component {
@@ -25,11 +25,13 @@ class LandingPage extends Component {
   onRegister (user) {
     this.props.dispatch(makeUser(user));
   }
-
+  showModal (user) {
+    this.props.dispatch(revealRegistrationModal(user));
+  }
   render () {
     return (
       <div className = "LandingPage">
-        <Header authenticateClick={ this.getAuthenticated.bind(this) } />
+        <Header authenticateClick={ this.showModal.bind(this) } />
         <LoginForm onSubmit={ this.onLogin.bind(this) } />
         <Registration onSubmit={ this.onRegister.bind(this) }/>
         <ProductDescription />

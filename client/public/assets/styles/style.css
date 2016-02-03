@@ -1,3 +1,12 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
 /*Landing Page*/
 
 .landingPageHeader {
@@ -69,18 +78,27 @@
 }
 /*Dashboard*/
 .DashboardPage {
-  margin-top: -21px;
   height: 100%;
-  width: 100%;
 }
 
-.dashboardNav {
+.dashboardPageHeader {
+  margin-bottom: 0;
+}
+
+/*.dashboardNav {
   float:left;
   height: 100%;
   background-color: #2b3e50;;
-}
+}*/
+
 .dashboardContent {
   float:right;
+}
+
+.SidebarNavigation {
+  float: left;
+  height: 100%;
+  width: 240px;
 }
 /*.Accordian {
   background-color: yellow;

@@ -7,12 +7,12 @@ import InviteTestersButton from './InviteTestersButton';
 export default class extends Component {
   render () {
     return (
-      <div className = "Accordian">
-        <TestButton />
-        <ReportsButton />
-        <SettingsButton />
-        <InviteTestersButton />
-      </div>
+      <li className = "Accordian">
+        <li><TestButton /></li>
+        <li><ReportsButton /></li>
+        <li><SettingsButton /></li>
+        <li><InviteTestersButton /></li>
+      </li>
     )
   }
 }

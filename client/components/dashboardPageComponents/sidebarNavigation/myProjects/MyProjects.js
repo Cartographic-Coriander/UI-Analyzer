@@ -8,9 +8,7 @@ class MyProjects extends Component {
   render () {
     return (
     <div className = "MyProjects">
-      <li>
-        <ProjectListEntry />
-      </li>
+      <ProjectListEntry />
       <AddProjectButton />
     </div>
     )
