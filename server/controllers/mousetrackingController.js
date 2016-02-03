@@ -8,42 +8,46 @@ var model = require('../db/model');
 // }, { timestamps: false });
 
 // input should be of the following format:
-// { movement: 'abc', clicks: 'abc', urlchange: 'abc', test_id: 123 }
+// { movement: 'abc', clicks: 'abc', urlchange: 'abc', userId: 123, imageId: 123 }
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var createMouseTracking = function (mouseTracking) {
   var params = {
+    userId: mouseTracking.userId,
+    imageId: mouseTracking.imageId,
     movement: mouseTracking.movement,
     clicks: mouseTracking.clicks,
     urlchange: mouseTracking.urlchange
   };
 
-  return model.sequelize.transaction(function (t) {
-    return model.MouseTracking.create(params, { transaction: t })
-      .then(function (newMouseTracking) {
-        var params = { test_id: mouseTracking.test_id, mousetracking_id: newMouseTracking.get('id') };
-
-        return model.MouseTrackingTest.create(params, { transaction: t })
-          .then(function (mouseTrackingTest) {
-            if (mouseTrackingTest === null) {
-              throw (new Error ('Error! Unable to create mousetracking_test join!'));
-            } else {
-              return newMouseTracking;
-            }
-          });
-      });
-  });
+  return model.MouseTracking.create(params)
+    .then(function (mouseTracking) {
+      return mouseTracking;
+    });
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, imageId: 123 }
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
+
 var retrieveMouseTracking = function (mouseTracking) {
   return model.MouseTracking.findAll({
+    where: { imageId: mouseTracking.imageId },
     include: [{
-      model: Test,
-      where: mousetracking
+      model: model.User,
+      where: { id: mouseTracking.userId },
+      attributes: [ 'id', 'email' ],
+      include: [{
+        model: model.Project,
+        include: [{
+          model: model.Test,
+          include: [{
+            model: model.Image,
+            where: { id: mouseTracking.imageId }
+          }]
+        }]
+      }]
     }]
   })
   .then(function (result) {
@@ -60,33 +64,91 @@ var retrieveMouseTracking = function (mouseTracking) {
 // output shall be of the following format:
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 var updateMouseTracking = function (mouseTracking) {
-  var params = { id: mouseTracking.id };
+  var params = { id: mouseTracking.mouseTrackingId };
 
-  return model.MouseTracking.update(mouseTracking, {
-    where: params
+  return model.Image.findOne({
+    where: { id: mouseTracking.imageId },
+    include: [{
+      model: model.MouseTracking,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: mouseTracking.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: mouseTracking.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Comment update failed!'));
+  .then(function (result) {
+    if (result.mousetrackings[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.MouseTracking.update(mouseTracking.update, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Mouse tracking update failed!'));
+        } else {
+          return updated;
+        }
+      });
     } else {
-      return comment;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
 
 // input should be of the following format:
-// { id: 123 }
+// { userId: 123, imageId: 123 }
 // output shall be of the following format:
 // 1
 var deleteMouseTracking = function (mouseTracking) {
-  return model.MouseTracking.destroy({
-    where: mouseTracking
+  var params = { id: mouseTracking.mouseTrackingId };
+
+  return model.Image.findOne({
+    where: { id: mouseTracking.imageId },
+    include: [{
+      model: model.MouseTracking,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: mouseTracking.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: mouseTracking.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Mouse tracking delete failed!'));
+  .then(function (result) {
+    if (result.mousetrackings[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.MouseTracking.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Mouse tracking delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };

@@ -10,7 +10,7 @@ class Header extends Component {
       <Navbar className="navbar-inverse landingPageHeader">
         <a className="navbar-brand" href="#">Scrutinize</a>
         <Nav className="navbar-nav navbar-right">
-          <NavItem onClick={ () => this.props.authenticateClick('authenticated') }> Get Started </NavItem>
+          <NavItem onClick={ () => this.props.authenticateClick('authenticate_me') }> Get Started </NavItem>
           <NavItem> Log In </NavItem>
         </Nav>
       </Navbar>
