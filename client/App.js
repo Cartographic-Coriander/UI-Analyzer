@@ -10,18 +10,19 @@ class App extends Component {
     return (
       <div>
         { (() => {
-          if (!this.props.authReducer.authenticated) {
-            return <LandingPage />
-          } else {
-            return (
-              <div>
-                <DashboardPage />
-                <AddNotes />
-              </div>
-            )
-          }
+            switch (this.props.authReducer.appState) {
+              case 'not_authenticated':
+                return <LandingPage />;
+              case 'authenticated':
+                return <DashboardPage />;
+              case 'Image_Appear':
+                return <AddNotes />
+              default:
+                return <LandingPage />
+            }
           })()
        }
+
       </div>
     )
   }

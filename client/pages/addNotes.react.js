@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import { addNote, sendNotes, getImageForNotes } from '../redux/actions';
+import { addNote, sendNotes, getImageForNotes, showImagePage } from '../redux/actions';
 
 class AddNotes extends Component {
 
-  //for sending array of notes to the server
   handleSendingNotes () {
+    //for sending array of notes to the server
     this.props.dispatch(sendNotes(this.props.notes));
+    //because the button also returns the user to the dashboard page
+    this.props.dispatch(showImagePage('returnToDashboard'));
   }
 
   //this runs on initialization
   componentDidMount() {
-    this.props.dispatch(getImageForNotes())
+    this.props.dispatch(getImageForNotes());
   }
 
   //this is the click handler that runs when the image to critique is clicked on
@@ -31,7 +33,12 @@ class AddNotes extends Component {
         text.style.top=cursorY-offset.top+"px";
         text.style.left=cursorX-offset.left+"px";
         text.style.position="absolute";
-        text.innerHTML = "<input type='radio' name='sentiment' value='yay'>yay</br><input type='radio' name='sentiment' value='nay'>nay</br><input id='inputText' type='text' /><button id='leaveCommentButton' type='button'>send</button>";
+        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='yay'><span></span>"+
+                            "<label for='radio1'>YAY</label>"+
+                          "<input id='radio2' type='radio' name='sentiment' value='nay'><p id='invisibleP'></p>"+
+                            "<label for='radio2'>NAY</label></br>"+
+                          "<input id='inputText' type='text' />"+
+                            "<button id='leaveCommentButton' type='button'>send</button>";
         document.getElementById('critiqueImage').appendChild(text);
         document.getElementById('inputText').focus();
         {/*need to attach a function to be run whenever the input button is clicked*/}

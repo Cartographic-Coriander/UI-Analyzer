@@ -14,7 +14,7 @@ const projectInitialState = {
 }
 
 const authenticationInitialState = {
-  authenticated: false
+  appState: 'not_authenticated'
 }
 
 const loginInitialState = {
@@ -32,14 +32,28 @@ const imageUpdateInitialState = {
   image: null
 }
 
+const initialImageState = {
+  appState: 'not_authenticated'
+}
+
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'AUTHENTICATED_USER':
-      newState.authenticated = action.auth;
+      newState.appState = action.auth;
       return newState;
   }
   return state
+}
+
+export function showImageReducer (state = initialImageState, action) {
+  var newState = Object.assign({}, state);
+  switch (action.type) {
+    case 'SHOW_TEST_IMAGE':
+      newState.appState = action.auth;
+      return newState;
+  }
+  return state;
 }
 
 export function buttonReducer (state = buttonInitialState, action) {

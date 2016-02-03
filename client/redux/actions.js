@@ -58,9 +58,9 @@ export function confirmProject (project) {
 
 export function authChecker (auth) {
   if (auth === 'authenticated') {
-    auth = true;
+    auth = 'authenticated';
   } else {
-    auth = false;
+    auth = 'not_authenticated';
   }
   return {
     type: 'AUTHENTICATED_USER',
@@ -142,3 +142,22 @@ function updateImageForNotes (image) {
   }
 }
 ///////////////////////end for making api call to grab image
+
+
+///////////////button handler for show image to and from dashboard page
+
+export function showImagePage (type) {
+  var auth = 'not_authenticated';
+  if(type === 'show_image') {
+    auth = 'Image_Appear';
+  }
+  if(type === 'returnToDashboard') {
+    auth = 'authenticated';
+  }
+  return {
+    type: 'AUTHENTICATED_USER',
+    auth: auth
+  }
+}
+
+//////////////////////////////////end show image to and from dashboard

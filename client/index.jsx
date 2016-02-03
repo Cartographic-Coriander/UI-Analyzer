@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
-import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer, loginReducer, registrationReducer, imageUpdateReducer  } from './redux/reducers';
+import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer, loginReducer, registrationReducer, imageUpdateReducer, showImageReducer } from './redux/reducers';
 
 const reducers = {
   buttonReducer: buttonReducer,
@@ -16,7 +16,8 @@ const reducers = {
   logOutReducer: logOutReducer,
   loginReducer: loginReducer,
   registrationReducer: registrationReducer,
-  imageUpdateReducer : imageUpdateReducer 
+  imageUpdateReducer : imageUpdateReducer ,
+  showImageReducer : showImageReducer
 };
 const combinedReducers = combineReducers(reducers);
 
