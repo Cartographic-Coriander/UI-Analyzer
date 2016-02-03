@@ -1,6 +1,4 @@
 const buttonInitialState = {
-  buttonOne: true,
-  buttonTwo: true,
   activeContentComponent: 'Dashboard',
 }
 
@@ -40,6 +38,179 @@ const imageUpdateInitialState = {
 const initialImageState = {
   appState: 'not_authenticated'
 }
+
+const userInitialState = {
+  firstName: null,
+  lastName: null,
+  company: null,
+  email : null
+};
+
+const projectsInitialState = {
+  list: [],
+  error: (e) => return e ? e : null
+};
+
+const testsInitialState = {
+  list: [],
+  error: (e) => return e ? e : null
+};
+
+const commentsInitialState = {
+  list: [],
+  error: (e) => return e ? e : null
+};
+
+const imagesInitialState = {
+  list: [],
+  error: (e) => return e ? e : null
+};
+
+const mouseTrackingsInitialState = {
+  list: [],
+  error: (e) => return e ? e : null
+};
+
+export user = (state = userInitialState, action) => {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'GET_USER':
+      return
+    case 'POST_USER':
+      return
+    case 'UPDATE_USER':
+      return
+    case 'DELETE_USER':
+      return
+    case 'ERROR_USER':
+      return
+  }
+};
+
+export projects = (state = projectsInitialState, action) => {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'GET_PROJECT':
+      newState.list = action.data;
+      return newState;
+    case 'POST_PROJECT':
+      let newList = newState.list.slice();
+      newList.push(action.data);
+      newState.list = newList;
+      return newState;
+    case 'UPDATE_PROJECT':
+      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      newState.list = newList;
+      return newState;
+    case 'DELETE_PROJECT':
+      let newList = newState.list.filter(item => item.id !== data.projectId);
+      newState.list = newList;
+      return newState;
+    case 'ERROR_PROJECT':
+      return state.error(action.data);
+  }
+};
+
+export tests = (state = testsInitialState, action) => {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'GET_TEST':
+      newState.list = action.data;
+      return newState;
+    case 'POST_TEST':
+      let newList = newState.list.slice();
+      newList.push(action.data);
+      newState.list = newList;
+      return newState;
+    case 'UPDATE_TEST':
+      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      newState.list = newList;
+      return newState;
+    case 'DELETE_TEST':
+      let newList = newState.list.filter(item => item.id !== data.testId);
+      newState.list = newList;
+      return newState;
+    case 'ERROR_TEST':
+      return state.error(action.data);
+  }
+};
+
+export comments = (state = commentsInitialState, action) => {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'GET_COMMENT':
+      newState.list = action.data;
+      return newState;
+    case 'POST_COMMENT':
+      let newList = newState.list.slice();
+      newList.push(action.data);
+      newState.list = newList;
+      return newState;
+    case 'UPDATE_COMMENT':
+      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      newState.list = newList;
+      return newState;
+    case 'DELETE_COMMENT':
+      let newList = newState.list.filter(item => item.id !== data.commentId);
+      newState.list = newList;
+      return newState;
+    case 'ERROR_COMMENT':
+      return state.error(action.data);
+  }
+};
+
+export images = (state = imagesInitialState, action) => {
+  var newState = Object.assign({}, state);
+  switch (action.type) {
+    case 'GET_IMAGE':
+      newState.list = action.data;
+      return newState;
+    case 'POST_IMAGE':
+      let newList = newState.list.slice();
+      newList.push(action.data);
+      newState.list = newList;
+      return newState;
+    case 'UPDATE_IMAGE':
+      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      newState.list = newList;
+      return newState;
+    case 'DELETE_IMAGE':
+      let newList = newState.list.filter(item => item.id !== data.imageId);
+      newState.list = newList;
+      return newState;
+    case 'ERROR_IMAGE':
+      return state.error(action.data);
+  }
+};
+
+export mouseTrackings = (state = mouseTrackingsInitialState, action) => {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'GET_MOUSETRACKING':
+      newState.list = action.data;
+      return newState;
+    case 'POST_MOUSETRACKING':
+      let newList = newState.list.slice();
+      newList.push(action.data);
+      newState.list = newList;
+      return newState;
+    case 'UPDATE_MOUSETRACKING':
+      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      newState.list = newList;
+      return newState;
+    case 'DELETE_MOUSETRACKING':
+      let newList = newState.list.filter(item => item.id !== data.mouseTrackingId);
+      newState.list = newList;
+      return newState;
+    case 'ERROR_MOUSETRACKING':
+      return state.error(action.data);
+  }
+};
 
 export function authReducer (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)

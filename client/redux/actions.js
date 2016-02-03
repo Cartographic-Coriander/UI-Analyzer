@@ -1,4 +1,463 @@
-import { getImage, getAuthenticated, registerUser, sendAllNotes, getStarted, logIn } from './api'
+import {
+  getUser, postUser,
+  getProject, postProject, updateProject, deleteProject,
+  getTest, postTest, updateTest, deleteTest,
+  getComment, postComment, updateComment, deleteComment,
+  getImage, postImage, updateImage, deleteImage,
+  getMouseTracking, postMouseTracking, updateMouseTracking, deleteMouseTracking
+} from './api'
+
+/* PROJECT API ACTIONS */
+
+export getsProject = (project) => {
+  return (dispatch) => {
+    return getProject(project)
+      .then((response) => {
+        var params = {
+          type: 'GET_PROJECT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_PROJECT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export postsProject = (project) => {
+  return (dispatch) => {
+    return postProject(project)
+      .then((response) => {
+        var params = {
+          type: 'POST_PROJECT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_PROJECT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export updatesProject = (project) => {
+  return (dispatch) => {
+    return updateProject(project)
+      .then((response) => {
+        var params = {
+          type: 'UPDATE_PROJECT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_PROJECT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export deletesProject = (project) => {
+  return (dispatch) => {
+    return deleteProject(project)
+      .then((response) => {
+        var params = {
+          type: 'DELETE_PROJECT',
+          data: project.projectId
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_PROJECT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+/* TEST API ACTIONS */
+
+export getsTest = (test) => {
+  return (dispatch) => {
+    return getTest(test)
+      .then((response) => {
+        var params = {
+          type: 'GET_TEST',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_TEST',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export postsTest = (test) => {
+  return (dispatch) => {
+    return postTest(test)
+      .then((response) => {
+        var params = {
+          type: 'POST_TEST',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_TEST',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export updatesTest = (test) => {
+  return (dispatch) => {
+    return updateTest(test)
+      .then((response) => {
+        var params = {
+          type: 'UPDATE_TEST',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_TEST',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export deletesTest = (test) => {
+  return (dispatch) => {
+    return deleteTest(test)
+      .then((response) => {
+        var params = {
+          type: 'DELETE_TEST',
+          data: test.testId
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_TEST',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+/* COMMENT API ACTIONS */
+
+export getsComment = (comment) => {
+  return (dispatch) => {
+    return getComment(comment)
+      .then((response) => {
+        var params = {
+          type: 'GET_COMMENT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_COMMENT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export postsComment = (comment) => {
+  return (dispatch) => {
+    return postComment(comment)
+      .then((response) => {
+        var params = {
+          type: 'POST_COMMENT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_COMMENT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export updatesComment = (comment) => {
+  return (dispatch) => {
+    return updateComment(comment)
+      .then((response) => {
+        var params = {
+          type: 'UPDATE_COMMENT',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_COMMENT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export deletesComment = (comment) => {
+  return (dispatch) => {
+    return deleteComment(comment)
+      .then((response) => {
+        var params = {
+          type: 'DELETE_COMMENT',
+          data: comment.commentId
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_COMMENT',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+/* IMAGE API ACTIONS */
+
+export getsImage = (image) => {
+  return (dispatch) => {
+    return getImage(image)
+      .then((response) => {
+        var params = {
+          type: 'GET_IMAGE',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_IMAGE',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export postsImage = (image) => {
+  return (dispatch) => {
+    return postImage(image)
+      .then((response) => {
+        var params = {
+          type: 'POST_IMAGE',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_IMAGE',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export updatesImage = (image) => {
+  return (dispatch) => {
+    return updateImage(image)
+      .then((response) => {
+        var params = {
+          type: 'UPDATE_IMAGE',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_IMAGE',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export deletesImage = (image) => {
+  return (dispatch) => {
+    return deleteImage(image)
+      .then((response) => {
+        var params = {
+          type: 'DELETE_IMAGE',
+          data: image.imageId
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_IMAGE',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+/* MOUSETRACKING API ACTIONS */
+
+export getsMouseTracking = (mouseTracking) => {
+  return (dispatch) => {
+    return getMouseTracking(mouseTracking)
+      .then((response) => {
+        var params = {
+          type: 'GET_MOUSETRACKING',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_MOUSETRACKING',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export postsMouseTracking = (mouseTracking) => {
+  return (dispatch) => {
+    return postMouseTracking(mouseTracking)
+      .then((response) => {
+        var params = {
+          type: 'POST_MOUSETRACKING',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_MOUSETRACKING',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export updatesMouseTracking = (mouseTracking) => {
+  return (dispatch) => {
+    return updateProject(mouseTracking)
+      .then((response) => {
+        var params = {
+          type: 'UPDATE_MOUSETRACKING',
+          data: response.data
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_MOUSETRACKING',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export deletesMouseTracking = (mouseTracking) => {
+  return (dispatch) => {
+    return deleteMouseTracking(mouseTracking)
+      .then((response) => {
+        var params = {
+          type: 'DELETE_MOUSETRACKING',
+          data: mouseTracking.mouseTrackingId
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_MOUSETRACKING',
+          data: error.split('\n')[0]
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+/* END API ACTIONS */
 
 export function switchVisibility (button) {
   return {
@@ -56,9 +515,9 @@ export function addNote (noteObj) {
 }
 
 ////////////////////////////////////////sends note array to server
-export function sendNotes (notes) { 
+export function postComments (notes) {
   return function (dispatch) {
-    return sendAllNotes (notes)
+    return getComment (notes)
       .then(function (success) {
         console.log('successful in sending notes');
       }, function (error) {
@@ -143,7 +602,7 @@ export function loggingIn (user) {
 ///////////////for making api call to auth and grab user JWT
 export function authUser (user) {
   return function (dispatch) {
-    return getAuthenticated(user)
+    return getUser(user)
       .then(function (response) {
         localStorage.setItem('Scrutinize.JWT.token', response.statusText);
         dispatch(userLogin(user.emailField));
@@ -166,7 +625,7 @@ export function userLogin (email) {
 ////////////////////////registering user and getting user JWT, called from submission of get_started form
 export function makeUser (user) {
   return function (dispatch) {
-    return registerUser(user)
+    return postUser(user)
       .then(function (response) {
           localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
           dispatch(signUpUser(user));
