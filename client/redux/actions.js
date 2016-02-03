@@ -9,7 +9,7 @@ import {
 
 /* PROJECT API ACTIONS */
 
-export getsProject = (project) => {
+export function getsProject(project) {
   return (dispatch) => {
     return getProject(project)
       .then((response) => {
@@ -31,7 +31,7 @@ export getsProject = (project) => {
   }
 }
 
-export postsProject = (project) => {
+export function postsProject(project) {
   return (dispatch) => {
     return postProject(project)
       .then((response) => {
@@ -53,7 +53,7 @@ export postsProject = (project) => {
   }
 }
 
-export updatesProject = (project) => {
+export function updatesProject(project) {
   return (dispatch) => {
     return updateProject(project)
       .then((response) => {
@@ -75,7 +75,7 @@ export updatesProject = (project) => {
   }
 }
 
-export deletesProject = (project) => {
+export function deletesProject(project) {
   return (dispatch) => {
     return deleteProject(project)
       .then((response) => {
@@ -99,7 +99,7 @@ export deletesProject = (project) => {
 
 /* TEST API ACTIONS */
 
-export getsTest = (test) => {
+export function getsTest(test) {
   return (dispatch) => {
     return getTest(test)
       .then((response) => {
@@ -121,7 +121,7 @@ export getsTest = (test) => {
   }
 }
 
-export postsTest = (test) => {
+export function postsTest(test) {
   return (dispatch) => {
     return postTest(test)
       .then((response) => {
@@ -143,7 +143,7 @@ export postsTest = (test) => {
   }
 }
 
-export updatesTest = (test) => {
+export function updatesTest(test) {
   return (dispatch) => {
     return updateTest(test)
       .then((response) => {
@@ -165,7 +165,7 @@ export updatesTest = (test) => {
   }
 }
 
-export deletesTest = (test) => {
+export function deletesTest(test) {
   return (dispatch) => {
     return deleteTest(test)
       .then((response) => {
@@ -189,7 +189,7 @@ export deletesTest = (test) => {
 
 /* COMMENT API ACTIONS */
 
-export getsComment = (comment) => {
+export function getsComment(comment) {
   return (dispatch) => {
     return getComment(comment)
       .then((response) => {
@@ -211,7 +211,7 @@ export getsComment = (comment) => {
   }
 }
 
-export postsComment = (comment) => {
+export function postsComment(comment) {
   return (dispatch) => {
     return postComment(comment)
       .then((response) => {
@@ -233,7 +233,7 @@ export postsComment = (comment) => {
   }
 }
 
-export updatesComment = (comment) => {
+export function updatesComment(comment) {
   return (dispatch) => {
     return updateComment(comment)
       .then((response) => {
@@ -255,7 +255,7 @@ export updatesComment = (comment) => {
   }
 }
 
-export deletesComment = (comment) => {
+export function deletesComment (comment) {
   return (dispatch) => {
     return deleteComment(comment)
       .then((response) => {
@@ -279,7 +279,7 @@ export deletesComment = (comment) => {
 
 /* IMAGE API ACTIONS */
 
-export getsImage = (image) => {
+export function getsImage(image) {
   return (dispatch) => {
     return getImage(image)
       .then((response) => {
@@ -301,7 +301,7 @@ export getsImage = (image) => {
   }
 }
 
-export postsImage = (image) => {
+export function postsImage(image) {
   return (dispatch) => {
     return postImage(image)
       .then((response) => {
@@ -323,7 +323,7 @@ export postsImage = (image) => {
   }
 }
 
-export updatesImage = (image) => {
+export function updatesImage(image) {
   return (dispatch) => {
     return updateImage(image)
       .then((response) => {
@@ -345,7 +345,7 @@ export updatesImage = (image) => {
   }
 }
 
-export deletesImage = (image) => {
+export function deletesImage(image) {
   return (dispatch) => {
     return deleteImage(image)
       .then((response) => {
@@ -369,7 +369,7 @@ export deletesImage = (image) => {
 
 /* MOUSETRACKING API ACTIONS */
 
-export getsMouseTracking = (mouseTracking) => {
+export function getsMouseTracking(mouseTracking) {
   return (dispatch) => {
     return getMouseTracking(mouseTracking)
       .then((response) => {
@@ -391,7 +391,7 @@ export getsMouseTracking = (mouseTracking) => {
   }
 }
 
-export postsMouseTracking = (mouseTracking) => {
+export function postsMouseTracking(mouseTracking) {
   return (dispatch) => {
     return postMouseTracking(mouseTracking)
       .then((response) => {
@@ -413,7 +413,7 @@ export postsMouseTracking = (mouseTracking) => {
   }
 }
 
-export updatesMouseTracking = (mouseTracking) => {
+export function updatesMouseTracking(mouseTracking) {
   return (dispatch) => {
     return updateProject(mouseTracking)
       .then((response) => {
@@ -435,7 +435,7 @@ export updatesMouseTracking = (mouseTracking) => {
   }
 }
 
-export deletesMouseTracking = (mouseTracking) => {
+export function deletesMouseTracking(mouseTracking) {
   return (dispatch) => {
     return deleteMouseTracking(mouseTracking)
       .then((response) => {
@@ -660,7 +660,7 @@ export function getImageForNotes () {
   }
 }
 
-function updateImageForNotes (image) {
+export function updateImageForNotes (image) {
   return {
     type: 'UPDATE_IMAGE',
     image: image

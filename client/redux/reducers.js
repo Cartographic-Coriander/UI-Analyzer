@@ -48,30 +48,30 @@ const userInitialState = {
 
 const projectsInitialState = {
   list: [],
-  error: (e) => return e ? e : null
+  error: (e) => e ? e : null
 };
 
 const testsInitialState = {
   list: [],
-  error: (e) => return e ? e : null
+  error: (e) => e ? e : null
 };
 
 const commentsInitialState = {
   list: [],
-  error: (e) => return e ? e : null
+  error: (e) => e ? e : null
 };
 
 const imagesInitialState = {
   list: [],
-  error: (e) => return e ? e : null
+  error: (e) => e ? e : null
 };
 
 const mouseTrackingsInitialState = {
   list: [],
-  error: (e) => return e ? e : null
+  error: (e) => e ? e : null
 };
 
-export user = (state = userInitialState, action) => {
+export function user(state = userInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -88,7 +88,7 @@ export user = (state = userInitialState, action) => {
   }
 };
 
-export projects = (state = projectsInitialState, action) => {
+export function projects(state = projectsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -96,16 +96,16 @@ export projects = (state = projectsInitialState, action) => {
       newState.list = action.data;
       return newState;
     case 'POST_PROJECT':
-      let newList = newState.list.slice();
+      var newList = newState.list.slice();
       newList.push(action.data);
       newState.list = newList;
       return newState;
     case 'UPDATE_PROJECT':
-      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
       newState.list = newList;
       return newState;
     case 'DELETE_PROJECT':
-      let newList = newState.list.filter(item => item.id !== data.projectId);
+      var newList = newState.list.filter(item => item.id !== data.projectId);
       newState.list = newList;
       return newState;
     case 'ERROR_PROJECT':
@@ -113,7 +113,7 @@ export projects = (state = projectsInitialState, action) => {
   }
 };
 
-export tests = (state = testsInitialState, action) => {
+export function tests(state = testsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -121,16 +121,16 @@ export tests = (state = testsInitialState, action) => {
       newState.list = action.data;
       return newState;
     case 'POST_TEST':
-      let newList = newState.list.slice();
+      var newList = newState.list.slice();
       newList.push(action.data);
       newState.list = newList;
       return newState;
     case 'UPDATE_TEST':
-      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
       newState.list = newList;
       return newState;
     case 'DELETE_TEST':
-      let newList = newState.list.filter(item => item.id !== data.testId);
+      var newList = newState.list.filter(item => item.id !== data.testId);
       newState.list = newList;
       return newState;
     case 'ERROR_TEST':
@@ -138,7 +138,7 @@ export tests = (state = testsInitialState, action) => {
   }
 };
 
-export comments = (state = commentsInitialState, action) => {
+export function comments(state = commentsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -146,16 +146,16 @@ export comments = (state = commentsInitialState, action) => {
       newState.list = action.data;
       return newState;
     case 'POST_COMMENT':
-      let newList = newState.list.slice();
+      var newList = newState.list.slice();
       newList.push(action.data);
       newState.list = newList;
       return newState;
     case 'UPDATE_COMMENT':
-      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
       newState.list = newList;
       return newState;
     case 'DELETE_COMMENT':
-      let newList = newState.list.filter(item => item.id !== data.commentId);
+      var newList = newState.list.filter(item => item.id !== data.commentId);
       newState.list = newList;
       return newState;
     case 'ERROR_COMMENT':
@@ -163,23 +163,23 @@ export comments = (state = commentsInitialState, action) => {
   }
 };
 
-export images = (state = imagesInitialState, action) => {
+export function images(state = imagesInitialState, action) {
   var newState = Object.assign({}, state);
   switch (action.type) {
     case 'GET_IMAGE':
       newState.list = action.data;
       return newState;
     case 'POST_IMAGE':
-      let newList = newState.list.slice();
+      var newList = newState.list.slice();
       newList.push(action.data);
       newState.list = newList;
       return newState;
     case 'UPDATE_IMAGE':
-      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
       newState.list = newList;
       return newState;
     case 'DELETE_IMAGE':
-      let newList = newState.list.filter(item => item.id !== data.imageId);
+      var newList = newState.list.filter(item => item.id !== data.imageId);
       newState.list = newList;
       return newState;
     case 'ERROR_IMAGE':
@@ -187,7 +187,7 @@ export images = (state = imagesInitialState, action) => {
   }
 };
 
-export mouseTrackings = (state = mouseTrackingsInitialState, action) => {
+export function mouseTrackings(state = mouseTrackingsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -195,16 +195,16 @@ export mouseTrackings = (state = mouseTrackingsInitialState, action) => {
       newState.list = action.data;
       return newState;
     case 'POST_MOUSETRACKING':
-      let newList = newState.list.slice();
+      var newList = newState.list.slice();
       newList.push(action.data);
       newState.list = newList;
       return newState;
     case 'UPDATE_MOUSETRACKING':
-      let newList = newState.list.map(item => item.id === data.id ? item = data : item);
+      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
       newState.list = newList;
       return newState;
     case 'DELETE_MOUSETRACKING':
-      let newList = newState.list.filter(item => item.id !== data.mouseTrackingId);
+      var newList = newState.list.filter(item => item.id !== data.mouseTrackingId);
       newState.list = newList;
       return newState;
     case 'ERROR_MOUSETRACKING':
