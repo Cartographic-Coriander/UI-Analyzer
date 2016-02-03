@@ -25,7 +25,7 @@ class SignUpForm extends Component{
   render () {
   const { fields: { firstName, lastName, company, emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal>
+    <Modal show={ this.props.showRegistrationModal }>
       <form onSubmit={ handleSubmit }>
         <div>
           <label>first name</label>

@@ -144,17 +144,24 @@ export function imageUpdateReducer (state = imageUpdateInitialState, action) {
 
 export function modalStateReducer (state = modalInitialState, action) {
   var newState = Object.assign({}, state);
+  console.log(action)
   switch(action.type) {
     case 'SHOW_LOGIN':
       newState.login = true;
+      newState.getStarted = false;
       return newState;
     case 'SHOW_GET_STARTED':
       newState.getStarted = true;
+      newState.login = false;
       return newState;
     case 'HIDE_LOGIN':
       newState.login = false;
       return newState;
     case 'HIDE_GET_STARTED':
+      newState.getStarted = false;
+      return newState;
+    case 'MODAL_RESET':
+      newState.login = false;
       newState.getStarted = false;
       return newState;
   }
