@@ -1,4 +1,11 @@
-import { getImage, getAuthenticated, registerUser, sendAllNotes, getStarted, logIn } from './api'
+import {
+  getUser, postUser,
+  getProject, postProject, updateProject, deleteProject,
+  getTest, postTest, updateTest, deleteTest,
+  getComment, postComment, updateComment, deleteComment,
+  getImage, postImage, updateImage, deleteImage,
+  getMouseTracking, postMouseTracking, updateMouseTracking, deleteMouseTracking
+} from './api'
 
 export function switchVisibility (button) {
   return {
@@ -56,9 +63,9 @@ export function addNote (noteObj) {
 }
 
 ////////////////////////////////////////sends note array to server
-export function sendNotes (notes) { 
+export function postComments (notes) {
   return function (dispatch) {
-    return sendAllNotes (notes)
+    return getComment (notes)
       .then(function (success) {
         console.log('successful in sending notes');
       }, function (error) {
@@ -143,7 +150,7 @@ export function loggingIn (user) {
 ///////////////for making api call to auth and grab user JWT
 export function authUser (user) {
   return function (dispatch) {
-    return getAuthenticated(user)
+    return getUser(user)
       .then(function (response) {
         localStorage.setItem('Scrutinize.JWT.token', response.statusText);
         dispatch(userLogin(user.emailField));
@@ -166,7 +173,7 @@ export function userLogin (email) {
 ////////////////////////registering user and getting user JWT, called from submission of get_started form
 export function makeUser (user) {
   return function (dispatch) {
-    return registerUser(user)
+    return postUser(user)
       .then(function (response) {
           localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
           dispatch(signUpUser(user));

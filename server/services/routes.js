@@ -24,7 +24,7 @@ module.exports = function (app, express) {
     // retrieves array of project objects
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
-      var params = { userId: req.decoded.token.iss };
+      var params = { userId: req.decoded.iss };
       // var params = { userId: req.query.userId }; /* for testing purposes */
 
       projectsController.retrieveProject(params)
@@ -38,7 +38,7 @@ module.exports = function (app, express) {
     })
     .post(auth.decode, function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         name: req.body.name,
         description: req.body.description
       };
@@ -55,7 +55,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         projectId: req.body.projectId,
         update: {
           name: req.body.name,
@@ -83,7 +83,7 @@ module.exports = function (app, express) {
     .delete(auth.decode, function (req, res) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         projectId: req.body.projectId
       };
       // var params = { /* for testing purposes */
@@ -105,7 +105,7 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         projectId: req.query.projectId
       };
       // var params = { /* for testing purposes */
@@ -125,7 +125,7 @@ module.exports = function (app, express) {
     .post(auth.decode, function (req, res) {
     // .post(function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         projectId: req.body.projectId,
         name: req.body.name,
         url: req.body.url,
@@ -151,7 +151,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         testId: req.body.testId,
         projectId: req.body.projectId,
         update: {
@@ -183,7 +183,7 @@ module.exports = function (app, express) {
     .delete(auth.decode, function (req, res) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         testId: req.body.testId,
         projectId: req.body.projectId
       };
@@ -207,7 +207,7 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
       // var params = { /* for testing purposes */
@@ -226,7 +226,7 @@ module.exports = function (app, express) {
     })
     .post(auth.decode, function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         commentType: req.body.commentType,
         commentText: req.body.commentText,
@@ -246,7 +246,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         commentId: req.body.id,
         update: {
@@ -280,7 +280,7 @@ module.exports = function (app, express) {
     .delete(auth.decode, function (req, res) {
     // .delete(function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         commentId: req.body.commentId
       };
@@ -304,7 +304,7 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         testId: req.body.testId
       };
       // var params = { /* for testing purposes */
@@ -323,7 +323,7 @@ module.exports = function (app, express) {
     })
     .post(auth.decode, function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         testId: req.body.testId,
         image: req.body.image,
         url: req.body.url
@@ -341,7 +341,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         testId: req.body.testId,
         update: {
@@ -371,7 +371,7 @@ module.exports = function (app, express) {
     .delete(auth.decode, function (req, res) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         testId: req.body.testId,
       };
@@ -395,7 +395,7 @@ module.exports = function (app, express) {
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
       // var params = { /* for testing purposes */
@@ -414,7 +414,7 @@ module.exports = function (app, express) {
     })
     .post(auth.decode, function (req, res) {
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         movement: req.body.movement,
         clicks: req.body.clicks,
@@ -433,7 +433,7 @@ module.exports = function (app, express) {
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         mouseTrackingId: req.body.mouseTrackingId,
         update: {
@@ -465,7 +465,7 @@ module.exports = function (app, express) {
     .delete(auth.decode, function (req, res) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
-        userId: req.decoded.token.iss,
+        userId: req.decoded.iss,
         imageId: req.body.imageId,
         mouseTrackingId: req.body.mouseTrackingId
       };
