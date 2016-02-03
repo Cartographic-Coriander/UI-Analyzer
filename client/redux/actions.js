@@ -18,17 +18,30 @@ export function inviteTesters () {
   type: 'TOGGLE_INVITE_USER'
 }
 
-//////////////////////////////modal state
-export function showLoginModal () {
+//////////////////////////////////////modal state
+
+export function showLoginModal (action) {
+  var visibility = 'MODAL_RESET';
+  if (action) {
+    visibility = 'SHOW_LOGIN';
+  }
+  console.log('visibility', visibility)
   return {
-    type: 'SHOW_LOGIN',
-    
+    type: visibility,
+    action: action
   }
 }
 
-
-
-
+export function showSignupModal (action) {
+  var visibility = 'MODAL_RESET';
+  if (action) {
+    visibility = 'SHOW_GET_STARTED';
+  }
+  return {
+    type: visibility,
+    action: action
+  }
+}
 
 //////////////////////////end modal state
 
@@ -48,8 +61,7 @@ export function sendNotes (notes) {
     return sendAllNotes (notes)
       .then(function (success) {
         console.log('successful in sending notes');
-      })
-      .catch(function (error) {
+      }, function (error) {
         throw new Error(error);
       })
   }
@@ -104,14 +116,15 @@ export function authChecker (auth) {
   }
 }
 
-///////////////this below is being called from landin page login button, may have to change to be called from form in modal later
-export function loggingIn () {
+
+///////////////this below is being called the form that appears on the landing page
+export function loggingIn (user) {
   var userAuthObject = {
     type: 'AUTHENTICATED_USER',
     auth : 'not_authenticated'
   }
   return function (dispatch) {
-    logIn()
+    logIn(user)
       .then(function (response) {
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
         //we have set token in localstorage, set auth to authenticated and dispatch
@@ -123,6 +136,7 @@ export function loggingIn () {
       })
   }
 }
+////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -131,18 +145,11 @@ export function authUser (user) {
   return function (dispatch) {
     return getAuthenticated(user)
       .then(function (response) {
-        //
-        //TOKEN AND OTHER DATA WILL BE ACCESSED BY RESPONSE.BODY <uncomment when needed (when it is set up) >
-        //
-        //localStorage.setItem('Scrutinize.JWT.token', response.body);
-        //
         localStorage.setItem('Scrutinize.JWT.token', response.statusText);
         dispatch(userLogin(user.emailField));
+      }, function (error) {
+        throw new Error(error)
       })
-      .catch(function (response) {
-        throw new Error(response);
-      })
-  }
 }
 
 export function userLogin (email) {
@@ -155,20 +162,19 @@ export function userLogin (email) {
 
 
 
-////////////////////////registering user and getting user JWT
+////////////////////////registering user and getting user JWT, called from submission of get_started form
 export function makeUser (user) {
   return function (dispatch) {
     return registerUser(user)
       .then(
         function (response) {
-        //
-        //TOKEN AND OTHER DATA WIL BE ACCESSED BY RESPONSE.BODY <uncomment when needed (when it is set up) >
-        //
-        //localStorage.setItem('Scrutinize.JWT.token', response.body);
-        //
+        localStorage.setItem('Scrutinize.JWT.token', response.statusText);
         dispatch(signUpUser(user));
-      })
-      .catch(function (error) {
+        dispatch({
+          type: 'AUTHENTICATED_USER',
+          auth: 'authenticated'
+        })
+      }, function (error) {
         throw new Error(error);
       })
   }

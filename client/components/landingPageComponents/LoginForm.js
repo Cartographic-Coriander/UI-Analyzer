@@ -19,7 +19,7 @@ class LoginForm extends Component{
   render () {
   const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal show={ this.props.showRegistrationModal } >
+    <Modal show={ this.props.showLoginModal } >
       <form onSubmit={ handleSubmit }>
         <div>
           <label>e-mail</label>
