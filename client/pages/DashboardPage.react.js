@@ -22,7 +22,7 @@ export default class DashboardPage extends Component {
           <NavItem onClick={ () => { this.handleLogout('leaving') } }> Log Out </NavItem>
         </Nav>
       </Navbar>
-      <SidebarNavigation />
+      <SidebarNavigation className="dashboardSidebarNavigation" />
       <Content className= "dashboardContent"/>
       </div>
     )

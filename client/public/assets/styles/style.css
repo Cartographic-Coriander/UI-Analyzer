@@ -92,7 +92,9 @@ html, body {
 }*/
 
 .dashboardContent {
-  float:right;
+  height: 100%;
+  width: 80%;
+  float: right;
 }
 
 .SidebarNavigation {
@@ -100,6 +102,8 @@ html, body {
   height: 100%;
   width: 240px;
 }
+
+
 /*.Accordian {
   background-color: yellow;
 }

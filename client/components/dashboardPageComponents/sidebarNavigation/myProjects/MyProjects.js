@@ -6,9 +6,21 @@ import { toggleContentComponent } from '../../../../redux/actions';
 
 class MyProjects extends Component {
   render () {
+    var projects = [{
+      name: 'project1',
+      description: 'awesome',
+      id: 0
+    }, {
+      name: 'project2',
+      description: 'awesome',
+      id: 1
+    }];
+
     return (
     <div className = "MyProjects">
-      <ProjectListEntry />
+      {projects.map(item => 
+        <ProjectListEntry name={item.name} key={item.id} description={item.description}/>
+      )}
       <AddProjectButton />
     </div>
     )

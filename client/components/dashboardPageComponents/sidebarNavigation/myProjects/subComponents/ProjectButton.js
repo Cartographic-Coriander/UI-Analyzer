@@ -11,7 +11,7 @@ class ProjectButton extends Component {
   render () {
     return (
       <a href="#" className = "list-group-item ProjectButton" onClick = { this.handleClick.bind(this) }>
-        Project
+        {this.props.name}
         <ul className="dropdown-menu"> 
           <Accordian />
         </ul>
