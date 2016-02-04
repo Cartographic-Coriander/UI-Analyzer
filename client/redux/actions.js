@@ -13,13 +13,24 @@ export function getsUser(user) {
   return function (dispatch) {
     return getUser(user)
       .then((response) => {
-        var params = {
+        let params = {
           type: 'GET_USER',
           data: response.data.user
         };
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
         dispatch(params);
+      })
+      .then(() => {
+        return getProject()
+          .then((projects) => {
+            var params = {
+              type: 'GET_PROJECT',
+              data: projects.data
+            };
+
+            dispatch(params);
+          })
       })
       .catch((error) => {
         console.log('!!!!!ERROR!!!!!', error);

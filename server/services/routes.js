@@ -28,6 +28,18 @@ module.exports = function (app, express) {
       // var params = { userId: req.query.userId }; /* for testing purposes */
 
       projectsController.retrieveProject(params)
+        .then(function (results) {
+          return results.reduce(function (previous, current) {
+            var params = {
+              id: current.get('id'),
+              name: current.get('name'),
+              description: current.get('description')
+            };
+
+            previous.push(params);
+            return previous;
+          }, []);
+        })
         .then(function (result) {
           res.json(result);
         })
@@ -115,6 +127,20 @@ module.exports = function (app, express) {
       // };
 
       testsController.retrieveTest(params)
+        .then(function (results) {
+          results.reduce(function (previous, current) {
+            var params = {
+              id: current.get('id'),
+              projectId: current.get('projectId'),
+              name: current.get('name'),
+              url: current.get('url'),
+              prompt: current.get('prompt')
+            };
+
+            previous.push(params);
+            return previous;
+          }, []);
+        })
         .then(function (result) {
           res.json(result);
         })
@@ -217,6 +243,22 @@ module.exports = function (app, express) {
       // };
 
       commentsController.retrieveComment(params)
+        .then(function (results) {
+          results.reduce(function (previous, current) {
+            var params = {
+              id: current.get('id'),
+              userId: current.get('userId'),
+              imageId: current.get('imageId'),
+              commentType: current.get('commentType'),
+              commentText: current.get('commentText'),
+              x: current.get('x'),
+              y: current.get('y')
+            };
+
+            previous.push(params);
+            return previous;
+          }, []);
+        })
         .then(function (result) {
           res.json(result);
         })
@@ -314,6 +356,19 @@ module.exports = function (app, express) {
       // };
 
       imagesController.retrieveImage(params)
+        .then(function (results) {
+          results.reduce(function (previous, current) {
+            var params = {
+              id: current.get('id'),
+              testId: current.get('testId'),
+              url: current.get('url'),
+              image: current.get('image')
+            };
+
+            previous.push(params);
+            return previous;
+          }, []);
+        })
         .then(function (result) {
           res.json(result);
         })
@@ -405,6 +460,21 @@ module.exports = function (app, express) {
       // };
 
       mousetrackingController.retrieveMouseTracking(params)
+        .then(function (results) {
+          results.reduce(function (previous, current) {
+            var params = {
+              id: current.get('id'),
+              movement: current.get('movement'),
+              clicks: current.get('clicks'),
+              urlchange: current.get('urlchange'),
+              imageId: current.get('imageId'),
+              userId: current.get('userId')
+            };
+
+            previous.push(params);
+            return previous;
+          }, []);
+        })
         .then(function (result) {
           res.json(result);
         })

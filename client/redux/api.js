@@ -45,7 +45,7 @@ export function signOut () {
   return instance.delete('/api/users/signin')
 }
 
-export function getProject (project) {
+export function getProject () {
   return instance.get('/api/project');
 }
 
