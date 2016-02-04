@@ -13,8 +13,10 @@ export function getUser (user) {
     .then(function (response) {
       instance = axios.create({
         timeout: 1000,
-        headers: {'X-Custom-Header': response.data}
+        headers: { 'x-access-token': response.data.token }
       });
+
+      return response;
     })
 }
 
@@ -32,8 +34,10 @@ export function postUser (user) {
     .then(function (response) {
       instance = axios.create({
         timeout: 1000,
-        headers: {'X-Custom-Header': response.data}
+        headers: { 'x-access-token': response.data.token }
       });
+
+      return response;
     })
 }
 

@@ -6,7 +6,7 @@ import Registration from '../components/landingPageComponents/Registration';
 import ProductDescription from '../components/landingPageComponents/ProductDescription';
 import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
-import { switchVisibility, authChecker, authUser, registerUser, makeUser, showLoginModal, showSignupModal, loggingIn } from '../redux/actions';
+import { switchVisibility, authChecker, authUser, registerUser, showLoginModal, showSignupModal, getsUser, postsUser } from '../redux/actions';
 import LoginForm from '../components/landingPageComponents/LoginForm';
 
 class LandingPage extends Component {
@@ -19,12 +19,12 @@ class LandingPage extends Component {
   }
 
   onLogin (user) {
-    this.props.dispatch(loggingIn(user));;
+    this.props.dispatch(getsUser(user));;
     this.props.dispatch(showLoginModal(false));
   }
 
   onRegister (user) {
-    this.props.dispatch(makeUser(user));
+    this.props.dispatch(postsUser(user));
     this.props.dispatch(showSignupModal(false));
   }
 
@@ -41,8 +41,8 @@ class LandingPage extends Component {
       <div className = "LandingPage">
         {/* TODO     :       get authenticated may not be needed now*/}
         <Header authenticateClick={ this.getAuthenticated.bind(this) } showLogin={ this.showLogModal.bind(this) } showSignup= { this.showRegisterModal.bind(this) }/>
-        <LoginForm onSubmit={ this.onLogin.bind(this) } showLoginModal = { this.props.modalStateReducer.login }/>
-        <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalStateReducer.getStarted } />
+        <LoginForm onSubmit={ this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }/>
+        <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } />
         <ProductDescription />
         <AboutUs />
         <Footer />

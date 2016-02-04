@@ -48,7 +48,7 @@ const userInitialState = {
 
 const projectsInitialState = {
   list: [],
-  error: (e) => e ? e : null
+  error: null
 };
 
 const testsInitialState = {
@@ -71,24 +71,34 @@ const mouseTrackingsInitialState = {
   error: (e) => e ? e : null
 };
 
-export function user(state = userInitialState, action) {
+export function user (state = userInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
     case 'GET_USER':
-      return
+      console.log('get user, ', action)
+      newState.firstName = action.data.firstName;
+      newState.lastName = action.data.lastName;
+      newState.company = action.data.company;
+      newState.email = action.data.emailField;
+      return newState;
     case 'POST_USER':
-      return
+      newState.firstName = action.data.firstName;
+      newState.lastName = action.data.lastName;
+      newState.company = action.data.company;
+      newState.email = action.data.emailField;
+      return newState;
     case 'UPDATE_USER':
       return
     case 'DELETE_USER':
       return
     case 'ERROR_USER':
-      return
+      return state;
   }
+  return state;
 };
 
-export function projects(state = projectsInitialState, action) {
+export function projects (state = projectsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -111,9 +121,10 @@ export function projects(state = projectsInitialState, action) {
     case 'ERROR_PROJECT':
       return state.error(action.data);
   }
+  return state;
 };
 
-export function tests(state = testsInitialState, action) {
+export function tests (state = testsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -136,9 +147,10 @@ export function tests(state = testsInitialState, action) {
     case 'ERROR_TEST':
       return state.error(action.data);
   }
+  return state;
 };
 
-export function comments(state = commentsInitialState, action) {
+export function comments (state = commentsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -161,9 +173,10 @@ export function comments(state = commentsInitialState, action) {
     case 'ERROR_COMMENT':
       return state.error(action.data);
   }
+  return state;
 };
 
-export function images(state = imagesInitialState, action) {
+export function images (state = imagesInitialState, action) {
   var newState = Object.assign({}, state);
   switch (action.type) {
     case 'GET_IMAGE':
@@ -185,9 +198,10 @@ export function images(state = imagesInitialState, action) {
     case 'ERROR_IMAGE':
       return state.error(action.data);
   }
+  return state;
 };
 
-export function mouseTrackings(state = mouseTrackingsInitialState, action) {
+export function mouseTrackings (state = mouseTrackingsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -210,19 +224,21 @@ export function mouseTrackings(state = mouseTrackingsInitialState, action) {
     case 'ERROR_MOUSETRACKING':
       return state.error(action.data);
   }
+  return state;
 };
 
-export function authReducer (state = authenticationInitialState, action) {
+export function page (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
-    case 'AUTHENTICATED_USER':
-      newState.appState = action.auth;
+    case 'PAGE_STATE':
+    console.log('PAGE STATE!!!!!', action)
+      newState.appState = action.data;
       return newState;
   }
-  return state
+  return state;
 }
 
-export function showImageReducer (state = initialImageState, action) {
+export function showImage (state = initialImageState, action) {
   var newState = Object.assign({}, state);
   switch (action.type) {
     case 'SHOW_TEST_IMAGE':
@@ -232,11 +248,10 @@ export function showImageReducer (state = initialImageState, action) {
   return state;
 }
 
-export function buttonReducer (state = buttonInitialState, action) {
+export function button (state = buttonInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'SWITCH_VISIBILITY':
-    console.log(state)
       return newState[action.button] = !newState[action.button];
     case 'TOGGLE_CONTENT_COMPONENT':
       newState.activeContentComponent = action.targetComponent;
@@ -247,7 +262,7 @@ export function buttonReducer (state = buttonInitialState, action) {
   return state
 }
 
-export function noteReducer (state = noteInitialState, action) {
+export function note (state = noteInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'ADD_NOTE':
@@ -261,7 +276,7 @@ export function noteReducer (state = noteInitialState, action) {
   return state
 }
 
-export function projectReducer (state = projectInitialState, action) {
+export function project (state = projectInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'ADD_PROJECT':
@@ -279,7 +294,7 @@ export function projectReducer (state = projectInitialState, action) {
   return state
 }
 
-export function loginReducer (state = loginInitialState, action) {
+export function login (state = loginInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'USER_LOGIN':
@@ -289,9 +304,8 @@ export function loginReducer (state = loginInitialState, action) {
   return state;
 }
 
-export function registrationReducer (state = registrationInitialState, action) {
-  var newState = Object.assign({}, state)
-  console.log('logging from registration reduce ',action)
+export function registration (state = registrationInitialState, action) {
+  var newState = Object.assign({}, state);
   switch (action.type) {
     case 'REGISTER_USER' :
       newState.firstName = action.user.firstName;
@@ -303,7 +317,7 @@ export function registrationReducer (state = registrationInitialState, action) {
   return state;
 }
 
-export function imageUpdateReducer (state = imageUpdateInitialState, action) {
+export function imageUpdate (state = imageUpdateInitialState, action) {
   var newState = Object.assign({}, state);
   switch (action.type) {
     case 'UPDATE_IMAGE' :
@@ -313,9 +327,8 @@ export function imageUpdateReducer (state = imageUpdateInitialState, action) {
   return state;
 }
 
-export function modalStateReducer (state = modalInitialState, action) {
+export function modalState (state = modalInitialState, action) {
   var newState = Object.assign({}, state);
-  console.log(action)
   switch(action.type) {
     case 'SHOW_LOGIN':
       newState.login = true;
