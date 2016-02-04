@@ -14,13 +14,13 @@ class LandingPage extends Component {
     this.props.dispatch(switchVisibility(button));
   }
 
-  getAuthenticated (auth) {
-    this.props.dispatch(authChecker(auth));
-  }
-
   onLogin (user) {
     this.props.dispatch(getsUser(user));;
     this.props.dispatch(showLoginModal(false));
+    this.props.dispatch({
+      type: 'PAGE_STATE',
+      data: 'dashboard'
+    })
   }
 
   onRegister (user) {
@@ -40,7 +40,7 @@ class LandingPage extends Component {
     return (
       <div className = "LandingPage">
         {/* TODO     :       get authenticated may not be needed now*/}
-        <Header authenticateClick={ this.getAuthenticated.bind(this) } showLogin={ this.showLogModal.bind(this) } showSignup= { this.showRegisterModal.bind(this) }/>
+        <Header showLogin={ this.showLogModal.bind(this) } showSignup= { this.showRegisterModal.bind(this) }/>
         <LoginForm onSubmit={ this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }/>
         <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } />
         <ProductDescription />

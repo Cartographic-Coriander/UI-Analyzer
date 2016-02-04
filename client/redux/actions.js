@@ -12,20 +12,15 @@ import {
 export function getsUser(user) {
   return function (dispatch) {
     return getUser(user)
-      .then((response) => {
+      .then(function (response) {
         console.log('response', response)
-        var params = {
-          type: 'PAGE_STATE',
-          data: 'dashboard'
-        }
         response.type = 'GET_USER';
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
-        dispatch(params);
         dispatch(response);
       })
       .catch((error) => {
-        console.log('!!!!!ERROR!!!!!', error);
+        console.log('!!!!!ER!!!!!', error);
         var params = {
           type: 'ERROR_USER',
           data: error

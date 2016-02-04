@@ -26,6 +26,8 @@ export default class DashboardPage extends Component {
   }
 }
 
-const select = (state) => state
+const select = (state) => {
+  return state
+}
 
 export default connect(select)(DashboardPage)
