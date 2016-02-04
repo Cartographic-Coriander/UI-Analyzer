@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
-import { showImagePage } from '../redux/actions';
+import { showImagePage, signsOut } from '../redux/actions';
 
 export default class DashboardPage extends Component {
   handleLogout () {

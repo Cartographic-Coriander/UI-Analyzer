@@ -19,21 +19,29 @@ class LandingPage extends Component {
     this.props.dispatch(showSignupModal(false));
   }
 
-  showLoginModal (show) {
-    this.props.dispatch(showLoginModal(show));
+  showLoginModal () {
+    this.props.dispatch(showLoginModal(true));
   }
 
-  showRegisterModal (show) {
-    this.props.dispatch(showSignupModal(show));
+  hideLoginModal () {
+    this.props.dispatch(showLoginModal(false));
+  }
+
+  showRegisterModal () {
+    this.props.dispatch(showSignupModal(true));
+  }
+
+  hideRegistrationModal () {
+    this.props.dispatch(showSignupModal(false));
   }
 
   render () {
     return (
       <div className = "LandingPage">
         <Header showLogin = { this.showLoginModal.bind(this) } showSignup = { this.showRegisterModal.bind(this) }/>
-        <LoginForm onSubmit = { this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }/>
-        <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } />
-        <ProductDescription />
+        <LoginForm onSubmit = { this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }  hideLogin={ this.hideLoginModal.bind(this) }  />
+        <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } hideRegModal={ this.hideRegistrationModal.bind(this) } />
+        <ProductDescription showRegistration={ this.showRegisterModal.bind(this) } />
         <AboutUs />
         <Footer />
       </div>
