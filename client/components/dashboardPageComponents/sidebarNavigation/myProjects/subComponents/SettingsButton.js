@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toggleContentComponent } from '../../../../../redux/actions';
+import { Button } from 'react-bootstrap';
 import { contentState } from '../../../../../redux/actions';
 
 class SettingsButton extends Component {
@@ -8,9 +10,9 @@ class SettingsButton extends Component {
   }
   render () {
     return (
-      <button className = "SettingsButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "SettingsButton btn-block" onClick = { this.handleClick.bind(this) }>
         Settings
-      </button>
+      </Button>
     )
   }
 }

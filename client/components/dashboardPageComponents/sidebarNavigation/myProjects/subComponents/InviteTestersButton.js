@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { inviteTesters } from '../../../../../redux/actions';
+import { Button } from 'react-bootstrap';
 
 class InviteTestersButton extends Component {
   handleClick () {
@@ -8,9 +9,9 @@ class InviteTestersButton extends Component {
   }
   render () {
     return (
-      <button className = "InvteTestersButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "InvteTestersButton btn-block" onClick = { this.handleClick.bind(this) }>
       Invite Testers
-      </button>
+      </Button>
     )
   }
 }

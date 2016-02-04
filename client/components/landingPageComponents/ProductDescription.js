@@ -2,6 +2,7 @@ import React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Panel } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 export default React.createClass({
 
@@ -45,3 +46,8 @@ export default React.createClass({
   }
 
 });
+
+var mapStateToProps = function (state) {
+  
+  return state
+};
