@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
-import { showImagePage } from '../redux/actions';
+import { signsOut } from '../redux/actions';
 
 export default class DashboardPage extends Component {
   handleLogout () {
@@ -10,7 +10,7 @@ export default class DashboardPage extends Component {
   }
 
   handleClick () {
-    this.props.dispatch(showImagePage('show_image'));
+    // this.props.dispatch(showImagePage('show_image'));
   }
 
   render () {

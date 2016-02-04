@@ -150,10 +150,11 @@ var createUser = function (req, res, next) {
     });
 };
 
-var signout = function(req, res){
+var signout = function (req, res) {
   // call passport's log out functionality
+  console.log('signout')
   req.logout();
-  res.redirect('/');
+  res.end();
 };
 
 module.exports = {
