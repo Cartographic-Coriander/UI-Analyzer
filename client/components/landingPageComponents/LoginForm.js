@@ -31,7 +31,7 @@ class LoginForm extends Component{
         <div>
           <label>password</label>
           <div>
-            <input type="text" {...passwordField}/>
+            <input type="password" {...passwordField}/>
           </div>
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>

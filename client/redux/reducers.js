@@ -76,17 +76,16 @@ export function user (state = userInitialState, action) {
 
   switch (action.type) {
     case 'GET_USER':
-      console.log('get user, ', action)
-      newState.firstName = action.data.firstName;
-      newState.lastName = action.data.lastName;
-      newState.company = action.data.company;
-      newState.email = action.data.emailField;
+      newState.firstName = action.data.firstName || null;
+      newState.lastName = action.data.lastName || null;
+      newState.company = action.data.user.company || null;
+      newState.email = action.data.user.email || null;
       return newState;
     case 'POST_USER':
-      newState.firstName = action.data.firstName;
-      newState.lastName = action.data.lastName;
-      newState.company = action.data.company;
-      newState.email = action.data.emailField;
+      newState.firstName = action.data.firstName || null;
+      newState.lastName = action.data.lastName || null;
+      newState.company = action.data.company || null;
+      newState.email = action.data.emailField || null;
       return newState;
     case 'UPDATE_USER':
       return
@@ -231,8 +230,8 @@ export function page (state = authenticationInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'PAGE_STATE':
-    console.log('PAGE STATE!!!!!', action)
       newState.appState = action.data;
+      console.log('page state,', newState)
       return newState;
   }
   return state;
@@ -248,11 +247,11 @@ export function showImage (state = initialImageState, action) {
   return state;
 }
 
-export function button (state = buttonInitialState, action) {
+export function focus (state = buttonInitialState, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
     case 'SWITCH_VISIBILITY':
-      return newState[action.button] = !newState[action.button];
+      return newState[action.focus] = !newState[action.focus];
     case 'TOGGLE_CONTENT_COMPONENT':
       newState.activeContentComponent = action.targetComponent;
       return newState;
@@ -310,7 +309,7 @@ export function registration (state = registrationInitialState, action) {
     case 'REGISTER_USER' :
       newState.firstName = action.user.firstName;
       newState.lastName = action.user.lastName;
-      newState.company = action.user.company;
+      newState.company = action.user.company || null;
       newState.email = action.user.emailField;
       return newState;
   }

@@ -7,7 +7,7 @@ export default class extends Component {
     return (
       <div className="SidebarNavigation">
         'This is SidebarNavigation'
-        <MyDashboardButton />
+        {/*<MyDashboardButton />*/}
         <MyProjects />
       </div>
     )
