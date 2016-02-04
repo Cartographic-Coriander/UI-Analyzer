@@ -89,6 +89,12 @@ html, body {
 .login-button, .signup-button {
   margin-top: 10px;
 }
+
+.login-cancel-button, .signup-cancel-button {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 /*Dashboard*/
 .DashboardPage {
   height: 100%;

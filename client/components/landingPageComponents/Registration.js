@@ -67,7 +67,7 @@ class SignUpForm extends Component{
           <Button className="btn-primary signup-button" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} sign up
           </Button>
-          <Button type="button" onClick={ this.props.hideRegModal } >
+          <Button type="button" className="signup-cancel-button" onClick={ this.props.hideRegModal } >
             cancel
           </Button>
         </div>
