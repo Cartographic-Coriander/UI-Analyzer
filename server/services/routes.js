@@ -45,7 +45,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/project GET Error!', error);
-          res.end('No projects found.');
+          res.status(500).end('No projects found.');
         });
     })
     .post(auth.decode, function (req, res) {
@@ -62,7 +62,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/project POST Error!', error);
-          res.end('Project already exists');
+          res.status(500).end('Project already exists');
         });
     })
     .put(auth.decode, function (req, res) {
@@ -90,7 +90,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/project PUT Error!', error);
-          res.end('Project PUT Error!');
+          res.status(500).end('Project PUT Error!');
         });
     })
     .delete(auth.decode, function (req, res) {
@@ -110,7 +110,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/project DELETE Error!', error);
-          res.end('Project DELETE Error!');
+          res.status(500).end('Project DELETE Error!');
         });
     });
 
@@ -146,7 +146,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/test GET Error!', error);
-          res.end('Test GET Error!');
+          res.status(500).end('Test GET Error!');
         });
     })
     .post(auth.decode, function (req, res) {
@@ -172,7 +172,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/test POST Error!', error);
-          res.end('Test POST Error!');
+          res.status(500).end('Test POST Error!');
         });
     })
     .put(auth.decode, function (req, res) {
@@ -204,7 +204,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/test PUT Error!', error);
-          res.end('Test PUT Error!');
+          res.status(500).end('Test PUT Error!');
         });
     })
     .delete(auth.decode, function (req, res) {
@@ -226,7 +226,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/test DELETE Error!', error);
-          res.end('Test DELETE Error!');
+          res.status(500).end('Test DELETE Error!');
         });
     });
 
@@ -264,7 +264,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/comment GET Error!', error);
-          res.end('Test GET Error!');
+          res.status(500).end('Test GET Error!');
         });
     })
     .post(auth.decode, function (req, res) {
@@ -283,7 +283,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/comment POST Error!', error);
-          res.end('Test POST Error!');
+          res.status(500).end('Test POST Error!');
         });
     })
     .put(auth.decode, function (req, res) {
@@ -317,7 +317,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/comment PUT Error!', error);
-          res.end('Test PUT Error!');
+          res.status(500).end('Test PUT Error!');
         });
     })
     .delete(auth.decode, function (req, res) {
@@ -339,7 +339,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/comment DELETE Error!', error);
-          res.end('Test DELETE Error!');
+          res.status(500).end('Test DELETE Error!');
         });
     });
 
@@ -374,7 +374,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/image GET Error!', error);
-          res.end('Image GET Error!');
+          res.status(500).end('Image GET Error!');
         });
     })
     .post(auth.decode, function (req, res) {
@@ -391,7 +391,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/image POST Error!', error);
-          res.end('Image POST Error!');
+          res.status(500).end('Image POST Error!');
         });
     })
     .put(auth.decode, function (req, res) {
@@ -421,7 +421,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/image PUT Error!', error);
-          res.end('Image PUT Error!');
+          res.status(500).end('Image PUT Error!');
         });
     })
     .delete(auth.decode, function (req, res) {
@@ -443,7 +443,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/image DELETE Error!', error);
-          res.end('Image DELETE Error!');
+          res.status(500).end('Image DELETE Error!');
         });
     });
 
@@ -480,7 +480,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/mousetracking GET Error!', error);
-          res.end('Mousetracking GET Error!');
+          res.status(500).end('Mousetracking GET Error!');
         });
     })
     .post(auth.decode, function (req, res) {
@@ -498,7 +498,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/mousetracking POST Error!', error);
-          res.end('Mousetracking POST Error!');
+          res.status(500).end('Mousetracking POST Error!');
         });
     })
     .put(auth.decode, function (req, res) {
@@ -530,7 +530,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/mousetracking PUT Error!', error);
-          res.end('Mousetracking PUT Error!');
+          res.status(500).end('Mousetracking PUT Error!');
         });
     })
     .delete(auth.decode, function (req, res) {
@@ -552,7 +552,7 @@ module.exports = function (app, express) {
         })
         .catch(function (error) {
           console.log('/api/mousetracking DELETE Error!', error);
-          res.end('Mousetracking DELETE Error!');
+          res.status(500).end('Mousetracking DELETE Error!');
         });
     });
 };
