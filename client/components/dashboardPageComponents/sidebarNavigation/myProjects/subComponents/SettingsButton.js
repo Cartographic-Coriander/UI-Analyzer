@@ -15,6 +15,6 @@ class SettingsButton extends Component {
   }
 }
 
-const select = (state) => state.buttonReducer
+const select = (state) => state.form
 
 export default connect(select)(SettingsButton)

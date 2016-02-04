@@ -15,7 +15,7 @@ class Content extends Component {
         <SettingsContainer />
         <ProjectHeader />
         { (() => {
-          switch (this.props.buttonReducer.activeContentComponent) {
+          switch (this.props.focus.activeContentComponent) {
             case 'Reports':
               return <ReportsContainer />;
             case 'Dashboard':

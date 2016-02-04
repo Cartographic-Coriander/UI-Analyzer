@@ -31,13 +31,16 @@ class LoginForm extends Component{
         <div>
           <label>password</label>
           <div>
-            <input type="text" {...passwordField}/>
+            <input type="password" {...passwordField}/>
           </div>
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>
         <div>
           <button type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} login
+          </button>
+          <button type="button" onClick={ this.props.hideLogin }>
+            cancel
           </button>
         </div>
       </form>
