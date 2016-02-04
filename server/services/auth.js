@@ -153,7 +153,7 @@ var createUser = function (req, res, next) {
 var signout = function(req, res){
   // call passport's log out functionality
   req.logout();
-  res.redirect('/');
+  res.end();
 };
 
 module.exports = {
