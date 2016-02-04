@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     {console.log('props:', this.props)}
     return (
-      <div>
+      <div className="APP">
         { (() => {
             switch (this.props.stateRouter.pageState) {
               case 'not_authenticated':

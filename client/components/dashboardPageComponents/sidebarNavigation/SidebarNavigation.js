@@ -5,8 +5,7 @@ import MyProjects from './myProjects/MyProjects';
 export default class extends Component {
   render () {
     return (
-      <div className="SidebarNavigation">
-        'This is SidebarNavigation'
+      <div className="SidebarNavigation list-group">
         <MyDashboardButton />
         <MyProjects />
       </div>

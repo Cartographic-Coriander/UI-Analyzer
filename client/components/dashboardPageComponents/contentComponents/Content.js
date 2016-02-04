@@ -18,7 +18,7 @@ class Content extends Component {
           switch (this.props.stateRouter.contentState) {
             case 'Reports':
               return <ReportsContainer />;
-            case 'Dashboard':
+            case 'DashboardHOLD':
               return <DashboardContainer />;
             case 'AddProject':
               return <AddProjectContainer />;

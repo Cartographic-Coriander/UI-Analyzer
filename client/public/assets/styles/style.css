@@ -1,4 +1,18 @@
-/*Landing Page Header*/
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.APP {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+/*Landing Page*/
+
 .landingPageHeader {
   margin: 0 0 0 0;
 }
@@ -38,6 +52,7 @@
   justify-content:         space-around;
 }
 
+
 .productExample {
   width: 400px;
   height: 300px;
@@ -66,25 +81,71 @@
   -webkit-justify-content: space-around; /* Safari */
   justify-content:         space-around;
 }
-/*Landing Page About Us*/
 
-/*.aboutUs li {
-  display: inline;
-  display: block;
-  height: 100px;
-  width: 300px;
-  border-radius: 5px;
-  background-color: #FF781C;
-  float: left;
+.modal-content {
+  padding: 20px 20px 20px 20px;
 }
-*/
-/*.memberName {
-  margin-top: 50px;
-  padding-left: 25px;
+
+.login-button, .signup-button {
+  margin-top: 10px;
+}
+
+.login-cancel-button, .signup-cancel-button {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*Dashboard*/
+.DashboardPage {
+  height: 100%;
+}
+
+.dashboardPageHeader {
+  margin-bottom: 0;
+}
+
+/*.dashboardNav {
+  float:left;
+  height: 100%;
+  background-color: #2b3e50;;
 }*/
 
+.dashboardContent {
+  height: 100%;
+  width: 80%;
+  float: right;
+}
 
-.Accordian {
+.SidebarNavigation {
+  float: left;
+  height: 100%;
+  width: 200px;
+  background-color: #df691a;
+}
+
+.SidebarNavigation h3 {
+  font-size: 17px;
+  text-align: center;
+  padding-top: 5px;
+  height: 39px;
+  background-color: #df691a;
+}
+/*
+.react-sanfona-item-body {
+  margin-top: 10px;
+}*/
+
+.react-sanfona-item-body .Button{
+  width: 100%;
+}
+
+.projectAccordionItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*.Accordian {
   background-color: yellow;
 }
 
@@ -109,7 +170,6 @@
 }
 
 .MyDashboardButton {
-  background-color: orange;
 }
 
 .AddProjectButton {
@@ -154,4 +214,4 @@
 
 .hide * {
   display: none;
-}
+}*/
