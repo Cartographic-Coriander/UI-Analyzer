@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CreateProjectContainer from './subComponents/CreateProjectContainer';
 import ProjectConfirmation from './subComponents/ProjectConfirmation';
-import { addProject, confirmProject } from '../../../../redux/actions';
+import { postsProject } from '../../../../redux/actions';
 
 class AddProjectContainer extends Component {
-  constructor () {
+  constructor (props) {
     super(props);
     this.state = {
       confirm: {
@@ -19,11 +19,13 @@ class AddProjectContainer extends Component {
     this.setState({ confirm: project });
   }
 
-  onConfirm (project) {
-    let params = { projectName: null, projectDescription: null };
+  onConfirm (data) {
+    let nullParams = { projectName: null, projectDescription: null };
+    let params = { name: data.projectName, description: data.projectDescription };
 
-    this.setState({ confirm: params });
-    this.props.dispatch(postsProject(project));
+    this.setState({ confirm: nullParams });
+    console.log('project to add:', data)
+    this.props.dispatch(postsProject(params));
   }
 
   render () {
