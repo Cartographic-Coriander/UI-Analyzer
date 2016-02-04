@@ -83,7 +83,7 @@ export function getsProject(project) {
       .catch((error) => {
         var params = {
           type: 'ERROR_PROJECT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -105,7 +105,7 @@ export function postsProject(project) {
       .catch((error) => {
         var params = {
           type: 'ERROR_PROJECT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -127,7 +127,7 @@ export function updatesProject(project) {
       .catch((error) => {
         var params = {
           type: 'ERROR_PROJECT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -149,7 +149,7 @@ export function deletesProject(project) {
       .catch((error) => {
         var params = {
           type: 'ERROR_PROJECT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -173,7 +173,7 @@ export function getsTest(test) {
       .catch((error) => {
         var params = {
           type: 'ERROR_TEST',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -195,7 +195,7 @@ export function postsTest(test) {
       .catch((error) => {
         var params = {
           type: 'ERROR_TEST',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -217,7 +217,7 @@ export function updatesTest(test) {
       .catch((error) => {
         var params = {
           type: 'ERROR_TEST',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -239,7 +239,7 @@ export function deletesTest(test) {
       .catch((error) => {
         var params = {
           type: 'ERROR_TEST',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -263,7 +263,7 @@ export function getsComment(comment) {
       .catch((error) => {
         var params = {
           type: 'ERROR_COMMENT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -285,7 +285,7 @@ export function postsComment(comment) {
       .catch((error) => {
         var params = {
           type: 'ERROR_COMMENT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -307,7 +307,7 @@ export function updatesComment(comment) {
       .catch((error) => {
         var params = {
           type: 'ERROR_COMMENT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -329,7 +329,7 @@ export function deletesComment (comment) {
       .catch((error) => {
         var params = {
           type: 'ERROR_COMMENT',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -353,7 +353,7 @@ export function getsImage(image) {
       .catch((error) => {
         var params = {
           type: 'ERROR_IMAGE',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -375,7 +375,7 @@ export function postsImage(image) {
       .catch((error) => {
         var params = {
           type: 'ERROR_IMAGE',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -397,7 +397,7 @@ export function updatesImage(image) {
       .catch((error) => {
         var params = {
           type: 'ERROR_IMAGE',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -419,7 +419,7 @@ export function deletesImage(image) {
       .catch((error) => {
         var params = {
           type: 'ERROR_IMAGE',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -443,7 +443,7 @@ export function getsMouseTracking(mouseTracking) {
       .catch((error) => {
         var params = {
           type: 'ERROR_MOUSETRACKING',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -465,7 +465,7 @@ export function postsMouseTracking(mouseTracking) {
       .catch((error) => {
         var params = {
           type: 'ERROR_MOUSETRACKING',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -487,7 +487,7 @@ export function updatesMouseTracking(mouseTracking) {
       .catch((error) => {
         var params = {
           type: 'ERROR_MOUSETRACKING',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -509,7 +509,7 @@ export function deletesMouseTracking(mouseTracking) {
       .catch((error) => {
         var params = {
           type: 'ERROR_MOUSETRACKING',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
@@ -531,7 +531,7 @@ export function signsOut() {
       .catch((error) => {
         var params = {
           type: 'ERROR_USER',
-          data: error.split('\n')[0]
+          data: error
         };
 
         dispatch(params);
