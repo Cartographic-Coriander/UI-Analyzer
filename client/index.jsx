@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
-import { user, projects, tests, comments, images, mouseTrackings, stateRouter, modalState } from './redux/reducers';
+import { user, projects, tests, comments, images, mouseTrackings, currentFocus, stateRouter, modalState } from './redux/reducers';
 
 const reducers = {
   user: user,
@@ -14,6 +14,7 @@ const reducers = {
   comments: comments,
   images: images,
   mouseTrackings: mouseTrackings,
+  currentFocus: currentFocus,
   stateRouter: stateRouter,
   modalState: modalState,
   form: formReducer

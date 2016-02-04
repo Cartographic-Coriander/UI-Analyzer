@@ -40,6 +40,15 @@ const mouseTrackingsInitialState = {
   error: null
 };
 
+const currentFocusInitialState = {
+  userId: null,
+  projectId: null,
+  testId: null,
+  imageId: null,
+  commentId: null,
+  mouseTrackingId: null
+};
+
 export function user (state = userInitialState, action) {
   var newState = Object.assign({}, state);
 
@@ -196,6 +205,17 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
   return state;
 };
 
+export function currentFocus (state = currentFocusInitialState, action) {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'SET_FOCUS':
+      newState[action.key] = action.value;
+      return newState
+  }
+  return state;
+}
+
 export function stateRouter (state = stateRouterInitialState, action) {
   var newState = Object.assign({}, state);
 
@@ -214,7 +234,7 @@ export function stateRouter (state = stateRouterInitialState, action) {
       return newState;
   }
   return state;
-}
+};
 
 export function modalState (state = modalInitialState, action) {
   var newState = Object.assign({}, state);
@@ -234,6 +254,6 @@ export function modalState (state = modalInitialState, action) {
       return newState;
   }
   return state;
-}
+};
 
 

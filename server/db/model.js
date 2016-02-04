@@ -82,6 +82,8 @@ var init = function() {
   console.log('Database initialized!');
 };
 
+sequelize.sync();
+
 module.exports = {
   sequelize: sequelize,
   User: User,
