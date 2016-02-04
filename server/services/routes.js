@@ -42,10 +42,11 @@ module.exports = function (app, express) {
         name: req.body.name,
         description: req.body.description
       };
+      console.log('project post params:', params, typeof params.userId)
 
       projectsController.createProject(params)
         .then(function (result) {
-          res.end(result);
+          res.json(result);
         })
         .catch(function (error) {
           console.log('/api/project POST Error!', error);
