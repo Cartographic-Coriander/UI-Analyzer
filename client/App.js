@@ -5,15 +5,15 @@ import AddNotes from './pages/addNotes.react.js';
 import { connect } from 'react-redux';
 
 class App extends Component {
-  render() {
-    {(()=>{console.log('this is the props at App.js: ', this.props)})()}
+  render() { 
+    {(()=>{console.log('this is theprops at App.js: ', this.props)})()}
     return (
       <div>
         { (() => {
-            switch (this.props.authReducer.appState) {
+            switch (this.props.page.appState) {
               case 'not_authenticated':
                 return <LandingPage />;
-              case 'authenticated':
+              case 'dashboard':
                 return <DashboardPage />;
               case 'Image_Appear':
                 return <AddNotes />
@@ -28,8 +28,9 @@ class App extends Component {
   }
 };
 
-function mapStoP (state) {
+function mapStateToProps (state) {
+  console.log('state at App.js', state)
   return state;
 }
 
-export default connect(mapStoP)(App);
+export default connect(mapStateToProps)(App);

@@ -9,6 +9,58 @@ import {
 
 /* PROJECT API ACTIONS */
 
+export function getsUser(user) {
+  return function (dispatch) {
+    return getUser(user)
+      .then((response) => {
+        console.log('response', response)
+        var params = {
+          type: 'PAGE_STATE',
+          data: 'dashboard'
+        }
+        response.type = 'GET_USER';
+
+        localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+        dispatch(params);
+        dispatch(response);
+      })
+      .catch((error) => {
+        console.log('!!!!!ERROR!!!!!', error);
+        var params = {
+          type: 'ERROR_USER',
+          data: error
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
+export function postsUser(user) {
+  return function (dispatch) {
+    return postUser(user)
+      .then((response) => {
+        var params = {
+          type: 'AUTHENTICATED_USER',
+          auth: 'authenticated'
+        };
+        response.type = 'POST_USER';
+
+        localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+        dispatch(response);
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_USER',
+          data: error
+        };
+
+        dispatch(params);
+      })
+  }
+}
+
 export function getsProject(project) {
   return (dispatch) => {
     return getProject(project)
