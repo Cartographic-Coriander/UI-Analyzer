@@ -4,7 +4,6 @@ import { NavItem } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 
 class Header extends Component {
-
   render() {
     return (
       <Navbar className="navbar-inverse landingPageHeader">
@@ -14,8 +13,8 @@ class Header extends Component {
           <NavItem onClick={ () => this.props.showLogin(true) }> Log In </NavItem>
         </Nav>
       </Navbar>
-      )
+    )
   }
-}; 
+};
 
 export default Header;

@@ -41,6 +41,10 @@ export function postUser (user) {
     })
 }
 
+export function signout () {
+  return instance.delete('/api/users/signin')
+}
+
 export function getProject (project) {
   return instance.get('/api/project');
 }

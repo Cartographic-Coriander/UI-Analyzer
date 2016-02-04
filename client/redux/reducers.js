@@ -1,18 +1,6 @@
-const buttonInitialState = {
-  activeContentComponent: 'Dashboard',
-}
-
-const noteInitialState = {
-  notes: []
-}
-
-const projectInitialState = {
-  confirm: { projectName: null, projectDescription: null },
-  projects: []
-}
-
-const authenticationInitialState = {
-  appState: 'not_authenticated'
+const stateRouterInitialState = {
+  pageState: 'not_authenticated',
+  contentState: 'Dashboard'
 }
 
 const modalInitialState = {
@@ -20,28 +8,9 @@ const modalInitialState = {
   getStarted: false
 }
 
-const loginInitialState = {
-  email : null
-}
-
-const registrationInitialState = {
-  firstName: null,
-  lastName: null,
-  company: null,
-  email : null
-}
-
-const imageUpdateInitialState = {
-  image: null
-}
-
-const initialImageState = {
-  appState: 'not_authenticated'
-}
-
 const userInitialState = {
-  firstName: null,
-  lastName: null,
+  firstname: null,
+  surname: null,
   company: null,
   email : null
 };
@@ -53,22 +22,22 @@ const projectsInitialState = {
 
 const testsInitialState = {
   list: [],
-  error: (e) => e ? e : null
+  error: null
 };
 
 const commentsInitialState = {
   list: [],
-  error: (e) => e ? e : null
+  error: null
 };
 
 const imagesInitialState = {
   list: [],
-  error: (e) => e ? e : null
+  error: null
 };
 
 const mouseTrackingsInitialState = {
   list: [],
-  error: (e) => e ? e : null
+  error: null
 };
 
 export function user (state = userInitialState, action) {
@@ -76,24 +45,23 @@ export function user (state = userInitialState, action) {
 
   switch (action.type) {
     case 'GET_USER':
-      console.log('get user, ', action)
-      newState.firstName = action.data.firstName;
-      newState.lastName = action.data.lastName;
+      newState.firstname = action.data.firstname;
+      newState.surname = action.data.surname;
       newState.company = action.data.company;
-      newState.email = action.data.emailField;
+      newState.email = action.data.email;
       return newState;
     case 'POST_USER':
-      newState.firstName = action.data.firstName;
-      newState.lastName = action.data.lastName;
+      newState.firstname = action.data.firstname;
+      newState.surname = action.data.surname;
       newState.company = action.data.company;
-      newState.email = action.data.emailField;
+      newState.email = action.data.email;
       return newState;
     case 'UPDATE_USER':
-      return
+      return newState;
     case 'DELETE_USER':
-      return
+      return newState;
     case 'ERROR_USER':
-      return state;
+      return newState;
   }
   return state;
 };
@@ -178,6 +146,7 @@ export function comments (state = commentsInitialState, action) {
 
 export function images (state = imagesInitialState, action) {
   var newState = Object.assign({}, state);
+
   switch (action.type) {
     case 'GET_IMAGE':
       newState.list = action.data;
@@ -227,101 +196,18 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
   return state;
 };
 
-export function page (state = authenticationInitialState, action) {
-  var newState = Object.assign({}, state)
+export function stateRouter (state = stateRouterInitialState, action) {
+  var newState = Object.assign({}, state);
+
   switch (action.type) {
     case 'PAGE_STATE':
-    console.log('PAGE STATE!!!!!', action)
-      newState.appState = action.data;
+      newState.pageState = action.target;
       return newState;
-  }
-  return state;
-}
-
-export function showImage (state = initialImageState, action) {
-  var newState = Object.assign({}, state);
-  switch (action.type) {
-    case 'SHOW_TEST_IMAGE':
-      newState.appState = action.auth;
+    case 'CONTENT_STATE':
+      newState.contentState = action.target;
       return newState;
-  }
-  return state;
-}
-
-export function button (state = buttonInitialState, action) {
-  var newState = Object.assign({}, state)
-  switch (action.type) {
-    case 'SWITCH_VISIBILITY':
-      return newState[action.button] = !newState[action.button];
-    case 'TOGGLE_CONTENT_COMPONENT':
-      newState.activeContentComponent = action.targetComponent;
-      return newState;
-    default:
-      return state;
-  }
-  return state
-}
-
-export function note (state = noteInitialState, action) {
-  var newState = Object.assign({}, state)
-  switch (action.type) {
-    case 'ADD_NOTE':
-      var newComments = state['notes'].slice();
-      newComments.push(action.note);
-      newState['notes'] = newComments;
-      return newState;
-    default:
-      return state;
-  }
-  return state
-}
-
-export function project (state = projectInitialState, action) {
-  var newState = Object.assign({}, state)
-  switch (action.type) {
-    case 'ADD_PROJECT':
-      var newProjects = state.projects.slice();
-      newProjects.push(action.project);
-      newState.projects = newProjects;
-      return newState;
-    case 'CONFIRM_PROJECT':
-      console.log('confirm', action)
-      newState.confirm = action.project;
-      return newState;
-    default:
-      return state;
-  }
-  return state
-}
-
-export function login (state = loginInitialState, action) {
-  var newState = Object.assign({}, state)
-  switch (action.type) {
-    case 'USER_LOGIN':
-      newState.email = action.email;
-      return newState;
-  }
-  return state;
-}
-
-export function registration (state = registrationInitialState, action) {
-  var newState = Object.assign({}, state);
-  switch (action.type) {
-    case 'REGISTER_USER' :
-      newState.firstName = action.user.firstName;
-      newState.lastName = action.user.lastName;
-      newState.company = action.user.company;
-      newState.email = action.user.emailField;
-      return newState;
-  }
-  return state;
-}
-
-export function imageUpdate (state = imageUpdateInitialState, action) {
-  var newState = Object.assign({}, state);
-  switch (action.type) {
-    case 'UPDATE_IMAGE' :
-      newState.image = action.image.data;
+    case 'GET_USER':
+      newState.pageState = 'authenticated';
       return newState;
   }
   return state;
@@ -329,6 +215,7 @@ export function imageUpdate (state = imageUpdateInitialState, action) {
 
 export function modalState (state = modalInitialState, action) {
   var newState = Object.assign({}, state);
+
   switch(action.type) {
     case 'SHOW_LOGIN':
       newState.login = true;
@@ -338,12 +225,6 @@ export function modalState (state = modalInitialState, action) {
       newState.getStarted = true;
       newState.login = false;
       return newState;
-    case 'HIDE_LOGIN':
-      newState.login = false;
-      return newState;
-    case 'HIDE_GET_STARTED':
-      newState.getStarted = false;
-      return newState;
     case 'MODAL_RESET':
       newState.login = false;
       newState.getStarted = false;
@@ -351,3 +232,5 @@ export function modalState (state = modalInitialState, action) {
   }
   return state;
 }
+
+

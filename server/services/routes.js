@@ -18,7 +18,7 @@ module.exports = function (app, express) {
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
 
-  app.get('/signOut', auth.signout);
+  app.delete('/api/users/signin', auth.signout);
 
   app.route('/api/project')
     // retrieves array of project objects

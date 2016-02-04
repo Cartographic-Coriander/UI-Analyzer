@@ -4,33 +4,23 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
-import { reducer as form } from 'redux-form';
-import { button, note, project, auth, logOut, login, registration, imageUpdate, showImage, modalState, page, projects, user, tests, comments, images, mouseTrackings } from './redux/reducers';
+import { reducer as formReducer } from 'redux-form';
+import { user, projects, tests, comments, images, mouseTrackings, stateRouter, modalState } from './redux/reducers';
 
 const reducers = {
-  button: button,
-  note: note,
-  project: project,
-  form: form,
-  auth: auth,
-  logOut: logOut,
-  login: login,
-  registration: registration,
-  imageUpdate : imageUpdate ,
-  showImage: showImage,
-  modalState: modalState,
-  page: page,
-  projects: projects,
   user: user,
-  tests: tests, 
+  projects: projects,
+  tests: tests,
   comments: comments,
   images: images,
-  mouseTrackings: mouseTrackings
+  mouseTrackings: mouseTrackings,
+  stateRouter: stateRouter,
+  modalState: modalState,
+  form: formReducer
 };
 const combinedReducers = combineReducers(reducers);
-
 let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-let store = createStoreWithMiddleware(combinedReducers)
+let store = createStoreWithMiddleware(combinedReducers);
 
 ReactDOM.render(
   <Provider store={ store }>
