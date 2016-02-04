@@ -531,7 +531,6 @@ export function showLoginModal (action) {
   if (action) {
     visibility = 'SHOW_LOGIN';
   }
-  console.log('visibility', visibility)
   return {
     type: visibility,
     action: action

@@ -39,6 +39,9 @@ class LoginForm extends Component{
           <button type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} login
           </button>
+          <button type="button" onClick={ this.props.hideLogin }>
+            cancel
+          </button>
         </div>
       </form>
     </Modal>
