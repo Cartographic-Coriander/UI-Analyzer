@@ -9,9 +9,9 @@ class MyDashboardButton extends Component {
   }
   render () {
     return (
-      <a href="#" className="list-group-item MyDashboardButton" onClick = { this.handleClick.bind(this) }>
+      <Button className="MyDashboardButton btn-primary btn-block" onClick = { this.handleClick.bind(this) }>
         My Dashboard
-      </a>
+      </Button>
     )
   }
 }

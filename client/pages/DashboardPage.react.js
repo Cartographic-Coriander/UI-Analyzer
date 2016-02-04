@@ -3,6 +3,9 @@ import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavi
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
 import { authChecker, showImagePage } from '../redux/actions';
+import { Navbar } from 'react-bootstrap';
+import { NavItem } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 
 export default class DashboardPage extends Component {
   handleLogout (goodBye) {
@@ -16,8 +19,11 @@ export default class DashboardPage extends Component {
   render () {
     return (
       <div className = "DashboardPage">
-        'This is DashboardPage'
-        <button onClick={ () => { this.handleLogout('leaving') } }>Logout</button>
+        <Navbar className="navbar-inverse dashboardPageHeader">
+          <Nav className="navbar-nav navbar-right">
+            <NavItem onClick={ () => { this.handleLogout('leaving') } }> Log Out </NavItem>
+          </Nav>
+        </Navbar>
         <SidebarNavigation />
         <Content />
         <button onClick={ this.handleClick.bind(this) }>make image appear</button>

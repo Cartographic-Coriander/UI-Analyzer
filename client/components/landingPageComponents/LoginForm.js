@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 export const fields = ['emailField', 'passwordField'];
 
 const validate = values => {
@@ -19,7 +20,7 @@ class LoginForm extends Component{
   render () {
   const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal show={ this.props.showLoginModal } >
+    <Modal show={ this.props.showLoginModal } className="LoginForm">
       <form onSubmit={ handleSubmit }>
         <div>
           <label>e-mail</label>
@@ -36,9 +37,9 @@ class LoginForm extends Component{
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>
         <div>
-          <button type="submit" disabled={submitting}>
+          <Button className="login-button btn-primary" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} login
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

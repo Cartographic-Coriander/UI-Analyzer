@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     {(()=>{console.log('this is the props at App.js: ', this.props)})()}
     return (
-      <div>
+      <div className="APP">
         { (() => {
             switch (this.props.authReducer.appState) {
               case 'not_authenticated':

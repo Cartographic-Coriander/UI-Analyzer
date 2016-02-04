@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 export const fields = ['firstName', 'lastName', 'company', 'emailField', 'passwordField'];
 
 const validate = values => {
@@ -63,9 +64,9 @@ class SignUpForm extends Component{
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>
         <div>
-          <button type="submit" disabled={submitting}>
+          <Button className="btn-primary signup-button" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} sign up
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

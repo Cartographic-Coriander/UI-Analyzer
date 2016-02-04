@@ -43,7 +43,7 @@ class LandingPage extends Component {
         <Header authenticateClick={ this.getAuthenticated.bind(this) } showLogin={ this.showLogModal.bind(this) } showSignup= { this.showRegisterModal.bind(this) }/>
         <LoginForm onSubmit={ this.onLogin.bind(this) } showLoginModal = { this.props.modalStateReducer.login }/>
         <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalStateReducer.getStarted } />
-        <ProductDescription />
+        <ProductDescription showSignup= { this.showRegisterModal.bind(this) }/>
         <AboutUs />
         <Footer />
       </div>

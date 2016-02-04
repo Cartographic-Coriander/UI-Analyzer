@@ -9,7 +9,7 @@ class ReportsButton extends Component {
   }
   render () {
     return (
-      <Button className = "ReportsButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "ReportsButton btn-block" onClick = { this.handleClick.bind(this) }>
       Reports
       </Button>
     )

@@ -9,7 +9,7 @@ class TestButton extends Component {
   }
   render () {
     return (
-      <Button className = "TestButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "TestButton btn-block" onClick = { this.handleClick.bind(this) }>
         Test
       </Button>
     )

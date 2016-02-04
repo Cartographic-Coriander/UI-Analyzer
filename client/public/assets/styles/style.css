@@ -3,6 +3,10 @@ html, body {
     height: 100%;
 }
 
+.APP {
+  height: 100%;
+}
+
 #app {
   height: 100%;
 }
@@ -48,6 +52,7 @@ html, body {
   justify-content:         space-around;
 }
 
+
 .productExample {
   width: 400px;
   height: 300px;
@@ -76,6 +81,14 @@ html, body {
   -webkit-justify-content: space-around; /* Safari */
   justify-content:         space-around;
 }
+
+.modal-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.login-button, .signup-button {
+  margin-top: 10px;
+}
 /*Dashboard*/
 .DashboardPage {
   height: 100%;
@@ -101,8 +114,30 @@ html, body {
   float: left;
   height: 100%;
   width: 240px;
+  background-color: #df691a;
 }
 
+.SidebarNavigation h3 {
+  font-size: 17px;
+  text-align: center;
+  padding-top: 5px;
+  height: 39px;
+  background-color: #df691a;
+}
+/*
+.react-sanfona-item-body {
+  margin-top: 10px;
+}*/
+
+.react-sanfona-item-body .Button{
+  width: 100%;
+}
+
+.projectAccordionItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
 /*.Accordian {
   background-color: yellow;

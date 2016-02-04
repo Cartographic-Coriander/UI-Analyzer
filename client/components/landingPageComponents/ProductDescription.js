@@ -2,6 +2,7 @@ import React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Panel } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 export default React.createClass({
 
@@ -15,7 +16,7 @@ export default React.createClass({
             <h1>Inspiration from Users, for Users</h1>
             <p>Scrutinize tracks, aggregates and reports user behavior on your website.</p>
             <p>Gain insights into your users to optimize UI/UX.</p>
-            <p><Button className="btn-primary btn-lg getStartedBtn-lg">Get Started</Button></p>
+            <p><Button className="btn-primary btn-lg getStartedBtn-lg" onClick={ () => this.props.showSignup(true)}>Get Started</Button></p>
           </div>
         </Jumbotron>
 
@@ -45,3 +46,8 @@ export default React.createClass({
   }
 
 });
+
+var mapStateToProps = function (state) {
+  
+  return state
+};

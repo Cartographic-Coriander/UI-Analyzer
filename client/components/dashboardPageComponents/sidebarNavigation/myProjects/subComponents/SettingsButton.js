@@ -9,7 +9,7 @@ class SettingsButton extends Component {
   }
   render () {
     return (
-      <Button className = "SettingsButton" onClick = { this.handleClick.bind(this) }>
+      <Button className = "SettingsButton btn-block" onClick = { this.handleClick.bind(this) }>
         Settings
       </Button>
     )
