@@ -29,9 +29,7 @@ let fakeData = {
 
 
 class SettingsContainer extends Component {
-
   render () {
-
     return (
       <div className = 'Settings'>
         <h3>I am the settings container component</h3>

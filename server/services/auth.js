@@ -100,7 +100,7 @@ var decode = function(req, res, next) {
 
   try {
     try {
-      var decoded = jwt.decode(req.headers.token, tokenSecret);
+      var decoded = jwt.decode(req.headers['x-access-token'], tokenSecret);
     } finally {
       if (decoded.exp <= Date.now()) {
         throw new Error ('[Error: Token expired]');
@@ -111,7 +111,7 @@ var decode = function(req, res, next) {
     res.status(400).end('Error! Unable to decode token.');
   }
 
-  console.log(decoded);
+  console.log('decoded: ', decoded);
   req.decoded = decoded;
   next();
 };

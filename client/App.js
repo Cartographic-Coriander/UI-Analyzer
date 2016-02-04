@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import LandingPage from './pages/LandingPage.react';
 import DashboardPage from './pages/DashboardPage.react';
-import AddNotes from './pages/addNotes.react.js';
+import AddNotes from './pages/AddComments.react';
 import { connect } from 'react-redux';
 
 class App extends Component {
-  render() { 
-    {(()=>{console.log('this is theprops at App.js: ', this.props)})()}
+  render() {
+    {console.log('props:', this.props)}
     return (
       <div>
         { (() => {
-            switch (this.props.page.appState) {
+            switch (this.props.stateRouter.pageState) {
               case 'not_authenticated':
                 return <LandingPage />;
-              case 'dashboard':
+              case 'authenticated':
                 return <DashboardPage />;
               case 'Image_Appear':
                 return <AddNotes />
@@ -22,15 +22,11 @@ class App extends Component {
             }
           })()
        }
-
       </div>
     )
   }
 };
 
-function mapStateToProps (state) {
-  console.log('state at App.js', state)
-  return state;
-}
+const select = (state) => state;
 
-export default connect(mapStateToProps)(App);
+export default connect(select)(App);

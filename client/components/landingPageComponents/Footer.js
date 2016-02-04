@@ -1,6 +1,6 @@
 import React from 'react';
 
-//footer not going to change much, no need state
+//footer is not going to change much, does not need state
 const Footer = () => {
   return (
     <div className="footer">

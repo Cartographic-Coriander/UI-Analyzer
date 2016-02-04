@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleContentComponent } from '../../../../redux/actions';
+import { contentState } from '../../../../redux/actions';
 
 class MyDashboardButton extends Component {
   handleClick () {
-    this.props.dispatch(toggleContentComponent('Dashboard'));
+    this.props.dispatch(contentState('Dashboard'));
   }
   render () {
     return (
@@ -15,6 +15,6 @@ class MyDashboardButton extends Component {
   }
 }
 
-const select = (state) => state.buttonReducer
+const select = (state) => state
 
 export default connect(select)(MyDashboardButton)

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleContentComponent } from '../../../../../redux/actions';
+import { contentState } from '../../../../../redux/actions';
 
 class SettingsButton extends Component {
   handleClick () {
-    this.props.dispatch(toggleContentComponent('Settings'));
+    this.props.dispatch(contentState('Settings'));
   }
   render () {
     return (
@@ -15,6 +15,6 @@ class SettingsButton extends Component {
   }
 }
 
-const select = (state) => state.buttonReducer
+const select = (state) => state
 
 export default connect(select)(SettingsButton)

@@ -18,7 +18,7 @@ module.exports = function (app, express) {
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
 
-  app.get('/signOut', auth.signout);
+  app.delete('/api/users/signin', auth.signout);
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -42,10 +42,11 @@ module.exports = function (app, express) {
         name: req.body.name,
         description: req.body.description
       };
+      console.log('project post params:', params, typeof params.userId)
 
       projectsController.createProject(params)
         .then(function (result) {
-          res.end(result);
+          res.json(result);
         })
         .catch(function (error) {
           console.log('/api/project POST Error!', error);

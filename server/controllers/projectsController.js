@@ -20,6 +20,7 @@ var createProject = function (project) {
     return model.Project.create(params, { transaction: t })
       .then(function (newProject) {
         var params = { userId: project.userId, projectId: newProject.get('id'), role: 'owner' };
+        console.log('new project: ', params)
 
         return model.ProjectUser.create(params, { transaction: t })
           .then(function (projectUser) {
