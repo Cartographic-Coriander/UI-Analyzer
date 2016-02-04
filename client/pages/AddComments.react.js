@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import { postsComment, getImageForNotes, showImagePage } from '../redux/actions';
+import { postsComment, getsImage, pageState } from '../redux/actions';
 
 class AddNotes extends Component {
-  constructor () {
+  constructor (props) {
     super(props);
     this.state = {
       comments: []
@@ -15,12 +15,12 @@ class AddNotes extends Component {
     //for sending array of notes to the server
     this.props.dispatch(postsComment(this.state.comments));
     //because the button also returns the user to the dashboard page
-    this.props.dispatch(showImagePage('returnToDashboard'));
+    this.props.dispatch(pageState('authenticated'));
   }
 
   //this runs on initialization
   componentDidMount() {
-    this.props.dispatch(getImageForNotes());
+    this.props.dispatch(getsImage());
   }
 
   //this is the click handler that runs when the image to critique is clicked on
@@ -39,9 +39,9 @@ class AddNotes extends Component {
         text.style.top = cursorY - offset.top + "px";
         text.style.left = cursorX - offset.left + "px";
         text.style.position = "absolute";
-        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='yay'><span></span>" +
+        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
                             "<label for='radio1'>YAY</label>" +
-                          "<input id='radio2' type='radio' name='sentiment' value='nay'><p id='invisibleP'></p>" +
+                          "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
                             "<label for='radio2'>NAY</label></br>" +
                           "<input id='inputText' type='text' />" +
                             "<button id='leaveCommentButton' type='button'>send</button>";
@@ -58,9 +58,13 @@ class AddNotes extends Component {
             y: cursorY - offset.top,
             commentText: critique,
             commentType: commentType,
+            // TODO: HAVE TO GRAB IMAGE ID
+            imageId: null,
             id: this.state.comments.length
           }
-          let comments = this.state.comments.push(newComment);
+          let comments = this.state.comments;
+          comments.push(newComment);
+          {/*adding new comment to image*/}
           this.setState({ comments: comments });
           {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
           setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
@@ -72,7 +76,8 @@ class AddNotes extends Component {
 
   render () {
     let divStyle = {
-      background: 'url(' + this.props.image + ')',
+      //background image will come from the database
+      background: 'url(' + this.props.images + ')',
       position: 'relative',
       height: '100vh',
       backgroundSize: 'cover'
@@ -80,14 +85,13 @@ class AddNotes extends Component {
 
     {/*each note is mapped to one createItem upon rendering*/}
     let createItem = function (comment) {
-      {/*key that has been chosen is NOT OPTIMAL. if the comments have exactly the same y values, the latest will not be posted. ideally, it would be something totally unique*/}
       return <Note key = { comment.id } x = { comment.x } y = { comment.y } commentText = { comment.commentText } commentType = { comment.commentType }/>;
     };
     return (
       <div>
         <div id = 'critiqueImage' style = {divStyle} onClick = {this.findMousePosAndAddInput.bind(this)}>
-          {/*when hooked up to redux, the line below will be changing via props*/}
-          {this.states.comments.map(createItem)}
+          {/*mapping and rendering out array of comments*/}
+          {this.state.comments.map(createItem)}
        </div>
         <button onClick = { this.handleSendingNotes.bind(this) }>COMPLETE-O</button>
       </div>
@@ -98,7 +102,7 @@ class AddNotes extends Component {
 function mapStateToProps(state) {
   return {
     comments: state.comments.list,
-    image: state.imageUpdateReducer.image
+    image: state.images
   }
 }
 
