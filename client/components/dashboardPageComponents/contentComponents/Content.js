@@ -12,9 +12,10 @@ class Content extends Component {
   render () {
     return (
       <div>
+        <SettingsContainer />
         <ProjectHeader />
         { (() => {
-          switch (this.props.buttonReducer.activeContentComponent) {
+          switch (this.props.stateRouter.contentState) {
             case 'Reports':
               return <ReportsContainer />;
             case 'DashboardHOLD':

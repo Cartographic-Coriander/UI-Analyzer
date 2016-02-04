@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import LandingPage from './pages/LandingPage.react';
 import DashboardPage from './pages/DashboardPage.react';
-import AddNotes from './pages/addNotes.react.js';
+import AddNotes from './pages/AddComments.react';
 import { connect } from 'react-redux';
 
 class App extends Component {
   render() {
-    {(()=>{console.log('this is the props at App.js: ', this.props)})()}
+    {console.log('props:', this.props)}
     return (
       <div className="APP">
         { (() => {
-            switch (this.props.authReducer.appState) {
+            switch (this.props.stateRouter.pageState) {
               case 'not_authenticated':
                 return <LandingPage />;
               case 'authenticated':
@@ -22,14 +22,11 @@ class App extends Component {
             }
           })()
        }
-
       </div>
     )
   }
 };
 
-function mapStoP (state) {
-  return state;
-}
+const select = (state) => state;
 
-export default connect(mapStoP)(App);
+export default connect(select)(App);

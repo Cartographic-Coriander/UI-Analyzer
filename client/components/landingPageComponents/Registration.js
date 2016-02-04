@@ -9,13 +9,13 @@ const validate = values => {
   const errors = {};
   if (!values.emailField) {
     errors.emailField = 'Required';
-  } 
+  }
   if (!values.passwordField) {
     errors.passwordField = 'Required';
   }
   if (!values.firstName) {
     errors.firstName = 'Required';
-  }  
+  }
   if (!values.lastName) {
     errors.lastName = 'Required';
   }
@@ -52,20 +52,23 @@ class SignUpForm extends Component{
         <div>
           <label>enter e-mail</label>
           <div>
-            <input type="text" {...emailField}/>
+            <input type="email" {...emailField}/>
           </div>
           {emailField.touched && emailField.error && <div>{emailField.error}</div>}
         </div>
         <div>
           <label>enter password</label>
           <div>
-            <input type="text" {...passwordField}/>
+            <input type="password" {...passwordField}/>
           </div>
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>
         <div>
           <Button className="btn-primary signup-button" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} sign up
+          </Button>
+          <Button type="button" onClick={ this.props.hideRegModal } >
+            cancel
           </Button>
         </div>
       </form>

@@ -69,7 +69,6 @@ passport.deserializeUser(function (email, cb) {
 
 var authenticate = function(req, res, next) {
   //user has authenticated correctly thus we create a JWT token
-  console.log('wheres my JWT')
   passport.authenticate('local',
     function(err, user, info) {
       if (err) {
@@ -100,7 +99,7 @@ var decode = function(req, res, next) {
 
   try {
     try {
-      var decoded = jwt.decode(req.headers.token, tokenSecret);
+      var decoded = jwt.decode(req.headers['x-access-token'], tokenSecret);
     } finally {
       if (decoded.exp <= Date.now()) {
         throw new Error ('[Error: Token expired]');
@@ -111,7 +110,7 @@ var decode = function(req, res, next) {
     res.status(400).end('Error! Unable to decode token.');
   }
 
-  console.log(decoded);
+  console.log('decoded: ', decoded);
   req.decoded = decoded;
   next();
 };
@@ -150,10 +149,11 @@ var createUser = function (req, res, next) {
     });
 };
 
-var signout = function(req, res){
+var signout = function (req, res) {
   // call passport's log out functionality
+  console.log('signout')
   req.logout();
-  res.redirect('/');
+  res.end();
 };
 
 module.exports = {

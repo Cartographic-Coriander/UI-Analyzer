@@ -9,7 +9,7 @@ const validate = values => {
   const errors = {};
   if (!values.emailField) {
     errors.emailField = 'Required';
-  } 
+  }
   if (!values.passwordField) {
     errors.passwordField = 'Required';
   }
@@ -25,20 +25,23 @@ class LoginForm extends Component{
         <div>
           <label>e-mail</label>
           <div>
-            <input type="text" {...emailField}/>
+            <input type="email" {...emailField}/>
           </div>
           {emailField.touched && emailField.error && <div>{emailField.error}</div>}
         </div>
         <div>
           <label>password</label>
           <div>
-            <input type="text" {...passwordField}/>
+            <input type="password" {...passwordField}/>
           </div>
           {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
         </div>
         <div>
           <Button className="login-button btn-primary" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} login
+          </Button>
+          <Button onClick={ this.props.hideLogin } type='button'>
+            cancel
           </Button>
         </div>
       </form>

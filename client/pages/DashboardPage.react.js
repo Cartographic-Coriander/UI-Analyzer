@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import { authChecker, showImagePage } from '../redux/actions';
 import { Navbar } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
+=======
+import { signsOut } from '../redux/actions';
+>>>>>>> d28724d011facf9b1fdb6be8233c2a38bdb40c8b
 
 export default class DashboardPage extends Component {
-  handleLogout (goodBye) {
-    this.props.dispatch(authChecker(goodBye));
+  handleLogout () {
+    this.props.dispatch(signsOut());
   }
 
   handleClick () {
-    this.props.dispatch(showImagePage('show_image'));
+    // this.props.dispatch(showImagePage('show_image'));
   }
 
   render () {
@@ -26,7 +30,7 @@ export default class DashboardPage extends Component {
         </Navbar>
         <SidebarNavigation />
         <Content />
-        <button onClick={ this.handleClick.bind(this) }>make image appear</button>
+        {/* <button onClick={ this.handleClick.bind(this) }>make image appear</button> */}
       </div>
     )
   }

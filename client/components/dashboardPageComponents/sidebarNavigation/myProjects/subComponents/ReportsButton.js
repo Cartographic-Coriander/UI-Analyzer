@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleContentComponent } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
+import { contentState } from '../../../../../redux/actions';
 
 class ReportsButton extends Component {
   handleClick () {
-    this.props.dispatch(toggleContentComponent('Reports'));
+    this.props.dispatch(contentState('Reports'));
   }
   render () {
     return (
@@ -16,6 +17,6 @@ class ReportsButton extends Component {
   }
 }
 
-const select = (state) => state.buttonReducer
+const select = (state) => state
 
 export default connect(select)(ReportsButton)
