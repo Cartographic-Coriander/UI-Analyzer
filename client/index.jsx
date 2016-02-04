@@ -4,21 +4,28 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
-import { reducer as formReducer } from 'redux-form';
-import { buttonReducer, noteReducer, projectReducer, authReducer, logOutReducer, loginReducer, registrationReducer, imageUpdateReducer, showImageReducer, modalStateReducer } from './redux/reducers';
+import { reducer as form } from 'redux-form';
+import { button, note, project, auth, logOut, login, registration, imageUpdate, showImage, modalState, page, projects, user, tests, comments, images, mouseTrackings } from './redux/reducers';
 
 const reducers = {
-  buttonReducer: buttonReducer,
-  noteReducer:noteReducer,
-  projectReducer: projectReducer,
-  form: formReducer,
-  authReducer: authReducer,
-  logOutReducer: logOutReducer,
-  loginReducer: loginReducer,
-  registrationReducer: registrationReducer,
-  imageUpdateReducer : imageUpdateReducer ,
-  showImageReducer : showImageReducer,
-  modalStateReducer: modalStateReducer
+  button: button,
+  note: note,
+  project: project,
+  form: form,
+  auth: auth,
+  logOut: logOut,
+  login: login,
+  registration: registration,
+  imageUpdate : imageUpdate ,
+  showImage: showImage,
+  modalState: modalState,
+  page: page,
+  projects: projects,
+  user: user,
+  tests: tests, 
+  comments: comments,
+  images: images,
+  mouseTrackings: mouseTrackings
 };
 const combinedReducers = combineReducers(reducers);
 
