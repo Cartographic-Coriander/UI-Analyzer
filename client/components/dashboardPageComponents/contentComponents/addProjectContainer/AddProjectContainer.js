@@ -24,7 +24,6 @@ class AddProjectContainer extends Component {
     let params = { name: data.projectName, description: data.projectDescription };
 
     this.setState({ confirm: nullParams });
-    console.log('project to add:', data)
     this.props.dispatch(postsProject(params));
   }
 

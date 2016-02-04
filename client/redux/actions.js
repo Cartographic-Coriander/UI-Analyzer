@@ -17,9 +17,15 @@ export function getsUser(user) {
           type: 'GET_USER',
           data: response.data.user
         };
+        let userParams = {
+          type: 'SET_FOCUS',
+          key: 'userId',
+          value: response.data.user.id
+        };
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
         dispatch(params);
+        dispatch(userParams);
       })
       .then(() => {
         return getProject()
@@ -30,7 +36,7 @@ export function getsUser(user) {
             };
 
             dispatch(params);
-          })
+          });
       })
       .catch((error) => {
         console.log('!!!!!ERROR!!!!!', error);
@@ -40,8 +46,8 @@ export function getsUser(user) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsUser(user) {
@@ -65,8 +71,8 @@ export function postsUser(user) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function getsProject(project) {
@@ -87,8 +93,8 @@ export function getsProject(project) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsProject(project) {
@@ -109,8 +115,8 @@ export function postsProject(project) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function updatesProject(project) {
@@ -131,8 +137,8 @@ export function updatesProject(project) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function deletesProject(project) {
@@ -153,8 +159,8 @@ export function deletesProject(project) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 /* TEST API ACTIONS */
@@ -177,8 +183,8 @@ export function getsTest(test) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsTest(test) {
@@ -199,8 +205,8 @@ export function postsTest(test) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function updatesTest(test) {
@@ -221,8 +227,8 @@ export function updatesTest(test) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function deletesTest(test) {
@@ -243,8 +249,8 @@ export function deletesTest(test) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 /* COMMENT API ACTIONS */
@@ -267,8 +273,8 @@ export function getsComment(comment) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsComment(comment) {
@@ -289,8 +295,8 @@ export function postsComment(comment) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function updatesComment(comment) {
@@ -311,8 +317,8 @@ export function updatesComment(comment) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function deletesComment (comment) {
@@ -333,8 +339,8 @@ export function deletesComment (comment) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 /* IMAGE API ACTIONS */
@@ -357,8 +363,8 @@ export function getsImage(image) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsImage(image) {
@@ -379,8 +385,8 @@ export function postsImage(image) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function updatesImage(image) {
@@ -401,8 +407,8 @@ export function updatesImage(image) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function deletesImage(image) {
@@ -423,8 +429,8 @@ export function deletesImage(image) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 /* MOUSETRACKING API ACTIONS */
@@ -447,8 +453,8 @@ export function getsMouseTracking(mouseTracking) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function postsMouseTracking(mouseTracking) {
@@ -469,8 +475,8 @@ export function postsMouseTracking(mouseTracking) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function updatesMouseTracking(mouseTracking) {
@@ -491,8 +497,8 @@ export function updatesMouseTracking(mouseTracking) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function deletesMouseTracking(mouseTracking) {
@@ -513,8 +519,8 @@ export function deletesMouseTracking(mouseTracking) {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 export function signsOut() {
@@ -535,28 +541,38 @@ export function signsOut() {
         };
 
         dispatch(params);
-      })
-  }
+      });
+  };
 }
 
 /* END API ACTIONS */
+
+export function setFocus (key, value) {
+  return {
+    type: 'SET_FOCUS',
+    key: key,
+    value: value
+  };
+}
 
 export function pageState (target) {
   return {
     type: 'PAGE_STATE',
     target: target
-  }
+  };
 }
 
 export function contentState (target) {
   return {
     type: 'CONTENT_STATE',
     target: target
-  }
+  };
 }
 
 export function inviteTesters () {
-  type: 'TOGGLE_INVITE_USER'
+  return {
+    type: 'TOGGLE_INVITE_USER'
+  };
 }
 
 /* MODAL ACTIONS */
@@ -565,7 +581,7 @@ export function showLoginModal (bool) {
   var visibility = bool ? 'SHOW_LOGIN' : 'MODAL_RESET';
 
   return {
-    type: visibility,
+    type: visibility
   };
 }
 
@@ -573,8 +589,8 @@ export function showSignupModal (bool) {
   var visibility = bool ? 'SHOW_GET_STARTED' : 'MODAL_RESET';
 
   return {
-    type: visibility,
-  }
+    type: visibility
+  };
 }
 
 /*END MODAL ACTIONS */
@@ -583,5 +599,5 @@ export function addProject (project) {
   return {
     type: 'ADD_PROJECT',
     data: project
-  }
+  };
 }
