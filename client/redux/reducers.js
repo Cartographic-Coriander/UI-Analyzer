@@ -209,6 +209,9 @@ export function stateRouter (state = stateRouterInitialState, action) {
     case 'GET_USER':
       newState.pageState = 'authenticated';
       return newState;
+    case 'SIGNOUT_USER':
+      newState.pageState = 'not_authenticated';
+      return newState;
   }
   return state;
 }

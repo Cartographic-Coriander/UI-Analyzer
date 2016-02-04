@@ -41,7 +41,7 @@ export function postUser (user) {
     })
 }
 
-export function signout () {
+export function signOut () {
   return instance.delete('/api/users/signin')
 }
 
