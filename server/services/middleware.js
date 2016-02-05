@@ -13,6 +13,14 @@ module.exports = function (app, express) {
     resave: false,
     saveUninitialized: false
   }));
+  app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    // @!@!@! TODO: change the header for deployment*******************************************************
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    // Pass to next layer of middleware
+    next();
+});
 
   // Initialize Passport and restore authentication state, if any, from the
   // session.
