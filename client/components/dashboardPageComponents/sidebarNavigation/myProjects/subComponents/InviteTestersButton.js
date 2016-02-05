@@ -9,7 +9,7 @@ class InviteTestersButton extends Component {
   }
   render () {
     return (
-      <Button className = "InvteTestersButton btn-block" onClick = { this.handleClick.bind(this) }>
+      <Button className = "InviteTestersButton btn-block" onClick = { this.handleClick.bind(this) }>
       Invite Testers
       </Button>
     )

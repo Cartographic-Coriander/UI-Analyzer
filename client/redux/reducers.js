@@ -54,6 +54,7 @@ export function user (state = userInitialState, action) {
 
   switch (action.type) {
     case 'GET_USER':
+      console.log('data from user', action.data)
       newState.firstname = action.data.firstname;
       newState.surname = action.data.surname;
       newState.company = action.data.company;
@@ -70,7 +71,7 @@ export function user (state = userInitialState, action) {
     case 'DELETE_USER':
       return newState;
     case 'ERROR_USER':
-      return newState;
+      return state.error(action.data);
   }
   return state;
 };
@@ -106,6 +107,7 @@ export function tests (state = testsInitialState, action) {
 
   switch (action.type) {
     case 'GET_TEST':
+      console.log(action)
       newState.list = action.data;
       return newState;
     case 'POST_TEST':
