@@ -128,7 +128,7 @@ module.exports = function (app, express) {
 
       testsController.retrieveTest(params)
         .then(function (results) {
-          results.reduce(function (previous, current) {
+          return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
               projectId: current.get('projectId'),
@@ -142,6 +142,7 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          console.log('test get result', result)
           res.json(result);
         })
         .catch(function (error) {
@@ -244,7 +245,7 @@ module.exports = function (app, express) {
 
       commentsController.retrieveComment(params)
         .then(function (results) {
-          results.reduce(function (previous, current) {
+          return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
               userId: current.get('userId'),
@@ -357,7 +358,7 @@ module.exports = function (app, express) {
 
       imagesController.retrieveImage(params)
         .then(function (results) {
-          results.reduce(function (previous, current) {
+          return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
               testId: current.get('testId'),
@@ -461,7 +462,7 @@ module.exports = function (app, express) {
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
-          results.reduce(function (previous, current) {
+          return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
               movement: current.get('movement'),
