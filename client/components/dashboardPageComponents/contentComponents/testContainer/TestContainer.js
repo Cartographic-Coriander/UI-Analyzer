@@ -26,6 +26,7 @@ class TestContainer extends Component {
 
   //adding new tests
   addTest (test) {
+    console.log(this)
     let newTest = {
       projectId: this.props.currentFocus.projectId,
       name: this.state.addTestName,
@@ -62,6 +63,13 @@ class TestContainer extends Component {
     })
   }
 
+  //to get to the proxy server
+  redirect () {
+    let newUrl="www.google.com";
+
+    window.location=newUrl;
+  }
+
   render () {
 
     return (
@@ -83,6 +91,7 @@ class TestContainer extends Component {
         </Modal>
 
         <button onClick = { this.toggleModal.bind(this) } type= "button">add test</button>
+        <button onClick = { this.redirect.bind(this) } type = "button">Start test</button>
       </div>
     )
   };

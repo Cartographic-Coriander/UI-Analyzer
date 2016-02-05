@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
-import AddProjectButton from './subComponents/AddProjectButton';
 import { connect } from 'react-redux';
 import { contentState, setFocus, getsTest, postsProject } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
