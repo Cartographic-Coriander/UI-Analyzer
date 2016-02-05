@@ -14,37 +14,26 @@ import { Button } from 'react-bootstrap';
 
 class MyProjects extends Component {
   render () {
-    var projects = [{
-      name: 'project1',
-      description: 'awesome',
-      id: 0
-    }, {
-      name: 'project2',
-      description: 'awesome',
-      id: 1
-    }, {
-      name: 'project3',
-      description: 'awesome',
-      id: 2
-    }];
-
     return (
-      <Accordion className="ProjectAccordion">
-          {projects.map((item) => {
-              return (
-                <AccordionItem title={item.name}>
-                  <div>
-                    <ul className="projectAccordionItems">
-                     <li><TestButton/></li>
-                     <li><ReportsButton /></li>
-                     <li><SettingsButton /></li>
-                     <li><InviteTestersButton /></li>
-                    </ul>
-                  </div>
-                </AccordionItem>
-              );
-          })}
-      </Accordion>
+      <div>
+        <AddProjectButton />
+        <Accordion className="ProjectAccordion">
+            { this.props.projects.list.map((item) => {
+                return (
+                  <AccordionItem key={ item.id } title={ item.name }>
+                    <div>
+                      <ul className="projectAccordionItems">
+                       <li><TestButton/></li>
+                       <li><ReportsButton /></li>
+                       <li><SettingsButton /></li>
+                       <li><InviteTestersButton /></li>
+                      </ul>
+                    </div>
+                  </AccordionItem>
+                );
+            })}
+        </Accordion>
+      </div>
     );
   }
 }
