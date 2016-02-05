@@ -29,7 +29,6 @@ class AddProjectContainer extends Component {
   }
 
   hideProjectModal () {
-    console.log('safkbjskfjbskdbf', this)
     this.setState = { addProjectModalVisibility : false }
   }
 

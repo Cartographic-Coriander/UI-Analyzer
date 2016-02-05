@@ -19,8 +19,8 @@ class CreateProjectContainer extends Component {
   render () {
     const { fields: { projectName, projectDescription }, handleSubmit, submitting } = this.props;
     return (
-      <Modal show = { true }>
-        <form onSubmit={handleSubmit}>
+      <Modal show = { this.props.visibility }>
+        <form onSubmit={ handleSubmit }>
           <div>
             <label>Project Name</label>
             <div>
@@ -39,7 +39,7 @@ class CreateProjectContainer extends Component {
             <button type="submit" disabled={submitting}>
               {submitting ? <i/> : <i/>} Create Project
             </button>
-            <button type="button" onClick= { console.log('hello wold') }>
+            <button type="button" onClick= { this.props.hideVisibility }>
               cancel
             </button>
           </div>

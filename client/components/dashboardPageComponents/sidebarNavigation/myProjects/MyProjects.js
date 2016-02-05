@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
 import AddProjectButton from './subComponents/AddProjectButton';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, postsProject } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -10,9 +10,32 @@ import SettingsButton from './subComponents/SettingsButton';
 import InviteTestersButton from './subComponents/InviteTestersButton';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
-import CreateProectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
+import CreateProjectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
 
 class MyProjects extends Component {
+  //setting initial addProject modal visibility to not be shown
+  constructor (props) {
+    super(props)
+    this.state = {
+      addProjectModalVisibility : false
+    };
+  };
+
+  //toggle add project modal visibilty
+  toggleModalVisibility () {
+    this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true })
+  }
+
+  //sending data from add project form in the modal and hiding the modal
+  sendNewProject (project) {
+    let newProject = {
+      name: project.projectName,
+      description: project.projectDescription
+    };
+    this.props.dispatch(postsProject(newProject));
+    this.toggleModalVisibility();
+  }
+
   handleClick (projectId) {
     console.log('select project', projectId);
     this.props.dispatch(getsTest({ projectId: projectId }));
@@ -34,7 +57,7 @@ class MyProjects extends Component {
   render () {
     return (
       <div>
-        <button type = "button">Add Project</button>
+        <button type = "button" onClick = { this.toggleModalVisibility.bind(this) } >Add Project</button>
         <Accordion className = "ProjectAccordion">
             { this.props.projects.list.map((project) => {
                 return (
@@ -51,6 +74,7 @@ class MyProjects extends Component {
                 );
             })}
         </Accordion>
+        <CreateProjectContainer onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
       </div>
     );
   }
