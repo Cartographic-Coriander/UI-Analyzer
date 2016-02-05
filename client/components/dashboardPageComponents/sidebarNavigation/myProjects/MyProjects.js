@@ -40,7 +40,7 @@ class MyProjects extends Component {
                   <AccordionItem key = { project.id } title = { project.name } >
                     <div>
                       <ul className = "projectAccordionItems">
-                       <li ><TestButton /></li>
+                       <li><TestButton/></li>
                        <li><ReportsButton /></li>
                        <li><SettingsButton /></li>
                        <li><InviteTestersButton /></li>

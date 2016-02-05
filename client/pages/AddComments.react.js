@@ -59,7 +59,7 @@ class AddNotes extends Component {
             commentText: critique,
             commentType: commentType,
             // TODO: HAVE TO GRAB IMAGE ID
-            imageId: null,
+            imageId: this.props.currentFocus.imageId,
             id: this.state.comments.length
           }
           let comments = this.state.comments;
