@@ -556,4 +556,10 @@ module.exports = function (app, express) {
           res.status(500).end('Mousetracking DELETE Error!');
         });
     });
+  app.get('/testview', function (req, res) {
+    console.log('request host', req.headers.host);
+    var url = req.query.url;
+    var userSessionKey = req.query.session;
+    res.redirect(301, 'http://localhost:3000/testview?url=' + url);
+  });
 };
