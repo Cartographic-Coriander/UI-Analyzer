@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
-import Header from './subComponents/Header'
+import { connect } from 'react-redux';
 
-export default class extends Component {
+class ProjectHeader extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      projectName: null
+    }
+  }
+
+  updateHeader () {
+    this.props.projects.each((item) => console.log(item))
+  }
+
   render () {
     return (
       <div>
-        <h3>I am the project header component</h3>
-        <Header />
+        <h3>
+          { () => updateHeader() }
+        </h3>
       </div>
     )
   }
 }
+
+const select = (state) => state
+
+export default connect(select)(ProjectHeader)

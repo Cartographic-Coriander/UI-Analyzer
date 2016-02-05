@@ -13,7 +13,6 @@ import { Button } from 'react-bootstrap';
 
 class MyProjects extends Component {
   handleClick (projectId) {
-    console.log('select project', projectId);
     this.props.dispatch(getsTest({ projectId: projectId }));
     this.props.dispatch(setFocus('projectId', projectId));
     this.props.dispatch(contentState('Test'));

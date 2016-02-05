@@ -12,13 +12,12 @@ class Content extends Component {
   render () {
     return (
       <div>
-        <SettingsContainer />
         <ProjectHeader />
         { (() => {
           switch (this.props.stateRouter.contentState) {
             case 'Reports':
               return <ReportsContainer />;
-            case 'DashboardHOLD':
+            case 'Dashboard':
               return <DashboardContainer />;
             case 'AddProject':
               return <AddProjectContainer />;

@@ -107,7 +107,6 @@ export function tests (state = testsInitialState, action) {
 
   switch (action.type) {
     case 'GET_TEST':
-      console.log(action)
       newState.list = action.data;
       return newState;
     case 'POST_TEST':
