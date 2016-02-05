@@ -9,7 +9,7 @@ class ProjectEntryComponent extends Component {
       descriptionStyle: "none",
       newDescription: null
     };
-  }
+  };
 
   render () {
     let editNameStyle = {
@@ -21,19 +21,11 @@ class ProjectEntryComponent extends Component {
     };
 
     let toggleNameInput = () => {
-      if (this.state.nameDisplay === "inline-block") {
-        this.setState({ nameDisplay : "none" });
-      } else {
-        this.setState({ nameDisplay: "inline-block"});
-      }
+      this.state.nameDisplay === "inline-block" ? this.setState({ nameDisplay:"none" }) : this.setState({ nameDisplay:"inline-block" });
     };
 
     let toggleDescriptionInput = () => {
-      if (this.state.descriptionStyle === "inline-block") {
-        this.setState({ descriptionStyle : "none" });
-      } else {
-        this.setState({ descriptionStyle: "inline-block"});
-      }
+      this.state.descriptionStyle === "inline-block" ? this.setState({ descriptionStyle:"none" }) : this.setState({ descriptionStyle:"inline-block" });
     };
 
     let updateProject = () => {
@@ -64,10 +56,12 @@ class ProjectEntryComponent extends Component {
       <div>
         <form onSubmit = { updateProject.bind(this) } >
           <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } 
-            <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>
+          <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>
+
           <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit</button>{ this.props.description }
-           <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
-          <button onClick = { updateProject.bind(this) } type = "button">save changes</button>
+          <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
+
+          <button type = "submit">save changes</button>
           <button onClick = { deleteProject.bind(this) } type="button">delete project</button>
         </form>
         <br></br>
