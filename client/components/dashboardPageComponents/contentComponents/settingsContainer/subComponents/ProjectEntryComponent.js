@@ -5,7 +5,9 @@ class ProjectEntryComponent extends Component {
     super(props)
     this.state = {
       nameDisplay: "none",
-      discriptionStyle: "none"
+      newName : null,
+      descriptionStyle: "none",
+      newDescription: null
     };
   }
 
@@ -15,31 +17,50 @@ class ProjectEntryComponent extends Component {
     };
 
     let editDiscriptionStyle = {
-      display: this.state.discriptionStyle
+      display: this.state.descriptionStyle
     };
 
-    let toggleNameInput = function () {
+    let toggleNameInput = () => {
       if (this.state.nameDisplay === "inline-block") {
-        this.setState({ nameDisplay : "none" })
+        this.setState({ nameDisplay : "none" });
       } else {
-        this.setState({ nameDisplay: "inline-block"})
+        this.setState({ nameDisplay: "inline-block"});
       }
     };
 
-    let toggleDiscriptionInput = function () {
-      if (this.state.discriptionStyle === "inline-block") {
-        this.setState({ discriptionStyle : "none" })
+    let toggleDescriptionInput = () => {
+      if (this.state.descriptionStyle === "inline-block") {
+        this.setState({ descriptionStyle : "none" });
       } else {
-        this.setState({ discriptionStyle: "inline-block"})
+        this.setState({ descriptionStyle: "inline-block"});
       }
+    };
+
+    let updateProject = () => {
+      const updatedProject = {
+        projectId: this.props.id,
+        name: this.state.newName || this.props.name,
+        description: this.state.newDescription || this.props.description
+      };
+      this.props.update(updatedProject);
+    };
+
+    let handleNameInput = (event) => {
+      this.setState({ newName : event.target.value });
+    };
+
+    let handleDescriptionInput = (event) => {
+      this.setState({ newDescription : event.target.value });
     };
 
     return (
       <div>
-        <form>
-          <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } <input style = { editNameStyle } type="text"></input><br></br>
-          <button onClick = { toggleDiscriptionInput.bind(this) } type = "button">edit</button>{ this.props.description } <input style = { editDiscriptionStyle } type="text"></input><br></br>
-          <button type = "button">save changes</button>
+        <form onSubmit = { updateProject.bind(this) } >
+          <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } 
+            <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>
+          <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit</button>{ this.props.description }
+           <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
+          <button onClick = { updateProject.bind(this) } type = "button">save changes</button>
         </form>
         <br></br>
       </div>
