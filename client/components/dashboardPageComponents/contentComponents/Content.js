@@ -12,7 +12,6 @@ class Content extends Component {
   render () {
     return (
       <div>
-        <SettingsContainer />
         <ProjectHeader />
         { (() => {
           switch (this.props.stateRouter.contentState) {
