@@ -45,6 +45,13 @@ class ProjectEntryComponent extends Component {
       this.props.update(updatedProject);
     };
 
+    let deleteProject = () => {
+      const deletedProject = {
+        projectId : this.props.id
+      }
+      this.props.delete(deletedProject);
+    };
+
     let handleNameInput = (event) => {
       this.setState({ newName : event.target.value });
     };
@@ -61,6 +68,7 @@ class ProjectEntryComponent extends Component {
           <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit</button>{ this.props.description }
            <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
           <button onClick = { updateProject.bind(this) } type = "button">save changes</button>
+          <button onClick = { deleteProject.bind(this) } type="button">delete project</button>
         </form>
         <br></br>
       </div>
