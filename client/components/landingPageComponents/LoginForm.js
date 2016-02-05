@@ -40,7 +40,7 @@ class LoginForm extends Component{
           <Button className="login-button btn-primary" type="submit" disabled={submitting}>
             {submitting ? <i/> : <i/>} login
           </Button>
-          <Button className="login-cancel-button" onClick={ this.props.hideLogin } type='button'>
+          <Button className="login-cancel-button" onClick={ this.props.hideLogin } type="button">
             cancel
           </Button>
         </div>

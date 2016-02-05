@@ -10,6 +10,7 @@ import SettingsButton from './subComponents/SettingsButton';
 import InviteTestersButton from './subComponents/InviteTestersButton';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
+import CreateProectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
 
 class MyProjects extends Component {
   handleClick (projectId) {
@@ -33,7 +34,7 @@ class MyProjects extends Component {
   render () {
     return (
       <div>
-        <AddProjectButton />
+        <button type = "button">Add Project</button>
         <Accordion className = "ProjectAccordion">
             { this.props.projects.list.map((project) => {
                 return (

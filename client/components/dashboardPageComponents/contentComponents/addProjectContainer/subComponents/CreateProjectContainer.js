@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import InviteTesters from './InviteTesters';
 export const fields = [ 'projectName', 'projectDescription' ];
+import { Modal } from 'react-bootstrap';
 
 const validate = values => {
   const errors = {};
@@ -18,27 +19,32 @@ class CreateProjectContainer extends Component {
   render () {
     const { fields: { projectName, projectDescription }, handleSubmit, submitting } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Project Name</label>
+      <Modal show = { true }>
+        <form onSubmit={handleSubmit}>
           <div>
-            <input type="text" placeholder="Project Name" {...projectName}/>
+            <label>Project Name</label>
+            <div>
+              <input type="text" placeholder="Project Name" {...projectName}/>
+            </div>
+            {projectName.touched && projectName.error && <div>{projectName.error}</div>}
           </div>
-          {projectName.touched && projectName.error && <div>{projectName.error}</div>}
-        </div>
-        <div>
-          <label>Project Description</label>
           <div>
-            <textarea placeholder="Project Description..." {...projectDescription}/>
+            <label>Project Description</label>
+            <div>
+              <textarea placeholder="Project Description..." {...projectDescription}/>
+            </div>
+            {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
           </div>
-          {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
-        </div>
-        <div>
-          <button type="submit" disabled={submitting}>
-            {submitting ? <i/> : <i/>} Create Project
-          </button>
-        </div>
-      </form>
+          <div>
+            <button type="submit" disabled={submitting}>
+              {submitting ? <i/> : <i/>} Create Project
+            </button>
+            <button type="button" onClick= { console.log('hello wold') }>
+              cancel
+            </button>
+          </div>
+        </form>
+      </Modal>
     );
   }
 }
