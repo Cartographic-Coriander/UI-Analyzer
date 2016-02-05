@@ -20,6 +20,12 @@ module.exports = function (app, express) {
 
   app.delete('/api/users/signin', auth.signout);
 
+  app.get('/testview', function (req, res) {
+    console.log('request host', req.headers.host);
+    var url = req.query.url;
+    res.redirect(301, 'http://localhost:3000/testview?url=' + url);
+  });
+
   app.route('/api/project')
     // retrieves array of project objects
     .get(auth.decode, function (req, res) {
@@ -556,10 +562,4 @@ module.exports = function (app, express) {
           res.status(500).end('Mousetracking DELETE Error!');
         });
     });
-  app.get('/testview', function (req, res) {
-    console.log('request host', req.headers.host);
-    var url = req.query.url;
-    var userSessionKey = req.query.session;
-    res.redirect(301, 'http://localhost:3000/testview?url=' + url);
-  });
 };
