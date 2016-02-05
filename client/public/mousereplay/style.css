@@ -1,0 +1,123 @@
+html{
+    min-height:5000px;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
+
+body{
+    height:5000px; /* force the BODY element to match the height of the HTML element */
+    position:absolute;
+    margin: 0;
+    padding: 0;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color: black;
+}
+
+#mousereplay-view {
+  height: 100%;
+  width: 100%;
+}
+
+.cursor {
+  border-radius: 50%;
+  background: red;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cursor2 {
+  border-radius: 50%;
+  background: blue;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cursor3 {
+  border-radius: 50%;
+  background: green;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor4 {
+  border-radius: 50%;
+  background: skyblue;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor5 {
+  border-radius: 50%;
+  background: pink;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor6 {
+  border-radius: 50%;
+  background: yellow;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor7 {
+  border-radius: 50%;
+  background: white;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor8 {
+  border-radius: 50%;
+  background: purple;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor8 {
+  border-radius: 50%;
+  background: grey;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor9 {
+  border-radius: 50%;
+  background: magenta;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursor10 {
+  border-radius: 50%;
+  background: orange;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
