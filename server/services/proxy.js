@@ -16,6 +16,7 @@ module.exports = function (express) {
 
   proxyServer.get('/testview', function (req, res) {
     realUrl = req.query.url;
+    console.log(realUrl)
 
     var context = '/';
     var options = {
@@ -29,7 +30,8 @@ module.exports = function (express) {
     var proxy = proxyMiddleware(context, options);
 
     proxyServer.use(proxy);
-    fs.readFile(path.resolve('../client/public/testview/testview.html'), "utf8", function (err, data) {
+    console.log(proxyServer)
+    fs.readFile(__dirname + '/../../client/public/testview/testview.html', 'utf8', function (err, data) {
       if(err) {
         throw err
       } else {

@@ -41,12 +41,48 @@ const mouseTrackingsInitialState = {
 };
 
 const currentFocusInitialState = {
-  userId: null,
-  projectId: null,
-  testId: null,
-  imageId: null,
-  commentId: null,
-  mouseTrackingId: null
+  user: {
+    id: null,
+    email: null,
+    company: null,
+    firstname: null,
+    surname: null
+  },
+  project: {
+    id: null,
+    name: null,
+    description: null
+  },
+  test: {
+    id: null,
+    name: null,
+    url: null,
+    prompt: null,
+    projectId: null
+  },
+  image: {
+    id: null,
+    image: null,
+    url: null,
+    testId: null
+  },
+  comment: {
+    id: null,
+    commentType: null,
+    commentText: null,
+    x: null,
+    y: null,
+    userId: null,
+    imageId: null
+  },
+  mouseTracking: {
+    id: null,
+    movement: null,
+    clicks: null,
+    urlchange: null,
+    userId: null,
+    imageId: null
+  }
 };
 
 export function user (state = userInitialState, action) {
