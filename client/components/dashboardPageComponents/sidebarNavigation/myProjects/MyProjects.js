@@ -35,10 +35,9 @@ class MyProjects extends Component {
     this.toggleModalVisibility();
   }
 
-  handleClick (projectId) {
-    console.log('select project', projectId);
-    this.props.dispatch(getsTest({ projectId: projectId }));
-    this.props.dispatch(setFocus('projectId', projectId));
+  handleClick (project) {
+    this.props.dispatch(getsTest({ projectId: project.id }));
+    this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));
   }
 
@@ -49,7 +48,7 @@ class MyProjects extends Component {
   componentDidMount () {
     var that = this;
     setTimeout(() => {$('.react-sanfona-item').children('h3').map(function (index, element) {
-        return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index].id));
+        return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
       })}, 500);
   }
 

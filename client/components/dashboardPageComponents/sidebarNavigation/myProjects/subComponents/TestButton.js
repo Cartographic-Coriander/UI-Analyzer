@@ -8,6 +8,7 @@ class TestButton extends Component {
   handleClick () {
     this.props.dispatch(contentState('Test'));
   }
+
   render () {
     return (
       <Button className = "TestButton btn-block" onClick = { this.handleClick.bind(this) }>
