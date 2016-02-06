@@ -28,7 +28,7 @@ class TestContainer extends Component {
   addTest (test) {
     console.log(this)
     let newTest = {
-      projectId: this.props.currentFocus.projectId,
+      projectId: this.props.currentFocus.project.id,
       name: this.state.addTestName,
       url: this.state.addTestUrl,
       prompt: this.state.addTestPrompt 

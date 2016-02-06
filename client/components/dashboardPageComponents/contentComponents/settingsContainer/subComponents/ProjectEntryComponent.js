@@ -34,6 +34,7 @@ class ProjectEntryComponent extends Component {
         name: this.state.newName || this.props.name,
         description: this.state.newDescription || this.props.description
       };
+      console.log('updateProject called', updatedProject)
       this.props.update(updatedProject);
     };
 
@@ -41,6 +42,7 @@ class ProjectEntryComponent extends Component {
       const deletedProject = {
         projectId : this.props.id
       }
+      console.log('deleteproject called', deletedProject)
       this.props.delete(deletedProject);
     };
 
@@ -53,17 +55,27 @@ class ProjectEntryComponent extends Component {
     };
 
     return (
-      <div>
-        <form onSubmit = { updateProject.bind(this) } >
-          <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } 
-          <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>
+      <div className =  "projectEntryComponent">
+        <form className = "settingsForm" onSubmit = { updateProject.bind(this) } >
+          <div className = "projectEntryComponentLeft">
+            <h3>{ this.props.name }</h3>
+            <h4>{ this.props.description }</h4>
+          </div>
+          <div className = "projectEntryComponentRight">
+            <div className = "editNameDiv">
+              <button onClick = { toggleNameInput.bind(this) } type = "button" >edit </button><span className = "editNameSpan">edit name</span> 
+              <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text" placeholder = { this.props.name } ></input><br></br>
+            </div>
 
-          <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit</button>{ this.props.description }
-          <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
-
-          <button onClick = { updateProject.bind(this) } type = "button">save changes</button>
-          <button onClick = { deleteProject.bind(this) } type="button">delete project</button>
+            <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit </button>edit description
+            <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text" placeholder= { this.props.description } ></input><br></br>
+          </div>
+          <br className = "floatClear" />
         </form>
+        <div className = "projectEntryComponentButtonContainer" >
+          <button className = "projectEntryButton" onClick = { updateProject.bind(this) } type = "button">save changes</button>
+          <button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</button>
+        </div>
         <br></br>
       </div>
     )

@@ -216,3 +216,62 @@ html, body {
 .hide * {
   display: none;
 }*/
+
+
+/*styling the settings page on the dashboard*/
+
+.Settings {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+}
+
+.settingsForm {
+  padding: 10px 35px;
+  display: flex;
+}
+
+.projectEntryComponent {
+  border: 1px solid blue;
+}
+
+.projectEntryComponentLeft {
+  float: left;
+  min-width: 57%;
+  word-wrap: break-word;
+}
+
+.projectEntryComponentRight {
+  float: left;
+}
+
+.projectEntryComponentButtonContainer {
+  text-align: center;
+}
+
+.floatClear {
+  clear: both;
+}
+
+.projectEntryButton {
+  margin-right: 20px;
+}
+
+.editNameSpan {
+  display: inline-block;
+  width: 102.609px;
+}
+
+#editName {
+  height: 25px;
+}
+
+#editDescription {
+  height: 25px;
+}
+
+.editNameDiv {
+  margin-bottom: 2px;
+  height: 27px;
+}

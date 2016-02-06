@@ -84,7 +84,7 @@ class TestContinerEntry extends Component {
         <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type="text"></input><br></br>
 
         <button onClick = { updateTest.bind(this) } type = "button">save changes</button>
-        <button onClick = { deleteTest.bind(this) } type="button">delete project</button>
+        <button onClick = { deleteTest.bind(this) } type="button">delete test</button>
       </form>
       <br></br>
     </div>

@@ -17,7 +17,7 @@ class Content extends Component {
             if (this.props.projects.list) {
               let currentProject, currentDescription;
               this.props.projects.list.forEach( (project) => {
-                if( this.props.currentFocus.projectId === project.id){
+                if( this.props.currentFocus.project.id === project.id){
                   currentProject = project.name
                   currentDescription = project.description;
                 }
