@@ -59,16 +59,18 @@ class AddNotes extends Component {
             commentText: critique,
             commentType: commentType,
             // TODO: HAVE TO GRAB IMAGE ID
-            imageId: this.props.currentFocus.imageId,
+            // imageId: this.props.currentFocus.imageId,
             id: this.state.comments.length
           }
           let comments = this.state.comments;
-          comments.push(newComment);
+          if (newComment.commentText !== "") {
+            comments.push(newComment);
+          }
           {/*adding new comment to image*/}
-          this.setState({ comments: comments });
           {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
           setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
           {/*END TODO*/}
+          this.setState({ comments: comments });
         }.bind(this))
       }
     }
