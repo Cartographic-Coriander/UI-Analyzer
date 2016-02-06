@@ -247,7 +247,6 @@ export function currentFocus (state = currentFocusInitialState, action) {
 
   switch (action.type) {
     case 'SET_FOCUS':
-      console.log(action.value)
       newState[action.key] = action.value;
       return newState
   }

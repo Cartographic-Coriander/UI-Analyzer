@@ -4,6 +4,7 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
+var port = 3000;
 
 // inputs:
 // in data field:
@@ -20,10 +21,24 @@ module.exports = function (app, express) {
 
   app.delete('/api/users/signin', auth.signout);
 
+
+
   app.get('/testview', function (req, res) {
+    ++port;
     console.log('request host', req.headers.host);
     var url = req.query.url;
-    res.redirect(301, 'http://localhost:3000/testview?url=' + url);
+
+    // Website you wish to allow to connect
+    // @!@!@! TODO: change the header for deployment*******************************************************
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:' + port);
+    // Pass to next layer of middleware
+    var params = {
+      url: req.query.url,
+      testId: req.query.testId,
+      token: req.query.token
+    };
+
+    require('./proxy')(express, port, req.query.url, function () { res.redirect(301, 'http://localhost:' + port + '/testview?url=' + url) });
   });
 
   app.route('/api/project')
