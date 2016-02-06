@@ -12,7 +12,25 @@ class Content extends Component {
   render () {
     return (
       <div>
-        <ProjectHeader />
+        {/* changing the project header when a project is selected */}
+        { (() => {
+            if (this.props.projects.list) {
+              let currentProject, currentDescription;
+              this.props.projects.list.forEach( (project) => {
+                if( this.props.currentFocus.projectId === project.id){
+                  currentProject = project.name
+                  currentDescription = project.description;
+                }
+              })
+              return (
+                <div>
+                  <h3>{ currentProject }</h3>
+                  <h4>{ currentDescription }</h4>
+                </div>
+              )
+            }
+          })() }
+        {/* changing what is shown in content area based on which accordion button is clicked */}
         { (() => {
           switch (this.props.stateRouter.contentState) {
             case 'Reports':

@@ -61,7 +61,7 @@ class ProjectEntryComponent extends Component {
           <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit</button>{ this.props.description }
           <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
 
-          <button type = "submit">save changes</button>
+          <button onClick = { updateProject.bind(this) } type = "button">save changes</button>
           <button onClick = { deleteProject.bind(this) } type="button">delete project</button>
         </form>
         <br></br>
