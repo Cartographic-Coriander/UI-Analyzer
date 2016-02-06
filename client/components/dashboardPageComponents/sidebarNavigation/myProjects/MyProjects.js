@@ -37,7 +37,7 @@ class MyProjects extends Component {
 
   handleClick (project) {
     this.props.dispatch(getsTest({ projectId: project.id }));
-    this.props.dispatch(setFocus('projectId', project));
+    this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));
   }
 

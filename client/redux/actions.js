@@ -19,8 +19,8 @@ export function getsUser(user) {
         };
         let userParams = {
           type: 'SET_FOCUS',
-          key: 'userId',
-          value: response.data.user.id
+          key: 'user',
+          value: response.data.user
         };
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
