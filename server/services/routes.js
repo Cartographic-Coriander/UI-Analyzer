@@ -4,7 +4,7 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
-var port = 3000;
+var port = 2999;
 
 // inputs:
 // in data field:
@@ -21,22 +21,21 @@ module.exports = function (app, express) {
 
   app.delete('/api/users/signin', auth.signout);
 
-  app.get('/testview', function (req, res) {
-    ++port;
-    console.log('request host', req.headers.host);
-    var url = req.query.url;
-
-    // Website you wish to allow to connect
-    // @!@!@! TODO: change the header for deployment*******************************************************
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:' + port);
-    // Pass to next layer of middleware
+  app.get('/testview', auth.decode, function (req, res) {
+    port = port + 2;
     var params = {
       url: req.query.url,
       testId: req.query.testId,
-      token: req.query.token
+      token: req.query.access_token,
+      location: req.query.location,
+      port: port
     };
 
-    require('./proxy')(express, port, params, function () { res.redirect(301, 'http://localhost:' + port + '/testview?url=' + url) });
+    res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
+
+    // new server must be spun up for every test instance
+    // after a given period of inactivity the server will spin down
+    require('./proxy')(express, params, function () { res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url) });
   });
 
   app.route('/api/project')

@@ -19,4 +19,4 @@ docker-compose.yml
 ###ignore the bundle
 client/public/bundle.js
 client/public/*.hot-update.*
-server/services/screenshot/test1/*
+server/data/screenshots/*

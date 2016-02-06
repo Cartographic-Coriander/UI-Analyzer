@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, currentFocus } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, setFocus } from '../../../../redux/actions';
 import { Modal } from 'react-bootstrap';
 
 class TestContainer extends Component {
@@ -65,12 +65,11 @@ class TestContainer extends Component {
 
   //to get to the proxy server
   startTest (test) {
-    console.log(test)
-    // this.dispatch.setFocus('test', )
-    let token = localStorage.getItem('Scrutinize.JWT.token');
-    // let testId = this.props.currentFocus.
-    let newUrl = "www.google.com";
+    let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+    let location = window.location.origin.slice(0, -portLength);
+    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location;
 
+    this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
     window.location = newUrl;
   }
 
@@ -78,18 +77,22 @@ class TestContainer extends Component {
     return (
       <div className = "Tests">
         <div>
-          { this.props.tests.list.map(function (test) {
-            return <TestContainerEntry
-              update = { this.updateTest.bind(this) }
-              delete = { this.deleteTest.bind(this) }
-              key = { test.id }
-              name = { test.name }
-              prompt = { test.prompt }
-              id = { test.id }
-              projectId = { test.projectId }
-              url = { test.url }
-            />
-          }.bind(this)) }
+          { this.props.tests.list.map((test, index) => {
+              console.log(index)
+              return <TestContainerEntry
+                update = { this.updateTest.bind(this) }
+                delete = { this.deleteTest.bind(this) }
+                startTest = { this.startTest.bind(this) }
+                key = { test.id }
+                index = { index }
+                name = { test.name }
+                prompt = { test.prompt }
+                id = { test.id }
+                projectId = { test.projectId }
+                url = { test.url }
+              />
+            })
+          }
         </div>
 
         <Modal show = { this.state.testModalDisplay }>
@@ -97,12 +100,11 @@ class TestContainer extends Component {
             test name: <input onChange = { this.newTestName.bind(this) } type = "text"></input><br></br>
             test prompt: <input onChange = { this.newTestPrompt.bind(this) } type = "text"></input><br></br>
             test url: <input onChange = { this.newTestUrl.bind(this) } type = "text"></input><br></br>
-            <button onClick = { this.addTest.bind(this) } type = "button">submit</button> <button onClick = { this.hideModal.bind(this) } type= "button">cancel</button>
+            <button onClick = { this.addTest.bind(this) } type = "button">submit</button>
+            <button onClick = { this.hideModal.bind(this) } type= "button">cancel</button>
           </form>
         </Modal>
-
         <button onClick = { this.toggleModal.bind(this) } type= "button">add test</button>
-        <button onClick = { this.startTest.bind(this) } type = "button">start test</button>
       </div>
     );
   };
