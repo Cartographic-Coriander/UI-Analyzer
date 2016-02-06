@@ -74,8 +74,8 @@ class TestContinerEntry extends Component {
     return (
      <div>
       <form onSubmit = { updateTest.bind(this) } >
-        <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } 
-        <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>    
+        <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name }
+        <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>
 
         <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button>{ this.props.prompt }
         <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>

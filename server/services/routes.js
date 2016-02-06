@@ -21,8 +21,6 @@ module.exports = function (app, express) {
 
   app.delete('/api/users/signin', auth.signout);
 
-
-
   app.get('/testview', function (req, res) {
     ++port;
     console.log('request host', req.headers.host);
@@ -38,7 +36,7 @@ module.exports = function (app, express) {
       token: req.query.token
     };
 
-    require('./proxy')(express, port, req.query.url, function () { res.redirect(301, 'http://localhost:' + port + '/testview?url=' + url) });
+    require('./proxy')(express, port, params, function () { res.redirect(301, 'http://localhost:' + port + '/testview?url=' + url) });
   });
 
   app.route('/api/project')

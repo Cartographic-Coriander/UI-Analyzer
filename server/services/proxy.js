@@ -60,7 +60,7 @@ module.exports = function (express, port, sessionInfo, callback) {
   });
 
   proxyServer.listen(port, function() {
-    callback()
+    callback();
     console.log('Proxy server is running on http://localhost:' + port);
   })
 };
