@@ -146,6 +146,10 @@ html, body {
   padding: 0;
 }
 
+button {
+  color: none;
+}
+
 /*.Accordian {
   background-color: yellow;
 }

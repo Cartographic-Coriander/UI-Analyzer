@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class TestContinerEntry extends Component {
+export default class TestContinerEntry extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -39,7 +39,7 @@ class TestContinerEntry extends Component {
     };
 
     let updateTest = () => {
-      const updatedProject = {
+      const updatedTest = {
         id: this.props.id,
         projectId: this.props.projectId,
         name: this.state.newName || this.props.name,
@@ -47,16 +47,28 @@ class TestContinerEntry extends Component {
         url: this.state.newUrl || this.props.url
       };
 
-      this.props.update(updatedProject);
+      this.props.update(updatedTest);
     };
 
     let deleteTest = () => {
-      const deletedProject = {
+      const deletedTest = {
         projectId : this.props.projectId,
         testId: this.props.id
       };
 
-      this.props.delete(deletedProject);
+      this.props.delete(deletedTest);
+    };
+
+    let startTest = () => {
+      let token = JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+      const startTest = {
+        url: this.props.url,
+        index: this.props.index,
+        testId: this.props.id,
+        access_token: token
+      };
+
+      this.props.startTest(startTest);
     };
 
     let handleNameInput = (event) => {
@@ -72,24 +84,20 @@ class TestContinerEntry extends Component {
     };
 
     return (
-     <div>
-      <form onSubmit = { updateTest.bind(this) } >
-        <button onClick = { toggleNameInput.bind(this) } type = "button" >edit</button>{ this.props.name } 
-        <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text"></input><br></br>    
-
-        <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button>{ this.props.prompt }
-        <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text"></input><br></br>
-
-        <button onClick = { toggleUrlInput.bind(this) } type = "button">edit</button>{ this.props.url }
-        <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type="text"></input><br></br>
-
-        <button onClick = { updateTest.bind(this) } type = "button">save changes</button>
-        <button onClick = { deleteTest.bind(this) } type="button">delete test</button>
-      </form>
-      <br></br>
-    </div>
-    )
-  }
-}
-
-export default TestContinerEntry;
+       <div>
+        <form onSubmit = { updateTest.bind(this) } >
+          <button onClick = { toggleNameInput.bind(this) } type = "button">edit</button><label>{ this.props.name }</label>
+          <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type = "text"></input><br></br>
+          <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button><label>{ this.props.prompt }</label>
+          <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type = "text"></input><br></br>
+          <button onClick = { toggleUrlInput.bind(this) } type = "button">edit</button><label>{ this.props.url }</label>
+          <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type = "text"></input><br></br>
+          <button onClick = { updateTest.bind(this) } type = "button">save changes</button>
+          <button onClick = { deleteTest.bind(this) } type="button">delete test</button>
+          <button onClick = { startTest.bind(this) } type = "button">start test</button>
+        </form>
+        <br></br>
+      </div>
+    );
+  };
+};
