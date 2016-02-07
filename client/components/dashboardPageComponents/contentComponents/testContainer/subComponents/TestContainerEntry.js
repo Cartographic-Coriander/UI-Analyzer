@@ -84,18 +84,34 @@ export default class TestContinerEntry extends Component {
     };
 
     return (
-       <div>
-        <form onSubmit = { updateTest.bind(this) } >
-          <button onClick = { toggleNameInput.bind(this) } type = "button">edit</button><label>{ this.props.name }</label>
-          <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type = "text"></input><br></br>
-          <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button><label>{ this.props.prompt }</label>
-          <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type = "text"></input><br></br>
-          <button onClick = { toggleUrlInput.bind(this) } type = "button">edit</button><label>{ this.props.url }</label>
-          <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type = "text"></input><br></br>
-          <button onClick = { updateTest.bind(this) } type = "button">save changes</button>
-          <button onClick = { deleteTest.bind(this) } type="button">delete test</button>
-          <button onClick = { startTest.bind(this) } type = "button">start test</button>
+       <div className = "testEntryComponent">
+        <form onSubmit = { updateTest.bind(this) } className = "testForm" >
+          <div className = "testEntryComponentLeft">
+            <h3> { this.props.name } </h3>
+            <h4 className = "testUrl"><span className = "testUrl"> { this.props.url } </span></h4>
+            <h4> { this.props.prompt } </h4>
+          </div>
+          <div className = "testEntryComponentRight">
+            <div className = "editDiv">
+              <button onClick = { toggleNameInput.bind(this) } type = "button">edit</button><span className = "editSpan">edit name</span> 
+              <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type = "text"></input><br></br>
+            </div>
+            <div className = "editDiv">
+              <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button><span className = "editSpan">edit prompt</span> 
+              <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type = "text"></input><br></br>
+            </div>
+            <div className = "editDiv">
+              <button onClick = { toggleUrlInput.bind(this) } type = "button">edit</button><span className = "editSpan">edit url</span> 
+              <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type = "text"></input><br></br>
+            </div>
+            <br className = "floatClear" />
+          </div>
         </form>
+        <div className = "testEntryButtonContainer">
+          <button onClick = { updateTest.bind(this) } className = "testEntryButton" type = "button">save changes</button>
+          <button onClick = { deleteTest.bind(this) } className = "testEntryButton" type="button">delete test</button>
+          <button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</button>
+        </div>
         <br></br>
       </div>
     );

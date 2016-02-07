@@ -62,21 +62,22 @@ class ProjectEntryComponent extends Component {
             <h4>{ this.props.description }</h4>
           </div>
           <div className = "projectEntryComponentRight">
-            <div className = "editNameDiv">
-              <button onClick = { toggleNameInput.bind(this) } type = "button" >edit </button><span className = "editNameSpan">edit name</span> 
+            <div className = "editDiv">
+              <button onClick = { toggleNameInput.bind(this) } type = "button" >edit </button><span className = "editSpan">edit name</span> 
               <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text" placeholder = { this.props.name } ></input><br></br>
             </div>
-
-            <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit </button>edit description
-            <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text" placeholder= { this.props.description } ></input><br></br>
+            <div className = "editDiv">
+              <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit </button><span className = "editSpan">edit description</span>
+              <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text" placeholder= { this.props.description } ></input><br></br>
+            </div>
           </div>
           <br className = "floatClear" />
         </form>
-        <div className = "projectEntryComponentButtonContainer" >
+        <div className = "projectEntryButtonContainer" >
           <button className = "projectEntryButton" onClick = { updateProject.bind(this) } type = "button">save changes</button>
           <button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</button>
         </div>
-        <br></br>
+        <br />
       </div>
     )
   }

@@ -150,6 +150,20 @@ button {
   color: none;
 }
 
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  background-color : #ffe5ff; 
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  background-color: #ffccff;
+}
+
+/*changing background color for autofilled values*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ccff99 inset;
+}
+
+
 /*.Accordian {
   background-color: yellow;
 }
@@ -222,35 +236,35 @@ button {
 }*/
 
 
-/*styling the settings page on the dashboard*/
+/*styling the settings and test pages on the dashboard*/
 
-.Settings {
+.Settings, .Tests {
   float: left;
   display: flex;
   flex-direction: column;
   min-width: 70%;
 }
 
-.settingsForm {
+.settingsForm, .testForm {
   padding: 10px 35px;
   display: flex;
 }
 
-.projectEntryComponent {
+.projectEntryComponent, .testEntryComponent {
   border: 1px solid blue;
 }
 
-.projectEntryComponentLeft {
+.projectEntryComponentLeft, .testEntryComponentLeft {
   float: left;
   min-width: 57%;
   word-wrap: break-word;
 }
 
-.projectEntryComponentRight {
+.projectEntryComponentRight, .testEntryComponentRight {
   float: left;
 }
 
-.projectEntryComponentButtonContainer {
+.projectEntryButtonContainer, .testEntryButtonContainer {
   text-align: center;
 }
 
@@ -258,13 +272,30 @@ button {
   clear: both;
 }
 
-.projectEntryButton {
-  margin-right: 20px;
+.projectEntryButton, .testEntryButton {
+  margin-right: 10px;
 }
 
-.editNameSpan {
+.editSpan , .createTestSpan {
   display: inline-block;
   width: 102.609px;
+  margin-left: 5px;
+}
+
+.createTestSpan {
+  height: 31px;
+}
+
+.addTestInput[type="text"] {
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
+  direction: rtl;
+}
+
+.addTestInput[type="text"]:focus {
+  width: 210px;
 }
 
 #editName {
@@ -275,7 +306,16 @@ button {
   height: 25px;
 }
 
-.editNameDiv {
+.editDiv {
   margin-bottom: 2px;
   height: 27px;
+}
+
+.addTestButton {
+  width: 80px;
+}
+
+.testUrl {
+  margin-top: -15px;
+  color: #b3b3b3;
 }

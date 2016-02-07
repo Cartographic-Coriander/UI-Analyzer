@@ -97,14 +97,14 @@ class TestContainer extends Component {
 
         <Modal show = { this.state.testModalDisplay }>
           <form>
-            test name: <input onChange = { this.newTestName.bind(this) } type = "text"></input><br></br>
-            test prompt: <input onChange = { this.newTestPrompt.bind(this) } type = "text"></input><br></br>
-            test url: <input onChange = { this.newTestUrl.bind(this) } type = "text"></input><br></br>
+            <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <span className = "createTestSpan">test prompt: </span><input onChange = { this.newTestPrompt.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text"></input><br></br>
             <button onClick = { this.addTest.bind(this) } type = "button">submit</button>
             <button onClick = { this.hideModal.bind(this) } type= "button">cancel</button>
           </form>
         </Modal>
-        <button onClick = { this.toggleModal.bind(this) } type= "button">add test</button>
+        <button onClick = { this.toggleModal.bind(this) } className = "addTestButton" type= "button">add test</button>
       </div>
     );
   };
