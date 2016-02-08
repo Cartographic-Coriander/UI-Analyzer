@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 export default class TestContinerEntry extends Component {
   constructor (props) {
@@ -9,7 +10,8 @@ export default class TestContinerEntry extends Component {
       promptDisplay: "none",
       newPrompt: null,
       urlDisplay: "none",
-      newUrl: null
+      newUrl: null,
+      modalVisbility: false
     };
   };
 
@@ -24,6 +26,10 @@ export default class TestContinerEntry extends Component {
 
     let editUrlStyle = {
       display: this.state.urlDisplay
+    };
+
+    let toggleModal = () => {
+      this.state.modalVisbility === false ?  this.setState({ modalVisbility: true }) : this.setState({ modalVisbility: false });
     };
 
     let toggleNameInput = () => {
@@ -46,8 +52,8 @@ export default class TestContinerEntry extends Component {
         prompt: this.state.newPrompt || this.props.prompt,
         url: this.state.newUrl || this.props.url
       };
-
       this.props.update(updatedTest);
+      toggleModal();
     };
 
     let deleteTest = () => {
@@ -84,20 +90,56 @@ export default class TestContinerEntry extends Component {
     };
 
     return (
-       <div>
-        <form onSubmit = { updateTest.bind(this) } >
-          <button onClick = { toggleNameInput.bind(this) } type = "button">edit</button><label>{ this.props.name }</label>
-          <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type = "text"></input><br></br>
-          <button onClick = { togglePromptInput.bind(this) } type = "button">edit</button><label>{ this.props.prompt }</label>
-          <input onChange = { handlePromptInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type = "text"></input><br></br>
-          <button onClick = { toggleUrlInput.bind(this) } type = "button">edit</button><label>{ this.props.url }</label>
-          <input onChange = { handleUrlInput.bind(this) } id = "editUrl" style = { editUrlStyle } type = "text"></input><br></br>
-          <button onClick = { updateTest.bind(this) } type = "button">save changes</button>
-          <button onClick = { deleteTest.bind(this) } type="button">delete test</button>
-          <button onClick = { startTest.bind(this) } type = "button">start test</button>
-        </form>
-        <br></br>
-      </div>
+        <Col className = "testEntryComponent" xs={12} md={9}>
+          <Row className = "testRow">
+            <Col xs={6} md={3} ><h5> name </h5></Col>
+            <Col xs={12} md={6} className = "testContent" ><h5>{ this.props.name }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Col xs={6} md={3}><h5> url </h5></Col>
+            <Col xs={12} md={9} className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Col xs={6} md={3}><h5> prompt </h5></Col>
+            <Col xs={12} md={9}className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testEntryButtonContainer">
+            <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
+            <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type="button">delete test</Button>
+            <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
+          </Row>
+          <br />
+
+          <Modal show = { this.state.modalVisbility }>
+            <form onSubmit = { updateTest.bind(this) } className = "testForm" >
+              <Row>
+                <Col xs={2} md={2}>name</Col>
+                <Col  xs={12} md={10}>
+                  <Input onChange = { handleNameInput.bind(this) } id = "editName" type = "text" placeholder = { this.props.name } />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={2} md={2}>url</Col>
+                <Col xs={12} md={10}>
+                  <Input onChange = { handleUrlInput.bind(this) } id = "editUrl" type = "text" placeholder = { this.props.url } />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={2} md={2}>prompt</Col>
+                <Col xs={12} md={10}>
+                  <Input onChange = { handlePromptInput.bind(this) } id = "editDescription" type = "textarea" placeholder = { this.props.prompt } />
+                </Col>
+              </Row>
+            </form>
+            <Col className = "testButtons">
+              <Button onClick = { updateTest.bind(this) } className = "testEntryButton" type = "button">save changes</Button>
+              <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">cancel</Button>
+            </Col>
+          </Modal>
+        </Col>
     );
   };
 };

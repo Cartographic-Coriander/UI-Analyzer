@@ -17,7 +17,6 @@ class SettingsContainer extends Component {
   render () {
     return (
       <div className = 'Settings'>
-        <h3>I am the settings container component</h3>
         { (() => {
           if (this.props.projects.error !== null) {
             return <div>{ this.props.projects.error }</div>
