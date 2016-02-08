@@ -14,14 +14,9 @@
       $('#startTestButton').hide();
       $('iframe').hide();
 
-      var mouseTracking = [];
+      var mouseTracking = {};
       var realUrl = '';
       var iframePrepared = false;
-      var pageCount = -1;
-      var url;
-      var documentWidth;
-      var documentHeight;
-      var refTime;
 
       $('#startTestButton').on('click', function () {
         $('#testStartPrompt').hide();
@@ -61,10 +56,6 @@
       // mountCount simply works with detailConfig to achieve above.
       var mouseCount = 0;
 
-      $('iframe').unload(function(e) {
-        console.log('unloading')
-      })
-
       $('iframe').load(function () {
         // new page has loaded -- resetting the url and reference time
         console.log('iframe content loaded')
@@ -74,39 +65,36 @@
         }
 
         // get current URL
+        var url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
+        var documentWidth = $('iframe').contents().find("body").width();
+        var documentHeight = $('iframe').contents().find("body").height();
 
         // track how many times this particular page has been visited
-        // var visitCount = 0;
-        // if (mouseTracking[url]) {
-        //   visitCount ++;
-        // } else {
-        //   mouseTracking[url] = {};
-        // }
-        if (!!url) {
-          // send screenshot to the server for review and comments
-          $.post({
-            url: '/api/screenshot',
-            data: {
-              url: url,
-              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
-              resolution: [documentWidth, documentHeight],
-              access_token: localStorage.getItem('Scrutinize.JWT.token')
-            },
-            success: function () {
-              console.log('screenshot saved for review');
-            }
-          });
+        var visitCount = 0;
+        if (mouseTracking[url]) {
+          visitCount ++;
+        } else {
+          mouseTracking[url] = {};
         }
 
-        pageCount++;
-        url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
-        documentWidth = $('iframe').contents().find("body").width();
-        documentHeight = $('iframe').contents().find("body").height();
+        // send screenshot to the server for review and comments
+        $.post({
+          url: '/api/screenshot',
+          data: {
+            url: url,
+            mouseTracking: JSON.stringify(mouseTracking[url][visitCount]),
+            resolution: [documentWidth, documentHeight],
+            access_token: localStorage.getItem('Scrutinize.JWT.token')
+          },
+          success: function () {
+            console.log('screenshot saved for review');
+          }
+        });
 
         // use the time of the onload event as the reference time
         var refTime = Date.now();
-        // console.log('current url: ', url);
-        // console.log('visit count: ', visitCount);
+        console.log('current url: ', url);
+        console.log('visit count: ', visitCount);
 
         $(this).contents().find("body").on('mousemove', function(event) {
           var x = event.pageX;
@@ -117,11 +105,11 @@
           mouseCount++;
 
           if (mouseCount % detailConfig === 0) {
-            if (!mouseTracking[pageCount]) {
-              mouseTracking[pageCount] = [];
+            if (!mouseTracking[url][visitCount]) {
+              mouseTracking[url][visitCount] = [];
             }
 
-            mouseTracking[pageCount].push({
+            mouseTracking[url][visitCount].push({
               x: x,
               y: y,
               timestamp: timestamp,
@@ -138,11 +126,11 @@
           // timestamp is calculated by deducting the reference time from the current time
           var timestamp = Date.now() - refTime;
 
-          if (!mouseTracking[pageCount]) {
-            mouseTracking[pageCount] = [];
+          if (!mouseTracking[url][visitCount]) {
+              mouseTracking[url][visitCount] = [];
           }
 
-          mouseTracking[pageCount].push({
+          mouseTracking[url][visitCount].push({
             x: x,
             y: y,
             timestamp: timestamp,
