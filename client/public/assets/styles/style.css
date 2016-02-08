@@ -98,6 +98,7 @@ html, body {
 /*Dashboard*/
 .DashboardPage {
   height: 100%;
+  padding-top: 40px;
 }
 
 .dashboardPageHeader {
@@ -146,9 +147,19 @@ html, body {
   padding: 0;
 }
 
-button {
-  color: none;
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  background-color : #ffe5ff; 
 }
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  background-color: #ffccff;
+}
+
+/*changing background color for autofilled values*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ccff99 inset;
+}
+
 
 /*.Accordian {
   background-color: yellow;
@@ -220,3 +231,96 @@ button {
 .hide * {
   display: none;
 }*/
+
+
+/*styling the settings and test pages on the dashboard*/
+
+.Settings, .Tests {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+}
+
+.settingsForm, .testForm {
+  padding: 10px 15px;
+}
+
+.projectEntryComponent, .testEntryComponent {
+  padding: 5px 22px;
+  text-align: center;
+  outline: #00FF00 dotted thick;
+  margin-left: 3%;
+}
+
+.projectEntryButtonContainer, .testEntryButtonContainer {
+  text-align: center;
+}
+
+.floatClear {
+  clear: both;
+}
+
+.testContent, .projectContent {
+  border: 1px solid #ffa31a;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  min-height: 43px;
+}
+
+.testRow {
+  margin: 5px 0;
+}
+
+.testLeftSideLabel {
+  text-align: center;
+}
+
+.projectEntryButton, .testEntryButton {
+  margin-right: 10px;
+}
+
+.editSpan , .createTestSpan {
+  display: inline-block;
+  width: 140px;
+  margin-left: 5px;
+}
+
+.createTestSpan {
+  height: 31px;
+}
+
+.addTestInput[type="text"] {
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
+  direction: rtl;
+}
+
+.addTestInput[type="text"]:focus {
+  width: 210px;
+}
+
+.testButtons, .projectButtons {
+  text-align: center;
+}
+
+#editName {
+  height: 25px;
+}
+
+.editDiv {
+  margin-bottom: 2px;
+  height: 27px;
+}
+
+.addTestButton {
+  width: 80px;
+}
+
+.testUrl {
+  margin-top: -15px;
+  color: #b3b3b3;
+}
