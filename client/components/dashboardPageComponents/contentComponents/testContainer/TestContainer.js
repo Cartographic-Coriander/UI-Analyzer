@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
 import { deletesTest, updatesTest, postsTest, setFocus } from '../../../../redux/actions';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class TestContainer extends Component {
   constructor (props) {
@@ -100,11 +101,11 @@ class TestContainer extends Component {
             <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text"></input><br></br>
             <span className = "createTestSpan">test prompt: </span><input onChange = { this.newTestPrompt.bind(this) } className = "addTestInput" type = "text"></input><br></br>
             <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text"></input><br></br>
-            <button onClick = { this.addTest.bind(this) } type = "button">submit</button>
-            <button onClick = { this.hideModal.bind(this) } type= "button">cancel</button>
+            <Button onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+            <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
           </form>
         </Modal>
-        <button onClick = { this.toggleModal.bind(this) } className = "addTestButton" type= "button">add test</button>
+        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton" type= "button">add test</Button>
       </div>
     );
   };

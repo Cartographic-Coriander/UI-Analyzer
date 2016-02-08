@@ -11,7 +11,7 @@ import TestContainer from './testContainer/TestContainer';
 class Content extends Component {
   render () {
     return (
-      <div>
+      <div className = "content-wrapper">
         {/* changing the project header when a project is selected */}
         { (() => {
             if (this.props.projects.list) {
