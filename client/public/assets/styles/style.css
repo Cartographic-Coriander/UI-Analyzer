@@ -98,6 +98,7 @@ html, body {
 /*Dashboard*/
 .DashboardPage {
   height: 100%;
+  padding-top: 40px;
 }
 
 .dashboardPageHeader {
@@ -144,10 +145,6 @@ html, body {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-button {
-  color: none;
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
@@ -239,29 +236,20 @@ input:-webkit-autofill {
 /*styling the settings and test pages on the dashboard*/
 
 .Settings, .Tests {
-  float: left;
   display: flex;
   flex-direction: column;
   min-width: 70%;
 }
 
 .settingsForm, .testForm {
-  padding: 10px 35px;
-  display: flex;
+  padding: 10px 15px;
 }
 
 .projectEntryComponent, .testEntryComponent {
-  border: 1px solid blue;
-}
-
-.projectEntryComponentLeft, .testEntryComponentLeft {
-  float: left;
-  min-width: 57%;
-  word-wrap: break-word;
-}
-
-.projectEntryComponentRight, .testEntryComponentRight {
-  float: left;
+  padding: 5px 22px;
+  text-align: center;
+  outline: #00FF00 dotted thick;
+  margin-left: 3%;
 }
 
 .projectEntryButtonContainer, .testEntryButtonContainer {
@@ -272,13 +260,30 @@ input:-webkit-autofill {
   clear: both;
 }
 
+.testContent, .projectContent {
+  border: 1px solid #ffa31a;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  min-height: 43px;
+}
+
+.testRow {
+  margin: 5px 0;
+}
+
+.testLeftSideLabel {
+  text-align: center;
+}
+
 .projectEntryButton, .testEntryButton {
   margin-right: 10px;
 }
 
 .editSpan , .createTestSpan {
   display: inline-block;
-  width: 102.609px;
+  width: 140px;
   margin-left: 5px;
 }
 
@@ -298,11 +303,11 @@ input:-webkit-autofill {
   width: 210px;
 }
 
-#editName {
-  height: 25px;
+.testButtons, .projectButtons {
+  text-align: center;
 }
 
-#editDescription {
+#editName {
   height: 25px;
 }
 

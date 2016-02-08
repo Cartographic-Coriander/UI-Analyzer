@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 class ProjectEntryComponent extends Component {
   constructor (props) {
@@ -7,7 +8,8 @@ class ProjectEntryComponent extends Component {
       nameDisplay: "none",
       newName : null,
       descriptionStyle: "none",
-      newDescription: null
+      newDescription: null,
+      modalVisibility: false
     };
   };
 
@@ -26,6 +28,11 @@ class ProjectEntryComponent extends Component {
 
     let toggleDescriptionInput = () => {
       this.state.descriptionStyle === "inline-block" ? this.setState({ descriptionStyle:"none" }) : this.setState({ descriptionStyle:"inline-block" });
+    };
+
+    let toggleModal = () => {
+      console.log('toggline', this)
+      this.state.modalVisibility === false ?  this.setState({ modalVisibility: true }) : this.setState({ modalVisibility: false });
     };
 
     let updateProject = () => {
@@ -55,30 +62,45 @@ class ProjectEntryComponent extends Component {
     };
 
     return (
-      <div className =  "projectEntryComponent">
-        <form className = "settingsForm" onSubmit = { updateProject.bind(this) } >
-          <div className = "projectEntryComponentLeft">
-            <h3>{ this.props.name }</h3>
-            <h4>{ this.props.description }</h4>
-          </div>
-          <div className = "projectEntryComponentRight">
-            <div className = "editDiv">
-              <button onClick = { toggleNameInput.bind(this) } type = "button" >edit </button><span className = "editSpan">edit name</span> 
-              <input onChange = { handleNameInput.bind(this) } id = "editName" style = { editNameStyle } type="text" placeholder = { this.props.name } ></input><br></br>
-            </div>
-            <div className = "editDiv">
-              <button onClick = { toggleDescriptionInput.bind(this) } type = "button">edit </button><span className = "editSpan">edit description</span>
-              <input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" style = { editDiscriptionStyle } type="text" placeholder= { this.props.description } ></input><br></br>
-            </div>
-          </div>
-          <br className = "floatClear" />
-        </form>
-        <div className = "projectEntryButtonContainer" >
-          <button className = "projectEntryButton" onClick = { updateProject.bind(this) } type = "button">save changes</button>
-          <button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</button>
-        </div>
+      <Col className = "projectEntryComponent" xs={12} md={9}>
+        <Row className = "testRow" >
+          <Col className = "testLeftSideLabel" xs={6} md={3} ><h5> name </h5></Col>
+          <Col xs={12} md={6} className = "projectContent" ><h5>{ this.props.name }</h5></Col>
+        </Row>
+        <hr />
+        <Row className = "testRow">
+          <Col className = "testLeftSideLabel" xs={6} md={3}><h5> prompt </h5></Col>
+          <Col xs={12} md={9}className = "projectContent" ><h5>{ this.props.description }</h5></Col>
+        </Row>
+        <hr />
+        <Row className = "testRow">
+          <Button className = "projectEntryButton" onClick = { toggleModal.bind(this) } type = "button">edit project</Button>
+          <Button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</Button>
+        </Row>
         <br />
-      </div>
+
+        <Modal show = { this.state.modalVisibility }>
+          <form className = "settingsForm" onSubmit = { updateProject.bind(this) } >
+            <Row>
+              <Col xs={2} md={2}>name</Col>
+              <Col  xs={12} md={10}>
+                <Input onChange = { handleNameInput.bind(this) } id = "editName" type = "text" placeholder = { this.props.name } />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={2} md={2}>description</Col>
+              <Col xs={12} md={10}>
+                <Input onChange = { handleDescriptionInput.bind(this) } id = "editUrl" type = "textarea" placeholder = { this.props.description } />
+              </Col>
+            </Row>
+          </form>
+            <Col className = "projectButtons">
+              <Button className = "projectEntryButton" onClick = { updateProject.bind(this) } type = "button">save changes</Button>
+              <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">cancel</Button>
+            </Col>
+        </Modal>
+
+      </Col>
     )
   }
 }

@@ -25,7 +25,7 @@ let store = createStoreWithMiddleware(combinedReducers);
 
 ReactDOM.render(
   <Provider store={ store }>
-    <App />
+    <App className = "wrapper" />
   </Provider>,
   document.getElementById('app')
 )
