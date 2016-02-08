@@ -6,7 +6,7 @@
 
     $(document).ready(function () {
       $('iframe').attr('src', window.location.origin);
-      var cookie = location.search.split('&access_token=')[1];
+      var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
       localStorage.setItem('Scrutinize.JWT.token', cookie);
 
       console.log('testview page ready');
@@ -21,7 +21,7 @@
       var url;
       var documentWidth;
       var documentHeight;
-      var refTime;
+
 
       $('#startTestButton').on('click', function () {
         $('#testStartPrompt').hide();
@@ -39,7 +39,7 @@
           url: '/mousetracking',
           data: {
             mouseTracking: mouseTracking,
-            access_token: localStorage.getItem('Scrutinize.JWT.token')
+            access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
           },
           success: function () {
             console.log('mousetracking info successfully posted');
@@ -51,19 +51,16 @@
       $.get({
         url: '/api/realUrl',
         data: {
-          access_token: localStorage.getItem('Scrutinize.JWT.token')
+          access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
         },
         success: function (data) { realUrl = data }
       });
 
       // if detailConfig is 0 or 1, every pixel movement is tracked. if set to five, it tracks every five pixel movement. Use it to configure the trade-off between memory size and granularity of the mouse movement tracking.
       var detailConfig = 1;
+
       // mountCount simply works with detailConfig to achieve above.
       var mouseCount = 0;
-
-      $('iframe').unload(function(e) {
-        console.log('unloading')
-      })
 
       $('iframe').load(function () {
         // new page has loaded -- resetting the url and reference time
@@ -73,15 +70,6 @@
           $('#testviewLoading').hide();
         }
 
-        // get current URL
-
-        // track how many times this particular page has been visited
-        // var visitCount = 0;
-        // if (mouseTracking[url]) {
-        //   visitCount ++;
-        // } else {
-        //   mouseTracking[url] = {};
-        // }
         if (!!url) {
           // send screenshot to the server for review and comments
           $.post({
@@ -90,7 +78,7 @@
               url: url,
               mouseTracking: JSON.stringify(mouseTracking[pageCount]),
               resolution: [documentWidth, documentHeight],
-              access_token: localStorage.getItem('Scrutinize.JWT.token')
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
             success: function () {
               console.log('screenshot saved for review');
@@ -98,15 +86,16 @@
           });
         }
 
+        // increment pagecount to access current mouseTracking index
         pageCount++;
+
+        // get current URL
         url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
         documentWidth = $('iframe').contents().find("body").width();
         documentHeight = $('iframe').contents().find("body").height();
 
         // use the time of the onload event as the reference time
         var refTime = Date.now();
-        // console.log('current url: ', url);
-        // console.log('visit count: ', visitCount);
 
         $(this).contents().find("body").on('mousemove', function(event) {
           var x = event.pageX;
@@ -127,7 +116,7 @@
               timestamp: timestamp,
               type: "move"
             });
-            console.log(mouseTracking);
+            // console.log(mouseTracking);
           }
         });
 
@@ -159,7 +148,7 @@
             url: '/endtest',
             data: {
               mouseTracking: mouseTracking,
-              access_token: localStorage.getItem('Scrutinize.JWT.token')
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
             success: function (response) {
               console.log('server response', response);
@@ -172,10 +161,8 @@
           $('iframe').hide();
           $('#testEndRequest').show();
         });
-
       });
     });
-
   </script>
 </head>
 <body>

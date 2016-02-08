@@ -18,8 +18,6 @@ var createMouseTracking = function (mouseTracking) {
     data: mouseTracking.data
   };
 
-  console.log('!!!!mouse tracking controller..... params:', params)
-
   return model.MouseTracking.create(params)
     .then(function (mouseTracking) {
       return mouseTracking;

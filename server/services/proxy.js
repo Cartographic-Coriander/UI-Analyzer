@@ -80,10 +80,9 @@ module.exports = function (express, session, callback) {
               data: req.body.mouseTracking
             };
 
-            console.log('mousetracking params: ', params);
             return mousetrackingController.createMouseTracking(params)
               .then(function (result) {
-                console.log('mousetracking created:', result.get())
+                // console.log('mousetracking created:', result.get())
                 res.json(result.get())
               })
               .catch(function (error) {
@@ -111,10 +110,9 @@ module.exports = function (express, session, callback) {
               data: req.body.mouseTracking
             };
 
-            console.log('mousetracking params: ', params);
             return mousetrackingController.createMouseTracking(params)
               .then(function (result) {
-                console.log('mousetracking created:', result.get())
+                // console.log('mousetracking created:', result.get())
                 res.json(result.get())
               })
               .catch(function (error) {
