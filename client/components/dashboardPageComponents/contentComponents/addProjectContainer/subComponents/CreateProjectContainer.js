@@ -24,7 +24,7 @@ class CreateProjectContainer extends Component {
           <div>
             <label>Project Name</label>
             <div>
-              <input type="text" placeholder="Project Name" {...projectName}/>
+              <input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
             </div>
             {projectName.touched && projectName.error && <div>{projectName.error}</div>}
           </div>
