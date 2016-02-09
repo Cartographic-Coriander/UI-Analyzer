@@ -11,14 +11,14 @@ import TestContainer from './testContainer/TestContainer';
 class Content extends Component {
   render () {
     return (
-      <div>
+      <div className = "content-wrapper">
         {/* changing the project header when a project is selected */}
         { (() => {
             if (this.props.projects.list) {
               let currentProject, currentDescription;
               this.props.projects.list.forEach( (project) => {
-                if( this.props.currentFocus.projectId === project.id){
-                  currentProject = project.name
+                if ( this.props.currentFocus.project.id === project.id) {
+                  currentProject = project.name;
                   currentDescription = project.description;
                 }
               })

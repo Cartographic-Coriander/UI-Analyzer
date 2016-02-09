@@ -10,13 +10,13 @@ export default React.createClass({
     return (
       <div className="productDescription">
         <Jumbotron className="landingPage-Jumbotron">
-          <video className="landingPageVideo" z-index="-50" autoPlay mute loop src="https://s3-us-west-1.amazonaws.com/scrutinize/landingPageVideo.mp4">
+          <video className="landingPageVideo" z-index="-50" autoPlay mute loop src = "https://s3-us-west-1.amazonaws.com/scrutinize/landingPageVideo.mp4">
           </video>
           <div id="landingPageText">
             <h1>Inspiration from Users, for Users</h1>
             <p>Scrutinize tracks, aggregates and reports user behavior on your website.</p>
             <p>Gain insights into your users to optimize UI/UX.</p>
-            <p><Button className="btn-primary btn-lg getStartedBtn-lg" onClick={ this.props.showRegistration } >Get Started</Button></p>
+            <p><Button className="btn-primary btn-lg getStartedBtn-lg" onClick = { this.props.showRegistration } >Get Started</Button></p>
           </div>
         </Jumbotron>
 
@@ -48,6 +48,5 @@ export default React.createClass({
 });
 
 var mapStateToProps = function (state) {
-  
   return state
 };

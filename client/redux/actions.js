@@ -548,6 +548,7 @@ export function signsOut() {
 /* END API ACTIONS */
 
 export function setFocus (key, value) {
+  console.log('setfocus action:', key, value)
   return {
     type: 'SET_FOCUS',
     key: key,

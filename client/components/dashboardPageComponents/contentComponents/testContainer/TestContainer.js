@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, setFocus } from '../../../../redux/actions';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class TestContainer extends Component {
   constructor (props) {
@@ -28,10 +29,10 @@ class TestContainer extends Component {
   addTest (test) {
     console.log(this)
     let newTest = {
-      projectId: this.props.currentFocus.projectId,
+      projectId: this.props.currentFocus.project.id,
       name: this.state.addTestName,
       url: this.state.addTestUrl,
-      prompt: this.state.addTestPrompt 
+      prompt: this.state.addTestPrompt
     };
     this.hideModal();
     console.log(newTest);
@@ -39,21 +40,21 @@ class TestContainer extends Component {
   };
 
   newTestName (event) {
-    this.setState({ addTestName : event.target.value });
+    this.setState({ addTestName: event.target.value });
   };
 
   newTestPrompt (event) {
-    this.setState({ addTestPrompt : event.target.value });
+    this.setState({ addTestPrompt: event.target.value });
   };
 
   newTestUrl (event) {
-    this.setState({ addTestUrl : event.target.value });
+    this.setState({ addTestUrl: event.target.value });
   };
 
   //for showing and hiding modals
   toggleModal () {
     this.setState({
-      testModalDisplay : this.state.testModalDisplay === true ? false : true
+      testModalDisplay: this.state.testModalDisplay === true ? false : true
     })
   }
 
@@ -64,36 +65,49 @@ class TestContainer extends Component {
   }
 
   //to get to the proxy server
-  redirect () {
-    let newUrl="www.google.com";
+  startTest (test) {
+    let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+    let location = window.location.origin.slice(0, -portLength);
+    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location;
 
-    window.location=newUrl;
+    this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
+    window.location = newUrl;
   }
 
   render () {
-
     return (
       <div className = "Tests">
-        <h3>I am the test settings component</h3>
         <div>
-          { this.props.tests.list.map(function (test) {
-            return <TestContainerEntry update = { this.updateTest.bind(this) } delete = { this.deleteTest.bind(this) } key = { test.id } name = { test.name } prompt = { test.prompt } id = { test.id } projectId = { test.projectId } url = { test.url } />
-          }.bind(this)) }
+          { this.props.tests.list.map((test, index) => {
+              console.log(index)
+              return <TestContainerEntry
+                update = { this.updateTest.bind(this) }
+                delete = { this.deleteTest.bind(this) }
+                startTest = { this.startTest.bind(this) }
+                key = { test.id }
+                index = { index }
+                name = { test.name }
+                prompt = { test.prompt }
+                id = { test.id }
+                projectId = { test.projectId }
+                url = { test.url }
+              />
+            })
+          }
         </div>
 
         <Modal show = { this.state.testModalDisplay }>
           <form>
-            test name: <input onChange = { this.newTestName.bind(this) } type = "text"></input><br></br>
-            test prompt: <input onChange = { this.newTestPrompt.bind(this) } type = "text"></input><br></br>
-            test url: <input onChange = { this.newTestUrl.bind(this) } type = "text"></input><br></br>
-            <button onClick = { this.addTest.bind(this) } type = "button">submit</button> <button onClick = { this.hideModal.bind(this) } type= "button" >cancel</button>
+            <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <span className = "createTestSpan">test prompt: </span><input onChange = { this.newTestPrompt.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <Button onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+            <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
           </form>
         </Modal>
-
-        <button onClick = { this.toggleModal.bind(this) } type= "button">add test</button>
-        <button onClick = { this.redirect.bind(this) } type = "button">Start test</button>
+        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton" type= "button">add test</Button>
       </div>
-    )
+    );
   };
 }
 

@@ -33,7 +33,7 @@ $( document ).ready(function() {
   // get the real url address to get screenshot
   $.get({
     url: '/realUrl',
-    success: function (data) { realUrl = data}
+    success: function (data) { realUrl = data }
   });
 
   // if detailConfig is 0 or 1, every pixel movement is tracked. if set to five, it tracks every five pixel movement. Use it to configure the trade-off between memory size and granularity of the mouse movement tracking.
@@ -115,7 +115,7 @@ $( document ).ready(function() {
       type: "click"
     });
 
-    console.log(mouseTracking);    
+    console.log(mouseTracking);
   });
 
   $(document).keypress('d', function (event) {

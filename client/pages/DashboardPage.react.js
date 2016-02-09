@@ -20,7 +20,8 @@ export default class DashboardPage extends Component {
   render () {
     return (
       <div className = "DashboardPage">
-        <Navbar className="navbar-inverse dashboardPageHeader">
+        <Navbar className="navbar navbar-default navbar-fixed-top">
+          <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
             <NavItem onClick={ () => { this.handleLogout('leaving') } }> Log Out </NavItem>
           </Nav>
