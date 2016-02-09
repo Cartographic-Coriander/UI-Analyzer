@@ -7,9 +7,14 @@
     $(document).ready(function () {
       $('iframe').attr('src', window.location.origin);
       var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
+      var prompt = JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
+      
+      console.log('prompt is...', prompt);
+      console.log('cookie is...', cookie);
       localStorage.setItem('Scrutinize.JWT.token', cookie);
 
       console.log('testview page ready');
+      $('#testPrompt').text(prompt);
       $('#testEndRequest').hide();
       $('#startTestButton').hide();
       $('iframe').hide();
@@ -167,7 +172,7 @@
 </head>
 <body>
  <div id="testStartPrompt">
-    <p>Prompt: Add any item to your shopping cart.</p>
+    <p id="testPrompt"></p>
     <p>Press Ctrl + D to end the test session.</p>
     <p id="testviewLoading"> Loading the test.... </p>
     <button id="startTestButton">Start Test</button>
