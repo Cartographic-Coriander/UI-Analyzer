@@ -109,7 +109,7 @@ export default class TestContinerEntry extends Component {
           <hr />
           <Row className = "testEntryButtonContainer">
             <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
-            <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type="button">delete test</Button>
+            <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
             <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
           </Row>
           <br />

@@ -33,7 +33,7 @@ var Comment = sequelize.define('comment', {
 
 var Image = sequelize.define('image', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  image: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  image: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   url: { type: Sequelize.STRING, notNull: true, notEmpty: true, unique: 'compositeOne' },
   testId: { type: Sequelize.INTEGER, unique: 'compositeOne' }
 }, { timestamps: false });

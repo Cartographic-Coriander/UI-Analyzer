@@ -4,6 +4,8 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
+var Promise = require("bluebird");
+var fs = require('fs');
 var port = 2999;
 
 // inputs:
@@ -32,13 +34,13 @@ module.exports = function (app, express) {
       prompt: req.query.prompt,
       port: port
     };
+    console.log('Test starting.... params:', params);
 
     res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
     require('./proxy')(express, params, function () {
-      // res.cookie('proxyCookie', params.token, { maxAge: 900000 });
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
@@ -147,6 +149,8 @@ module.exports = function (app, express) {
       //   userId: req.query.userId,
       //   projectId: req.query.projectId
       // };
+
+      console.log('get tests params:', params);
 
       testsController.retrieveTest(params)
         .then(function (results) {
@@ -380,12 +384,13 @@ module.exports = function (app, express) {
 
       imagesController.retrieveImage(params)
         .then(function (results) {
-          return results.reduce(function (previous, current) {
+          return Promise.reduce(results, function (previous, current) {
+            var image = current.get('image').split('/');
             var params = {
               id: current.get('id'),
               testId: current.get('testId'),
               url: current.get('url'),
-              image: current.get('image')
+              image: fs.readFileSync(current.get('image'), 'utf8')
             };
 
             previous.push(params);
@@ -393,6 +398,7 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          // app.use('/image', express.static(__dirname + '/../data/screenshots/' + req.testId));
           res.json(result);
         })
         .catch(function (error) {

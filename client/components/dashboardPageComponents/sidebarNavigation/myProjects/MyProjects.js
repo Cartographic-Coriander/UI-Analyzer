@@ -22,8 +22,8 @@ class MyProjects extends Component {
 
   //toggle add project modal visibilty
   toggleModalVisibility () {
-    this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true })
-  }
+    this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true });
+  };
 
   //sending data from add project form in the modal and hiding the modal
   sendNewProject (project) {
@@ -40,18 +40,18 @@ class MyProjects extends Component {
     this.props.dispatch(getsTest({ projectId: project.id }));
     this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));
-  }
+  };
 
   setContent (context) {
     this.props.dispatch(contentState(context));
-  }
+  };
 
   componentDidMount () {
     var that = this;
     setTimeout(() => {$('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
       })}, 500);
-  }
+  };
 
   render () {
     return (

@@ -8,7 +8,7 @@
       $('iframe').attr('src', window.location.origin);
       var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
       var prompt = 'Prompt: ' + JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
-      
+
       console.log('prompt is...', prompt);
       console.log('cookie is...', cookie);
       localStorage.setItem('Scrutinize.JWT.token', cookie);
@@ -39,7 +39,7 @@
       });
 
       $('#testEndYesButton').on('click', function () {
-        console.log('sending mousetracking info');
+        // console.log('sending mousetracking info');
         $.post({
           url: '/mousetracking',
           data: {
@@ -47,7 +47,7 @@
             access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
           },
           success: function () {
-            console.log('mousetracking info successfully posted');
+            // console.log('mousetracking info successfully posted');
           }
         });
       });
@@ -69,7 +69,7 @@
 
       $('iframe').load(function () {
         // new page has loaded -- resetting the url and reference time
-        console.log('iframe content loaded')
+        // console.log('iframe content loaded')
         if (!iframePrepared) {
           $('#startTestButton').show();
           $('#testviewLoading').hide();
@@ -86,7 +86,7 @@
               access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
             success: function () {
-              console.log('screenshot saved for review');
+              // console.log('screenshot saved for review');
             }
           });
         }
@@ -96,7 +96,7 @@
 
         // get current URL
         url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
-        documentWidth = $('iframe').contents().find("body").width();
+        documentWidth = $(document).contents().find("body").width();
         documentHeight = $('iframe').contents().find("body").height();
 
         // use the time of the onload event as the reference time
@@ -146,25 +146,63 @@
         });
 
         $(document).keypress('d', function (event) {
-          console.log('test end request A');
+          // console.log('test end request document');
           $('iframe').hide();
           $('#testEndRequest').show();
+
+          $.post({
+            url: '/api/screenshot',
+            data: {
+              url: url,
+              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
+              resolution: [documentWidth, documentHeight],
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+            },
+            success: function () {
+              // console.log('screenshot saved for review');
+            }
+          });
+
           $.post({
             url: '/endtest',
             data: {
-              mouseTracking: mouseTracking,
               access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
             success: function (response) {
-              console.log('server response', response);
+              // console.log('server response', response);
             }
           })
         });
 
         $('iframe').contents().find("body").keypress('d', function (event) {
-          console.log('test end request B');
+          // console.log('test end request iframe');
           $('iframe').hide();
           $('#testEndRequest').show();
+
+          $.post({
+            url: '/api/screenshot',
+            data: {
+              url: url,
+              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
+              resolution: [documentWidth, documentHeight],
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+            },
+            success: function () {
+              // console.log('screenshot saved for review');
+              window.location = response;
+            }
+          });
+
+          $.get({
+            url: '/endtest',
+            data: {
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+            },
+            success: function (response) {
+              // console.log('server response', response);
+              window.location = response;
+            }
+          })
         });
       });
     });

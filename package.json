@@ -40,7 +40,8 @@
     "redux-form": "^4.1.5",
     "redux-storage": "^2.1.0",
     "redux-thunk": "^1.0.3",
-    "sequelize": "^3.18.0"
+    "sequelize": "^3.18.0",
+    "webshot": "^0.17.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
