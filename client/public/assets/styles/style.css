@@ -13,7 +13,7 @@ html, body {
 
 /*Landing Page*/
 
-.landingPageHeader {
+.landingPageHeader, .dashboardPageHeader {
   margin: 0 0 0 0;
 }
 
@@ -98,7 +98,6 @@ html, body {
 /*Dashboard*/
 .DashboardPage {
   height: 100%;
-  padding-top: 40px;
 }
 
 .dashboardPageHeader {
@@ -148,89 +147,18 @@ html, body {
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
-  background-color : #ffe5ff; 
+  background-color : #FFFFFF; 
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-  background-color: #ffccff;
+  background-color: #f2f2f2;
 }
 
 /*changing background color for autofilled values*/
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #ccff99 inset;
+    -webkit-box-shadow: 0 0 0px 1000px #FFFFFF inset;
 }
 
-
-/*.Accordian {
-  background-color: yellow;
-}
-
-.SidebarNavigation {
-  background-color: purple;
-}
-
-.ProjectConfirmation {
-  background-color: green;
-}
-
-.MyProjects {
-  background-color: green;
-}
-
-.InvteTestersButton {
-  background-color: gray;
-}
-
-.ProjectButton {
-  background-color: orange;
-}
-
-.MyDashboardButton {
-}
-
-.AddProjectButton {
-  background-color: orange;
-}
-
-.SettingsButton {
-  background-color: orange;
-}
-
-.ReportsButton {
-  background-color: orange;
-}
-
-.TestButton {
-  background-color: orange;
-}
-
-.AddProject {
-  background-color: blue;
-}
-
-.Dashboard {
-  background-color: blue;
-}
-
-.Test {
-  background-color: blue;
-}
-
-.Settings {
-  background-color: blue;
-}
-
-.Reports {
-  background-color: blue;
-}
-
-.hide {
-  display: none;
-}
-
-.hide * {
-  display: none;
-}*/
 
 
 /*styling the settings and test pages on the dashboard*/
@@ -296,10 +224,11 @@ input:-webkit-autofill {
   -moz-transition: all 0.7s ease 0s;
   -o-transition: all 0.7s ease 0s;
   transition: all 0.7s ease 0s;
+  width: 181px;
 }
 
 .addTestInput[type="text"]:focus {
-  width: 210px;
+  width: 290px;
 }
 
 .testButtons, .projectButtons {
