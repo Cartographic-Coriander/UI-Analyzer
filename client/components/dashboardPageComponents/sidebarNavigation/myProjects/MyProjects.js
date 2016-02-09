@@ -33,7 +33,8 @@ class MyProjects extends Component {
     };
     this.props.dispatch(postsProject(newProject));
     this.toggleModalVisibility();
-  };
+    this.componentDidMount();
+  }
 
   handleClick (project) {
     this.props.dispatch(getsTest({ projectId: project.id }));

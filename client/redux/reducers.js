@@ -129,7 +129,12 @@ export function projects (state = projectsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_PROJECT':
-      var newList = newState.list.filter(item => item.id !== data.projectId);
+      var newList = [];
+      newState.list.forEach(function(item){
+        if (Number(item.id) !== Number(action.data)) {
+          newList.push(item);
+        }
+      });
       newState.list = newList;
       return newState;
     case 'ERROR_PROJECT':
@@ -155,7 +160,7 @@ export function tests (state = testsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_TEST':
-      var newList = newState.list.filter(item => item.id !== data.testId);
+      var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
     case 'ERROR_TEST':
@@ -181,7 +186,7 @@ export function comments (state = commentsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_COMMENT':
-      var newList = newState.list.filter(item => item.id !== data.commentId);
+      var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
     case 'ERROR_COMMENT':
@@ -207,7 +212,7 @@ export function images (state = imagesInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_IMAGE':
-      var newList = newState.list.filter(item => item.id !== data.imageId);
+      var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
     case 'ERROR_IMAGE':
@@ -233,7 +238,7 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_MOUSETRACKING':
-      var newList = newState.list.filter(item => item.id !== data.mouseTrackingId);
+      var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
     case 'ERROR_MOUSETRACKING':

@@ -120,7 +120,7 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        projectId: req.body.projectId
+        projectId: req.query.projectId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
