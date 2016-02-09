@@ -65,7 +65,21 @@ module.exports = function (express, session, callback) {
       }
     })
 
-    var insertData = function (params) {
+    var options = {
+      screenSize: {
+        width: req.body.resolution[0],
+        height: req.body.resolution[1]
+      }
+    };
+
+    webshot(url, dir + slug(url) + '.jpg', options, function(err) {
+      var params = {
+        testId: session.testId,
+        url: url,
+        image: dir + slug(url) + '.jpg'
+      };
+      console.log('image params:', params);
+
       return imagesController.createImage(params)
         .then(function (result) {
           var params = {
@@ -76,7 +90,6 @@ module.exports = function (express, session, callback) {
 
           return mousetrackingController.createMouseTracking(params)
             .then(function (result) {
-              // console.log('mousetracking created:', result.get())
               res.json(result.get())
             })
             .catch(function (error) {
@@ -84,43 +97,7 @@ module.exports = function (express, session, callback) {
               res.status(500).end('DB ERROR! Failed to create mousetracking data!');
             });
         });
-    }
-
-    var options = {
-      screenSize: {
-        width: req.body.resolution[0]
-      , height: req.body.resolution[1]
-      }};
-      console.log('webshot options', options, req.body)
-      webshot(url, dir + slug(url) + '.jpg', options, function(err) {
-    // var newImage = new Pageres({ delay: 5 }).src(url, resolution, { crop: false, filename: '<%= url %>' }).dest(directory).run()
-      // .then(function (data) {
-        // console.log('generating screenshot for', session.url);
-        // console.log('resolution: ', resolution);
-        // console.log('image data!!!!!!!!!!', data[0].filename);
-        var params = {
-          testId: session.testId,
-          url: url,
-          image: dir + slug(url) + '.jpg'
-        };
-        console.log('image params:', params);
-
-        insertData(params);
-      })
-      // .catch(function (error) {
-      //   // console.log(error, 'ERROR! Image creation error, continuing....', params)
-      //   // console.log('generating screenshot for', session.url);
-      //   // console.log('resolution: ', resolution);
-      //   var fixedUrl = url.split('http://www.')[1]
-      //   var params = {
-      //     testId: session.testId,
-      //     url: url,
-      //     image: dir + slug(url) + '.png'
-      //   };
-      //   console.log('ERROR image params:', params, error);
-
-      //   insertData(params);
-      // })
+    })
   });
 
   proxyServer.get('/endtest', auth.decode, function (req, res) {
