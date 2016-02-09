@@ -149,7 +149,6 @@ export function deletesProject(project) {
           type: 'DELETE_PROJECT',
           data: project.projectId
         };
-
         dispatch(params);
       })
       .catch((error) => {
@@ -237,7 +236,7 @@ export function deletesTest(test) {
       .then((response) => {
         var params = {
           type: 'DELETE_TEST',
-          data: test.testId
+          data: test.id
         };
 
         dispatch(params);
@@ -327,7 +326,7 @@ export function deletesComment (comment) {
       .then((response) => {
         var params = {
           type: 'DELETE_COMMENT',
-          data: comment.commentId
+          data: comment.id
         };
 
         dispatch(params);
@@ -417,7 +416,7 @@ export function deletesImage(image) {
       .then((response) => {
         var params = {
           type: 'DELETE_IMAGE',
-          data: image.imageId
+          data: image.id
         };
 
         dispatch(params);
@@ -507,7 +506,7 @@ export function deletesMouseTracking(mouseTracking) {
       .then((response) => {
         var params = {
           type: 'DELETE_MOUSETRACKING',
-          data: mouseTracking.mouseTrackingId
+          data: mouseTracking.id
         };
 
         dispatch(params);
@@ -531,8 +530,7 @@ export function signsOut() {
           type: 'SIGNOUT_USER'
         }
 
-        localStorage.removeItem('Scrutinize.saved.state');
-        localStorage.removeItem('Scrutinize.JWT.token');
+        window.localStorage.removeItem('Scrutinize.JWT.token');
         dispatch(params);
       })
       .catch((error) => {
@@ -549,7 +547,6 @@ export function signsOut() {
 /* END API ACTIONS */
 
 export function setFocus (key, value) {
-  console.log('setfocus action:', key, value)
   return {
     type: 'SET_FOCUS',
     key: key,

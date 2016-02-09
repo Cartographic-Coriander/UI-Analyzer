@@ -80,7 +80,7 @@ export function deleteProject (project) {
     projectId: project.projectId
   }
 
-  return instance.delete('/api/project', params);
+  return instance.delete('/api/project', { params: params });
 }
 
 export function getTest (test) {
