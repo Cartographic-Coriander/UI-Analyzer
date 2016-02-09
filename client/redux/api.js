@@ -71,7 +71,7 @@ export function updateProject (project) {
     name: project.name,
     description: project.description
   }
-
+  
   return instance.put('/api/project', params);
 }
 

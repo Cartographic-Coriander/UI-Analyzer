@@ -4,10 +4,12 @@ import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState } from '../redux/actions';
 
 class AddNotes extends Component {
+
   constructor (props) {
     super(props);
     this.state = {
-      comments: []
+      comments: [],
+      testImages : []
     }
   }
 
@@ -15,9 +17,22 @@ class AddNotes extends Component {
     const findImage = {
       testId : this.props.currentFocus.test.id
     }
-    console.log('the object that will be send from AddComments.js to get sent to find image ', findImage);
-    //the below setTimeout makes state reloading work
-    setTimeout( () => this.props.dispatch(getsImage(findImage)) , 5);
+
+    setTimeout( () => {
+      $.ajax({
+        url: 'http://localhost:8000/api/image',
+        data: findImage,
+        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+        method: 'GET',
+        timeout: 50000,
+        success: function (data, textStatus, jqXHR) {
+          // this.state.testImages = data;
+          this.setState({ testImages : data });
+          console.log('hope this works', this.state.testImages.length);
+        }.bind(this)
+      })
+
+    } , 50);
   }
 
   handleSendingNotes () {
@@ -93,11 +108,16 @@ class AddNotes extends Component {
     let createItem = function (comment) {
       return <Note key = { comment.id } x = { comment.x } y = { comment.y } commentText = { comment.commentText } commentType = { comment.commentType }/>;
     };
+    let createImage = function (imageObj) {
+      console.log(imageObj.image[0])
+      return <img key = { imageObj.url } src = {'data:image/jpeg;base64,' + imageObj.image } ></img>
+    };
     return (
       <div>
         <div id = 'critiqueImage' style = {divStyle} onClick = {this.findMousePosAndAddInput.bind(this)}>
           {/*mapping and rendering out array of comments*/}
           {this.state.comments.map(createItem)}
+          {this.state.testImages.map(createImage)}
        </div>
         <button onClick = { this.handleSendingNotes.bind(this) }>COMPLETE-O</button>
       </div>
