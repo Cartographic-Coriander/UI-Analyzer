@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import InviteTesters from './InviteTesters';
 export const fields = [ 'projectName', 'projectDescription' ];
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 const validate = values => {
   const errors = {};
@@ -24,7 +24,7 @@ class CreateProjectContainer extends Component {
           <div>
             <label>Project Name</label>
             <div>
-              <input type="text" placeholder="Project Name" {...projectName}/>
+              <input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
             </div>
             {projectName.touched && projectName.error && <div>{projectName.error}</div>}
           </div>
@@ -36,12 +36,12 @@ class CreateProjectContainer extends Component {
             {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
           </div>
           <div>
-            <button type="submit" disabled={submitting}>
+            <Button type="submit" disabled={submitting}>
               {submitting ? <i/> : <i/>} Create Project
-            </button>
-            <button type="button" onClick= { this.props.hideVisibility }>
+            </Button>
+            <Button type="button" onClick= { this.props.hideVisibility }>
               cancel
-            </button>
+            </Button>
           </div>
         </form>
       </Modal>

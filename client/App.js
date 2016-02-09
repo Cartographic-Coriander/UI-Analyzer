@@ -15,7 +15,7 @@ class App extends Component {
                 return <LandingPage />;
               case 'authenticated':
                 return <DashboardPage />;
-              case 'Image_Appear':
+              case 'imageView':
                 return <AddNotes />
               default:
                 return <LandingPage />
