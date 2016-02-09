@@ -31,6 +31,7 @@ module.exports = function (app, express) {
       token: req.query.access_token,
       location: req.query.location,
       callbackUrl: req.query.callbackUrl,
+      prompt: req.query.prompt,
       port: port
     };
     console.log('Test starting.... params:', params);
@@ -40,7 +41,7 @@ module.exports = function (app, express) {
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
     require('./proxy')(express, params, function () {
-      res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&access_token=' + params.token);
+      res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
 

@@ -73,7 +73,7 @@ class TestContainer extends Component {
     this.props.dispatch(pageState('imageView'));
 
     //sending user to mouse tracking page
-    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin;
+    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '&prompt=' + test.prompt;
     this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
 
     window.location = newUrl;

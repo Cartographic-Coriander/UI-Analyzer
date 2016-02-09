@@ -71,6 +71,7 @@ export default class TestContinerEntry extends Component {
         url: this.props.url,
         index: this.props.index,
         testId: this.props.id,
+        prompt: this.props.prompt,
         access_token: token
       };
 
