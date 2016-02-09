@@ -1,4 +1,5 @@
 module.exports = function (express) {
+  var https = require('https');
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
@@ -22,10 +23,10 @@ module.exports = function (express) {
     var options = {
       target: realUrl, // target host
       changeOrigin: true, // needed for virtual hosted sites
-      ws: true, // proxy websockets
-      // pathRewrite: {
-      // '^/old/api' : '/new/api' // rewrite paths
-      // }
+      ws: false, // proxy websockets
+      headers: {
+        host: 'localhost:3000'
+      }
     };
     var proxy = proxyMiddleware(context, options);
 

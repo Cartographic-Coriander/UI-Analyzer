@@ -68,13 +68,13 @@
     }
 
     // send screenshot to the server for review and comments
-    $.post({
-      url: '/screenshot',
-      data: {url: url,
-             resolution: [documentWidth, documentHeight]
-            },
-      success: function () {console.log('screenshot saved for review');}
-    });
+    // $.post({
+    //   url: '/screenshot',
+    //   data: {url: url,
+    //          resolution: [documentWidth, documentHeight]
+    //         },
+    //   success: function () {console.log('screenshot saved for review');}
+    // });
 
     // use the time of the onload event as the reference time
     var refTime = Date.now();
