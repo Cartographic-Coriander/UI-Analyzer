@@ -7,7 +7,7 @@
     $(document).ready(function () {
       $('iframe').attr('src', window.location.origin);
       var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
-      var prompt = JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
+      var prompt = 'Prompt: ' + JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
       
       console.log('prompt is...', prompt);
       console.log('cookie is...', cookie);
@@ -169,15 +169,218 @@
       });
     });
   </script>
+  <style media="screen" type="text/css">
+    @import url(http://fonts.googleapis.com/css?family=Roboto:100);
+    body {
+      background: #df691a;
+      text-align: center;
+    }
+
+    .group {
+      position: relative;
+      display: inline-block;
+      line-height: 16px;
+    }
+
+    .bigSqr {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      -webkit-transform-origin: bottom left;
+              transform-origin: bottom left;
+      -webkit-animation: bigSqrShrink 1s linear infinite;
+              animation: bigSqrShrink 1s linear infinite;
+    }
+
+    .square {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #FFF;
+    }
+
+    .first {
+      left: 0px;
+      top: 20px;
+    }
+
+    .second {
+      left: 20px;
+      top: 20px;
+      -webkit-animation: drop2 1s linear infinite;
+              animation: drop2 1s linear infinite;
+    }
+
+    .third {
+      left: 0px;
+      top: 0px;
+      -webkit-animation: drop3 1s linear infinite;
+              animation: drop3 1s linear infinite;
+    }
+
+    .fourth {
+      left: 20px;
+      top: 0px;
+      -webkit-animation: drop4 1s linear infinite;
+              animation: drop4 1s linear infinite;
+    }
+
+    .text {
+      line-height: 16px;
+      font-family: "Roboto";
+      color: #FFF;
+      display: block;
+      margin: 10px auto;
+      padding: 3px;
+    }
+
+    @-webkit-keyframes bigSqrShrink {
+      0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+      }
+      90% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+      }
+      100% {
+        -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+      }
+    }
+
+    @keyframes bigSqrShrink {
+      0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+      }
+      90% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+      }
+      100% {
+        -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+      }
+    }
+    @-webkit-keyframes drop2 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      25% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    @keyframes drop2 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      25% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    @-webkit-keyframes drop3 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      50% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    @keyframes drop3 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      50% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    @-webkit-keyframes drop4 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      75% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    @keyframes drop4 {
+      0% {
+        -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+      }
+      75% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+      100% {
+        -webkit-transform: translate(0);
+                transform: translate(0);
+      }
+    }
+    .link {
+      line-height: 1em;
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+      width: 300px;
+      height: 50px;
+      font-family: "Open Sans", "Roboto", Arial, sans-serif;
+      text-align: right;
+    }
+
+    .link > a {
+      text-decoration: none;
+      color: #FF0;
+    }
+  </style>
 </head>
 <body>
  <div id="testStartPrompt">
     <p id="testPrompt"></p>
     <p>Press Ctrl + D to end the test session.</p>
-    <p id="testviewLoading"> Loading the test.... </p>
     <button id="startTestButton">Start Test</button>
+    <div id="testviewLoading"> 
+      <div class="bigSqr">
+        <div class="square first"></div>
+        <div class="square second"></div>
+        <div class="square third"></div>
+        <div class="square fourth"></div>
+      </div>
+      <div class="text">loading the test...</div>
+    </div>
   </div>
-
   <iframe src="http://localhost" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
   </iframe>
 
