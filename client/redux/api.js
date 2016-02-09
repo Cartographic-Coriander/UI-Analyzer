@@ -1,6 +1,13 @@
 import axios from 'axios';
 
 var instance;
+//for creating instance when state is reloaded
+export function recallState () {
+  instance = axios.create({
+    timeout: 1000,
+    headers: {'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token }
+  });
+};
 
 //for signing up from the landing page
 export function getUser (user) {

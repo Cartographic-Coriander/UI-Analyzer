@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, setFocus } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, setFocus, pageState } from '../../../../redux/actions';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
@@ -27,7 +27,6 @@ class TestContainer extends Component {
 
   //adding new tests
   addTest (test) {
-    console.log(this)
     let newTest = {
       projectId: this.props.currentFocus.project.id,
       name: this.state.addTestName,
@@ -68,9 +67,14 @@ class TestContainer extends Component {
   startTest (test) {
     let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
     let location = window.location.origin.slice(0, -portLength);
-    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin;
 
+    //sending user to image commenting page
+    this.props.dispatch(pageState('imageView'));
+
+    //sending user to mouse tracking page
+    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin;
     this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
+
     window.location = newUrl;
   }
 
@@ -98,9 +102,9 @@ class TestContainer extends Component {
 
         <Modal show = { this.state.testModalDisplay }>
           <form>
-            <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text"></input><br></br>
-            <span className = "createTestSpan">test prompt: </span><input onChange = { this.newTestPrompt.bind(this) } className = "addTestInput" type = "text"></input><br></br>
-            <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text"></input><br></br>
+            <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" /><br />
+            <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" /><br />
+            <span className = "createTestSpan">test prompt: </span><textarea onChange = { this.newTestPrompt.bind(this) } type = "textarea" /><br />
             <Button onClick = { this.addTest.bind(this) } type = "button">submit</Button>
             <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
           </form>

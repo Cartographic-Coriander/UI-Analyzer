@@ -11,16 +11,20 @@ class AddNotes extends Component {
     }
   }
 
-  handleSendingNotes () {
-    //for sending array of notes to the server
-    this.props.dispatch(postsComment(this.state.comments));
-    //because the button also returns the user to the dashboard page
-    this.props.dispatch(pageState('authenticated'));
+  componentWillMount () {
+    const findImage = {
+      testId : this.props.currentFocus.test.id
+    }
+    console.log('the object that will be send from AddComments.js to get sent to find image ', findImage);
+    //the below setTimeout makes state reloading work
+    setTimeout( () => this.props.dispatch(getsImage(findImage)) , 5);
   }
 
-  //this runs on initialization
-  componentDidMount() {
-    this.props.dispatch(getsImage());
+  handleSendingNotes () {
+    //because the button also returns the user to the dashboard page
+    this.props.dispatch(pageState('authenticated'));
+    //for sending array of notes to the server
+    this.props.dispatch(postsComment(this.state.comments));
   }
 
   //this is the click handler that runs when the image to critique is clicked on
@@ -104,7 +108,8 @@ class AddNotes extends Component {
 function mapStateToProps(state) {
   return {
     comments: state.comments.list,
-    image: state.images
+    image: state.images,
+    currentFocus: state.currentFocus
   }
 }
 

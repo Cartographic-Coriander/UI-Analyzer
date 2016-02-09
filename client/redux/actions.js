@@ -531,6 +531,7 @@ export function signsOut() {
           type: 'SIGNOUT_USER'
         }
 
+        localStorage.removeItem('Scrutinize.saved.state');
         localStorage.removeItem('Scrutinize.JWT.token');
         dispatch(params);
       })

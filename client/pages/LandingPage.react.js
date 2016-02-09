@@ -40,8 +40,8 @@ class LandingPage extends Component {
       <div className = "LandingPage">
         <Header showLogin = { this.showLoginModal.bind(this) } showSignup = { this.showRegisterModal.bind(this) }/>
         <LoginForm onSubmit = { this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }  hideLogin={ this.hideLoginModal.bind(this) }  />
-        <Registration onSubmit={ this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } hideRegModal={ this.hideRegistrationModal.bind(this) } />
-        <ProductDescription showRegistration={ this.showRegisterModal.bind(this) } />
+        <Registration onSubmit = { this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } hideRegModal={ this.hideRegistrationModal.bind(this) } />
+        <ProductDescription showRegistration = { this.showRegisterModal.bind(this) } />
         <AboutUs />
         <Footer />
       </div>
