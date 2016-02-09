@@ -11,7 +11,6 @@ import {
 
 export function getsUser(user) {
   return function (dispatch) {
-    console.log('ksfkbsdkjgbdkb')
     return getUser(user)
       .then((response) => {
         let params = {
