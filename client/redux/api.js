@@ -71,7 +71,7 @@ export function updateProject (project) {
     name: project.name,
     description: project.description
   }
-
+  
   return instance.put('/api/project', params);
 }
 
@@ -169,7 +169,7 @@ export function getImage (image) {
   const params = {
     testId: image.testId
   }
-
+  console.log('from inside getsImage', image)
   return instance.get('/api/image', { params: params });
 }
 

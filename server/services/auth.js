@@ -96,7 +96,7 @@ var authenticate = function(req, res, next) {
 
 var decode = function(req, res, next) {
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
-
+  console.log('is there even a token?', token)
   try {
     try {
       var decoded = jwt.decode(token, tokenSecret);
