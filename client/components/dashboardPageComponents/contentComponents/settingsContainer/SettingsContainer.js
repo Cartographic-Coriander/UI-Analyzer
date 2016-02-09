@@ -22,7 +22,11 @@ class SettingsContainer extends Component {
             return <div>{ this.props.projects.error }</div>
           }
         })() }
-        <ProjectEntryComponent delete = { this.deleteProject.bind(this) } update = { this.updateProject.bind(this) } key = { this.props.currentFocus.project.id } id = { this.props.currentFocus.project.id } name = { this.props.currentFocus.project.name } description = { this.props.currentFocus.project.description }/>
+        { (() => {
+          if (this.props.currentFocus.project.description !== null) {
+            return <ProjectEntryComponent delete = { this.deleteProject.bind(this) } update = { this.updateProject.bind(this) } key = { this.props.currentFocus.project.id } id = { this.props.currentFocus.project.id } name = { this.props.currentFocus.project.name } description = { this.props.currentFocus.project.description }/>
+          }
+        })() }
       </div>
     )
   };

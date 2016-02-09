@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { setFocus } from '../../../../../redux/actions';
 
 class ProjectEntryComponent extends Component {
   constructor (props) {
@@ -31,7 +33,6 @@ class ProjectEntryComponent extends Component {
     };
 
     let toggleModal = () => {
-      console.log('toggline', this)
       this.state.modalVisibility === false ?  this.setState({ modalVisibility: true }) : this.setState({ modalVisibility: false });
     };
 
@@ -41,7 +42,6 @@ class ProjectEntryComponent extends Component {
         name: this.state.newName || this.props.name,
         description: this.state.newDescription || this.props.description
       };
-      console.log('updateProject called', updatedProject)
       this.props.update(updatedProject);
     };
 
@@ -49,8 +49,8 @@ class ProjectEntryComponent extends Component {
       const deletedProject = {
         projectId : this.props.id
       }
-      console.log('deleteproject called', deletedProject)
       this.props.delete(deletedProject);
+      this.props.dispatch(setFocus( 'project', { id: null, name: null, description: null}));
     };
 
     let handleNameInput = (event) => {
@@ -105,4 +105,7 @@ class ProjectEntryComponent extends Component {
   }
 }
 
-export default ProjectEntryComponent;
+
+let select = (state) => state;
+
+export default connect(select)(ProjectEntryComponent)
