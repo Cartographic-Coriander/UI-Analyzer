@@ -94,7 +94,7 @@ var updateProject = function (project) {
 // 1
 var deleteProject = function (project) {
   var params = { id: project.projectId };
-  console.log('inside the controller', project)
+
   return model.Project.findOne({
     where: params,
     include: [{
