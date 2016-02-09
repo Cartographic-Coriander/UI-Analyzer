@@ -370,16 +370,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/image')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.iss,
-      //   testId: req.body.testId
-      // };
-      var params = { /* for testing purposes */
-        userId: req.query.userId,
-        testId: req.query.testId
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.iss,
+        testId: req.body.testId
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   testId: req.query.testId
+      // };
 
       imagesController.retrieveImage(params)
         .then(function (results) {
