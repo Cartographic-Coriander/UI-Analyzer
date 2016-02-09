@@ -13,7 +13,7 @@ html, body {
 
 /*Landing Page*/
 
-.landingPageHeader {
+.landingPageHeader, .dashboardPageHeader {
   margin: 0 0 0 0;
 }
 
@@ -159,77 +159,6 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #FFFFFF inset;
 }
 
-
-/*.Accordian {
-  background-color: yellow;
-}
-
-.SidebarNavigation {
-  background-color: purple;
-}
-
-.ProjectConfirmation {
-  background-color: green;
-}
-
-.MyProjects {
-  background-color: green;
-}
-
-.InvteTestersButton {
-  background-color: gray;
-}
-
-.ProjectButton {
-  background-color: orange;
-}
-
-.MyDashboardButton {
-}
-
-.AddProjectButton {
-  background-color: orange;
-}
-
-.SettingsButton {
-  background-color: orange;
-}
-
-.ReportsButton {
-  background-color: orange;
-}
-
-.TestButton {
-  background-color: orange;
-}
-
-.AddProject {
-  background-color: blue;
-}
-
-.Dashboard {
-  background-color: blue;
-}
-
-.Test {
-  background-color: blue;
-}
-
-.Settings {
-  background-color: blue;
-}
-
-.Reports {
-  background-color: blue;
-}
-
-.hide {
-  display: none;
-}
-
-.hide * {
-  display: none;
-}*/
 
 
 /*styling the settings and test pages on the dashboard*/
