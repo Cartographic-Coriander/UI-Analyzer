@@ -28,6 +28,7 @@ module.exports = function (app, express) {
       testId: req.query.testId,
       token: req.query.access_token,
       location: req.query.location,
+      callbackUrl: req.query.callbackUrl,
       port: port
     };
 
@@ -35,7 +36,10 @@ module.exports = function (app, express) {
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
-    require('./proxy')(express, params, function () { res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url) });
+    require('./proxy')(express, params, function () {
+      // res.cookie('proxyCookie', params.token, { maxAge: 900000 });
+      res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&access_token=' + params.token);
+    });
   });
 
   app.route('/api/project')
@@ -72,7 +76,6 @@ module.exports = function (app, express) {
         name: req.body.name,
         description: req.body.description
       };
-      console.log('project post params:', params, typeof params.userId)
 
       projectsController.createProject(params)
         .then(function (result) {

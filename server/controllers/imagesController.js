@@ -11,10 +11,13 @@ var model = require('../db/model');
 // output shall be of the following format:
 // {id: 123, image: (stringified png file), url: 'abc' }
 var createImage = function (image) {
-  return model.Image.create(image)
-    .then(function (newImage) {
-      return newImage;
-    });
+  return model.Image.findOrCreate({
+    where: image,
+    defaults: image
+  })
+  .spread(function (newImage, created) {
+    return newImage;
+  });
 };
 
 // input should be of the following format:
