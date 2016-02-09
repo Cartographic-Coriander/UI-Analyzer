@@ -169,7 +169,7 @@ export function getImage (image) {
   const params = {
     testId: image.testId
   }
-  console.log('from inside getsImage', image)
+
   return instance.get('/api/image', { params: params });
 }
 

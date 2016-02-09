@@ -17,9 +17,7 @@ class AddNotes extends Component {
     const findImage = {
       testId : this.props.currentFocus.test.id
     }
-    const that = this;
-    console.log('the object that will be send from AddComments.js to get sent to find image ', findImage);
-    //the below setTimeout makes state reloading work
+
     setTimeout( () => {
       $.ajax({
         url: 'http://localhost:8000/api/image',
