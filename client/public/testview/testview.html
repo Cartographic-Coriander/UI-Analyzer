@@ -172,8 +172,26 @@
   <style media="screen" type="text/css">
     @import url(http://fonts.googleapis.com/css?family=Roboto:100);
     body {
-      background: #df691a;
       text-align: center;
+      font-family: Arial;
+      font-size: 20px;
+      color: white;
+      padding: 0 0 0 0;
+      margin: 0 0 0 0;
+    }
+
+    iframe {
+      z-index: -10;
+    }
+    #testStartPrompt, #testEndRequest {
+      position: relative;
+      top: 200px;
+      height: 200px;
+      width: 420px;
+      background-color: #df691a;
+      padding: 30px 30px 30px 30px;
+      z-index: 10;
+      margin: auto;
     }
 
     .group {
@@ -364,13 +382,44 @@
       text-decoration: none;
       color: #FF0;
     }
+
+    .btn-primary {
+      height: 50px;
+      width: 120px;
+      background-color: white;
+      color: #4e5d6c;
+      font-size: 20px;
+      border-color: transparent;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #startTestButton, #testviewLoading {
+      margin-top: 20px;
+    }
+
+    #testview-veil {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #4e5d6c;
+      opacity: 0.7;
+      z-index: 0;
+    }
+
+    #testEndRequest-text{
+      margin-top: 75px;
+    }
+
   </style>
 </head>
 <body>
- <div id="testStartPrompt">
+  <div id="testview-veil"></div>
+  <div id="testStartPrompt">
     <p id="testPrompt"></p>
     <p>Press Ctrl + D to end the test session.</p>
-    <button id="startTestButton">Start Test</button>
+    <button id="startTestButton" class="btn-primary">Start Test</button>
     <div id="testviewLoading"> 
       <div class="bigSqr">
         <div class="square first"></div>
@@ -381,15 +430,15 @@
       <div class="text">loading the test...</div>
     </div>
   </div>
-  <iframe src="http://localhost" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
-  </iframe>
-
   <div id="testEndRequest">
     <!-- Would you like to end this test session?
     <button id="testEndYesButton">Yes</button>
     <button id="testEndNoButton">No</button> -->
-    Test session ended, please wait...
+    <div id="testEndRequest-text"> Test session ended, please wait... </div>
   </div>
+  <iframe src="http://localhost" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
+  </iframe>
+
 
 </div>
 </body>
