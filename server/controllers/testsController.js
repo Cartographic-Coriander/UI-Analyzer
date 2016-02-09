@@ -23,7 +23,7 @@ var createTest = function (test) {
   .then(function (result) {
     if (result.users[0].projectUser.get('role') === 'owner') {
       var params = {
-        projectId: test.testId,
+        projectId: test.projectId,
         name: test.name,
         url: test.url,
         prompt: test.prompt

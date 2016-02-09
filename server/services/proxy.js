@@ -2,14 +2,15 @@ module.exports = function (express, session, callback) {
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
-  var Pageres = require('pageres');
-  var request = require('request');
+  // var Pageres = require('pageres');
+  var webshot = require('webshot');
   var mkdirp = require('mkdirp');
-  var path = require('path')
+  var path = require('path');
   var auth = require('./auth');
   var imagesController = require('../controllers/imagesController');
   var mousetrackingController = require('../controllers/mousetrackingController');
   var proxyServer = express();
+  var newServer;
 
   //proxy middleware
   proxyServer.use(parser.json());
@@ -40,13 +41,17 @@ module.exports = function (express, session, callback) {
   });
 
   proxyServer.post('/api/screenshot', auth.decode, function (req, res) {
-    console.log('mouse tracking results: ', req.body)
     var url = req.body.url;
     var resolution = [req.body.resolution[0] + 'x' + req.body.resolution[1]];
-    var directory = __dirname + '/../data/screenshots/' + session.testId;
+    var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
+    var dir = path.resolve(__dirname, '../data/screenshots/', session.testId) + '/';
+
+    console.log('directory', directory, 'dir', dir, 'dirname', __dirname)
 
     function slug (input) {
       return input
+        .replace(/^http:\/\/www/g, '')
+        .replace(/^http:\/\//g, '')
         .replace(/^\s\s*/, '') // Trim start
         .replace(/\s\s*$/, '') // Trim end
         .toLowerCase() // Camel case is bad
@@ -60,87 +65,70 @@ module.exports = function (express, session, callback) {
       }
     })
 
-    var newImage = new Pageres({ delay: 5 }).src(url, resolution, { crop: false, filename: '<%= url %>' }).dest(directory).run()
-      .then(function (data) {
-        console.log('generating screenshot for', session.url);
-        console.log('resolution: ', resolution);
-        console.log('image data!!!!!!!!!!', data[0].filename);
+    var insertData = function (params) {
+      return imagesController.createImage(params)
+        .then(function (result) {
+          var params = {
+            userId: req.decoded.iss,
+            imageId: result.get('id'),
+            data: req.body.mouseTracking
+          };
 
+          return mousetrackingController.createMouseTracking(params)
+            .then(function (result) {
+              // console.log('mousetracking created:', result.get())
+              res.json(result.get())
+            })
+            .catch(function (error) {
+              console.log('ERROR! Failed to save mousetracking data!', error);
+              res.status(500).end('DB ERROR! Failed to create mousetracking data!');
+            });
+        });
+    }
+
+    var options = {
+      screenSize: {
+        width: req.body.resolution[0]
+      , height: req.body.resolution[1]
+      }};
+      console.log('webshot options', options, req.body)
+      webshot(url, dir + slug(url) + '.jpg', options, function(err) {
+    // var newImage = new Pageres({ delay: 5 }).src(url, resolution, { crop: false, filename: '<%= url %>' }).dest(directory).run()
+      // .then(function (data) {
+        // console.log('generating screenshot for', session.url);
+        // console.log('resolution: ', resolution);
+        // console.log('image data!!!!!!!!!!', data[0].filename);
         var params = {
           testId: session.testId,
           url: url,
-          image: path.resolve(directory + data[0].filename)
+          image: dir + slug(url) + '.jpg'
         };
+        console.log('image params:', params);
 
-        return imagesController.createImage(params)
-          .then(function (result) {
-            var params = {
-              userId: req.decoded.iss,
-              imageId: result.get('id'),
-              data: req.body.mouseTracking
-            };
-
-            return mousetrackingController.createMouseTracking(params)
-              .then(function (result) {
-                // console.log('mousetracking created:', result.get())
-                res.json(result.get())
-              })
-              .catch(function (error) {
-                console.log('ERROR! Failed to save mousetracking data!', error);
-                res.status(500).end('DB ERROR! Failed to create mousetracking data!');
-              });
-          });
+        insertData(params);
       })
-      .catch(function (error) {
-        console.log(error, 'ERROR! Image creation error, continuing....', params)
-        console.log('generating screenshot for', session.url);
-        console.log('resolution: ', resolution);
+      // .catch(function (error) {
+      //   // console.log(error, 'ERROR! Image creation error, continuing....', params)
+      //   // console.log('generating screenshot for', session.url);
+      //   // console.log('resolution: ', resolution);
+      //   var fixedUrl = url.split('http://www.')[1]
+      //   var params = {
+      //     testId: session.testId,
+      //     url: url,
+      //     image: dir + slug(url) + '.png'
+      //   };
+      //   console.log('ERROR image params:', params, error);
 
-        var params = {
-          testId: session.testId,
-          url: url,
-          image: path.resolve(directory + slug(url))
-        };
-
-        return imagesController.createImage(params)
-          .then(function (result) {
-            var params = {
-              userId: req.decoded.iss,
-              imageId: result.get('id'),
-              data: req.body.mouseTracking
-            };
-
-            return mousetrackingController.createMouseTracking(params)
-              .then(function (result) {
-                // console.log('mousetracking created:', result.get())
-                res.json(result.get())
-              })
-              .catch(function (error) {
-                console.log('ERROR! Failed to save mousetracking data!', error);
-                res.status(500).end('DB ERROR! Failed to create mousetracking data!');
-              });
-          });
-      })
-
-  }, function (req, res) {
-    console.log(req.imageParams);
-
+      //   insertData(params);
+      // })
   });
 
-  proxyServer.post('/endtest', auth.decode, function (req, res) {
-    var mouseTracking = req.body.mouseTracking;
-    console.log('test ended! data:', JSON.stringify(req.body));
-    var params = {
-
-    }
-    request.post({
-      uri: session.callbackUrl,
-      headers: { 'x-access-token' : session.token},
-      body: req.body
-    })
+  proxyServer.get('/endtest', auth.decode, function (req, res) {
+    res.send(session.callbackUrl);
+    newServer.close();
   })
 
-  proxyServer.listen(session.port, function() {
+  newServer = proxyServer.listen(session.port, function() {
     callback();
     console.log('Proxy server is running on' + session.location + session.port);
   });

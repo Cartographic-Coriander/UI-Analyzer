@@ -296,7 +296,6 @@ input:-webkit-autofill {
   -moz-transition: all 0.7s ease 0s;
   -o-transition: all 0.7s ease 0s;
   transition: all 0.7s ease 0s;
-  direction: rtl;
 }
 
 .addTestInput[type="text"]:focus {
