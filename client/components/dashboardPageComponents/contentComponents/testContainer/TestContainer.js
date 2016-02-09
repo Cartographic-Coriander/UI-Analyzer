@@ -27,14 +27,15 @@ class TestContainer extends Component {
 
   //adding new tests
   addTest (test) {
+    let urlInput = this.state.addTestUrl;
+    let testUrl = urlInput.substr(0,4) === 'www.' ? 'http://' + urlInput : urlInput; 
     let newTest = {
       projectId: this.props.currentFocus.project.id,
       name: this.state.addTestName,
-      url: this.state.addTestUrl,
+      url: testUrl,
       prompt: this.state.addTestPrompt
     };
     this.hideModal();
-    console.log(newTest);
     this.props.dispatch(postsTest(newTest));
   };
 
