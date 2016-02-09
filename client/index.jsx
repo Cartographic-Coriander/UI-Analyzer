@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import App from './App.js';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
+import * as storage from 'redux-storage';
+import createEngine from 'redux-storage/engines/localStorage';
+import { recallState } from './redux/api';
 import { user, projects, tests, comments, images, mouseTrackings, currentFocus, stateRouter, modalState } from './redux/reducers';
 
 const reducers = {
@@ -20,8 +23,19 @@ const reducers = {
   form: formReducer
 };
 const combinedReducers = combineReducers(reducers);
-let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-let store = createStoreWithMiddleware(combinedReducers);
+//combined reducer is wrapped for saving state
+const reducer = storage.reducer(combinedReducers);
+const engine = createEngine('Scrutinize.saved.state');
+const middleware = storage.createMiddleware(engine);
+let createStoreWithMiddleware = applyMiddleware(thunk, middleware)(createStore);
+let store = createStoreWithMiddleware(reducer);
+const load = storage.createLoader(engine);
+load(store)
+  .then(() => { 
+    console.log('state reloaded');
+    recallState();
+  })
+  .catch(() => console.log('failed to load previous state'))
 
 ReactDOM.render(
   <Provider store={ store }>

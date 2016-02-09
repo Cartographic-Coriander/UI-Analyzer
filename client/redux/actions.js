@@ -11,6 +11,7 @@ import {
 
 export function getsUser(user) {
   return function (dispatch) {
+    console.log('ksfkbsdkjgbdkb')
     return getUser(user)
       .then((response) => {
         let params = {
@@ -531,6 +532,7 @@ export function signsOut() {
           type: 'SIGNOUT_USER'
         }
 
+        localStorage.removeItem('Scrutinize.saved.state');
         localStorage.removeItem('Scrutinize.JWT.token');
         dispatch(params);
       })
