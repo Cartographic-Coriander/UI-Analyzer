@@ -22,19 +22,15 @@ class SettingsContainer extends Component {
             return <div>{ this.props.projects.error }</div>
           }
         })() }
-        <div>
-        { this.props.projects.list.map(function (project) {
-          return <ProjectEntryComponent delete = { this.deleteProject.bind(this) } update = { this.updateProject.bind(this) } key = { project.id } id = { project.id } name = { project.name } description = { project.description }/>
-        }.bind(this)) }
-        {/*<EditSettingsContainer />*/}
-        </div>
+        <ProjectEntryComponent delete = { this.deleteProject.bind(this) } update = { this.updateProject.bind(this) } key = { this.props.currentFocus.project.id } id = { this.props.currentFocus.project.id } name = { this.props.currentFocus.project.name } description = { this.props.currentFocus.project.description }/>
       </div>
     )
   };
 }
 
 const select = (state) => ({
-  projects: state.projects
+  projects: state.projects,
+  currentFocus: state.currentFocus
 });
 
 export default connect(select)(SettingsContainer)
