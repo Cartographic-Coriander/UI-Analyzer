@@ -1,144 +1,169 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.js"></script>
   <script type="text/javascript">
-  $( document ).ready(function() {
-    $('iframe').attr('src', window.location.origin);
-    console.log('testview page ready');
-    $('#testEndRequest').hide();
-    $('#startTestButton').hide();
-    $('iframe').hide();
 
-    var mouseTracking = {};
-    var realUrl = '';
-    var iframePrepared = false;
+    $(document).ready(function () {
+      $('iframe').attr('src', window.location.origin);
+      var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
+      localStorage.setItem('Scrutinize.JWT.token', cookie);
 
-    $('#startTestButton').on('click', function () {
-      $('#testStartPrompt').hide();
-      $('iframe').show();
-    });
-
-    $('#testEndNoButton').on('click', function () {
+      console.log('testview page ready');
       $('#testEndRequest').hide();
-      $('iframe').show();
-    });
+      $('#startTestButton').hide();
+      $('iframe').hide();
 
-    $('#testEndYesButton').on('click', function () {
-      console.log('sending mousetracking info');
-      $.post({
-        url: '/mousetracking',
-        data: { mouseTracking: mouseTracking },
-        success: function () {
-          console.log('mousetracking info successfully posted');
-        }
+      var mouseTracking = [];
+      var realUrl = '';
+      var iframePrepared = false;
+      var pageCount = -1;
+      var url;
+      var documentWidth;
+      var documentHeight;
+
+
+      $('#startTestButton').on('click', function () {
+        $('#testStartPrompt').hide();
+        $('iframe').show();
       });
-    });
 
-    // get the real url address to get screenshot
-    $.get({
-      url: '/realUrl',
-      success: function (data) { realUrl = data }
-    });
+      $('#testEndNoButton').on('click', function () {
+        $('#testEndRequest').hide();
+        $('iframe').show();
+      });
 
-    // if detailConfig is 0 or 1, every pixel movement is tracked. if set to five, it tracks every five pixel movement. Use it to configure the trade-off between memory size and granularity of the mouse movement tracking.
-    var detailConfig = 1;
-    // mountCount simply works with detailConfig to achieve above.
-    var mouseCount = 0;
+      $('#testEndYesButton').on('click', function () {
+        console.log('sending mousetracking info');
+        $.post({
+          url: '/mousetracking',
+          data: {
+            mouseTracking: mouseTracking,
+            access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+          },
+          success: function () {
+            console.log('mousetracking info successfully posted');
+          }
+        });
+      });
 
-    $('iframe').load(function () {
-      // new page has loaded -- resetting the url and reference time
-      console.log('iframe content loaded')
-      if (!iframePrepared) {
-        $('#startTestButton').show();
-        $('#testviewLoading').hide();
-      }
-      // get current URL
-      // TODO: set the environmental variable depending on the deployment url *******************************
-      var url = realUrl + this.contentWindow.location.href.slice(21);
-      var documentWidth = $('iframe').contents().find("body").width();
-      var documentHeight = $('iframe').contents().find("body").height();
-
-      // track how many times this particular page has been visited
-      var visitCount = 0;
-      if (mouseTracking[url]) {
-        visitCount ++;
-      } else {
-        mouseTracking[url] = {};
-      }
-
-      // send screenshot to the server for review and comments
-      $.post({
-        url: '/screenshot',
+      // get the real url address to get screenshot
+      $.get({
+        url: '/api/realUrl',
         data: {
-          url: url,
-          resolution: [documentWidth, documentHeight]
+          access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
         },
-        success: function () { console.log('screenshot saved for review'); }
+        success: function (data) { realUrl = data }
       });
 
-      // use the time of the onload event as the reference time
-      var refTime = Date.now();
-      console.log('current url: ', url);
-      console.log('visit count: ', visitCount);
+      // if detailConfig is 0 or 1, every pixel movement is tracked. if set to five, it tracks every five pixel movement. Use it to configure the trade-off between memory size and granularity of the mouse movement tracking.
+      var detailConfig = 1;
 
-    $(this).contents().find("body").on('mousemove', function(event) {
-      var x = event.pageX;
-      var y = event.pageY;
-      // timestamp is calculated by deducting the reference time from the current time
-      var timestamp = Date.now() - refTime;
-      mouseCount++;
-      if(mouseCount % detailConfig === 0){
+      // mountCount simply works with detailConfig to achieve above.
+      var mouseCount = 0;
 
-        if (!mouseTracking[url][visitCount]) {
-          mouseTracking[url][visitCount] = [];
+      $('iframe').load(function () {
+        // new page has loaded -- resetting the url and reference time
+        console.log('iframe content loaded')
+        if (!iframePrepared) {
+          $('#startTestButton').show();
+          $('#testviewLoading').hide();
         }
 
-        mouseTracking[url][visitCount].push({
-          x: x,
-          y: y,
-          timestamp: timestamp,
-          type: "move"
+        if (!!url) {
+          // send screenshot to the server for review and comments
+          $.post({
+            url: '/api/screenshot',
+            data: {
+              url: url,
+              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
+              resolution: [documentWidth, documentHeight],
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+            },
+            success: function () {
+              console.log('screenshot saved for review');
+            }
+          });
+        }
+
+        // increment pagecount to access current mouseTracking index
+        pageCount++;
+
+        // get current URL
+        url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
+        documentWidth = $('iframe').contents().find("body").width();
+        documentHeight = $('iframe').contents().find("body").height();
+
+        // use the time of the onload event as the reference time
+        var refTime = Date.now();
+
+        $(this).contents().find("body").on('mousemove', function(event) {
+          var x = event.pageX;
+          var y = event.pageY;
+
+          // timestamp is calculated by deducting the reference time from the current time
+          var timestamp = Date.now() - refTime;
+          mouseCount++;
+
+          if (mouseCount % detailConfig === 0) {
+            if (!mouseTracking[pageCount]) {
+              mouseTracking[pageCount] = [];
+            }
+
+            mouseTracking[pageCount].push({
+              x: x,
+              y: y,
+              timestamp: timestamp,
+              type: "move"
+            });
+            // console.log(mouseTracking);
+          }
         });
 
-        console.log(mouseTracking);
-      }
-    });
+        $(this).contents().find("body").on('click', function (event) {
+          var x = event.pageX;
+          var y = event.pageY;
 
-    $(this).contents().find("body").on('click', function (event) {
-      var x = event.pageX;
-      var y = event.pageY;
-      // timestamp is calculated by deducting the reference time from the current time
-      var timestamp = Date.now() - refTime;
+          // timestamp is calculated by deducting the reference time from the current time
+          var timestamp = Date.now() - refTime;
 
-      if (!mouseTracking[url][visitCount]) {
-          mouseTracking[url][visitCount] = [];
-      }
+          if (!mouseTracking[pageCount]) {
+            mouseTracking[pageCount] = [];
+          }
 
-      mouseTracking[url][visitCount].push({
-        x: x,
-        y: y,
-        timestamp: timestamp,
-        type: "click"
+          mouseTracking[pageCount].push({
+            x: x,
+            y: y,
+            timestamp: timestamp,
+            type: "click"
+          });
+          console.log(mouseTracking);
+        });
+
+        $(document).keypress('d', function (event) {
+          console.log('test end request A');
+          $('iframe').hide();
+          $('#testEndRequest').show();
+          $.post({
+            url: '/endtest',
+            data: {
+              mouseTracking: mouseTracking,
+              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+            },
+            success: function (response) {
+              console.log('server response', response);
+            }
+          })
+        });
+
+        $('iframe').contents().find("body").keypress('d', function (event) {
+          console.log('test end request B');
+          $('iframe').hide();
+          $('#testEndRequest').show();
+        });
       });
-
-      console.log(mouseTracking);
     });
-
-    $(document).keypress('d', function (event) {
-      console.log('test end request A');
-      $('iframe').hide();
-      $('#testEndRequest').show();
-    });
-
-    $('iframe').contents().find("body").keypress('d', function (event) {
-      console.log('test end request B');
-      $('iframe').hide();
-      $('#testEndRequest').show();
-    });
-  });
-});
-</script>
+  </script>
 </head>
 <body>
  <div id="testStartPrompt">
@@ -152,9 +177,10 @@
   </iframe>
 
   <div id="testEndRequest">
-    Would you like to end this test session?
+    <!-- Would you like to end this test session?
     <button id="testEndYesButton">Yes</button>
-    <button id="testEndNoButton">No</button>
+    <button id="testEndNoButton">No</button> -->
+    Test session ended, please wait...
   </div>
 
 </div>

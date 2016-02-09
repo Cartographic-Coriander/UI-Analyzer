@@ -67,10 +67,12 @@ class TestContainer extends Component {
   startTest (test) {
     let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
     let location = window.location.origin.slice(0, -portLength);
-    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location;
+
     //sending user to image commenting page
     this.props.dispatch(pageState('imageView'));
 
+    //sending user to mouse tracking page
+    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin;
     this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
 
     window.location = newUrl;

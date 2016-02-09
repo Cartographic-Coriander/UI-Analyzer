@@ -15,9 +15,7 @@ var createMouseTracking = function (mouseTracking) {
   var params = {
     userId: mouseTracking.userId,
     imageId: mouseTracking.imageId,
-    movement: mouseTracking.movement,
-    clicks: mouseTracking.clicks,
-    urlchange: mouseTracking.urlchange
+    data: mouseTracking.data
   };
 
   return model.MouseTracking.create(params)
