@@ -91,10 +91,8 @@
 
         // get current URL
         url = realUrl + this.contentWindow.location.pathname + this.contentWindow.location.search;
-        setTimeout(function () {
-          documentWidth = $(document).contents().find("body").width();
-          documentHeight = $('iframe').contents().find("body").height();
-        }, 1000)
+        documentWidth = $(document).contents().find("body").width();
+        documentHeight = $('iframe').contents().find("body").height();
 
         // use the time of the onload event as the reference time
         var refTime = Date.now();
