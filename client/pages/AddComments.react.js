@@ -14,6 +14,14 @@ class AddNotes extends Component {
     }
   }
 
+  handleSendingNotes () {
+    console.log('-->',this.state.comments)
+    //because the button also returns the user to the dashboard page
+    this.props.dispatch(pageState('authenticated'));
+    //for sending array of notes to the server
+    this.props.dispatch(postsComment(this.state.comments));
+  }
+
   componentWillMount () {
 
     $(document).on('keydown', function (event) {
@@ -25,9 +33,9 @@ class AddNotes extends Component {
           var currentInx = this.state.currentIndex;
           this.setState({ currentIndex: currentInx+1 });
           this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-          console.log(this.state.currentIndex);
+
         } else {
-          console.log('we reached the end of the image array')
+
         }
       } else if (event.keyCode === 37) {
         //left arrow key
@@ -36,8 +44,14 @@ class AddNotes extends Component {
           this.setState({ currentIndex: currentInx-1 });
           this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
         } else {
-          console.log('we reached the beginning of the image array')
+
         }
+      }
+    }.bind(this));
+
+    $(document).keypress('d', function (event) {
+      if (event.ctrlKey) {
+        this.handleSendingNotes();
       }
     }.bind(this));
 
@@ -61,14 +75,7 @@ class AddNotes extends Component {
       })
 
     } , 50);
-  }
 
-  handleSendingNotes () {
-    console.log('handle sending notes')
-    //because the button also returns the user to the dashboard page
-    this.props.dispatch(pageState('authenticated'));
-    //for sending array of notes to the server
-    this.props.dispatch(postsComment(this.state.comments));
   }
 
   //this is the click handler that runs when the image to critique is clicked on
@@ -106,8 +113,7 @@ class AddNotes extends Component {
             y: cursorY - offset.top,
             commentText: critique,
             commentType: commentType,
-            // TODO: HAVE TO GRAB IMAGE ID
-            // imageId: this.props.currentFocus.imageId,
+            imageId: this.props.currentFocus.image.id,
             id: this.state.comments.length
           }
           let comments = this.state.comments;
@@ -159,7 +165,6 @@ class AddNotes extends Component {
           { this.state.comments.map(createItem) }
           { this.state.testImages.map(createImage) }
        </div>
-        <button onClick = { this.handleSendingNotes.bind(this) }>COMPLETE-O</button>
       </div>
     )
   }
