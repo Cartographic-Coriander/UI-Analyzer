@@ -389,6 +389,7 @@ module.exports = function (app, express) {
   app.route('/api/image')
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
+
       var params = {
         userId: req.decoded.iss,
         testId: req.query.testId
@@ -400,13 +401,15 @@ module.exports = function (app, express) {
 
       imagesController.retrieveImage(params)
         .then(function (results) {
+
           return Promise.reduce(results, function (previous, current) {
             var image = current.get('image').split('/');
+            var buffer = fs.readFileSync(current.get('image')).toString('base64');
             var params = {
               id: current.get('id'),
               testId: current.get('testId'),
               url: current.get('url'),
-              image: fs.readFileSync(current.get('image'), 'utf8')
+              image: buffer
             };
 
             previous.push(params);
