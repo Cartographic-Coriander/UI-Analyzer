@@ -7,7 +7,9 @@ var mousetrackingController = require('../controllers/mousetrackingController');
 var invitationsController = require('../controllers/invitationController');
 var Promise = require("bluebird");
 var fs = require('fs');
-var ejs = require('ejs')
+var ejs = require('ejs');
+var nodemailer = require('nodemailer');
+var mailAuth = require('mailAuth.js');
 var port = 2999;
 
 // inputs:
@@ -46,21 +48,6 @@ module.exports = function (app, express) {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
-
-
-  app.route('/invitation')
-    .get(function (req, res) {
-      var params = {
-        token: req.query.token
-      };
-
-      res.render('signup', params);
-    })
-    .post(function (req, res) {
-      var params = {
-
-      }
-    })
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -172,11 +159,23 @@ module.exports = function (app, express) {
         });
 
     })
-    .post(auth.decode, auth.encodeInvitationToken, function (req, res) {
+    .post(auth.decode, auth.encodeInvitation, function (req, res) {
 
     })
     .delete(auth.decode, function (req, res) {
 
+    })
+
+  app.route('/invitation')
+    .get(function (req, res) {
+      var params = {
+        token: req.query.token
+      };
+
+      res.render('signup', params);
+    })
+    .post(auth.decodeInvitation, function (req, res) {
+      console.log()
     })
 
   app.route('/api/test')
@@ -534,9 +533,7 @@ module.exports = function (app, express) {
           return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
-              movement: current.get('movement'),
-              clicks: current.get('clicks'),
-              urlchange: current.get('urlchange'),
+              data: current.get('data'),
               imageId: current.get('imageId'),
               userId: current.get('userId')
             };
@@ -578,9 +575,7 @@ module.exports = function (app, express) {
         imageId: req.body.imageId,
         mouseTrackingId: req.body.mouseTrackingId,
         update: {
-          movement: req.body.movement,
-          clicks: req.body.clicks,
-          urlchange: req.body.urlchange
+          data: req.body.movement
         }
       };
       // var params = { /* for testing purposes */
