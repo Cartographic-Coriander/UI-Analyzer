@@ -5,7 +5,6 @@ var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
 var invitationsController = require('../controllers/invitationController');
-// var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
 var ejs = require('ejs')
@@ -40,8 +39,6 @@ module.exports = function (app, express) {
       port: port
     };
     console.log('Test starting.... params:', params);
-
-    res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
