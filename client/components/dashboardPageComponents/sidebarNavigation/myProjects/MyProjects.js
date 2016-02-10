@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ProjectListEntry from './subComponents/ProjectListEntry';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, postsProject } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, getsComment, postsProject } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -37,7 +36,6 @@ class MyProjects extends Component {
   }
 
   handleClick (project) {
-    this.props.dispatch(getsComment({ imageId: 51 }));
     this.props.dispatch(getsTest({ projectId: project.id }));
     this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));

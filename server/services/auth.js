@@ -93,7 +93,7 @@ var authenticate = function(req, res, next) {
   })(req, res, next);
 };
 
-var createInvitationToken = function (req, res, next) {
+var encodeInvitationToken = function (req, res, next) {
   var params = {
     projectId: req.body.projectId,
     email: req.body.email
@@ -105,7 +105,12 @@ var createInvitationToken = function (req, res, next) {
     exp: expires
   }, tokenSecret);
 
-  
+  req.invitationToken = token;
+  next();
+}
+
+decodeInvitationToken = function (req, res, next) {
+
 }
 
 var decode = function(req, res, next) {
@@ -177,5 +182,7 @@ module.exports = {
   ensureLoggedIn: ensureAuth.ensureLoggedIn,
   ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
   createUser: createUser,
-  signout: signout
+  signout: signout,
+  encodeInvitationToken: encodeInvitationToken,
+  decodeInvitationToken: decodeInvitationToken
 };

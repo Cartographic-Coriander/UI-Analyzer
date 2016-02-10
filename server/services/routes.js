@@ -4,6 +4,7 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
+var invitationsController = require('../controllers/invitationController');
 // var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
@@ -159,9 +160,22 @@ module.exports = function (app, express) {
 
   app.route('/api/invitation')
     .get(auth.decode, function (req, res) {
+      var params = {
+        userId: req.decoded.iss,
+        projectId: req.query.projectId
+      };
+
+      invitationController.retrieveAllInvitations(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/invitation GET Error!', error);
+          res.status(500).end('Invitation GET Error!');
+        });
 
     })
-    .post(auth.decode, function (req, res) {
+    .post(auth.decode, auth.encodeInvitationToken, function (req, res) {
 
     })
     .delete(auth.decode, function (req, res) {
@@ -179,8 +193,6 @@ module.exports = function (app, express) {
       //   userId: req.query.userId,
       //   projectId: req.query.projectId
       // };
-
-      console.log('get tests params:', params);
 
       testsController.retrieveTest(params)
         .then(function (results) {
