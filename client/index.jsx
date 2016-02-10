@@ -8,7 +8,7 @@ import { reducer as formReducer } from 'redux-form';
 import * as storage from 'redux-storage';
 import createEngine from 'redux-storage/engines/localStorage';
 import { recallState } from './redux/api';
-import { user, projects, tests, comments, images, mouseTrackings, currentFocus, stateRouter, modalState } from './redux/reducers';
+import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
 
 const reducers = {
   user: user,
@@ -17,6 +17,7 @@ const reducers = {
   comments: comments,
   images: images,
   mouseTrackings: mouseTrackings,
+  errorState: errorState,
   currentFocus: currentFocus,
   stateRouter: stateRouter,
   modalState: modalState,
@@ -33,8 +34,8 @@ let store = createStoreWithMiddleware(reducer);
 const load = storage.createLoader(engine);
 
 load(store)
-  .then(() => {
-    console.log('state reloaded');
+  .then((newState) => {
+    console.log('state reloaded', newState);
     recallState();
   })
   .catch(() => console.log('failed to load previous state'))

@@ -44,7 +44,7 @@ var retrieveComment = function (comment) {
         where: { imageId: comment.imageId }
       })
       .then(function (result) {
-        if (result === null) {
+        if (result.length === 0) {
           throw (new Error ('Error! Comment does not exist!'));
         } else {
           return result;

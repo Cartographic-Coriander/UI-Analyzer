@@ -71,7 +71,7 @@ export function updateProject (project) {
     name: project.name,
     description: project.description
   }
-  
+
   return instance.put('/api/project', params);
 }
 
@@ -214,10 +214,8 @@ export function getMouseTracking (mouseTracking) {
 export function postMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
-    movement: mouseTracking.movement,
-    clicks: mouseTracking.clicks,
-    urlchange: mouseTracking.urlchange
-  }
+    data: mouseTracking.data
+  };
 
   return instance.post('/api/mousetracking', params);
 }
@@ -226,10 +224,8 @@ export function updateMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
     mouseTrackingId: mouseTracking.mouseTrackingId,
-    movement: mouseTracking.movement,
-    clicks: mouseTracking.clicks,
-    urlchange: mouseTracking.urlchange
-  }
+    data: mouseTracking.data
+  };
 
   return instance.put('/api/mousetracking', params);
 }

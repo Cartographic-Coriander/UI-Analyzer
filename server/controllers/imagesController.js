@@ -40,7 +40,7 @@ var retrieveImage = function (image) {
     }]
   })
   .then(function (result) {
-    if (result === null) {
+    if (result.length === 0) {
       throw (new Error ('Error! Image does not exist!'));
     } else {
       return result;

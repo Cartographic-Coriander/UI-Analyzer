@@ -56,7 +56,7 @@ var retrieveTest = function (test) {
     }]
   })
   .then(function (result) {
-    if (result === null) {
+    if (result.length === 0) {
       throw (new Error ('Error! Test does not exist!'));
     } else {
       return result;

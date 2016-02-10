@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleContentComponent } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
-import { contentState } from '../../../../../redux/actions';
+import { contentState, setFocus } from '../../../../../redux/actions';
 
 class SettingsButton extends Component {
   handleClick () {
+    var params = {
+      id: this.props.id,
+      name: this.props.name,
+      description: this.props.description
+    };
+
+    this.props.dispatch(setFocus('project', params));
     this.props.dispatch(contentState('Settings'));
   }
   render () {

@@ -47,7 +47,7 @@ var retrieveProject = function (project) {
     }]
   })
   .then(function (result) {
-    if (result === null) {
+    if (result.length === 0) {
       throw (new Error ('Error! Projects do not exist!'));
     } else {
       return result;

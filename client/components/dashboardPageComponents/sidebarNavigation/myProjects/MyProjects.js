@@ -31,10 +31,11 @@ class MyProjects extends Component {
       name: project.projectName,
       description: project.projectDescription
     };
+
     this.props.dispatch(postsProject(newProject));
     this.toggleModalVisibility();
     this.componentDidMount();
-  }
+  };
 
   handleClick (project) {
     this.props.dispatch(getsTest({ projectId: project.id }));
@@ -48,9 +49,12 @@ class MyProjects extends Component {
 
   componentDidMount () {
     var that = this;
-    setTimeout(() => {$('.react-sanfona-item').children('h3').map(function (index, element) {
+
+    setTimeout(() => {
+      $('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
-      })}, 500);
+      })
+    }, 500);
   };
 
   render () {
@@ -63,9 +67,9 @@ class MyProjects extends Component {
                   <AccordionItem key = { project } title = { project.name } >
                     <div>
                       <ul className = "projectAccordionItems">
-                       <li><TestButton/></li>
-                       <li><SettingsButton /></li>
-                       <li><InviteTestersButton /></li>
+                       <li><TestButton id = { project.id }/></li>
+                       <li><SettingsButton id = { project.id } name = { project.name } description = { project.description } /></li>
+                       <li><InviteTestersButton id = { project.id }/></li>
                       </ul>
                     </div>
                   </AccordionItem>
@@ -75,7 +79,7 @@ class MyProjects extends Component {
         <CreateProjectContainer onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
       </div>
     );
-  }
+  };
 }
 
 const select = (state) => state

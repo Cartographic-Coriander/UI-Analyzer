@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditSettingsContainer from './subComponents/EditSettingsContainer';
 import ProjectEntryComponent from './subComponents/ProjectEntryComponent';
-import { updatesProject, deletesProject } from '../../../../redux/actions';
+import { updatesProject, deletesProject, getsProject } from '../../../../redux/actions';
 
 class SettingsContainer extends Component {
 
   updateProject (project) {
     this.props.dispatch(updatesProject(project));
+    this.props.dispatch(getsProject());
   };
 
   deleteProject (project) {
     this.props.dispatch(deletesProject(project));
+    this.props.dispatch(getsProject());
   };
 
   render () {

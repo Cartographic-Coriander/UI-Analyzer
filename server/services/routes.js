@@ -4,10 +4,11 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
-// var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
-var ejs = require('ejs')
+var ejs = require('ejs');
+var nodemailer = require('nodemailer');
+var mailAuth = require('./mailAuth');
 var port = 2999;
 
 // inputs:
@@ -21,9 +22,13 @@ var port = 2999;
 module.exports = function (app, express) {
   app.set('view engine', 'ejs');
 
-  app.post('/api/users/signin', auth.authenticate);
+  app.post('/api/users/signin', auth.authenticate, function (req, res) {
+    res.json(req.userToken);
+  });
 
-  app.post('/api/users/signup', auth.createUser, auth.authenticate);
+  app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
+    res.json(req.userToken);
+  });
 
   app.delete('/api/users/signin', auth.signout);
 
@@ -49,20 +54,87 @@ module.exports = function (app, express) {
     });
   });
 
+  app.route('/api/invitation')
+    .get(auth.decode, function (req, res) {
+      var params = {
+        userId: req.decoded.iss,
+        projectId: req.query.projectId
+      };
+
+      invitationController.retrieveAllInvitations(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/invitation GET Error!', error);
+          res.status(500).end('Invitation GET Error!');
+        });
+
+    })
+    .post(auth.decode, auth.encodeInvitation, function (req, res) {
+      var params = {
+        projectId: req.body.projectId,
+        email: req.body.email,
+        firstname: req.body.surname,
+        surname: req.body.surname,
+        token: req.invitationToken
+      };
+
+      var mailOptions = {
+          from: 'Scrutinize App <scrutinizeApp@gmail.com>',
+          to: params.email,
+          subject: 'Invitation to Scrutinize App',
+          text: 'Please go to:',
+          html: '<a ahref="http://localhost:8000/invitation?token=' + token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '') + '">scrutinize app</a>'
+      };
+
+      invitationController.createInvitation(params)
+        .then(function (result) {
+          var transporter = nodemailer.createTransport(mailAuth);
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              res.status(500).end(error);
+            }
+
+            console.log('Message sent: ' + info.response);
+            res.json(info.response);
+          });
+        })
+        .catch(function (error) {
+          console.log('/api/invitation POST Error!', error);
+          res.status(500).end('Invitation error!');
+        });
+    });
 
   app.route('/invitation')
     .get(function (req, res) {
       var params = {
-        token: req.query.token
+        token: req.query.token,
+        firstname: req.query.firstname || 'first name',
+        surname:req.query.surname || 'surname'
       };
 
       res.render('signup', params);
     })
-    .post(function (req, res) {
-      var params = {
 
-      }
-    })
+    .post(auth.decodeInvitation, auth.createUser, auth.authenticate, function (req, res) {
+      console.log(req.body, req.userToken);
+      var params = {
+        userId: req.userToken.user.id,
+        projectId: req.invitationToken.iss.projectId
+      };
+
+      invitationController.createTester(params)
+        .then(function (results) {
+          res.json(req.userToken);
+        })
+        .catch(function (error) {
+          console.log('/invitation POST Error!', error);
+          res.status(500).end('Invitation sign up error!');
+        });
+    });
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -156,17 +228,6 @@ module.exports = function (app, express) {
           res.status(500).end('Project DELETE Error!');
         });
     });
-
-  app.route('/api/invitation')
-    .get(auth.decode, function (req, res) {
-
-    })
-    .post(auth.decode, function (req, res) {
-
-    })
-    .delete(auth.decode, function (req, res) {
-
-    })
 
   app.route('/api/test')
     .get(auth.decode, function (req, res) {
@@ -510,16 +571,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    .get(auth.decode, function (req, res) {
-    // .get(function (req, res) { /* for testing purposes */
-      var params = {
-        userId: req.decoded.iss,
-        imageId: req.query.imageId
-      };
-      // var params = { /* for testing purposes */
-      //   userId: req.query.userId,
+    // .get(auth.decode, function (req, res) {
+    .get(function (req, res) { /* for testing purposes */
+      // var params = {
+      //   userId: req.decoded.iss,
       //   imageId: req.query.imageId
       // };
+      var params = { /* for testing purposes */
+        userId: req.query.userId,
+        imageId: req.query.imageId
+      };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
@@ -549,9 +610,7 @@ module.exports = function (app, express) {
       var params = {
         userId: req.decoded.iss,
         imageId: req.body.imageId,
-        movement: req.body.movement,
-        clicks: req.body.clicks,
-        urlchange: req.body.urlchange
+        data: req.body.data
       };
 
       mousetrackingController.retrieveMouseTracking(params)
@@ -580,9 +639,7 @@ module.exports = function (app, express) {
       //   imageId: req.query.imageId,
       //   mouseTrackingId: req.query.mouseTrackingId,
       //   update: {
-      //     movement: req.query.movement,
-      //     clicks: req.query.clicks,
-      //     urlchange: req.query.urlchange
+      //     data: req.query.data
       //   }
       // };
 

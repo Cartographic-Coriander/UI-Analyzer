@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CreateProjectContainer from './subComponents/CreateProjectContainer';
 import ProjectConfirmation from './subComponents/ProjectConfirmation';
-import { postsProject } from '../../../../redux/actions';
+import { postsProject, getsProject } from '../../../../redux/actions';
 
 class AddProjectContainer extends Component {
   constructor (props) {
@@ -26,6 +26,7 @@ class AddProjectContainer extends Component {
 
     this.setState({ confirm: nullParams });
     this.props.dispatch(postsProject(params));
+    this.props.dispatch(getsProject());
   }
 
   hideProjectModal () {

@@ -85,11 +85,12 @@ var authenticate = function(req, res, next) {
       exp: expires
     }, tokenSecret);
 
-    res.json({
+    req.userToken = {
       token : token,
       expires: expires,
       user: user.toJSON()
-    });
+    };
+    next();
   })(req, res, next);
 };
 
@@ -105,7 +106,7 @@ var decode = function(req, res, next) {
 
   try {
     try {
-      var decoded = jwt.decode(token, tokenSecret);
+      var decoded = jwt.decode(token, userTokenSecret);
     } finally {
       if (decoded.exp <= Date.now()) {
         throw new Error ('[Error: Token expired]');
@@ -131,7 +132,7 @@ var decode = function(req, res, next) {
   //    message: if failure, reason for failure
 var createUser = function (req, res, next) {
   var user = {
-    email: req.body.email,
+    email: req.body.email || req.invitationToken.iss.email,
     password: req.body.password,
     company: req.body.company,
     firstname: req.body.firstname,
@@ -139,7 +140,7 @@ var createUser = function (req, res, next) {
   };
 
   // hashing is not done by the model, though it probably should
-  Promise.promisify(bcrypt.hash)(user.password,null,null)
+  Promise.promisify(bcrypt.hash)(user.password, null, null)
     .then(function (data) {
       user.password = data;
       return usersController.createUser(user);
@@ -157,7 +158,7 @@ var createUser = function (req, res, next) {
 
 var signout = function (req, res) {
   // call passport's log out functionality
-  console.log('signout')
+  console.log('signout');
   req.logout();
   res.end();
 };
