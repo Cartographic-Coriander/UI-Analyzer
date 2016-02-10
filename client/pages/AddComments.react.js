@@ -33,7 +33,8 @@ class AddNotes extends Component {
           var currentInx = this.state.currentIndex;
           this.setState({ currentIndex: currentInx+1 });
           this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: []})
         } else {
 
         }
@@ -43,6 +44,8 @@ class AddNotes extends Component {
           var currentInx = this.state.currentIndex;
           this.setState({ currentIndex: currentInx-1 });
           this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: []})
         } else {
 
         }
@@ -133,15 +136,8 @@ class AddNotes extends Component {
 
   render () {
 
-    // //initiating keyboard event to dispatch actions to go back to the landing page
-    // $(document).keypress('d', function () {
-
-    //   // this.handleSendingNotes();
-    // }.bind(this));
-
     let divStyle = {
       //background image will come from the database
-      background: 'url(' + this.props.images + ')',
       position: 'relative',
       height: '100%',
       width: '100%',
