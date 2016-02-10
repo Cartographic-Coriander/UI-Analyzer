@@ -27,7 +27,9 @@ class TestContainer extends Component {
 
   getReport (test) {
     this.props.dispatch(getsImage(test));
-    this.props.dispatch(contentState('Reports'));
+    // this.props.dispatch(contentState('Reports'));
+    this.props.dispatch(setFocus('test', test))
+    this.props.dispatch(pageState('reportView'));
   };
 
   //adding new tests

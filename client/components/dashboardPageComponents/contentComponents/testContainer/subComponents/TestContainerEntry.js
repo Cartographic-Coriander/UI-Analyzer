@@ -92,7 +92,11 @@ export default class TestContinerEntry extends Component {
 
     let viewReport = () => {
       const params = {
-        testId: this.props.id
+        id: this.props.id,
+        projectId: this.props.projectId,
+        name: this.props.name,
+        prompt: this.props.prompt,
+        url: this.props.url
       };
 
       this.props.viewReport(params);

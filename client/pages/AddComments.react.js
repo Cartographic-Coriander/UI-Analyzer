@@ -9,12 +9,12 @@ class AddNotes extends Component {
     this.state = {
       comments: [],
       testImages : [],
-      currentIndex: 0
+      currentIndex: 0,
+      showLanding: true
     }
   }
 
   handleSendingNotes () {
-    console.log('-->',this.state.comments)
     //because the button also returns the user to the dashboard page
     this.props.dispatch(pageState('authenticated'));
     //for sending array of notes to the server
@@ -22,16 +22,25 @@ class AddNotes extends Component {
   }
 
   componentWillMount () {
+    //show feedback prompt for six seconds
+    setTimeout(() => {
+      this.setState({ showLanding: false });
+    }, 5000);
+
     $(document).on('keydown', function (event) {
       //this is the right arrow key
-      if (event.keyCode === 39 && this.state.testImages[this.state.currentIndex + 1] !== undefined) {
-        var currentInx = this.state.currentIndex;
-        var params = JSON.parse(JSON.stringify(this.state.comments));
-        this.setState({ currentIndex: currentInx + 1 });
-        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-
-        this.props.dispatch(postsComment(this.state.comments));
-        this.setState({ comments: [] });
+      if (event.keyCode === 39){
+        if (this.state.testImages[this.state.currentIndex + 1] !== undefined){
+          var currentInx = this.state.currentIndex;
+          this.setState({ currentIndex: currentInx + 1 });
+          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: [] });
+        } else { //at the end of the array
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: [] });
+          this.props.dispatch(pageState('authenticated'));
+        }
       } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined) {
         var params = JSON.parse(JSON.stringify(this.state.comments));
         var currentInx = this.state.currentIndex;
@@ -46,6 +55,7 @@ class AddNotes extends Component {
       if (event.ctrlKey) {
         this.handleSendingNotes();
       }
+      $(document).off('keypress');
     }.bind(this));
 
     const findImage = {
@@ -141,11 +151,24 @@ class AddNotes extends Component {
     }.bind(this);
     return (
       <div>
-        <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
-          {/*mapping and rendering out array of comments*/}
-          { this.state.comments.map(createItem) }
-          { this.state.testImages.map(createImage) }
-       </div>
+        { (() => {
+          if (this.state.showLanding) {
+            return (
+              <div>
+                <h3>Please leave feedback</h3>
+                <h5>press ctrl+d to exit</h5>
+              </div>
+            )
+          } else {
+            return (
+              <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
+                {/*mapping and rendering out array of comments*/}
+                { this.state.comments.map(createItem) }
+                { this.state.testImages.map(createImage) }
+             </div>
+            )
+          }
+        })() }
       </div>
     )
   }

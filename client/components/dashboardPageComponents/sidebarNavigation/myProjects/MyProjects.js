@@ -47,6 +47,7 @@ class MyProjects extends Component {
 
   componentDidMount () {
     var that = this;
+    this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
     setTimeout(() => {$('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
       })}, 500);
