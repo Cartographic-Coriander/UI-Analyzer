@@ -160,7 +160,6 @@ export function tests (state = testsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_TEST':
-      console.log('we be doin dis shit... up in heeyuh', action.data)
       var newList = [];
       newState.list.forEach(function (item) {
         if (Number(item.id) !== Number(action.data)) {
@@ -169,8 +168,6 @@ export function tests (state = testsInitialState, action) {
       });
       newState.list = newList;
       return newState;
-    case 'ERROR_TEST':
-      return state.error(action.data);
   }
   return state;
 };
@@ -195,8 +192,6 @@ export function comments (state = commentsInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_COMMENT':
-      return state.error(action.data);
   }
   return state;
 };
@@ -221,8 +216,6 @@ export function images (state = imagesInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_IMAGE':
-      return state.error(action.data);
   }
   return state;
 };
@@ -247,8 +240,6 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_MOUSETRACKING':
-      return state.error(action.data);
   }
   return state;
 };
