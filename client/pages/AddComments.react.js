@@ -39,6 +39,7 @@ class AddNotes extends Component {
         } else { //at the end of the array
           this.props.dispatch(postsComment(this.state.comments));
           this.setState({ comments: [] });
+          $(document).off('keydown');
           this.props.dispatch(pageState('authenticated'));
         }
       } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined) {

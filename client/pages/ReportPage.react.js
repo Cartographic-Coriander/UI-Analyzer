@@ -13,16 +13,21 @@ class ReportPage extends Component {
 
   componentWillMount () {
     $(document).on('keydown', function (event) {
-      //this is the right arrow key
-      if (event.keyCode === 39){
-        if (this.state.reportImages[this.state.currentIndex + 1] !== undefined){
-          var currentInx = this.state.currentIndex;
-          this.setState({ currentIndex: currentInx + 1 });
-          this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
-          this.setState({ comments: [] });
-        } else { //at the end of the array
-          this.setState({ comments: [] });
-          this.props.dispatch(pageState('authenticated'));
+      if (this.props.stateRouter.pageState === 'reportView') {
+        console.log('check to see we are on review page', this)
+        //this is the right arrow key
+        if (event.keyCode === 39){
+          if (this.state.reportImages[this.state.currentIndex + 1] !== undefined){
+            var currentInx = this.state.currentIndex;
+            this.setState({ currentIndex: currentInx + 1 });
+            this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+            this.setState({ comments: [] });
+          } else { //at the end of the array
+            this.setState({ comments: [] });
+            this.setState({ currentIndex: 0 });
+            this.props.dispatch(pageState('authenticated'));
+            $(document).off('keydown');
+          }
         }
       }
     }.bind(this));
@@ -37,7 +42,6 @@ class ReportPage extends Component {
     const findImages = {
       testId : this.props.currentFocus.test.id
     }
-    console.log('findImages',findImages)
 
     $.ajax({
       url: 'http://localhost:8000/api/image',
@@ -48,7 +52,7 @@ class ReportPage extends Component {
       success: function (data, textStatus, jqXHR) {
         // this.state.reportImages = data;
         this.setState({ reportImages : data });
-
+        this.props.dispatch(setFocus('image', this.state.reportImages[0]));
       }.bind(this)
     })
   }
