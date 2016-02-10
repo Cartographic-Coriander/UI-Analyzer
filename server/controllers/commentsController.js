@@ -13,7 +13,7 @@ var model = require('../db/model');
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var createComment = function (comment) {
-  return model.Comment.create(comment)
+  return model.Comment.bulkCreate(comment)
     .then(function (newComment) {
       return newComment;
     });

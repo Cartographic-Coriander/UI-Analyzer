@@ -4,7 +4,6 @@ import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
 
 class AddNotes extends Component {
-
   constructor (props) {
     super(props);
     this.state = {
@@ -27,13 +26,16 @@ class AddNotes extends Component {
       //this is the right arrow key
       if (event.keyCode === 39 && this.state.testImages[this.state.currentIndex + 1] !== undefined) {
         var currentInx = this.state.currentIndex;
+        var params = JSON.parse(JSON.stringify(this.state.comments));
         this.setState({ currentIndex: currentInx + 1 });
         this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+
         this.props.dispatch(postsComment(this.state.comments));
         this.setState({ comments: [] });
-      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined){
+      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined) {
+        var params = JSON.parse(JSON.stringify(this.state.comments));
         var currentInx = this.state.currentIndex;
-        this.setState({ currentIndex: currentInx-1 });
+        this.setState({ currentIndex: currentInx - 1 });
         this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
         this.props.dispatch(postsComment(this.state.comments));
         this.setState({ comments: [] });
@@ -68,7 +70,7 @@ class AddNotes extends Component {
   }
 
   //this is the click handler that runs when the image to critique is clicked on
-  findMousePosAndAddInput(event) {
+  findMousePosAndAddInput (event) {
     {/*checking to see that the click occurs within the image displayed*/}
     let cursorX = event.pageX;
     let cursorY = event.pageY;
@@ -104,7 +106,7 @@ class AddNotes extends Component {
             commentType: commentType,
             imageId: this.props.currentFocus.image.id,
             id: this.state.comments.length
-          }
+          };
           let comments = this.state.comments;
           if (newComment.commentText !== "") {
             comments.push(newComment);

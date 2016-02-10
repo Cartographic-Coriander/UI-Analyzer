@@ -16,28 +16,23 @@ const userInitialState = {
 };
 
 const projectsInitialState = {
-  list: [],
-  error: null
+  list: []
 };
 
 const testsInitialState = {
-  list: [],
-  error: null
+  list: []
 };
 
 const commentsInitialState = {
-  list: [],
-  error: null
+  list: []
 };
 
 const imagesInitialState = {
-  list: [],
-  error: null
+  list: []
 };
 
 const mouseTrackingsInitialState = {
-  list: [],
-  error: null
+  list: []
 };
 
 const currentFocusInitialState = {
@@ -85,6 +80,15 @@ const currentFocusInitialState = {
   }
 };
 
+const errorInitialState = {
+  userError: null,
+  projectError: null,
+  testError: null,
+  imageError: null,
+  commentError: null,
+  mouseTrackingError: null
+}
+
 export function user (state = userInitialState, action) {
   var newState = Object.assign({}, state);
 
@@ -106,8 +110,6 @@ export function user (state = userInitialState, action) {
       return newState;
     case 'DELETE_USER':
       return newState;
-    case 'ERROR_USER':
-      return state.error(action.data);
   }
   return state;
 };
@@ -130,15 +132,13 @@ export function projects (state = projectsInitialState, action) {
       return newState;
     case 'DELETE_PROJECT':
       var newList = [];
-      newState.list.forEach(function(item){
+      newState.list.forEach(function (item){
         if (Number(item.id) !== Number(action.data)) {
           newList.push(item);
         }
       });
       newState.list = newList;
       return newState;
-    case 'ERROR_PROJECT':
-      return state.error(action.data);
   }
   return state;
 };
@@ -243,6 +243,34 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
       return newState;
     case 'ERROR_MOUSETRACKING':
       return state.error(action.data);
+  }
+  return state;
+};
+
+export function errorState (state = errorInitialState, action) {
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case 'ERROR_USER':
+      newState.userError = action.data;
+      return newState;
+    case 'ERROR_PROJECT':
+      newState.projectError = action.data;
+      return newState;
+    case 'ERROR_TEST':
+      newState.testError = action.data;
+      return newState;
+    case 'ERROR_COMMENT':
+      newState.commentError = action.data;
+      return newState;
+    case 'ERROR_IMAGE':
+      newState.imageError = action.data;
+      return newState;
+    case 'ERROR_MOUSETRACKING':
+      newState.mouseTrackingError = action.data;
+      return newState;
+    case 'ERROR_RESET':
+      return errorInitialState;
   }
   return state;
 };

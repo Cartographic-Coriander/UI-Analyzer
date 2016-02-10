@@ -600,3 +600,9 @@ export function addProject (project) {
     data: project
   };
 }
+
+export function resetError () {
+  return {
+    type: 'RESET_ERROR'
+  };
+}
