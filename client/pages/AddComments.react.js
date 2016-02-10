@@ -4,18 +4,17 @@ import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
 
 class AddNotes extends Component {
-
   constructor (props) {
     super(props);
     this.state = {
       comments: [],
       testImages : [],
-      currentIndex: 0
+      currentIndex: 0,
+      showLanding: true
     }
   }
 
   handleSendingNotes () {
-    console.log('-->',this.state.comments)
     //because the button also returns the user to the dashboard page
     this.props.dispatch(pageState('authenticated'));
     //for sending array of notes to the server
@@ -23,52 +22,57 @@ class AddNotes extends Component {
   }
 
   componentWillMount () {
+    //show feedback prompt for six seconds
+    setTimeout(() => {
+      this.setState({ showLanding: false });
+    }, 5000);
+
     $(document).on('keydown', function (event) {
       //this is the right arrow key
-      if (event.keyCode === 39 && this.state.testImages[this.state.currentIndex + 1] !== undefined) {
-        var currentInx = this.state.currentIndex;
-        this.setState({ currentIndex: currentInx + 1 });
-        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-        this.props.dispatch(postsComment(this.state.comments));
-        this.setState({ comments: [] });
-      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined){
-        var currentInx = this.state.currentIndex;
-        this.setState({ currentIndex: currentInx-1 });
-        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-        this.props.dispatch(postsComment(this.state.comments));
-        this.setState({ comments: [] });
-      }
+      if (event.keyCode === 39){
+        if (this.state.testImages[this.state.currentIndex + 1] !== undefined){
+          var currentInx = this.state.currentIndex;
+          this.setState({ currentIndex: currentInx + 1 });
+          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: [] });
+        } else { //at the end of the array
+          this.props.dispatch(postsComment(this.state.comments));
+          this.setState({ comments: [] });
+          $(document).off('keydown');
+          this.props.dispatch(pageState('authenticated'));
+        }
+      } 
     }.bind(this));
 
     $(document).keypress('d', function (event) {
       if (event.ctrlKey) {
         this.handleSendingNotes();
       }
+      $(document).off('keypress');
     }.bind(this));
 
     const findImage = {
       testId : this.props.currentFocus.test.id
     }
 
-    setTimeout( () => {
-      $.ajax({
-        url: 'http://localhost:8000/api/image',
-        data: findImage,
-        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
-        method: 'GET',
-        timeout: 5000,
-        success: function (data, textStatus, jqXHR) {
-          // this.state.testImages = data;
-          this.setState({ testImages : data });
-          let firstImage = this.state.testImages[0];
-          this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
-        }.bind(this)
-      })
-    }, 5000);
+    $.ajax({
+      url: 'http://localhost:8000/api/image',
+      data: findImage,
+      headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+      method: 'GET',
+      timeout: 5000,
+      success: function (data, textStatus, jqXHR) {
+        // this.state.testImages = data;
+        this.setState({ testImages : data });
+        let firstImage = this.state.testImages[0];
+        this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
+      }.bind(this)
+    })
   }
 
   //this is the click handler that runs when the image to critique is clicked on
-  findMousePosAndAddInput(event) {
+  findMousePosAndAddInput (event) {
     {/*checking to see that the click occurs within the image displayed*/}
     let cursorX = event.pageX;
     let cursorY = event.pageY;
@@ -104,7 +108,7 @@ class AddNotes extends Component {
             commentType: commentType,
             imageId: this.props.currentFocus.image.id,
             id: this.state.comments.length
-          }
+          };
           let comments = this.state.comments;
           if (newComment.commentText !== "") {
             comments.push(newComment);
@@ -141,11 +145,24 @@ class AddNotes extends Component {
     }.bind(this);
     return (
       <div>
-        <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
-          {/*mapping and rendering out array of comments*/}
-          { this.state.comments.map(createItem) }
-          { this.state.testImages.map(createImage) }
-       </div>
+        { (() => {
+          if (this.state.showLanding) {
+            return (
+              <div>
+                <h3>Please leave feedback</h3>
+                <h5>press ctrl+d to exit</h5>
+              </div>
+            )
+          } else {
+            return (
+              <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
+                {/*mapping and rendering out array of comments*/}
+                { this.state.comments.map(createItem) }
+                { this.state.testImages.map(createImage) }
+             </div>
+            )
+          }
+        })() }
       </div>
     )
   }

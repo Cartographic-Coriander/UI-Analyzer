@@ -160,19 +160,17 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function () {
-                // console.log('screenshot saved for review');
+                $.get({
+                  url: '/api/endtest',
+                  data: {
+                    access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+                  },
+                  success: function (response) {
+                    window.location = response;
+                  }
+                })
               }
             });
-
-            $.post({
-              url: '/endtest',
-              data: {
-                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-              },
-              success: function (response) {
-                // console.log('server response', response);
-              }
-            })
           }
         });
 
@@ -191,21 +189,17 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function () {
-                // console.log('screenshot saved for review');
-                window.location = response;
+                $.get({
+                  url: '/api/endtest',
+                  data: {
+                    access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+                  },
+                  success: function (response) {
+                    window.location = response;
+                  }
+                })
               }
             });
-
-            $.get({
-              url: '/endtest',
-              data: {
-                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-              },
-              success: function (response) {
-                console.log('server response', response);
-                window.location = response;
-              }
-            })
           }
         });
       });
@@ -478,7 +472,7 @@
     <button id="testEndNoButton">No</button> -->
     <div id="testEndRequest-text"> Test session ended, please wait... </div>
   </div>
-  <iframe src="http://localhost" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
+  <iframe src="http://localhost:8000" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
   </iframe>
 
 

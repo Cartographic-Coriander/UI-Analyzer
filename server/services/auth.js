@@ -10,7 +10,8 @@ var moment = require('moment');
 var Promise = require("bluebird");
 var usersController = require("../controllers/usersController.js");
 
-var tokenSecret = 'shhhh bby es ok';
+var userTokenSecret = 'shhhh bby es ok';
+var inviteTokenSecret = 'trogdor the burninator';
 
 // this creates our local strategy
 passport.use(new LocalStrategy({ usernameField: 'email' },
@@ -67,6 +68,8 @@ passport.deserializeUser(function (email, cb) {
     });
 });
 
+// USER AUTHENTICATION JWT TOKENS
+
 var authenticate = function(req, res, next) {
   //user has authenticated correctly thus we create a JWT token
   passport.authenticate('local', function(err, user, info) {
@@ -83,7 +86,7 @@ var authenticate = function(req, res, next) {
     var token = jwt.encode({
       iss: user.id,
       exp: expires
-    }, tokenSecret);
+    }, userTokenSecret);
 
     req.userToken = {
       token : token,
@@ -93,13 +96,6 @@ var authenticate = function(req, res, next) {
     next();
   })(req, res, next);
 };
-
-var invitationToken = function (req, res, next) {
-  var params = {
-    projectId: req.body.projectId,
-    
-  }
-}
 
 var decode = function(req, res, next) {
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
@@ -121,6 +117,45 @@ var decode = function(req, res, next) {
   req.decoded = decoded;
   next();
 };
+
+// INVITATION JWT TOKENS
+
+var encodeInvitation = function (req, res, next) {
+  var params = {
+    projectId: req.body.projectId,
+    email: req.body.email
+  };
+
+  var expires = moment().add('days', 30).valueOf();
+  var token = jwt.encode({
+    iss: params,
+    exp: expires
+  }, inviteTokenSecret);
+
+  req.invitationToken = token;
+  next();
+}
+
+var decodeInvitation = function (req, res, next) {
+  var token = req.body.token;
+
+  try {
+    try {
+      var decoded = jwt.decode(token, inviteTokenSecret);
+    } finally {
+      if (decoded.exp <= Date.now()) {
+        throw new Error ('[Error: Token expired]');
+      }
+    }
+  } catch (e) {
+    console.log('Error!:', e);
+    res.status(400).end('Error! Unable to decode token.');
+  }
+
+  console.log('invitation token decoded: ', decoded);
+  req.invitationToken = decoded;
+  next();
+}
 
 // inputs:
   // in data field:
@@ -170,5 +205,7 @@ module.exports = {
   ensureLoggedIn: ensureAuth.ensureLoggedIn,
   ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
   createUser: createUser,
-  signout: signout
+  signout: signout,
+  encodeInvitation: encodeInvitation,
+  decodeInvitation: decodeInvitation
 };

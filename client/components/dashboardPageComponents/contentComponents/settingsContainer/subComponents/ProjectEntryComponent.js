@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { setFocus } from '../../../../../redux/actions';
+import { setFocus, getsProject } from '../../../../../redux/actions';
 
 class ProjectEntryComponent extends Component {
   constructor (props) {
@@ -48,9 +48,11 @@ class ProjectEntryComponent extends Component {
     let deleteProject = () => {
       const deletedProject = {
         projectId : this.props.id
-      }
+      };
+
       this.props.delete(deletedProject);
       this.props.dispatch(setFocus( 'project', { id: null, name: null, description: null}));
+      this.props.dispatch(setFocus( 'test', { id: null, name: null, projectId: null, prompt: null, url: null }));
     };
 
     let handleNameInput = (event) => {

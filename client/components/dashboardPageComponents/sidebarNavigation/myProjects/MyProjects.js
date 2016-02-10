@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ProjectListEntry from './subComponents/ProjectListEntry';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, postsProject } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, getsComment, postsProject } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -10,13 +9,15 @@ import InviteTestersButton from './subComponents/InviteTestersButton';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
 import CreateProjectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
+import InviteTestersModal from './subComponents/inviteTestersModal';
 
 class MyProjects extends Component {
   //setting initial addProject modal visibility to not be shown
   constructor (props) {
     super(props)
     this.state = {
-      addProjectModalVisibility : false
+      addProjectModalVisibility : false,
+      inviteTestersModalVisibility: false
     };
   };
 
@@ -24,6 +25,11 @@ class MyProjects extends Component {
   toggleModalVisibility () {
     this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true });
   };
+
+  //toggle invite modal visibility
+  toggleInviteModal () {
+    this.state.inviteTestersModalVisibility ? this.setState({ inviteTestersModalVisibility : false }) : this.setState({ inviteTestersModalVisibility : true });
+  }
 
   //sending data from add project form in the modal and hiding the modal
   sendNewProject (project) {
@@ -49,7 +55,7 @@ class MyProjects extends Component {
 
   componentDidMount () {
     var that = this;
-
+  // this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
     setTimeout(() => {
       $('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
@@ -57,11 +63,16 @@ class MyProjects extends Component {
     }, 500);
   };
 
+  sendInviteInfo (invitee) {
+    console.log('the invited user ', invitee, 'project id ', this.props.currentFocus.project.id);
+    this.setState({ inviteTestersModalVisibility : false })
+  }
+
   render () {
     return (
       <div>
         <Button className="MyDashboardButton btn-primary btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
-        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length-1 } >
+        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
             { this.props.projects.list.map((project) => {
                 return (
                   <AccordionItem key = { project } title = { project.name } >
@@ -69,13 +80,14 @@ class MyProjects extends Component {
                       <ul className = "projectAccordionItems">
                        <li><TestButton id = { project.id }/></li>
                        <li><SettingsButton id = { project.id } name = { project.name } description = { project.description } /></li>
-                       <li><InviteTestersButton id = { project.id }/></li>
+                       <li><InviteTestersButton toggleInviteModal = { this.toggleInviteModal.bind(this) } /></li>
                       </ul>
                     </div>
                   </AccordionItem>
                 );
             })}
         </Accordion>
+        <InviteTestersModal onSubmit = { this.sendInviteInfo.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
         <CreateProjectContainer onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
       </div>
     );

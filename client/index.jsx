@@ -9,6 +9,7 @@ import * as storage from 'redux-storage';
 import createEngine from 'redux-storage/engines/localStorage';
 import { recallState } from './redux/api';
 import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
+import { signsOut } from './redux/actions';
 
 const reducers = {
   user: user,
@@ -33,16 +34,22 @@ let createStoreWithMiddleware = applyMiddleware(thunk, middleware)(createStore);
 let store = createStoreWithMiddleware(reducer);
 const load = storage.createLoader(engine);
 
+const app = () => {
+  ReactDOM.render(
+    <Provider store = { store }>
+      <App />
+    </Provider>,
+    document.getElementById('app')
+  )
+};
+
 load(store)
   .then((newState) => {
     console.log('state reloaded', newState);
     recallState();
+    app();
   })
-  .catch(() => console.log('failed to load previous state'))
-
-ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
-  document.getElementById('app')
-)
+  .catch(() => {
+    console.log('failed to load previous state')
+    app();
+  })
