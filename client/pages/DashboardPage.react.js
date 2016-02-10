@@ -16,7 +16,7 @@ export default class DashboardPage extends Component {
     }
     setTimeout(() => {
       localStorage.removeItem('Scrutinize.saved.state');
-    })
+    }, 100)
   }
 
   handleClick () {
