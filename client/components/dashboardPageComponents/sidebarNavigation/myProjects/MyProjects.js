@@ -64,7 +64,6 @@ class MyProjects extends Component {
                     <div>
                       <ul className = "projectAccordionItems">
                        <li><TestButton/></li>
-                       <li><ReportsButton /></li>
                        <li><SettingsButton /></li>
                        <li><InviteTestersButton /></li>
                       </ul>
