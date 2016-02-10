@@ -4,9 +4,10 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
-var invitation = require('../assets/signup');
+// var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
+var ejs = require('ejs')
 var port = 2999;
 
 // inputs:
@@ -46,8 +47,13 @@ module.exports = function (app, express) {
     });
   });
 
+  app.set('view engine', 'ejs');
+
   app.route('/invitation')
-    .get()
+    .get(function (req, res) {
+      var params = { token: req.query.token }
+      res.render('signup', params)
+    })
     .post()
 
   app.route('/api/project')

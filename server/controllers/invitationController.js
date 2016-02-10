@@ -45,7 +45,6 @@ var createInvitation = function (invitation) {
 var retrieveInvitation = function (invitation) {
   return model.Invitation.findOne({
     where: {
-      projectId: invitation.projectId,
       token: invitation.token
     }
   })

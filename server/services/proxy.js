@@ -100,6 +100,7 @@ module.exports = function (express, session, callback) {
   });
 
   proxyServer.get('/endtest', auth.decode, function (req, res) {
+    console.log('test ended', session.callbackUrl)
     res.send(session.callbackUrl);
     newServer.close();
   })
