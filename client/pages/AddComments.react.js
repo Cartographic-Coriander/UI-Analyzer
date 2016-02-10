@@ -23,32 +23,20 @@ class AddNotes extends Component {
   }
 
   componentWillMount () {
-
     $(document).on('keydown', function (event) {
-      // console.log(event);
-      console.log(this)
       //this is the right arrow key
-      if (event.keyCode === 39) {
-        if(this.state.testImages[this.state.currentIndex+1] !== undefined){
-          var currentInx = this.state.currentIndex;
-          this.setState({ currentIndex: currentInx+1 });
-          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-          this.props.dispatch(postsComment(this.state.comments));
-          this.setState({ comments: []})
-        } else {
-
-        }
-      } else if (event.keyCode === 37) {
-        //left arrow key
-        if(this.state.testImages[this.state.currentIndex-1] !== undefined){
-          var currentInx = this.state.currentIndex;
-          this.setState({ currentIndex: currentInx-1 });
-          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-          this.props.dispatch(postsComment(this.state.comments));
-          this.setState({ comments: []})
-        } else {
-
-        }
+      if (event.keyCode === 39 && this.state.testImages[this.state.currentIndex + 1] !== undefined) {
+        var currentInx = this.state.currentIndex;
+        this.setState({ currentIndex: currentInx + 1 });
+        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+        this.props.dispatch(postsComment(this.state.comments));
+        this.setState({ comments: [] });
+      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined){
+        var currentInx = this.state.currentIndex;
+        this.setState({ currentIndex: currentInx-1 });
+        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+        this.props.dispatch(postsComment(this.state.comments));
+        this.setState({ comments: [] });
       }
     }.bind(this));
 
@@ -68,7 +56,7 @@ class AddNotes extends Component {
         data: findImage,
         headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
         method: 'GET',
-        timeout: 50000,
+        timeout: 5000,
         success: function (data, textStatus, jqXHR) {
           // this.state.testImages = data;
           this.setState({ testImages : data });
@@ -76,9 +64,7 @@ class AddNotes extends Component {
           this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
         }.bind(this)
       })
-
-    } , 50);
-
+    }, 5000);
   }
 
   //this is the click handler that runs when the image to critique is clicked on
@@ -133,9 +119,7 @@ class AddNotes extends Component {
     }
   }
 
-
   render () {
-
     let divStyle = {
       //background image will come from the database
       position: 'relative',
@@ -157,7 +141,7 @@ class AddNotes extends Component {
     }.bind(this);
     return (
       <div>
-        <div id = 'critiqueImage' style = {divStyle} onClick = {this.findMousePosAndAddInput.bind(this)}>
+        <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
           {/*mapping and rendering out array of comments*/}
           { this.state.comments.map(createItem) }
           { this.state.testImages.map(createImage) }

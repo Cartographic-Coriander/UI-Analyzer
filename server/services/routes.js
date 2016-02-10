@@ -4,9 +4,10 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
-var invitation = require('../assets/signup');
+// var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
+var ejs = require('ejs')
 var port = 2999;
 
 // inputs:
@@ -18,6 +19,8 @@ var port = 2999;
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
+  app.set('view engine', 'ejs');
+
   app.post('/api/users/signin', auth.authenticate);
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
@@ -46,9 +49,20 @@ module.exports = function (app, express) {
     });
   });
 
+
   app.route('/invitation')
-    .get()
-    .post()
+    .get(function (req, res) {
+      var params = {
+        token: req.query.token
+      };
+
+      res.render('signup', params);
+    })
+    .post(function (req, res) {
+      var params = {
+
+      }
+    })
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -496,16 +510,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.iss,
-      //   imageId: req.query.imageId
-      // };
-      var params = { /* for testing purposes */
-        userId: req.query.userId,
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
