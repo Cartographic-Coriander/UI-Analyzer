@@ -236,7 +236,7 @@ export function deletesTest(test) {
       .then((response) => {
         var params = {
           type: 'DELETE_TEST',
-          data: test.id
+          data: test.testId
         };
 
         dispatch(params);

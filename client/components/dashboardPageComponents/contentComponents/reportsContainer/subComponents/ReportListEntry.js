@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-
 export default class extends Component {
-  
   getReportDetailForImage () {
     const params = {
       imageId: image.id

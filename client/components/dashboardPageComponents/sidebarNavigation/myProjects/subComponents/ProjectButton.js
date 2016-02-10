@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleContentComponent } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
-import Accordian from './Accordian';
 import { contentState } from '../../../../../redux/actions';
 
 class ProjectButton extends Component {
@@ -14,7 +12,6 @@ class ProjectButton extends Component {
       <a href="#" className = "list-group-item ProjectButton" onClick = { this.handleClick.bind(this) }>
         {this.props.name}
         <ul className="dropdown-menu"> 
-          <Accordian />
         </ul>
       </a>
     )

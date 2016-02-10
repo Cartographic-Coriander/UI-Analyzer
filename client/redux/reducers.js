@@ -132,7 +132,7 @@ export function projects (state = projectsInitialState, action) {
       return newState;
     case 'DELETE_PROJECT':
       var newList = [];
-      newState.list.forEach(function (item){
+      newState.list.forEach(function (item) {
         if (Number(item.id) !== Number(action.data)) {
           newList.push(item);
         }
@@ -160,11 +160,14 @@ export function tests (state = testsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_TEST':
-      var newList = newState.list.filter(item => item.id !== data.id);
+      var newList = [];
+      newState.list.forEach(function (item) {
+        if (Number(item.id) !== Number(action.data)) {
+          newList.push(item);
+        }
+      });
       newState.list = newList;
       return newState;
-    case 'ERROR_TEST':
-      return state.error(action.data);
   }
   return state;
 };
@@ -189,8 +192,6 @@ export function comments (state = commentsInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_COMMENT':
-      return state.error(action.data);
   }
   return state;
 };
@@ -215,8 +216,6 @@ export function images (state = imagesInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_IMAGE':
-      return state.error(action.data);
   }
   return state;
 };
@@ -241,8 +240,6 @@ export function mouseTrackings (state = mouseTrackingsInitialState, action) {
       var newList = newState.list.filter(item => item.id !== data.id);
       newState.list = newList;
       return newState;
-    case 'ERROR_MOUSETRACKING':
-      return state.error(action.data);
   }
   return state;
 };

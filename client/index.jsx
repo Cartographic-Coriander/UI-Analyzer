@@ -32,16 +32,22 @@ let createStoreWithMiddleware = applyMiddleware(thunk, middleware)(createStore);
 let store = createStoreWithMiddleware(reducer);
 const load = storage.createLoader(engine);
 
+const app = () => {
+  ReactDOM.render(
+    <Provider store={ store }>
+      <App />
+    </Provider>,
+    document.getElementById('app')
+  )
+}
+
 load(store)
   .then(() => {
     console.log('state reloaded');
     recallState();
+    app();
   })
-  .catch(() => console.log('failed to load previous state'))
-
-ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
-  document.getElementById('app')
-)
+  .catch(() => {
+    console.log('failed to load previous state')
+    app();
+  })
