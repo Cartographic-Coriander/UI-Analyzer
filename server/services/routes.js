@@ -268,8 +268,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        testId: req.body.testId,
-        projectId: req.body.projectId
+        testId: req.query.testId,
+        projectId: req.query.projectId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -380,8 +380,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) {
       var params = {
         userId: req.decoded.iss,
-        imageId: req.body.imageId,
-        commentId: req.body.commentId
+        imageId: req.query.imageId,
+        commentId: req.query.commentId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -489,8 +489,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.body.imageId,
-        testId: req.body.testId,
+        imageId: req.query.imageId,
+        testId: req.query.testId,
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -598,8 +598,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.body.imageId,
-        mouseTrackingId: req.body.mouseTrackingId
+        imageId: req.query.imageId,
+        mouseTrackingId: req.query.mouseTrackingId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,

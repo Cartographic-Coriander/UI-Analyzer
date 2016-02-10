@@ -93,11 +93,19 @@ var authenticate = function(req, res, next) {
   })(req, res, next);
 };
 
-var invitationToken = function (req, res, next) {
+var createInvitationToken = function (req, res, next) {
   var params = {
     projectId: req.body.projectId,
-    
-  }
+    email: req.body.email
+  };
+
+  var expires = moment().add('days', 7).valueOf();
+  var token = jwt.encode({
+    iss: params,
+    exp: expires
+  }, tokenSecret);
+
+  
 }
 
 var decode = function(req, res, next) {

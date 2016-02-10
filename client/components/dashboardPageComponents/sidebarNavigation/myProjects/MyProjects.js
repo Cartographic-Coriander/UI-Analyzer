@@ -37,6 +37,7 @@ class MyProjects extends Component {
   }
 
   handleClick (project) {
+    this.props.dispatch(getsComment({ imageId: 51 }));
     this.props.dispatch(getsTest({ projectId: project.id }));
     this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));
@@ -57,13 +58,13 @@ class MyProjects extends Component {
     return (
       <div>
         <Button className="MyDashboardButton btn-primary btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
-        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length-1 } >
+        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
             { this.props.projects.list.map((project) => {
                 return (
                   <AccordionItem key = { project } title = { project.name } >
                     <div>
                       <ul className = "projectAccordionItems">
-                       <li><TestButton/></li>
+                       <li><TestButton test = { project.id }/></li>
                        <li><SettingsButton /></li>
                        <li><InviteTestersButton /></li>
                       </ul>

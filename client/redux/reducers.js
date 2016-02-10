@@ -132,7 +132,7 @@ export function projects (state = projectsInitialState, action) {
       return newState;
     case 'DELETE_PROJECT':
       var newList = [];
-      newState.list.forEach(function (item){
+      newState.list.forEach(function (item) {
         if (Number(item.id) !== Number(action.data)) {
           newList.push(item);
         }
@@ -160,7 +160,13 @@ export function tests (state = testsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'DELETE_TEST':
-      var newList = newState.list.filter(item => item.id !== data.id);
+      console.log('we be doin dis shit... up in heeyuh', action.data)
+      var newList = [];
+      newState.list.forEach(function (item) {
+        if (Number(item.id) !== Number(action.data)) {
+          newList.push(item);
+        }
+      });
       newState.list = newList;
       return newState;
     case 'ERROR_TEST':

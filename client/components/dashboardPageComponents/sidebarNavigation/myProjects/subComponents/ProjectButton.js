@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleContentComponent } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
 import Accordian from './Accordian';
 import { contentState } from '../../../../../redux/actions';

@@ -52,21 +52,19 @@ class AddNotes extends Component {
       testId : this.props.currentFocus.test.id
     }
 
-    setTimeout( () => {
-      $.ajax({
-        url: 'http://localhost:8000/api/image',
-        data: findImage,
-        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
-        method: 'GET',
-        timeout: 5000,
-        success: function (data, textStatus, jqXHR) {
-          // this.state.testImages = data;
-          this.setState({ testImages : data });
-          let firstImage = this.state.testImages[0];
-          this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
-        }.bind(this)
-      })
-    }, 5000);
+    $.ajax({
+      url: 'http://localhost:8000/api/image',
+      data: findImage,
+      headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+      method: 'GET',
+      timeout: 5000,
+      success: function (data, textStatus, jqXHR) {
+        // this.state.testImages = data;
+        this.setState({ testImages : data });
+        let firstImage = this.state.testImages[0];
+        this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
+      }.bind(this)
+    })
   }
 
   //this is the click handler that runs when the image to critique is clicked on
