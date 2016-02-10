@@ -9,13 +9,15 @@ import InviteTestersButton from './subComponents/InviteTestersButton';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
 import CreateProjectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
+import InviteTestersModal from './subComponents/inviteTestersModal';
 
 class MyProjects extends Component {
   //setting initial addProject modal visibility to not be shown
   constructor (props) {
     super(props)
     this.state = {
-      addProjectModalVisibility : false
+      addProjectModalVisibility : false,
+      inviteTestersModalVisibility: false
     };
   };
 
@@ -23,6 +25,11 @@ class MyProjects extends Component {
   toggleModalVisibility () {
     this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true });
   };
+
+  //toggle invite modal visibility
+  toggleInviteModal () {
+    this.state.inviteTestersModalVisibility ? this.setState({ inviteTestersModalVisibility : false }) : this.setState({ inviteTestersModalVisibility : true });
+  }
 
   //sending data from add project form in the modal and hiding the modal
   sendNewProject (project) {
@@ -53,6 +60,11 @@ class MyProjects extends Component {
       })}, 500);
   };
 
+  sendInviteInfo (invitee) {
+    console.log('the invited user ', invitee, 'project id ', this.props.currentFocus.project.id);
+    this.setState({ inviteTestersModalVisibility : false })
+  }
+
   render () {
     return (
       <div>
@@ -65,13 +77,14 @@ class MyProjects extends Component {
                       <ul className = "projectAccordionItems">
                        <li><TestButton id = { project.id }/></li>
                        <li><SettingsButton /></li>
-                       <li><InviteTestersButton /></li>
+                       <li><InviteTestersButton toggleInviteModal = { this.toggleInviteModal.bind(this) } /></li>
                       </ul>
                     </div>
                   </AccordionItem>
                 );
             })}
         </Accordion>
+        <InviteTestersModal onSubmit = { this.sendInviteInfo.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
         <CreateProjectContainer onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
       </div>
     );

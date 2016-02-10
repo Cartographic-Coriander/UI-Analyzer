@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 class InviteTestersButton extends Component {
   handleClick () {
     this.props.dispatch(inviteTesters());
+    this.props.toggleInviteModal()
   }
   render () {
     return (
