@@ -24,29 +24,34 @@ var createComment = function (comment) {
 // output shall be of the following format:
 // { id: 123, user_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
-  return model.Comment.findAll({
-    where: { imageId: comment.imageId },
+  return model.Image.findOne({
+    where: { id: comment.imageId },
     include: [{
-      model: model.User,
-      where: { id: comment.userId },
-      attributes: [ 'id', 'email' ],
+      model: model.Test,
       include: [{
         model: model.Project,
         include: [{
-          model: model.Test,
-          include: [{
-            model: model.Image,
-            where: { id: comment.imageId }
-          }]
+          model: model.User,
+          where: { id: comment.userId },
+          attributes: [ 'id', 'email' ]
         }]
       }]
     }]
   })
   .then(function (result) {
-    if (result === null) {
-      throw (new Error ('Error! Comment does not exist!'));
+    if (result.test.project.users[0].projectUser.get('role') === 'owner') {
+      return model.Comment.findAll({
+        where: { imageId: comment.imageId }
+      })
+      .then(function (result) {
+        if (result === null) {
+          throw (new Error ('Error! Comment does not exist!'));
+        } else {
+          return result;
+        }
+      });
     } else {
-      return result;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };

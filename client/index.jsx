@@ -27,11 +27,13 @@ const combinedReducers = combineReducers(reducers);
 const reducer = storage.reducer(combinedReducers);
 const engine = createEngine('Scrutinize.saved.state');
 const middleware = storage.createMiddleware(engine);
+
 let createStoreWithMiddleware = applyMiddleware(thunk, middleware)(createStore);
 let store = createStoreWithMiddleware(reducer);
 const load = storage.createLoader(engine);
+
 load(store)
-  .then(() => { 
+  .then(() => {
     console.log('state reloaded');
     recallState();
   })
@@ -39,7 +41,7 @@ load(store)
 
 ReactDOM.render(
   <Provider store={ store }>
-    <App className = "wrapper" />
+    <App />
   </Provider>,
   document.getElementById('app')
 )

@@ -4,6 +4,7 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
+var invitation = require('../assets/signup');
 var Promise = require("bluebird");
 var fs = require('fs');
 var port = 2999;
@@ -44,6 +45,10 @@ module.exports = function (app, express) {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
+
+  app.route('/invitation')
+    .get()
+    .post()
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -137,6 +142,17 @@ module.exports = function (app, express) {
           res.status(500).end('Project DELETE Error!');
         });
     });
+
+  app.route('/api/invitation')
+    .get(auth.decode, function (req, res) {
+
+    })
+    .post(auth.decode, function (req, res) {
+
+    })
+    .delete(auth.decode, function (req, res) {
+
+    })
 
   app.route('/api/test')
     .get(auth.decode, function (req, res) {
@@ -375,7 +391,7 @@ module.exports = function (app, express) {
     // .get(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        testId: req.body.testId
+        testId: req.query.testId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -477,16 +493,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    .get(auth.decode, function (req, res) {
-    // .get(function (req, res) { /* for testing purposes */
-      var params = {
-        userId: req.decoded.iss,
-        imageId: req.query.imageId
-      };
-      // var params = { /* for testing purposes */
-      //   userId: req.query.userId,
+    // .get(auth.decode, function (req, res) {
+    .get(function (req, res) { /* for testing purposes */
+      // var params = {
+      //   userId: req.decoded.iss,
       //   imageId: req.query.imageId
       // };
+      var params = { /* for testing purposes */
+        userId: req.query.userId,
+        imageId: req.query.imageId
+      };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {

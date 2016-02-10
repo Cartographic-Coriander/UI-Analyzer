@@ -2,7 +2,6 @@ module.exports = function (express, session, callback) {
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
-  // var Pageres = require('pageres');
   var webshot = require('webshot');
   var mkdirp = require('mkdirp');
   var path = require('path');
@@ -48,7 +47,7 @@ module.exports = function (express, session, callback) {
 
     console.log('directory', directory, 'dir', dir, 'dirname', __dirname)
 
-    function slug (input) {
+    var slug = function (input) {
       return input
         .replace(/^http:\/\/www/g, '')
         .replace(/^http:\/\//g, '')
