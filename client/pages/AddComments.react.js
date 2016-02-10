@@ -4,7 +4,6 @@ import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
 
 class AddNotes extends Component {
-
   constructor (props) {
     super(props);
     this.state = {
@@ -25,6 +24,7 @@ class AddNotes extends Component {
   componentWillMount () {
     $(document).on('keydown', function (event) {
       //this is the right arrow key
+<<<<<<< HEAD
       if (event.keyCode === 39){
         if (this.state.testImages[this.state.currentIndex + 1] !== undefined){
           var currentInx = this.state.currentIndex;
@@ -38,8 +38,20 @@ class AddNotes extends Component {
           this.props.dispatch(pageState('authenticated'));
         }
       } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined){
+=======
+      if (event.keyCode === 39 && this.state.testImages[this.state.currentIndex + 1] !== undefined) {
         var currentInx = this.state.currentIndex;
-        this.setState({ currentIndex: currentInx-1 });
+        var params = JSON.parse(JSON.stringify(this.state.comments));
+        this.setState({ currentIndex: currentInx + 1 });
+        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+
+        this.props.dispatch(postsComment(this.state.comments));
+        this.setState({ comments: [] });
+      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined) {
+        var params = JSON.parse(JSON.stringify(this.state.comments));
+>>>>>>> 0772df3f94d21155193af605980e36bf08729eb8
+        var currentInx = this.state.currentIndex;
+        this.setState({ currentIndex: currentInx - 1 });
         this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
         this.props.dispatch(postsComment(this.state.comments));
         this.setState({ comments: [] });
@@ -56,26 +68,23 @@ class AddNotes extends Component {
       testId : this.props.currentFocus.test.id
     }
 
-    setTimeout( () => {
-      $.ajax({
-        url: 'http://localhost:8000/api/image',
-        data: findImage,
-        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
-        method: 'GET',
-        timeout: 5000,
-        success: function (data, textStatus, jqXHR) {
-          // this.state.testImages = data;
-          this.setState({ testImages : data });
-          let firstImage = this.state.testImages[0];
-          this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
-          this.setState({ showLanding : false });
-        }.bind(this)
-      })
-    }, 5000);
+    $.ajax({
+      url: 'http://localhost:8000/api/image',
+      data: findImage,
+      headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+      method: 'GET',
+      timeout: 5000,
+      success: function (data, textStatus, jqXHR) {
+        // this.state.testImages = data;
+        this.setState({ testImages : data });
+        let firstImage = this.state.testImages[0];
+        this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
+      }.bind(this)
+    })
   }
 
   //this is the click handler that runs when the image to critique is clicked on
-  findMousePosAndAddInput(event) {
+  findMousePosAndAddInput (event) {
     {/*checking to see that the click occurs within the image displayed*/}
     let cursorX = event.pageX;
     let cursorY = event.pageY;
@@ -111,7 +120,7 @@ class AddNotes extends Component {
             commentType: commentType,
             imageId: this.props.currentFocus.image.id,
             id: this.state.comments.length
-          }
+          };
           let comments = this.state.comments;
           if (newComment.commentText !== "") {
             comments.push(newComment);

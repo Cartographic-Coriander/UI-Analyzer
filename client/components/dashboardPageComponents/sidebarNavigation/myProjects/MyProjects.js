@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ProjectListEntry from './subComponents/ProjectListEntry';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, postsProject, getsComment } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, getsComment, postsProject } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -58,13 +57,13 @@ class MyProjects extends Component {
     return (
       <div>
         <Button className="MyDashboardButton btn-primary btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
-        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length-1 } >
+        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
             { this.props.projects.list.map((project) => {
                 return (
                   <AccordionItem key = { project } title = { project.name } >
                     <div>
                       <ul className = "projectAccordionItems">
-                       <li><TestButton/></li>
+                       <li><TestButton id = { project.id }/></li>
                        <li><SettingsButton /></li>
                        <li><InviteTestersButton /></li>
                       </ul>

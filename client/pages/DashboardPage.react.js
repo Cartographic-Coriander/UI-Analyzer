@@ -10,14 +10,13 @@ import { signsOut, setFocus } from '../redux/actions';
 
 export default class DashboardPage extends Component {
   handleLogout () {
-    setTimeout(function(){
-      //dirty but this means that on logout, localStorage is cleared
-      localStorage.removeItem('Scrutinize.saved.state');
-    },100);
+    this.props.dispatch(signsOut());
     if (this.props.projects.list) {
       this.props.dispatch(setFocus({project: this.props.projects.list[0]}));
     }
-    this.props.dispatch(signsOut());
+    setTimeout(() => {
+      localStorage.removeItem('Scrutinize.saved.state');
+    }, 100)
   }
 
   handleClick () {

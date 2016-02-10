@@ -236,7 +236,7 @@ export function deletesTest(test) {
       .then((response) => {
         var params = {
           type: 'DELETE_TEST',
-          data: test.id
+          data: test.testId
         };
 
         dispatch(params);
@@ -598,5 +598,11 @@ export function addProject (project) {
   return {
     type: 'ADD_PROJECT',
     data: project
+  };
+}
+
+export function resetError () {
+  return {
+    type: 'RESET_ERROR'
   };
 }

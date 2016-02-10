@@ -160,19 +160,17 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function () {
-                // console.log('screenshot saved for review');
+                $.post({
+                  url: '/endtest',
+                  data: {
+                    access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+                  },
+                  success: function (response) {
+                    window.location = response;
+                  }
+                })
               }
             });
-
-            $.post({
-              url: '/endtest',
-              data: {
-                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-              },
-              success: function (response) {
-                // console.log('server response', response);
-              }
-            })
           }
         });
 
@@ -191,21 +189,17 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function () {
-                // console.log('screenshot saved for review');
-                window.location = response;
+                $.get({
+                  url: '/endtest',
+                  data: {
+                    access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+                  },
+                  success: function (response) {
+                    window.location = response;
+                  }
+                })
               }
             });
-
-            $.get({
-              url: '/endtest',
-              data: {
-                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-              },
-              success: function (response) {
-                console.log('server response', response);
-                window.location = response;
-              }
-            })
           }
         });
       });

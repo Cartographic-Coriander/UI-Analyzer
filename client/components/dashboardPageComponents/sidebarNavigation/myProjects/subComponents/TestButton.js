@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleContentComponent } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
-import { contentState } from '../../../../../redux/actions';
+import { contentState, getsTest } from '../../../../../redux/actions';
 
 class TestButton extends Component {
   handleClick () {
+    this.props.dispatch(getsTest({ projectId: this.props.id }))
     this.props.dispatch(contentState('Test'));
   }
 
@@ -14,7 +14,7 @@ class TestButton extends Component {
       <Button className = "TestButton btn-block" onClick = { this.handleClick.bind(this) }>
         Test
       </Button>
-    )
+    );
   }
 }
 
