@@ -143,7 +143,8 @@ class AddNotes extends Component {
       //background image will come from the database
       background: 'url(' + this.props.images + ')',
       position: 'relative',
-      height: '100vh',
+      height: '100%',
+      width: '100%',
       backgroundSize: 'cover'
     };
 
