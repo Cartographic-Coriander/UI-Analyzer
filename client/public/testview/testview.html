@@ -160,8 +160,8 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function () {
-                $.post({
-                  url: '/endtest',
+                $.get({
+                  url: '/api/endtest',
                   data: {
                     access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
                   },
@@ -190,7 +190,7 @@
               },
               success: function () {
                 $.get({
-                  url: '/endtest',
+                  url: '/api/endtest',
                   data: {
                     access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
                   },
