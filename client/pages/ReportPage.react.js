@@ -36,6 +36,7 @@ class ReportPage extends Component {
       if (event.ctrlKey) {
         this.props.dispatch(pageState('authenticated'))
       }
+      $(document).off('keydown');
       $(document).off('keypress');
     }.bind(this));
 
