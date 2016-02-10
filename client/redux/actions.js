@@ -529,7 +529,7 @@ export function signsOut() {
         var params = {
           type: 'SIGNOUT_USER'
         }
-        window.localStorage.removeItem('Scrutinize.saved.state');
+
         window.localStorage.removeItem('Scrutinize.JWT.token');
         dispatch(params);
       })
