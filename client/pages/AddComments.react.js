@@ -42,14 +42,7 @@ class AddNotes extends Component {
           $(document).off('keydown');
           this.props.dispatch(pageState('authenticated'));
         }
-      } else if (event.keyCode === 37 && this.state.testImages[this.state.currentIndex - 1] !== undefined) {
-        var params = JSON.parse(JSON.stringify(this.state.comments));
-        var currentInx = this.state.currentIndex;
-        this.setState({ currentIndex: currentInx - 1 });
-        this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
-        this.props.dispatch(postsComment(this.state.comments));
-        this.setState({ comments: [] });
-      }
+      } 
     }.bind(this));
 
     $(document).keypress('d', function (event) {
