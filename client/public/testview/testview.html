@@ -147,62 +147,66 @@
 
         $(document).keypress('d', function (event) {
           // console.log('test end request document');
-          $('iframe').hide();
-          $('#testEndRequest').show();
+          if (event.ctrlKey) {
+            $('iframe').hide();
+            $('#testEndRequest').show();
 
-          $.post({
-            url: '/api/screenshot',
-            data: {
-              url: url,
-              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
-              resolution: [documentWidth, documentHeight],
-              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-            },
-            success: function () {
-              // console.log('screenshot saved for review');
-            }
-          });
+            $.post({
+              url: '/api/screenshot',
+              data: {
+                url: url,
+                mouseTracking: JSON.stringify(mouseTracking[pageCount]),
+                resolution: [documentWidth, documentHeight],
+                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+              },
+              success: function () {
+                // console.log('screenshot saved for review');
+              }
+            });
 
-          $.post({
-            url: '/endtest',
-            data: {
-              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-            },
-            success: function (response) {
-              console.log('server response', response);
-            }
-          })
+            $.post({
+              url: '/endtest',
+              data: {
+                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+              },
+              success: function (response) {
+                // console.log('server response', response);
+              }
+            })
+          }
         });
 
         $('iframe').contents().find("body").keypress('d', function (event) {
           // console.log('test end request iframe');
-          $('iframe').hide();
-          $('#testEndRequest').show();
+          if (event.ctrlKey) {
+            $('iframe').hide();
+            $('#testEndRequest').show();
 
-          $.post({
-            url: '/api/screenshot',
-            data: {
-              url: url,
-              mouseTracking: JSON.stringify(mouseTracking[pageCount]),
-              resolution: [documentWidth, documentHeight],
-              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-            },
-            success: function () {
-              // console.log('screenshot saved for review');
-              window.location = response;
-            }
-          });
+            $.post({
+              url: '/api/screenshot',
+              data: {
+                url: url,
+                mouseTracking: JSON.stringify(mouseTracking[pageCount]),
+                resolution: [documentWidth, documentHeight],
+                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+              },
+              success: function () {
+                // console.log('screenshot saved for review');
+                window.location = response;
+              }
+            });
 
-          $.get({
-            url: '/endtest',
-            data: {
-              access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-            },
-            success: function (response) {
-              console.log('server response', response);
-              window.location = response;
-            }
-          })
+            $.get({
+              url: '/endtest',
+              data: {
+                access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
+              },
+              success: function (response) {
+                // console.log('server response', response);
+                window.location = response;
+              }
+            })
+          }
         });
       });
     });
