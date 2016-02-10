@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
-import { postsComment, getsImage, pageState } from '../redux/actions';
+import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
 
 class AddNotes extends Component {
 
@@ -9,11 +9,38 @@ class AddNotes extends Component {
     super(props);
     this.state = {
       comments: [],
-      testImages : []
+      testImages : [],
+      currentIndex: 0
     }
   }
 
   componentWillMount () {
+
+    $(document).on('keydown', function (event) {
+      // console.log(event);
+      console.log(this)
+      //this is the right arrow key
+      if (event.keyCode === 39) {
+        if(this.state.testImages[this.state.currentIndex+1] !== undefined){
+          var currentInx = this.state.currentIndex;
+          this.setState({ currentIndex: currentInx+1 });
+          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+          console.log(this.state.currentIndex);
+        } else {
+          console.log('we reached the end of the image array')
+        }
+      } else if (event.keyCode === 37) {
+        //left arrow key
+        if(this.state.testImages[this.state.currentIndex-1] !== undefined){
+          var currentInx = this.state.currentIndex;
+          this.setState({ currentIndex: currentInx-1 });
+          this.props.dispatch(setFocus('image', this.state.testImages[this.state.currentIndex]));
+        } else {
+          console.log('we reached the beginning of the image array')
+        }
+      }
+    }.bind(this));
+
     const findImage = {
       testId : this.props.currentFocus.test.id
     }
@@ -28,7 +55,8 @@ class AddNotes extends Component {
         success: function (data, textStatus, jqXHR) {
           // this.state.testImages = data;
           this.setState({ testImages : data });
-          console.log('hope this works', this.state.testImages.length);
+          let firstImage = this.state.testImages[0];
+          this.props.dispatch(setFocus('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
         }.bind(this)
       })
 
@@ -36,6 +64,7 @@ class AddNotes extends Component {
   }
 
   handleSendingNotes () {
+    console.log('handle sending notes')
     //because the button also returns the user to the dashboard page
     this.props.dispatch(pageState('authenticated'));
     //for sending array of notes to the server
@@ -95,7 +124,15 @@ class AddNotes extends Component {
     }
   }
 
+
   render () {
+
+    // //initiating keyboard event to dispatch actions to go back to the landing page
+    // $(document).keypress('d', function () {
+
+    //   // this.handleSendingNotes();
+    // }.bind(this));
+
     let divStyle = {
       //background image will come from the database
       background: 'url(' + this.props.images + ')',
@@ -108,16 +145,19 @@ class AddNotes extends Component {
     let createItem = function (comment) {
       return <Note key = { comment.id } x = { comment.x } y = { comment.y } commentText = { comment.commentText } commentType = { comment.commentType }/>;
     };
+    {/*we do not want to show every image at once*/}
     let createImage = function (imageObj) {
-      console.log(imageObj.image[0])
-      return <img key = { imageObj.url } src = {'data:image/jpeg;base64,' + imageObj.image } ></img>
-    };
+      // console.log(imageObj, this);
+      if ( imageObj.id === this.props.currentFocus.image.id ) {
+        return <img key = { imageObj.url } src = {'data:image/jpeg;base64,' + imageObj.image } ></img>
+      }
+    }.bind(this);
     return (
       <div>
         <div id = 'critiqueImage' style = {divStyle} onClick = {this.findMousePosAndAddInput.bind(this)}>
           {/*mapping and rendering out array of comments*/}
-          {this.state.comments.map(createItem)}
-          {this.state.testImages.map(createImage)}
+          { this.state.comments.map(createItem) }
+          { this.state.testImages.map(createImage) }
        </div>
         <button onClick = { this.handleSendingNotes.bind(this) }>COMPLETE-O</button>
       </div>
