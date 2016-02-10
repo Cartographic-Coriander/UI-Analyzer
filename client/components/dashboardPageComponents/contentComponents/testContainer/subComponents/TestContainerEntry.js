@@ -87,7 +87,15 @@ export default class TestContinerEntry extends Component {
     };
 
     let handleUrlInput = (event) => {
-      this.setState({ newUrl : event.target.value })
+      this.setState({ newUrl : event.target.value });
+    };
+
+    let viewReport = () => {
+      const params = {
+        testId: this.props.id
+      };
+
+      this.props.viewReport(params);
     };
 
     return (
@@ -111,6 +119,7 @@ export default class TestContinerEntry extends Component {
             <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
             <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
             <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
+            <Button onClick = { viewReport.bind(this) } className = "testEntryButton" type = "button">view report</Button>
           </Row>
           <br />
 

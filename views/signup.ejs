@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <h2>Scrutinize Sign up</h2>
+  </head>
+  <body>
+    <form form action="/invitation" method="post">
+      <input type="text" name="firstname" placeholder="first name"><label>first name</label>
+      <input type="text" name="surname" placeholder="surname"><label>surname</label>
+      <input type="text" name="company" placeholder="company"><label>company</label>
+      <input type="password" name="password" placeholder="password" required><label>password</label>
+      <input type="hidden" value="<%= token %>" name="token"/>
+      <button type="submit">sign up</button>
+    </form>
+  </body>
+</html>

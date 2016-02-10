@@ -5,14 +5,21 @@ import MakeGithubIssueButton from './MakeGithubIssueButton';
 import ReportDetails from './ReportDetails';
 
 export default class extends Component {
+  
+  getReportDetailForImage () {
+    const params = {
+      imageId: image.id
+    };
+
+    this.props.reportDetails(params);
+  };
+
+
+
   render () {
     return (
       <div>
-        <h3>I am the report list entry component</h3>
-        <TestEntryDescription />
-        <CompareButton />
-        <MakeGithubIssueButton />
-        <ReportDetails />
+      
       </div>
     )
   }

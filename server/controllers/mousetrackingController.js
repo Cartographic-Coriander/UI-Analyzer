@@ -30,29 +30,35 @@ var createMouseTracking = function (mouseTracking) {
 // { id: 123, movement: 'abc', clicks: 'abc', urlchange: 'abc' }
 
 var retrieveMouseTracking = function (mouseTracking) {
-  return model.MouseTracking.findAll({
-    where: { imageId: mouseTracking.imageId },
+  return model.Image.findOne({
+    where: { id: mouseTracking.imageId },
     include: [{
-      model: model.User,
-      where: { id: mouseTracking.userId },
-      attributes: [ 'id', 'email' ],
+      model: model.Test,
       include: [{
         model: model.Project,
         include: [{
-          model: model.Test,
-          include: [{
-            model: model.Image,
-            where: { id: mouseTracking.imageId }
-          }]
+          model: model.User,
+          where: { id: mouseTracking.userId },
+          attributes: [ 'id', 'email' ]
         }]
       }]
     }]
   })
   .then(function (result) {
-    if (result === null) {
-      throw (new Error ('Error! Mouse tracking does not exist!'));
+    if (result.test.project.users[0].projectUser.get('role') === 'owner') {
+      return model.MouseTracking.findAll({
+        where: { imageId: mouseTracking.imageId }
+      })
+      .then(function (result) {
+        // console.log(result[0])
+        if (result === null) {
+          throw (new Error ('Error! Mouse tracking does not exist!'));
+        } else {
+          return result;
+        }
+      });
     } else {
-      return result;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };

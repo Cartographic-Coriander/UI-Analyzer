@@ -69,30 +69,36 @@ passport.deserializeUser(function (email, cb) {
 
 var authenticate = function(req, res, next) {
   //user has authenticated correctly thus we create a JWT token
-  passport.authenticate('local',
-    function(err, user, info) {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res.json(401, { error: 'message' });
-      }
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.json(401, { error: 'message' });
+    }
 
-      user.password = null;
+    user.password = null;
 
-      var expires = moment().add('days', 7).valueOf();
-      var token = jwt.encode({
-        iss: user.id,
-        exp: expires
-      }, tokenSecret);
+    var expires = moment().add('days', 7).valueOf();
+    var token = jwt.encode({
+      iss: user.id,
+      exp: expires
+    }, tokenSecret);
 
-      res.json({
-        token : token,
-        expires: expires,
-        user: user.toJSON()
-      });
-    })(req, res, next);
-  };
+    res.json({
+      token : token,
+      expires: expires,
+      user: user.toJSON()
+    });
+  })(req, res, next);
+};
+
+var invitationToken = function (req, res, next) {
+  var params = {
+    projectId: req.body.projectId,
+    
+  }
+}
 
 var decode = function(req, res, next) {
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];

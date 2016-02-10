@@ -48,10 +48,20 @@ var ProjectUser = sequelize.define('projectUser', {
   role: { type: Sequelize.STRING, notNull: true, notEmpty: true }
 }, { timestamps: false });
 
+var Invitation = sequelize.define('invitation', {
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  token: { type: Sequelize.STRING, unique: true, notNull: true },
+  email: { type: Sequelize.STRING }
+}, { timestamps: false });
+
 var init = function() {
   // User:Project m:m Relationship
   User.belongsToMany(Project, { through: 'projectUser', foreignKey: 'userId' });
   Project.belongsToMany(User, { through: 'projectUser', foreignKey: 'projectId' });
+
+  // Project:Invitation 1:m Relationship
+  Project.hasMany(Invitation, { foreignKey: 'projectId' });
+  Invitation.belongsTo(Project, { foreignKey: 'projectId' });
 
   // Project:Test 1:m Relationship
   Project.hasMany(Test, { foreignKey: 'projectId' });
@@ -92,5 +102,6 @@ module.exports = {
   Image: Image,
   MouseTracking: MouseTracking,
   ProjectUser: ProjectUser,
+  Invitation: Invitation,
   init: init
 };
