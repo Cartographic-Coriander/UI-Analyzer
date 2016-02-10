@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, setFocus, pageState } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, setFocus, pageState, getsImage, contentState } from '../../../../redux/actions';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
@@ -23,6 +23,11 @@ class TestContainer extends Component {
 
   deleteTest (test) {
     this.props.dispatch(deletesTest(test));
+  };
+
+  getReport (test) {
+    this.props.dispatch(getsImage(test));
+    this.props.dispatch(contentState('Reports'));
   };
 
   //adding new tests
@@ -89,6 +94,7 @@ class TestContainer extends Component {
                 update = { this.updateTest.bind(this) }
                 delete = { this.deleteTest.bind(this) }
                 startTest = { this.startTest.bind(this) }
+                viewReport = { this.getReport.bind(this) }
                 key = { test.id }
                 index = { index }
                 name = { test.name }
