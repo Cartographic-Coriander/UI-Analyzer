@@ -19,6 +19,8 @@ var port = 2999;
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
+  app.set('view engine', 'ejs');
+
   app.post('/api/users/signin', auth.authenticate);
 
   app.post('/api/users/signup', auth.createUser, auth.authenticate);
@@ -47,14 +49,20 @@ module.exports = function (app, express) {
     });
   });
 
-  app.set('view engine', 'ejs');
 
   app.route('/invitation')
     .get(function (req, res) {
-      var params = { token: req.query.token }
-      res.render('signup', params)
+      var params = {
+        token: req.query.token
+      };
+
+      res.render('signup', params);
     })
-    .post()
+    .post(function (req, res) {
+      var params = {
+
+      }
+    })
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -502,16 +510,16 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.iss,
-      //   imageId: req.query.imageId
-      // };
-      var params = { /* for testing purposes */
-        userId: req.query.userId,
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {

@@ -202,7 +202,7 @@
                 access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
               },
               success: function (response) {
-                // console.log('server response', response);
+                console.log('server response', response);
                 window.location = response;
               }
             })

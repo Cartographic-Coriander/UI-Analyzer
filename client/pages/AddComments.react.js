@@ -28,11 +28,9 @@ class AddNotes extends Component {
         success: function (data, textStatus, jqXHR) {
           // this.state.testImages = data;
           this.setState({ testImages : data });
-          console.log('hope this works', this.state.testImages.length);
         }.bind(this)
       })
-
-    } , 50);
+    }, 50);
   }
 
   handleSendingNotes () {
@@ -114,7 +112,7 @@ class AddNotes extends Component {
     };
     return (
       <div>
-        <div id = 'critiqueImage' style = {divStyle} onClick = {this.findMousePosAndAddInput.bind(this)}>
+        <div id = 'critiqueImage' style = { divStyle } onClick = { this.findMousePosAndAddInput.bind(this) }>
           {/*mapping and rendering out array of comments*/}
           {this.state.comments.map(createItem)}
           {this.state.testImages.map(createImage)}
