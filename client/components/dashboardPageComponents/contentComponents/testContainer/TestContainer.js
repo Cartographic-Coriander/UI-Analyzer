@@ -26,8 +26,11 @@ class TestContainer extends Component {
   };
 
   getReport (test) {
+    console.log('from getsReport (check for things needed to set currentFocus)', this, 'also checking the input', test);
     this.props.dispatch(getsImage(test));
-    this.props.dispatch(contentState('Reports'));
+    // this.props.dispatch(contentState('Reports'));
+    this.props.dispatch(setFocus('test', test))
+    this.props.dispatch(pageState('reportView'));
   };
 
   //adding new tests

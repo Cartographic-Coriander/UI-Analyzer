@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditSettingsContainer from './subComponents/EditSettingsContainer';
 import ProjectEntryComponent from './subComponents/ProjectEntryComponent';
-import { updatesProject, deletesProject } from '../../../../redux/actions';
+import { updatesProject, deletesProject, setFocus, deletesTest } from '../../../../redux/actions';
 
 class SettingsContainer extends Component {
 
@@ -34,7 +34,8 @@ class SettingsContainer extends Component {
 
 const select = (state) => ({
   projects: state.projects,
-  currentFocus: state.currentFocus
+  currentFocus: state.currentFocus,
+  tests: state.tests
 });
 
 export default connect(select)(SettingsContainer)

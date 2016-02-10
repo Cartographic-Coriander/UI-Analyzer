@@ -9,6 +9,7 @@ import * as storage from 'redux-storage';
 import createEngine from 'redux-storage/engines/localStorage';
 import { recallState } from './redux/api';
 import { user, projects, tests, comments, images, mouseTrackings, currentFocus, stateRouter, modalState } from './redux/reducers';
+import { signsOut } from './redux/actions';
 
 const reducers = {
   user: user,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProjectListEntry from './subComponents/ProjectListEntry';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, postsProject } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, postsProject, getsComment } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -48,6 +48,7 @@ class MyProjects extends Component {
 
   componentDidMount () {
     var that = this;
+    this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
     setTimeout(() => {$('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
       })}, 500);
