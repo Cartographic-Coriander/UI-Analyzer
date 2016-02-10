@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setFocus, pageState } from '../redux/actions';
+import { setFocus, pageState, getsMouseTracking } from '../redux/actions';
 
 class ReportPage extends Component {
   constructor (props) {
@@ -38,6 +38,11 @@ class ReportPage extends Component {
       }
       $(document).off('keypress');
     }.bind(this));
+
+    this.props.dispatch(getsMouseTracking({
+      imageId: this.props.currentFocus.image.id
+    }));
+
 
     const findImages = {
       testId : this.props.currentFocus.test.id
