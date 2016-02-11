@@ -8,7 +8,7 @@ const GroupMember = (props) => {
         <a className="memberName panel-title">{ props.name }</a>
       </div>
       <div className="panel-body">
-        This guy is pretty cool.
+        { props.description }
       </div>
     </div>
   )
