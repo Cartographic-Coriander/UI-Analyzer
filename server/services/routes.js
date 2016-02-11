@@ -378,6 +378,7 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          console.log(result)
           res.json(result);
         })
         .catch(function (error) {
@@ -386,23 +387,21 @@ module.exports = function (app, express) {
         });
     })
     .post(auth.decode, function (req, res) {
-      var params = {
-        userId: req.decoded.iss,
-        imageId: req.body.imageId,
-        commentType: req.body.commentType,
-        commentText: req.body.commentText,
-        x: req.body.x,
-        y: req.body.y
-      };
-
-      commentsController.createComment(params)
-        .then(function (result) {
-          res.json(result);
-        })
-        .catch(function (error) {
-          console.log('/api/comment POST Error!', error);
-          res.status(500).end('Test POST Error!');
-        });
+      Promise.map(req.body, function(comment) {
+        delete comment.id;
+        comment.userId = req.decoded.iss;
+        return comment;
+      })
+      .then(function (comments) {
+        commentsController.createComment(comments)
+          .then(function (result) {
+            res.json(result);
+          })
+          .catch(function (error) {
+            console.log('/api/comment POST Error!', error);
+            res.status(500).end('Test POST Error!');
+          });
+      })
     })
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
@@ -571,25 +570,24 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.iss,
-      //   imageId: req.query.imageId
-      // };
-      var params = { /* for testing purposes */
-        userId: req.query.userId,
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
+      // console.log('!!!!!!!!!!!!!!PARAMS', params)
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
           return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
-              movement: current.get('movement'),
-              clicks: current.get('clicks'),
-              urlchange: current.get('urlchange'),
+              data: current.get('data'),
               imageId: current.get('imageId'),
               userId: current.get('userId')
             };

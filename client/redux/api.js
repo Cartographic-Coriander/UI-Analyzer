@@ -150,16 +150,8 @@ export function getComment (comment) {
   return instance.get('/api/comment', { params: params });
 }
 
-export function postComment (comment) {
-  const params = {
-    imageId: comment.imageId,
-    commentType: comment.commentType,
-    commentText: comment.commentText,
-    x: comment.x,
-    y: comment.y
-  }
-
-  return instance.post('/api/comment', params);
+export function postComment (comments) {
+  return instance.post('/api/comment', comments);
 }
 
 export function updateComment (comment) {
