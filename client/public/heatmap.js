@@ -28,3 +28,8 @@ window.renderHeatmap = function(){
     data: window.heatdata
   }); 
 };
+
+window.removeHeatmap = function(){
+  $('#app').unwrap();
+  $('.heatmap-canvas').remove();
+};
