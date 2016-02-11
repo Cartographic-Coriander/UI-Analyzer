@@ -4,12 +4,12 @@
   </head>
   <body>
     <form form action="/invitation" method="post">
-      <input type="text" name="firstname" placeholder="first name"><label> first name</label><p>
-      <input type="text" name="surname" placeholder="surname"><label> surname</label><p>
-      <input type="text" name="company" placeholder="company"><label> company</label><p>
-      <input type="password" name="password" placeholder="password" required><label> password</label><p>
-      <input type="hidden" value="<%= token %>" name="token"/>
-      <button type="submit">sign up</button>
+      <input type = "text" name = "firstname" placeholder = "first name" value = "<%= firstname %>"><label> first name</label><p>
+      <input type = "text" name = "surname" placeholder = "surname" value = "<%= surname %>"><label> surname</label><p>
+      <input type = "text" name = "company" placeholder = "company"><label> company</label><p>
+      <input type = "password" name = "password" placeholder = "password" required><label> password</label><p>
+      <input type = "hidden" value = "<%= token %>" name = "token"/>
+      <button type = "submit">sign up</button>
     </form>
   </body>
 </html>

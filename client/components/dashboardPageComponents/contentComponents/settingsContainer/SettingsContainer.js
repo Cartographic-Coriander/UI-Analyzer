@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditSettingsContainer from './subComponents/EditSettingsContainer';
 import ProjectEntryComponent from './subComponents/ProjectEntryComponent';
-import { updatesProject, deletesProject, setFocus, deletesTest } from '../../../../redux/actions';
+import { updatesProject, deletesProject, getsProject } from '../../../../redux/actions';
 
 class SettingsContainer extends Component {
 
   updateProject (project) {
     this.props.dispatch(updatesProject(project));
+    this.props.dispatch(getsProject());
   };
 
   deleteProject (project) {
     this.props.dispatch(deletesProject(project));
+    this.props.dispatch(getsProject());
   };
 
   render () {
@@ -24,7 +26,14 @@ class SettingsContainer extends Component {
         })() }
         { (() => {
           if (this.props.currentFocus.project.description !== null) {
-            return <ProjectEntryComponent delete = { this.deleteProject.bind(this) } update = { this.updateProject.bind(this) } key = { this.props.currentFocus.project.id } id = { this.props.currentFocus.project.id } name = { this.props.currentFocus.project.name } description = { this.props.currentFocus.project.description }/>
+            return <ProjectEntryComponent
+              delete = { this.deleteProject.bind(this) }
+              update = { this.updateProject.bind(this) }
+              key = { this.props.currentFocus.project.id }
+              id = { this.props.currentFocus.project.id }
+              name = { this.props.currentFocus.project.name }
+              description = { this.props.currentFocus.project.description }
+            />
           }
         })() }
       </div>

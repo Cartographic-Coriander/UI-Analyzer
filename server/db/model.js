@@ -51,7 +51,9 @@ var ProjectUser = sequelize.define('projectUser', {
 var Invitation = sequelize.define('invitation', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   token: { type: Sequelize.STRING, unique: true, notNull: true },
-  email: { type: Sequelize.STRING }
+  firstname: { type: Sequelize.STRING },
+  surname: { type: Sequelize.STRING },
+  email: { type: Sequelize.STRING, unique: true, notNull: true }
 }, { timestamps: false });
 
 var init = function() {

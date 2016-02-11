@@ -35,7 +35,7 @@ export function postUser (user) {
     firstName: user.firstName,
     lastName: user.lastName,
     company: user.company
-  };
+  }
 
   return axios.post('/api/users/signup', params)
     .then(function (response) {
@@ -52,6 +52,25 @@ export function signOut () {
   return instance.delete('/api/users/signin')
 }
 
+export function getInvitation (invitation) {
+  const params = {
+    projectId: invitation.projectId
+  };
+
+  return instance.get('/api/invitation', { params: params });
+}
+
+export function postInvitation (invitation) {
+  const params = {
+    projectId: invitation.projectId,
+    email: invitation.email,
+    firstname: invitation.firstname,
+    surname: invitation.surname,
+  };
+
+  return instance.post('/api/invitation', params);
+}
+
 export function getProject () {
   return instance.get('/api/project');
 }
@@ -60,7 +79,7 @@ export function postProject (project) {
   const params = {
     name: project.name,
     description: project.description
-  };
+  }
 
   return instance.post('/api/project', params);
 }
@@ -70,7 +89,7 @@ export function updateProject (project) {
     projectId: project.projectId,
     name: project.name,
     description: project.description
-  };
+  }
 
   return instance.put('/api/project', params);
 }
@@ -78,7 +97,7 @@ export function updateProject (project) {
 export function deleteProject (project) {
   const params = {
     projectId: project.projectId
-  };
+  }
 
   return instance.delete('/api/project', { params: params });
 }
@@ -86,7 +105,7 @@ export function deleteProject (project) {
 export function getTest (test) {
   const params = {
     projectId: test.projectId
-  };
+  }
 
   return instance.get('/api/test', { params: params });
 }
@@ -97,7 +116,7 @@ export function postTest (test) {
     name: test.name,
     url: test.url,
     prompt: test.prompt
-  };
+  }
 
   return instance.post('/api/test', params);
 }
@@ -109,7 +128,7 @@ export function updateTest (test) {
     name: test.name,
     url: test.url,
     prompt: test.prompt
-  };
+  }
 
   return instance.put('/api/test', params);
 }
@@ -118,21 +137,29 @@ export function deleteTest (test) {
   const params = {
     testId: test.testId,
     projectId: test.projectId
-  };
+  }
 
-  return instance.delete('/api/test', { params: params });
+  return instance.delete('/api/test', params);
 }
 
 export function getComment (comment) {
   const params = {
     imageId: comment.imageId
-  };
+  }
 
   return instance.get('/api/comment', { params: params });
 }
 
-export function postComment (comments) {
-  return instance.post('/api/comment', comments);
+export function postComment (comment) {
+  const params = {
+    imageId: comment.imageId,
+    commentType: comment.commentType,
+    commentText: comment.commentText,
+    x: comment.x,
+    y: comment.y
+  }
+
+  return instance.post('/api/comment', params);
 }
 
 export function updateComment (comment) {
@@ -143,7 +170,7 @@ export function updateComment (comment) {
     commentText: comment.commentText,
     x: comment.x,
     y: comment.y
-  };
+  }
 
   return instance.put('/api/comment', params);
 }
@@ -152,15 +179,15 @@ export function deleteComment (comment) {
   const params = {
     imageId: comment.imageId,
     commentId: comment.commentId
-  };
+  }
 
-  return instance.delete('/api/comment', { params: params });
+  return instance.delete('/api/comment', params);
 }
 
 export function getImage (image) {
   const params = {
     testId: image.testId
-  };
+  }
 
   return instance.get('/api/image', { params: params });
 }
@@ -170,7 +197,7 @@ export function postImage (image) {
     testId: image.testId,
     image: image.image,
     url: image.url
-  };
+  }
 
   return instance.post('/api/image', params);
 }
@@ -181,7 +208,7 @@ export function updateImage (image) {
     testId: image.testId,
     image: image.image,
     url: image.url
-  };
+  }
 
   return instance.put('/api/image', params);
 }
@@ -190,15 +217,15 @@ export function deleteImage (image) {
   const params = {
     imageId: image.imageId,
     testId: image.testId,
-  };
+  }
 
-  return instance.delete('/api/image', { params: params });
+  return instance.delete('/api/image', params);
 }
 
 export function getMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId
-  };
+  }
 
   return instance.get('/api/mousetracking', { params: params });
 }
@@ -206,9 +233,7 @@ export function getMouseTracking (mouseTracking) {
 export function postMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
-    movement: mouseTracking.movement,
-    clicks: mouseTracking.clicks,
-    urlchange: mouseTracking.urlchange
+    data: mouseTracking.data
   };
 
   return instance.post('/api/mousetracking', params);
@@ -218,9 +243,7 @@ export function updateMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
     mouseTrackingId: mouseTracking.mouseTrackingId,
-    movement: mouseTracking.movement,
-    clicks: mouseTracking.clicks,
-    urlchange: mouseTracking.urlchange
+    data: mouseTracking.data
   };
 
   return instance.put('/api/mousetracking', params);
@@ -230,7 +253,7 @@ export function deleteMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
     mouseTrackingId: mouseTracking.mouseTrackingId
-  };
+  }
 
-  return instance.delete('/api/mousetracking', { params: params });
+  return instance.delete('/api/mousetracking', params);
 }

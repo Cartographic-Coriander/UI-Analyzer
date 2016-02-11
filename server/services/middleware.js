@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var auth = require('./auth'); // ./auth does some stuff to set up passport
 var morgan = require('morgan');
 var session = require('express-session');
+var ejs = require('ejs');
 
 module.exports = function (app, express) {
   var staticServeOptions = {
@@ -12,6 +13,7 @@ module.exports = function (app, express) {
       }
   };
 
+  app.set('view engine', 'ejs');
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json({ limit: '50mb' }));

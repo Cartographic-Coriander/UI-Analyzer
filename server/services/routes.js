@@ -4,12 +4,11 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
-var invitationsController = require('../controllers/invitationController');
+var invitationController = require('../controllers/invitationController');
 var Promise = require("bluebird");
 var fs = require('fs');
-var ejs = require('ejs');
 var nodemailer = require('nodemailer');
-var mailAuth = require('mailAuth.js');
+var mailAuth = require('./mailAuth');
 var port = 2999;
 
 // inputs:
@@ -21,11 +20,13 @@ var port = 2999;
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
-  app.set('view engine', 'ejs');
+  app.post('/api/users/signin', auth.authenticate, function (req, res) {
+    res.json(req.userToken);
+  });
 
-  app.post('/api/users/signin', auth.authenticate);
-
-  app.post('/api/users/signup', auth.createUser, auth.authenticate);
+  app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
+    res.json(req.userToken);
+  });
 
   app.delete('/api/users/signin', auth.signout);
 
@@ -42,12 +43,98 @@ module.exports = function (app, express) {
     };
     console.log('Test starting.... params:', params);
 
+    res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
+
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
     require('./proxy')(express, params, function () {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
+
+  app.route('/api/invitation')
+    .get(auth.decode, function (req, res) {
+      var params = {
+        userId: req.decoded.iss,
+        projectId: req.query.projectId
+      };
+
+      invitationController.retrieveAllInvitations(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/invitation GET Error!', error);
+          res.status(500).end('Invitation GET Error!');
+        });
+
+    })
+    .post(auth.decode, auth.encodeInvitation, function (req, res) {
+      var params = {
+        userId: req.decoded.iss,
+        projectId: req.body.projectId,
+        email: req.body.email,
+        firstname: req.body.firstname,
+        surname: req.body.surname,
+        token: req.invitationToken
+      };
+
+      var mailOptions = {
+          from: 'Scrutinize App <scrutinizeApp@gmail.com>',
+          to: params.email,
+          subject: 'Invitation to Scrutinize App',
+          text: 'Please go to:' + 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+          html: 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
+      };
+
+      invitationController.createInvitation(params)
+        .then(function (result) {
+          var transporter = nodemailer.createTransport(mailAuth);
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              res.status(500).end(error);
+            }
+
+            console.log('Message sent: ' + info.response);
+            res.end();
+          });
+        })
+        .catch(function (error) {
+          console.log('/api/invitation POST Error!', error);
+          res.status(500).end('Invitation error!');
+        });
+    });
+
+  app.route('/invitation')
+    .get(function (req, res) {
+      var params = {
+        token: req.query.token,
+        firstname: req.query.firstname || 'first name',
+        surname:req.query.surname || 'surname'
+      };
+
+      res.render('signup', params);
+    })
+
+    .post(auth.decodeInvitation, auth.createUser, auth.authenticate, function (req, res) {
+      console.log(req.body, req.userToken);
+      var params = {
+        userId: req.userToken.user.id,
+        projectId: req.invitationToken.iss.projectId,
+        role: 'tester'
+      };
+
+      invitationController.createTester(params)
+        .then(function (results) {
+          res.redirect(301, 'http://localhost:8000');
+        })
+        .catch(function (error) {
+          console.log('/invitation POST Error!', error);
+          res.status(500).end('Invitation sign up error!');
+        });
+    });
 
   app.route('/api/project')
     // retrieves array of project objects
@@ -142,42 +229,6 @@ module.exports = function (app, express) {
         });
     });
 
-  app.route('/api/invitation')
-    .get(auth.decode, function (req, res) {
-      var params = {
-        userId: req.decoded.iss,
-        projectId: req.query.projectId
-      };
-
-      invitationController.retrieveAllInvitations(params)
-        .then(function (result) {
-          res.json(result);
-        })
-        .catch(function (error) {
-          console.log('/api/invitation GET Error!', error);
-          res.status(500).end('Invitation GET Error!');
-        });
-
-    })
-    .post(auth.decode, auth.encodeInvitation, function (req, res) {
-
-    })
-    .delete(auth.decode, function (req, res) {
-
-    })
-
-  app.route('/invitation')
-    .get(function (req, res) {
-      var params = {
-        token: req.query.token
-      };
-
-      res.render('signup', params);
-    })
-    .post(auth.decodeInvitation, function (req, res) {
-      console.log()
-    })
-
   app.route('/api/test')
     .get(auth.decode, function (req, res) {
     // .get(function (req, res) { /* for testing purposes */
@@ -189,6 +240,8 @@ module.exports = function (app, express) {
       //   userId: req.query.userId,
       //   projectId: req.query.projectId
       // };
+
+      console.log('get tests params:', params);
 
       testsController.retrieveTest(params)
         .then(function (results) {
@@ -276,8 +329,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        testId: req.query.testId,
-        projectId: req.query.projectId
+        testId: req.body.testId,
+        projectId: req.body.projectId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -333,22 +386,23 @@ module.exports = function (app, express) {
         });
     })
     .post(auth.decode, function (req, res) {
-      console.log(req.body)
-      Promise.map(req.body, function(comment) {
-        delete comment.id;
-        comment.userId = req.decoded.iss;
-        return comment;
-      })
-      .then(function (comments) {
-        commentsController.createComment(comments)
-          .then(function (result) {
-            res.json(result);
-          })
-          .catch(function (error) {
-            console.log('/api/comment POST Error!', error);
-            res.status(500).end('Test POST Error!');
-          });
-      })
+      var params = {
+        userId: req.decoded.iss,
+        imageId: req.body.imageId,
+        commentType: req.body.commentType,
+        commentText: req.body.commentText,
+        x: req.body.x,
+        y: req.body.y
+      };
+
+      commentsController.createComment(params)
+        .then(function (result) {
+          res.json(result);
+        })
+        .catch(function (error) {
+          console.log('/api/comment POST Error!', error);
+          res.status(500).end('Test POST Error!');
+        });
     })
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
@@ -388,8 +442,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) {
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        commentId: req.query.commentId
+        imageId: req.body.imageId,
+        commentId: req.body.commentId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -497,8 +551,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        testId: req.query.testId,
+        imageId: req.body.imageId,
+        testId: req.body.testId,
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -517,23 +571,25 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    .get(auth.decode, function (req, res) {
-    // .get(function (req, res) { /* for testing purposes */
-      var params = {
-        userId: req.decoded.iss,
-        imageId: req.query.imageId
-      };
-      // var params = { /* for testing purposes */
-      //   userId: req.query.userId,
+    // .get(auth.decode, function (req, res) {
+    .get(function (req, res) { /* for testing purposes */
+      // var params = {
+      //   userId: req.decoded.iss,
       //   imageId: req.query.imageId
       // };
+      var params = { /* for testing purposes */
+        userId: req.query.userId,
+        imageId: req.query.imageId
+      };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
           return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
-              data: current.get('data'),
+              movement: current.get('movement'),
+              clicks: current.get('clicks'),
+              urlchange: current.get('urlchange'),
               imageId: current.get('imageId'),
               userId: current.get('userId')
             };
@@ -554,9 +610,7 @@ module.exports = function (app, express) {
       var params = {
         userId: req.decoded.iss,
         imageId: req.body.imageId,
-        movement: req.body.movement,
-        clicks: req.body.clicks,
-        urlchange: req.body.urlchange
+        data: req.body.data
       };
 
       mousetrackingController.retrieveMouseTracking(params)
@@ -575,7 +629,9 @@ module.exports = function (app, express) {
         imageId: req.body.imageId,
         mouseTrackingId: req.body.mouseTrackingId,
         update: {
-          data: req.body.movement
+          movement: req.body.movement,
+          clicks: req.body.clicks,
+          urlchange: req.body.urlchange
         }
       };
       // var params = { /* for testing purposes */
@@ -583,9 +639,7 @@ module.exports = function (app, express) {
       //   imageId: req.query.imageId,
       //   mouseTrackingId: req.query.mouseTrackingId,
       //   update: {
-      //     movement: req.query.movement,
-      //     clicks: req.query.clicks,
-      //     urlchange: req.query.urlchange
+      //     data: req.query.data
       //   }
       // };
 
@@ -602,8 +656,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        mouseTrackingId: req.query.mouseTrackingId
+        imageId: req.body.imageId,
+        mouseTrackingId: req.body.mouseTrackingId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,

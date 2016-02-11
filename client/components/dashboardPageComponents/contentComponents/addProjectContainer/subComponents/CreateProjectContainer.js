@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import InviteTesters from './InviteTesters';
 export const fields = [ 'projectName', 'projectDescription' ];
 import { Modal, Button } from 'react-bootstrap';
 

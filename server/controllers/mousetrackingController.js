@@ -45,13 +45,15 @@ var retrieveMouseTracking = function (mouseTracking) {
     }]
   })
   .then(function (result) {
+    console.log(result)
     if (result.test.project.users[0].projectUser.get('role') === 'owner') {
       return model.MouseTracking.findAll({
         where: { imageId: mouseTracking.imageId }
       })
       .then(function (result) {
+        return result;
         // console.log(result[0])
-        if (result === null) {
+        if (result.length === 0) {
           throw (new Error ('Error! Mouse tracking does not exist!'));
         } else {
           console.log('result from mousetracking controller: ', result);

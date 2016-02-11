@@ -49,11 +49,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' },
 // typical implementation of this is as simple as supplying the user ID when
 // serializing, and querying the user record by ID from the database when
 // deserializing.
-passport.serializeUser(function (user, cb) {
-  cb(null, user.email);
+passport.serializeUser(function (user, callback) {
+  callback(null, user.email);
 });
 
-passport.deserializeUser(function (email, cb) {
+passport.deserializeUser(function (email, callback) {
   usersController.retrieveUser({ email: email })
     .then (function (user) {
       var data = {
@@ -61,10 +61,10 @@ passport.deserializeUser(function (email, cb) {
         email: user.email,
       };
       // data is set to request.user
-      cb(null, data);
+      callback(null, data);
     })
     .catch(function (error){
-      return cb(error);
+      return callback(error);
     });
 });
 
@@ -88,11 +88,12 @@ var authenticate = function(req, res, next) {
       exp: expires
     }, userTokenSecret);
 
-    res.json({
+    req.userToken = {
       token : token,
       expires: expires,
       user: user.toJSON()
-    });
+    };
+    next();
   })(req, res, next);
 };
 
@@ -101,7 +102,7 @@ var decode = function(req, res, next) {
 
   try {
     try {
-      var decoded = jwt.decode(token, tokenSecret);
+      var decoded = jwt.decode(token, userTokenSecret);
     } finally {
       if (decoded.exp <= Date.now()) {
         throw new Error ('[Error: Token expired]');
@@ -124,6 +125,8 @@ var encodeInvitation = function (req, res, next) {
     projectId: req.body.projectId,
     email: req.body.email
   };
+
+  console.log('invitation params:', params)
 
   var expires = moment().add('days', 30).valueOf();
   var token = jwt.encode({
@@ -153,6 +156,7 @@ var decodeInvitation = function (req, res, next) {
 
   console.log('invitation token decoded: ', decoded);
   req.invitationToken = decoded;
+  req.body.email = decoded.iss.email;
   next();
 }
 
@@ -165,6 +169,7 @@ var decodeInvitation = function (req, res, next) {
   // in data field:
   //    message: if failure, reason for failure
 var createUser = function (req, res, next) {
+  console.log('create user:', req.body, req.invitationToken)
   var user = {
     email: req.body.email,
     password: req.body.password,
@@ -174,7 +179,7 @@ var createUser = function (req, res, next) {
   };
 
   // hashing is not done by the model, though it probably should
-  Promise.promisify(bcrypt.hash)(user.password,null,null)
+  Promise.promisify(bcrypt.hash)(user.password, null, null)
     .then(function (data) {
       user.password = data;
       return usersController.createUser(user);
@@ -192,7 +197,7 @@ var createUser = function (req, res, next) {
 
 var signout = function (req, res) {
   // call passport's log out functionality
-  console.log('signout')
+  console.log('signout');
   req.logout();
   res.end();
 };

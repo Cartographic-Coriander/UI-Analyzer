@@ -38,6 +38,13 @@ var createInvitation = function (invitation) {
   });
 };
 
+var createTester = function (user) {
+  return model.ProjectUser.create(user)
+    .then(function (result) {
+      return result;
+    });
+};
+
 // input should be of the following format:
 // { token: 'abcd', projectId: 123 }
 // output shall be of the following format:
@@ -159,5 +166,6 @@ module.exports = {
   retrieveInvitation: retrieveInvitation,
   retrieveAllInvitations: retrieveAllInvitations,
   // updateInvitation: updateInvitation,
+  createTester: createTester,
   deleteInvitation: deleteInvitation
 };

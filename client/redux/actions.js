@@ -1,5 +1,6 @@
 import {
   getUser, postUser, signOut,
+  getInvitation, postInvitation,
   getProject, postProject, updateProject, deleteProject,
   getTest, postTest, updateTest, deleteTest,
   getComment, postComment, updateComment, deleteComment,
@@ -9,8 +10,10 @@ import {
 
 /* PROJECT API ACTIONS */
 
-export function getsUser(user) {
-  return function (dispatch) {
+/* USER API ACTIONS */
+
+export function getsUser (user) {
+  return (dispatch) => {
     return getUser(user)
       .then((response) => {
         let params = {
@@ -39,7 +42,6 @@ export function getsUser(user) {
           });
       })
       .catch((error) => {
-        console.log('!!!!!ERROR!!!!!', error);
         var params = {
           type: 'ERROR_USER',
           data: error
@@ -50,8 +52,8 @@ export function getsUser(user) {
   };
 }
 
-export function postsUser(user) {
-  return function (dispatch) {
+export function postsUser (user) {
+  return (dispatch) => {
     return postUser(user)
       .then((response) => {
         var params = {
@@ -75,7 +77,55 @@ export function postsUser(user) {
   };
 }
 
-export function getsProject(project) {
+/* INVITATION API ACTIONS */
+
+export function getsInvitation (invitation) {
+  return (dispatch) => {
+    return getInvitation(invitation)
+      .then((response) => {
+        var params = {
+          type: 'GET_INVITATION',
+          data: response
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_INVITATION',
+          data: error
+        };
+
+        dispatch(params);
+      });
+  };
+}
+
+export function postsInvitation (invitation) {
+  return (dispatch) => {
+    return postInvitation(invitation)
+      .then((response) => {
+        var params = {
+          type: 'POST_INVITATION',
+          data: response
+        };
+
+        dispatch(params);
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_INVITATION',
+          data: error
+        };
+
+        dispatch(params);
+      });
+  };
+}
+
+/* PROJECT API ACTIONS */
+
+export function getsProject (project) {
   return (dispatch) => {
     return getProject(project)
       .then((response) => {
@@ -97,7 +147,7 @@ export function getsProject(project) {
   };
 }
 
-export function postsProject(project) {
+export function postsProject (project) {
   return (dispatch) => {
     return postProject(project)
       .then((response) => {
@@ -119,7 +169,7 @@ export function postsProject(project) {
   };
 }
 
-export function updatesProject(project) {
+export function updatesProject (project) {
   return (dispatch) => {
     return updateProject(project)
       .then((response) => {
@@ -141,7 +191,7 @@ export function updatesProject(project) {
   };
 }
 
-export function deletesProject(project) {
+export function deletesProject (project) {
   return (dispatch) => {
     return deleteProject(project)
       .then((response) => {
@@ -164,7 +214,7 @@ export function deletesProject(project) {
 
 /* TEST API ACTIONS */
 
-export function getsTest(test) {
+export function getsTest (test) {
   return (dispatch) => {
     return getTest(test)
       .then((response) => {
@@ -186,7 +236,7 @@ export function getsTest(test) {
   };
 }
 
-export function postsTest(test) {
+export function postsTest (test) {
   return (dispatch) => {
     return postTest(test)
       .then((response) => {
@@ -208,7 +258,7 @@ export function postsTest(test) {
   };
 }
 
-export function updatesTest(test) {
+export function updatesTest (test) {
   return (dispatch) => {
     return updateTest(test)
       .then((response) => {
@@ -230,7 +280,7 @@ export function updatesTest(test) {
   };
 }
 
-export function deletesTest(test) {
+export function deletesTest (test) {
   return (dispatch) => {
     return deleteTest(test)
       .then((response) => {
@@ -254,7 +304,7 @@ export function deletesTest(test) {
 
 /* COMMENT API ACTIONS */
 
-export function getsComment(comment) {
+export function getsComment (comment) {
   return (dispatch) => {
     return getComment(comment)
       .then((response) => {
@@ -276,7 +326,7 @@ export function getsComment(comment) {
   };
 }
 
-export function postsComment(comment) {
+export function postsComment (comment) {
   return (dispatch) => {
     return postComment(comment)
       .then((response) => {
@@ -298,7 +348,7 @@ export function postsComment(comment) {
   };
 }
 
-export function updatesComment(comment) {
+export function updatesComment (comment) {
   return (dispatch) => {
     return updateComment(comment)
       .then((response) => {
@@ -344,7 +394,7 @@ export function deletesComment (comment) {
 
 /* IMAGE API ACTIONS */
 
-export function getsImage(image) {
+export function getsImage (image) {
   return (dispatch) => {
     return getImage(image)
       .then((response) => {
@@ -366,7 +416,7 @@ export function getsImage(image) {
   };
 }
 
-export function postsImage(image) {
+export function postsImage (image) {
   return (dispatch) => {
     return postImage(image)
       .then((response) => {
@@ -388,7 +438,7 @@ export function postsImage(image) {
   };
 }
 
-export function updatesImage(image) {
+export function updatesImage (image) {
   return (dispatch) => {
     return updateImage(image)
       .then((response) => {
@@ -410,7 +460,7 @@ export function updatesImage(image) {
   };
 }
 
-export function deletesImage(image) {
+export function deletesImage (image) {
   return (dispatch) => {
     return deleteImage(image)
       .then((response) => {
@@ -434,7 +484,7 @@ export function deletesImage(image) {
 
 /* MOUSETRACKING API ACTIONS */
 
-export function getsMouseTracking(mouseTracking) {
+export function getsMouseTracking (mouseTracking) {
   return (dispatch) => {
     return getMouseTracking(mouseTracking)
       .then((response) => {
@@ -457,7 +507,7 @@ export function getsMouseTracking(mouseTracking) {
   };
 }
 
-export function postsMouseTracking(mouseTracking) {
+export function postsMouseTracking (mouseTracking) {
   return (dispatch) => {
     return postMouseTracking(mouseTracking)
       .then((response) => {
@@ -479,7 +529,7 @@ export function postsMouseTracking(mouseTracking) {
   };
 }
 
-export function updatesMouseTracking(mouseTracking) {
+export function updatesMouseTracking (mouseTracking) {
   return (dispatch) => {
     return updateProject(mouseTracking)
       .then((response) => {
@@ -501,7 +551,7 @@ export function updatesMouseTracking(mouseTracking) {
   };
 }
 
-export function deletesMouseTracking(mouseTracking) {
+export function deletesMouseTracking (mouseTracking) {
   return (dispatch) => {
     return deleteMouseTracking(mouseTracking)
       .then((response) => {
@@ -523,7 +573,7 @@ export function deletesMouseTracking(mouseTracking) {
   };
 }
 
-export function signsOut() {
+export function signsOut () {
   return (dispatch) => {
     return signOut()
       .then((response) => {
