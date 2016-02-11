@@ -21,18 +21,18 @@ input[type=radio]:checked + span + label, input[type=radio]:checked + p + label 
 
 input[type=radio]:checked + span + label {
   background-color:#00ff99;
-  border-top-right-radius: 2em;
-  border-top-left-radius: 2em;
-  border-bottom-right-radius: 2em;
-  border-bottom-left-radius: 2em;
 }
 
 input[type=radio]:checked + p + label { 
   background-color:#ff9900;
-  border-top-right-radius: 2em;
-  border-top-left-radius: 2em;
-  border-bottom-right-radius: 2em;
-  border-bottom-left-radius: 2em;
+}
+
+#inputText {
+  border: none;
+}
+
+#inputText:focus {
+  outline: none;
 }
 
 /*end changin label colors*/
@@ -44,24 +44,13 @@ span + label, p + label {
   padding: 4px 11px;
   outline: 0;
   color: #1f1f14;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
 }
 
 span + label {
-  border-top-left-radius: 2em;
-  border-bottom-left-radius: 2em;
-  border-top-right-radius: 2em;
-  border-bottom-right-radius: 2em;
   background-color: #00e68a;
 }
 
 p + label {
-  border-top-right-radius: 2em;
-  border-bottom-right-radius: 2em;
-  border-top-left-radius: 2em;
-  border-bottom-left-radius: 2em;
   background-color: #cc7a00;
 }
 /*end setting initial colors for critique buttons*/
@@ -72,14 +61,15 @@ p + label {
 }
 
 .note {
-  color: #FFFEEE;
+  color: black;
   position: relative;
   width: 200px;
   height: 0 auto;
   padding: 20px;
-  box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
   word-wrap: break-word;
   display: none;
+  margin-left: 4px;
+  margin-top: -10px;
 }
 
 .color {
@@ -91,32 +81,57 @@ p + label {
   transform: rotate(2deg)
 }
 
+.feedbackContainer {
+  background: #FFFCA9;
+  padding: 14px;
+}
+
 /*comment pin */
 .commentPin {
-  height: 11px;
-  width: 11px;
-  border-top-right-radius: 2em;
-  border-top-left-radius: 2em;
-  border-bottom-right-radius: 2em;
-  border-bottom-left-radius: 2em;
+  height: 17px;
+  width: 17px;
   margin-bottom: 5px;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg)
 }
 
 .commentPin:hover + blockquote {
   display: block;
 }
 
-.greenPin, .greencomment {
+.greenPin {
   background: #00ff99;
 }
 
-.redPin, .redcomment {
+.greencomment {
+  background: #00FF91;
+}
+
+.redPin {
   background: #ff9900;
+}
+
+.redcomment {
+  background: #FFBC00
 }
 
 /*space between buttons*/
 #radioLabel {
+  margin-left:5px;
+  margin-bottom:10px;
+}
+
+#leaveCommentButton {
   margin-left: 5px;
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 2px 8px;
+  text-align: center;
+  text-decoration: none;
 }
 
 /*the feedback component that is showing up before the add comments section*/
