@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, getsComment, postsProject } from '../../../../redux/actions';
+import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../../redux/actions';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
@@ -64,7 +64,15 @@ class MyProjects extends Component {
   };
 
   sendInviteInfo (invitee) {
+    var params = {
+      email: invitee.emailField,
+      firstname: invitee.firstNameField,
+      surname: invitee.surnameField,
+      projectId: this.props.currentFocus.project.id
+    };
+
     console.log('the invited user ', invitee, 'project id ', this.props.currentFocus.project.id);
+    this.props.dispatch(postsInvitation(params))
     this.setState({ inviteTestersModalVisibility : false })
   }
 

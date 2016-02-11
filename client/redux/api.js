@@ -52,6 +52,25 @@ export function signOut () {
   return instance.delete('/api/users/signin')
 }
 
+export function getInvitation (invitation) {
+  const params = {
+    projectId: invitation.projectId
+  };
+
+  return instance.get('/api/invitation', { params: params });
+}
+
+export function postInvitation (invitation) {
+  const params = {
+    projectId: invitation.projectId,
+    email: invitation.email,
+    firstname: invitation.firstname,
+    surname: invitation.surname,
+  };
+
+  return instance.post('/api/invitation', params);
+}
+
 export function getProject () {
   return instance.get('/api/project');
 }

@@ -4,9 +4,9 @@ var testsController = require('../controllers/testsController');
 var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
+var invitationController = require('../controllers/invitationController');
 var Promise = require("bluebird");
 var fs = require('fs');
-var ejs = require('ejs');
 var nodemailer = require('nodemailer');
 var mailAuth = require('./mailAuth');
 var port = 2999;
@@ -20,8 +20,6 @@ var port = 2999;
 // in data field:
 //    message: if failure, reason for failure
 module.exports = function (app, express) {
-  app.set('view engine', 'ejs');
-
   app.post('/api/users/signin', auth.authenticate, function (req, res) {
     res.json(req.userToken);
   });
@@ -73,9 +71,10 @@ module.exports = function (app, express) {
     })
     .post(auth.decode, auth.encodeInvitation, function (req, res) {
       var params = {
+        userId: req.decoded.iss,
         projectId: req.body.projectId,
         email: req.body.email,
-        firstname: req.body.surname,
+        firstname: req.body.firstname,
         surname: req.body.surname,
         token: req.invitationToken
       };
@@ -84,8 +83,8 @@ module.exports = function (app, express) {
           from: 'Scrutinize App <scrutinizeApp@gmail.com>',
           to: params.email,
           subject: 'Invitation to Scrutinize App',
-          text: 'Please go to:',
-          html: '<a ahref="http://localhost:8000/invitation?token=' + token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '') + '">scrutinize app</a>'
+          text: 'Please go to:' + 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+          html: 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
       };
 
       invitationController.createInvitation(params)
@@ -99,7 +98,7 @@ module.exports = function (app, express) {
             }
 
             console.log('Message sent: ' + info.response);
-            res.json(info.response);
+            res.end();
           });
         })
         .catch(function (error) {
@@ -123,12 +122,13 @@ module.exports = function (app, express) {
       console.log(req.body, req.userToken);
       var params = {
         userId: req.userToken.user.id,
-        projectId: req.invitationToken.iss.projectId
+        projectId: req.invitationToken.iss.projectId,
+        role: 'tester'
       };
 
       invitationController.createTester(params)
         .then(function (results) {
-          res.json(req.userToken);
+          res.redirect(301, 'http://localhost:8000');
         })
         .catch(function (error) {
           console.log('/invitation POST Error!', error);

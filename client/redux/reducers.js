@@ -86,8 +86,9 @@ const errorInitialState = {
   testError: null,
   imageError: null,
   commentError: null,
-  mouseTrackingError: null
-}
+  mouseTrackingError: null,
+  invitationError: null
+};
 
 export function user (state = userInitialState, action) {
   var newState = Object.assign({}, state);
@@ -266,6 +267,9 @@ export function errorState (state = errorInitialState, action) {
     case 'ERROR_MOUSETRACKING':
       newState.mouseTrackingError = action.data;
       return newState;
+    case 'ERROR_INVITATION':
+      newState.invitationError = action.data;
+      return newState;
     case 'ERROR_RESET':
       return errorInitialState;
   }
@@ -281,7 +285,7 @@ export function currentFocus (state = currentFocusInitialState, action) {
       return newState
   }
   return state;
-}
+};
 
 export function stateRouter (state = stateRouterInitialState, action) {
   var newState = Object.assign({}, state);
@@ -322,5 +326,4 @@ export function modalState (state = modalInitialState, action) {
   }
   return state;
 };
-
 

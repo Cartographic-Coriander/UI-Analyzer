@@ -39,8 +39,11 @@ var createInvitation = function (invitation) {
 };
 
 var createTester = function (user) {
-
-}
+  return model.ProjectUser.create(user)
+    .then(function (result) {
+      return result;
+    });
+};
 
 // input should be of the following format:
 // { token: 'abcd', projectId: 123 }

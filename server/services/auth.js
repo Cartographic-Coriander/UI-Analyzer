@@ -49,11 +49,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' },
 // typical implementation of this is as simple as supplying the user ID when
 // serializing, and querying the user record by ID from the database when
 // deserializing.
-passport.serializeUser(function (user, cb) {
-  cb(null, user.email);
+passport.serializeUser(function (user, callback) {
+  callback(null, user.email);
 });
 
-passport.deserializeUser(function (email, cb) {
+passport.deserializeUser(function (email, callback) {
   usersController.retrieveUser({ email: email })
     .then (function (user) {
       var data = {
@@ -61,10 +61,10 @@ passport.deserializeUser(function (email, cb) {
         email: user.email,
       };
       // data is set to request.user
-      cb(null, data);
+      callback(null, data);
     })
     .catch(function (error){
-      return cb(error);
+      return callback(error);
     });
 });
 
@@ -126,6 +126,8 @@ var encodeInvitation = function (req, res, next) {
     email: req.body.email
   };
 
+  console.log('invitation params:', params)
+
   var expires = moment().add('days', 30).valueOf();
   var token = jwt.encode({
     iss: params,
@@ -154,6 +156,7 @@ var decodeInvitation = function (req, res, next) {
 
   console.log('invitation token decoded: ', decoded);
   req.invitationToken = decoded;
+  req.body.email = decoded.iss.email;
   next();
 }
 
@@ -166,8 +169,9 @@ var decodeInvitation = function (req, res, next) {
   // in data field:
   //    message: if failure, reason for failure
 var createUser = function (req, res, next) {
+  console.log('create user:', req.body, req.invitationToken)
   var user = {
-    email: req.body.email || req.invitationToken.iss.email,
+    email: req.body.email,
     password: req.body.password,
     company: req.body.company,
     firstname: req.body.firstname,
