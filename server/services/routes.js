@@ -378,6 +378,7 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          console.log(result)
           res.json(result);
         })
         .catch(function (error) {
@@ -575,7 +576,7 @@ module.exports = function (app, express) {
         userId: req.decoded.iss,
         imageId: req.query.imageId
       };
-      console.log('!!!!!!!!!!!!!!PARAMS', params)
+      // console.log('!!!!!!!!!!!!!!PARAMS', params)
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
       //   imageId: req.query.imageId
