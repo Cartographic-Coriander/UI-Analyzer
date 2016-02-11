@@ -25,6 +25,7 @@ class ReportPage extends Component {
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
+          $('.heatmap-canvas').remove();
           this.setState({ currentIndex: 0 });
           this.props.dispatch(pageState('authenticated'));
           $(document).off('keydown');
@@ -38,6 +39,7 @@ class ReportPage extends Component {
       }
       $(document).off('keydown');
       $(document).off('keypress');
+      $('.heatmap-canvas').remove();
     });
 
     this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
@@ -94,7 +96,26 @@ class ReportPage extends Component {
         var path = JSON.parse(cursorData.data);
         replay($(cursor), path);
       });
-   }, 1500)
+   }, 1500);
+
+  setTimeout(() =>  {
+      window.heatdata = [];
+      $('.heatmap-canvas').remove();
+      this.props.mouseTrackings.list.forEach(function (cursorData) {
+        var path = JSON.parse(cursorData.data);
+        path.forEach(function (datapoint) {
+          var heatdataPoint = {
+            x: datapoint.x,
+            y: datapoint.y,
+            value: 5
+          };
+          window.heatdata.push(heatdataPoint);
+        });
+      });
+
+    console.log('heatdata: ', heatdata);
+    window.renderHeatmap();
+      }, 1500);
   };
 
   render () {
@@ -105,8 +126,6 @@ class ReportPage extends Component {
       width: '100%',
       backgroundSize: 'cover'
     };
-
-    let data = [{ x: 10, y: 15, value: 5}, { x: 50, y: 50, value: 2}]
 
     let createImage = (imageObj) => {
       if ( imageObj.id === this.props.currentFocus.image.id ) {
