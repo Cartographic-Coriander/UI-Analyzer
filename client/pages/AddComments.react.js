@@ -43,7 +43,7 @@ class AddNotes extends Component {
           $(document).off('keydown');
           this.props.dispatch(pageState('authenticated'));
         }
-      } 
+      }
     }.bind(this));
 
     $(document).keypress('d', function (event) {
@@ -88,8 +88,9 @@ class AddNotes extends Component {
         text.style.top = cursorY - offset.top + "px";
         text.style.left = cursorX - offset.left + "px";
         text.style.position = "absolute";
+        text.className = "feedbackContainer";
         text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
-                            "<label for='radio1'>Like</label>" +
+                            "<label id='radioLabel' for='radio1'>Like</label>" +
                           "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
                             "<label id='radioLabel' for='radio2'>Dislike</label></br>" +
                           "<input id='inputText' type='text' />" +
@@ -129,8 +130,7 @@ class AddNotes extends Component {
       //background image will come from the database
       position: 'relative',
       height: '100%',
-      width: '100%',
-      backgroundSize: 'cover'
+      width: '100%'
     };
 
     {/*each note is mapped to one createItem upon rendering*/}

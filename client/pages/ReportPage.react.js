@@ -67,9 +67,7 @@ class ReportPage extends Component {
   };
 
   componentDidMount () {
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-    //this is done twice, if once, wrong comments appear occasionally
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+    setTimeout(() => { this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }))}, 10);
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
