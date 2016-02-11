@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactHeatmap from 'react-heatmap';
+// import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
 
 class ReportPage extends Component {
