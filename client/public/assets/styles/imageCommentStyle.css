@@ -8,8 +8,13 @@ input[type=radio] {
   display: none;
 }
 
+#feedbackText {
+  color: black;
+}
+
+
 /*for changing label colors if they are for the selected radio button*/
-input[type=radio]:checked + span + label, input[type=radio]:checked + p + label { 
+input[type=radio]:checked + span + label, input[type=radio]:checked + p + label {
   background-image: none;
   margin-bottom: 0;
   font-size: 12.5px;
@@ -21,12 +26,13 @@ input[type=radio]:checked + span + label, input[type=radio]:checked + p + label 
 
 input[type=radio]:checked + span + label {
   background-color:#00ff99;
-  border-top-right-radius: 0.25em;
+  margin-bottom: 5px;
+  /*border-top-right-radius: 0.25em;*/
 }
 
 input[type=radio]:checked + p + label { 
   background-color:#ff9900;
-  border-top-left-radius: 0.25em
+  /*border-top-left-radius: 0.25em*/
 }
 
 /*end changin label colors*/
@@ -38,21 +44,27 @@ span + label, p + label {
   padding: 4px 11px;
   outline: 0;
   color: #1f1f14;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+  /*-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);*/
+  /*-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);*/
+  /*box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);*/
 }
 
 span + label {
-  border-top-left-radius: 2em;
-  border-bottom-left-radius: 2em;
+  /*border-top-left-radius: 2em;*/
+  /*border-bottom-left-radius: 2em;*/
   background-color: #00e68a;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 p + label {
-  border-top-right-radius: 2em;
-  border-bottom-right-radius: 2em;
+  /*border-top-right-radius: 2em;*/
+  /*border-bottom-right-radius: 2em;*/
   background-color: #cc7a00;
+}
+
+button {
+  margin-left: 5px;
 }
 /*end setting initial colors for critique buttons*/
 
@@ -61,13 +73,18 @@ p + label {
   position: relative;
 }
 
+.feedback {
+  padding: 8px;
+  background-color: #CCCCCC;
+}
+
 .note {
   color: #FFFEEE;
   position: relative;
   width: 200px;
   height: 0 auto;
   padding: 20px;
-  box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
+  /*box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);*/
   word-wrap: break-word;
   display: none;
 }
@@ -82,20 +99,39 @@ p + label {
 }
 
 /*comment pin ATTENTION: color of pins is set in */
-.commentPin {
-  height: 7px;
-  width: 7px;
+/*.commentPin {
+  height: 25px;
+  width: 25px;
   border-top-right-radius: 2em;
   border-top-left-radius: 2em;
   border-bottom-right-radius: 2em;
   border-bottom-left-radius: 2em;
   margin-bottom: 5px;
+}*/
+.commentPin {
+  width: 0;
+  height: 0;
+  border: 25px solid transparent;
+  border-bottom-color: red;
+  position: relative;
+  top: -18px;
+}
+
+.commentPin:after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 8px;
+  width: 0;
+  height: 0;
+  border: 25px solid transparent;
+  border-top-color: red;
 }
 
 .commentPin:hover + blockquote {
   display: block;
 }
-
+/*
 .greenPin, .greencomment {
   background: #00ff99;
 }
@@ -104,3 +140,4 @@ p + label {
   background: #ff9900;
 }
 
+*/

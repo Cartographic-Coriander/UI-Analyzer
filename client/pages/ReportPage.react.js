@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import ReactHeatmap from 'react-heatmap';
+import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
 
 class ReportPage extends Component {
@@ -66,19 +66,22 @@ class ReportPage extends Component {
         var i = 0;
         var timeInterval;
         var length = path.length;
+
         var move = function () {
           var position = path[i];
+
           cursor.css({
             top: position.y,
             left: position.x
           });
-          if (i > 1){
+
+          if (i > 1) {
             timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
           } else {
             timeInterval = 0;
           }
           i++;
-          if ( i === length) {
+          if (i === length) {
             return;
           } else {
             setTimeout(move, timeInterval);
@@ -88,6 +91,7 @@ class ReportPage extends Component {
       };
 
       let path = JSON.parse(this.props.mouseTrackings.list[0].data);
+
       this.props.mouseTrackings.list.forEach((cursorData) => {
         console.log('cursorData: ', cursorData);
         var cursor = '#' + cursorData.id;
@@ -105,8 +109,6 @@ class ReportPage extends Component {
       width: '100%',
       backgroundSize: 'cover'
     };
-
-    let data = [{ x: 10, y: 15, value: 5}, { x: 50, y: 50, value: 2}]
 
     let createImage = (imageObj) => {
       if ( imageObj.id === this.props.currentFocus.image.id ) {
@@ -145,7 +147,7 @@ function mapStateToProps(state) {
     comments: state.comments,
     currentFocus: state.currentFocus,
     stateRouter: state.stateRouter
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(ReportPage);
