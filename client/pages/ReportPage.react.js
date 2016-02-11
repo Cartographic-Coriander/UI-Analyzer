@@ -20,6 +20,7 @@ class ReportPage extends Component {
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
         if (this.state.reportImages[this.state.currentIndex + 1] !== undefined) {
+          $('.heatmap-canvas').remove();
           this.componentDidMount();
           var currentIndx = this.state.currentIndex;
           this.setState({ currentIndex: currentIndx + 1 });
