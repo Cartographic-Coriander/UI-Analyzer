@@ -150,8 +150,8 @@ export function getComment (comment) {
   return instance.get('/api/comment', { params: params });
 }
 
-export function postComment (comment) {
-  return instance.post('/api/comment', comment);
+export function postComment (comments) {
+  return instance.post('/api/comment', comments);
 }
 
 export function updateComment (comment) {
