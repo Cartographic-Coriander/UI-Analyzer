@@ -386,23 +386,21 @@ module.exports = function (app, express) {
         });
     })
     .post(auth.decode, function (req, res) {
-      var params = {
-        userId: req.decoded.iss,
-        imageId: req.body.imageId,
-        commentType: req.body.commentType,
-        commentText: req.body.commentText,
-        x: req.body.x,
-        y: req.body.y
-      };
-
-      commentsController.createComment(params)
-        .then(function (result) {
-          res.json(result);
-        })
-        .catch(function (error) {
-          console.log('/api/comment POST Error!', error);
-          res.status(500).end('Test POST Error!');
-        });
+      Promise.map(req.body, function(comment) {
+        delete comment.id;
+        comment.userId = req.decoded.iss;
+        return comment;
+      })
+      .then(function (comments) {
+        commentsController.createComment(comments)
+          .then(function (result) {
+            res.json(result);
+          })
+          .catch(function (error) {
+            console.log('/api/comment POST Error!', error);
+            res.status(500).end('Test POST Error!');
+          });
+      })
     })
     .put(auth.decode, function (req, res) {
     // .put(function (req, res) { /* for testing purposes */
