@@ -45,7 +45,7 @@ var retrieveMouseTracking = function (mouseTracking) {
     }]
   })
   .then(function (result) {
-    console.log(result)
+    // console.log(result)
     if (result.test.project.users[0].projectUser.get('role') === 'owner') {
       return model.MouseTracking.findAll({
         where: { imageId: mouseTracking.imageId }

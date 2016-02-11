@@ -569,25 +569,24 @@ module.exports = function (app, express) {
     });
 
   app.route('/api/mousetracking')
-    // .get(auth.decode, function (req, res) {
-    .get(function (req, res) { /* for testing purposes */
-      // var params = {
-      //   userId: req.decoded.iss,
-      //   imageId: req.query.imageId
-      // };
-      var params = { /* for testing purposes */
-        userId: req.query.userId,
+    .get(auth.decode, function (req, res) {
+    // .get(function (req, res) { /* for testing purposes */
+      var params = {
+        userId: req.decoded.iss,
         imageId: req.query.imageId
       };
+      console.log('!!!!!!!!!!!!!!PARAMS', params)
+      // var params = { /* for testing purposes */
+      //   userId: req.query.userId,
+      //   imageId: req.query.imageId
+      // };
 
       mousetrackingController.retrieveMouseTracking(params)
         .then(function (results) {
           return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
-              movement: current.get('movement'),
-              clicks: current.get('clicks'),
-              urlchange: current.get('urlchange'),
+              data: current.get('data'),
               imageId: current.get('imageId'),
               userId: current.get('userId')
             };

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking } from '../redux/actions';
 
 class ReportPage extends Component {
@@ -101,7 +100,6 @@ class ReportPage extends Component {
 
     return (
       <div>
-        <ReactHeatmap max={5} data={data} />
         <div id = 'critiqueImage' style = { divStyle } >
           { this.state.reportImages.map(createImage) }
           { this.props.mouseTrackings.list.map(createCursor) }
