@@ -20,7 +20,7 @@ docker-compose.yml
 client/public/bundle.js
 client/public/*.hot-update.*
 server/data/screenshots/*
-server/services/mailAuth.js
+server/services/mail*
 
 ##downloaded styles
 client/public/assets/dist
