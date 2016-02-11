@@ -534,9 +534,7 @@ module.exports = function (app, express) {
           return results.reduce(function (previous, current) {
             var params = {
               id: current.get('id'),
-              movement: current.get('movement'),
-              clicks: current.get('clicks'),
-              urlchange: current.get('urlchange'),
+              data: current.get('data'),
               imageId: current.get('imageId'),
               userId: current.get('userId')
             };
