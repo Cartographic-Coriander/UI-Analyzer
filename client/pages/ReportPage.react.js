@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setFocus, pageState } from '../redux/actions';
+import ReactHeatmap from 'react-heatmap';
 
 class ReportPage extends Component {
   constructor (props) {
@@ -60,6 +61,7 @@ class ReportPage extends Component {
 
 
   render () {
+    let data = [{ x: 10, y: 15, value: 5}, { x: 50, y: 50, value: 2}, ...];
     let divStyle = {
       //background image will come from the database
       position: 'relative',
@@ -77,6 +79,7 @@ class ReportPage extends Component {
     return (
       <div>
         <div id = 'critiqueImage' style = { divStyle } >
+        <ReactHeatmap max={5} data={data} />
           { this.state.reportImages.map(createImage) }
         </div>
       </div>

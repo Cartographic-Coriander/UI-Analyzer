@@ -151,15 +151,7 @@ export function getComment (comment) {
 }
 
 export function postComment (comment) {
-  const params = {
-    imageId: comment.imageId,
-    commentType: comment.commentType,
-    commentText: comment.commentText,
-    x: comment.x,
-    y: comment.y
-  }
-
-  return instance.post('/api/comment', params);
+  return instance.post('/api/comment', comment);
 }
 
 export function updateComment (comment) {
