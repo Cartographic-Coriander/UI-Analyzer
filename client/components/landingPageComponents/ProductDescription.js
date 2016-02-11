@@ -29,8 +29,6 @@ export default React.createClass({
             <h4>Gather Visual Feedback</h4>
             <p>Lorem ipsum sit amet</p>
           </div>
-        </div>
-        <div className="productExampleContainer">
           <div className="productExample">
             <h4>Analyze Project Result</h4>
             <p>Lorem ipsum sit amet</p>
@@ -40,7 +38,6 @@ export default React.createClass({
             <p>Lorem ipsum sit amet</p>
           </div>
         </div>
-
       </div>
     )
   }

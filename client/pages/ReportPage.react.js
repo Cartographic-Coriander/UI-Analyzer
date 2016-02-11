@@ -1,6 +1,10 @@
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setFocus, pageState, getsMouseTracking } from '../redux/actions';
+
+// import * as ReactHeatmap from './react-heatmap.js';
+
 
 class ReportPage extends Component {
   constructor (props) {
@@ -103,6 +107,7 @@ class ReportPage extends Component {
           { this.state.reportImages.map(createImage) }
           { this.props.mouseTrackings.list.map(createCursor) }
         </div>
+        <div id="heatmapContainer"></div>
       </div>
     )
 
@@ -142,7 +147,37 @@ class ReportPage extends Component {
         var path = JSON.parse(cursorData.data);
         replay($(cursor), path);
       });
-               }, 1500)
+               }, 1500);
+
+    setTimeout(() =>  {
+      let heatdata = [];
+        this.props.mouseTrackings.list.forEach(function (cursorData) {
+          var path = JSON.parse(cursorData.data);
+          path.forEach(function (datapoint) {
+            var heatdataPoint = {
+              x: datapoint.x,
+              y: datapoint.y,
+              value: 5
+            };
+            heatdata.push(heatdataPoint);
+          });
+        });
+      console.log('heatdata: ', heatdata);
+
+      var heatmap = h337.create({
+        container: document.getElementById('heatmapContainer'),
+        radius: 13,
+        maxOpacity: .5,
+        minOpacity: 0,
+        blur: .75
+      });
+
+      // create heatmap with configuration
+      heatmap.setData({
+        max: 15,
+        data: heatdata
+      });
+    }, 1500);
   }
 
 }
