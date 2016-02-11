@@ -56,6 +56,7 @@ var retrieveMouseTracking = function (mouseTracking) {
         if (result.length === 0) {
           throw (new Error ('Error! Mouse tracking does not exist!'));
         } else {
+          console.log('result from mousetracking controller: ', result);
           return result;
         }
       });

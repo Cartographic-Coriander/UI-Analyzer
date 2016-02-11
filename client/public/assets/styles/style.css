@@ -252,3 +252,12 @@ input:-webkit-autofill {
   margin-top: -15px;
   color: #b3b3b3;
 }
+
+.cursor {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

@@ -488,6 +488,7 @@ export function getsMouseTracking (mouseTracking) {
   return (dispatch) => {
     return getMouseTracking(mouseTracking)
       .then((response) => {
+        console.log('response from getsMouseTracking: ', response);
         var params = {
           type: 'GET_MOUSETRACKING',
           data: response.data
