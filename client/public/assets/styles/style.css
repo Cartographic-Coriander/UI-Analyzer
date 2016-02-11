@@ -1,0 +1,263 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.APP {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+/*Landing Page*/
+
+.landingPageHeader, .dashboardPageHeader {
+  margin: 0 0 0 0;
+}
+
+.landingPage-Jumbotron {
+  padding: 0 0 0 0;
+  margin: 0 0 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.getStartedBtn-lg {
+  margin-left: 80%;
+}
+
+.landingPageVideo {
+  position:"fixed";
+  width: 100%;
+  height: 100%;
+  z-index: -50;
+  opacity: 0.15;
+}
+
+#landingPageText {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  padding: 10px 10px 10px 10px;
+}
+
+.productExampleContainer {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+
+.productExample {
+  width: 400px;
+  height: 300px;
+}
+
+.aboutUs {
+  margin-top: 30px;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.authorProfile {
+  width: 350px;
+  height: 200px;
+}
+
+.footer {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.modal-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.login-button, .signup-button {
+  margin-top: 10px;
+}
+
+.login-cancel-button, .signup-cancel-button {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*Dashboard*/
+.DashboardPage {
+  height: 100%;
+}
+
+.dashboardPageHeader {
+  margin-bottom: 0;
+}
+
+/*.dashboardNav {
+  float:left;
+  height: 100%;
+  background-color: #2b3e50;;
+}*/
+
+.dashboardContent {
+  height: 100%;
+  width: 80%;
+  float: right;
+}
+
+.SidebarNavigation {
+  text-align: center;
+  float: left;
+  height: 100%;
+  width: 200px;
+  background-color: #df691a;
+}
+
+.SidebarNavigation h3 {
+  font-size: 17px;
+  text-align: center;
+  padding-top: 5px;
+  height: 39px;
+  background-color: #df691a;
+}
+/*
+.react-sanfona-item-body {
+  margin-top: 10px;
+}*/
+
+.react-sanfona-item-body .Button{
+  width: 100%;
+}
+
+.projectAccordionItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  background-color : #FFFFFF; 
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  background-color: #f2f2f2;
+}
+
+/*changing background color for autofilled values*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #FFFFFF inset;
+}
+
+
+
+/*styling the settings and test pages on the dashboard*/
+
+.Settings, .Tests {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+}
+
+.settingsForm, .testForm {
+  padding: 10px 15px;
+}
+
+.projectEntryComponent, .testEntryComponent {
+  padding: 5px 22px;
+  text-align: center;
+  outline: #00FF00 dotted thick;
+  margin-left: 3%;
+}
+
+.projectEntryButtonContainer, .testEntryButtonContainer {
+  text-align: center;
+}
+
+.floatClear {
+  clear: both;
+}
+
+.testContent, .projectContent {
+  border: 1px solid #ffa31a;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  min-height: 43px;
+}
+
+.testRow {
+  margin: 5px 0;
+}
+
+.testLeftSideLabel {
+  text-align: center;
+}
+
+.projectEntryButton, .testEntryButton {
+  margin-right: 10px;
+}
+
+.editSpan , .createTestSpan {
+  display: inline-block;
+  width: 140px;
+  margin-left: 5px;
+}
+
+.createTestSpan {
+  height: 31px;
+}
+
+.addTestInput[type="text"] {
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
+  width: 181px;
+}
+
+.addTestInput[type="text"]:focus {
+  width: 290px;
+}
+
+.testButtons, .projectButtons {
+  text-align: center;
+}
+
+#editName {
+  height: 25px;
+}
+
+.editDiv {
+  margin-bottom: 2px;
+  height: 27px;
+}
+
+.addTestButton {
+  width: 80px;
+}
+
+.testUrl {
+  margin-top: -15px;
+  color: #b3b3b3;
+}
+
+.cursor {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,106 @@
+input[type=radio] {
+  display: none;
+  margin: 10px;
+}
+
+/*this acts like a span but is not a span, used got changing colors of selected button*/
+#invisibleP {
+  display: none;
+}
+
+/*for changing label colors if they are for the selected radio button*/
+input[type=radio]:checked + span + label, input[type=radio]:checked + p + label { 
+  background-image: none;
+  margin-bottom: 0;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #333;
+  text-align: center;
+  cursor: pointer;
+}
+
+input[type=radio]:checked + span + label {
+  background-color:#00ff99;
+  border-top-right-radius: 0.25em;
+}
+
+input[type=radio]:checked + p + label { 
+  background-color:#ff9900;
+  border-top-left-radius: 0.25em
+}
+
+/*end changin label colors*/
+
+/*setting initial colors for critique butttons*/
+span + label, p + label {
+  display: inline-block;
+  margin: 0px;
+  padding: 4px 11px;
+  outline: 0;
+  color: #1f1f14;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+}
+
+span + label {
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em;
+  background-color: #00e68a;
+}
+
+p + label {
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
+  background-color: #cc7a00;
+}
+/*end setting initial colors for critique buttons*/
+
+/*styling the comment that is left on the page*/
+.quote-container {
+  position: relative;
+}
+
+.note {
+  color: #FFFEEE;
+  position: relative;
+  width: 200px;
+  height: 0 auto;
+  padding: 20px;
+  box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
+  word-wrap: break-word;
+  display: none;
+}
+
+.color {
+  background: #b2e6c9;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg)
+}
+
+/*comment pin ATTENTION: color of pins is set in */
+.commentPin {
+  height: 7px;
+  width: 7px;
+  border-top-right-radius: 2em;
+  border-top-left-radius: 2em;
+  border-bottom-right-radius: 2em;
+  border-bottom-left-radius: 2em;
+  margin-bottom: 5px;
+}
+
+.commentPin:hover + blockquote {
+  display: block;
+}
+
+.greenPin, .greencomment {
+  background: #00ff99;
+}
+
+.redPin, .redcomment {
+  background: #ff9900;
+}
+
