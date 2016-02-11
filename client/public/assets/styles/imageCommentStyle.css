@@ -21,12 +21,18 @@ input[type=radio]:checked + span + label, input[type=radio]:checked + p + label 
 
 input[type=radio]:checked + span + label {
   background-color:#00ff99;
-  border-top-right-radius: 0.25em;
+  border-top-right-radius: 2em;
+  border-top-left-radius: 2em;
+  border-bottom-right-radius: 2em;
+  border-bottom-left-radius: 2em;
 }
 
 input[type=radio]:checked + p + label { 
   background-color:#ff9900;
-  border-top-left-radius: 0.25em
+  border-top-right-radius: 2em;
+  border-top-left-radius: 2em;
+  border-bottom-right-radius: 2em;
+  border-bottom-left-radius: 2em;
 }
 
 /*end changin label colors*/
@@ -46,12 +52,16 @@ span + label, p + label {
 span + label {
   border-top-left-radius: 2em;
   border-bottom-left-radius: 2em;
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
   background-color: #00e68a;
 }
 
 p + label {
   border-top-right-radius: 2em;
   border-bottom-right-radius: 2em;
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em;
   background-color: #cc7a00;
 }
 /*end setting initial colors for critique buttons*/
@@ -81,10 +91,10 @@ p + label {
   transform: rotate(2deg)
 }
 
-/*comment pin ATTENTION: color of pins is set in */
+/*comment pin */
 .commentPin {
-  height: 7px;
-  width: 7px;
+  height: 11px;
+  width: 11px;
   border-top-right-radius: 2em;
   border-top-left-radius: 2em;
   border-bottom-right-radius: 2em;
@@ -103,4 +113,230 @@ p + label {
 .redPin, .redcomment {
   background: #ff9900;
 }
+
+/*space between buttons*/
+#radioLabel {
+  margin-left: 5px;
+}
+
+/*the feedback component that is showing up before the add comments section*/
+#testStartPrompt, #testEndRequest {
+  position: relative;
+  top: 200px;
+  height: 200px;
+  width: 420px;
+  background-color: #df691a;
+  padding: 30px 30px 30px 30px;
+  z-index: 10;
+  margin: auto;
+}
+
+.group {
+  position: relative;
+  display: inline-block;
+  line-height: 16px;
+}
+
+.bigSqr {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+  -webkit-animation: bigSqrShrink 1s linear infinite;
+          animation: bigSqrShrink 1s linear infinite;
+}
+
+.square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FFF;
+}
+
+.first {
+  left: 0px;
+  top: 20px;
+}
+
+.second {
+  left: 20px;
+  top: 20px;
+  -webkit-animation: drop2 1s linear infinite;
+          animation: drop2 1s linear infinite;
+}
+
+.third {
+  left: 0px;
+  top: 0px;
+  -webkit-animation: drop3 1s linear infinite;
+          animation: drop3 1s linear infinite;
+}
+
+.fourth {
+  left: 20px;
+  top: 0px;
+  -webkit-animation: drop4 1s linear infinite;
+          animation: drop4 1s linear infinite;
+}
+
+.text {
+  line-height: 16px;
+  font-family: "Roboto";
+  color: #FFF;
+  display: block;
+  margin: 10px auto;
+  padding: 3px;
+}
+
+@-webkit-keyframes bigSqrShrink {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+}
+
+@keyframes bigSqrShrink {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+}
+@-webkit-keyframes drop2 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  25% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop2 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  25% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@-webkit-keyframes drop3 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  50% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop3 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  50% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@-webkit-keyframes drop4 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  75% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop4 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  75% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+.link {
+  line-height: 1em;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  width: 300px;
+  height: 50px;
+  font-family: "Open Sans", "Roboto", Arial, sans-serif;
+  text-align: right;
+}
+
+.link > a {
+  text-decoration: none;
+  color: #FF0;
+}
+
+
+#startTestButton, #testviewLoading {
+  margin-top: 20px;
+  text-align: center; 
+}
+
+#testview-veil {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #4e5d6c;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+#testEndRequest-text{
+  margin-top: 75px;
+}
+
 

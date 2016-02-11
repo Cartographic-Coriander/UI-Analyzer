@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
+import Welcome from '../components/testingPageComponents/welcomeToComments.js';
 
 class AddNotes extends Component {
   constructor (props) {
@@ -48,8 +49,8 @@ class AddNotes extends Component {
     $(document).keypress('d', function (event) {
       if (event.ctrlKey) {
         this.handleSendingNotes();
+        $(document).off('keypress');
       }
-      $(document).off('keypress');
     }.bind(this));
 
     const findImage = {
@@ -88,9 +89,9 @@ class AddNotes extends Component {
         text.style.left = cursorX - offset.left + "px";
         text.style.position = "absolute";
         text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
-                            "<label for='radio1'>YAY</label>" +
+                            "<label for='radio1'>Like</label>" +
                           "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
-                            "<label for='radio2'>NAY</label></br>" +
+                            "<label id='radioLabel' for='radio2'>Dislike</label></br>" +
                           "<input id='inputText' type='text' />" +
                             "<button id='leaveCommentButton' type='button'>send</button>";
         document.getElementById('critiqueImage').appendChild(text);
@@ -148,10 +149,7 @@ class AddNotes extends Component {
         { (() => {
           if (this.state.showLanding) {
             return (
-              <div>
-                <h3>Please leave feedback</h3>
-                <h5>press ctrl+d to exit</h5>
-              </div>
+              <Welcome />
             )
           } else {
             return (

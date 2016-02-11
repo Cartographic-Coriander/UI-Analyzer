@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
+import Note from '../components/testingPageComponents/notesView/Note';
+{/*Note is a shared component and can be placed in a shared component place*/}
 
 class ReportPage extends Component {
   constructor (props) {
@@ -13,7 +15,6 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
     this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     $(document).on('keydown', (event) => {
@@ -24,6 +25,7 @@ class ReportPage extends Component {
           this.setState({ currentIndex: currentIndx + 1 });
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+          this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
           $('.heatmap-canvas').remove();
           this.setState({ currentIndex: 0 });
@@ -36,10 +38,10 @@ class ReportPage extends Component {
     $(document).keypress('d', (event) => {
       if (event.ctrlKey) {
         this.props.dispatch(pageState('authenticated'))
+        $(document).off('keydown');
+        $(document).off('keypress');
+        $('.heatmap-canvas').remove();
       }
-      $(document).off('keydown');
-      $(document).off('keypress');
-      $('.heatmap-canvas').remove();
     });
 
     this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
@@ -63,6 +65,10 @@ class ReportPage extends Component {
   };
 
   componentDidMount () {
+    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+    //this is done twice, if once, wrong comments appear occasionally
+    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+
     setTimeout(() => {
       let replay = function (cursor, path) {
         var i = 0;
@@ -147,11 +153,17 @@ class ReportPage extends Component {
       return <div key = { data.id } id = { data.id } className = "cursor" style = { divStyle }> </div>
     };
 
+    {/*each note is mapped to one createItem upon rendering*/}
+    let createComment = function (comment) {
+      return <Note key = { comment.id } x = { comment.x } y = { comment.y } commentText = { comment.commentText } commentType = { comment.commentType }/>;
+    };
+
     return (
       <div>
         <div id = 'critiqueImage' style = { divStyle } >
           { this.state.reportImages.map(createImage) }
           { this.props.mouseTrackings.list.map(createCursor) }
+          { this.props.comments.list.map(createComment) }
         </div>
       </div>
     );
