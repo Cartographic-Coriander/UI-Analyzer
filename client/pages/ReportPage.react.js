@@ -15,7 +15,6 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
@@ -28,16 +27,14 @@ class ReportPage extends Component {
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
           this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
-          window.removeHeatmap();
           this.setState({ currentIndex: 0 });
-          this.props.dispatch(pageState('authenticated'));
           $(document).off('keydown');
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+          this.props.dispatch(pageState('authenticated'));
+          window.removeHeatmap();
         }
       }
     });
-
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const findImages = {
       testId : this.props.currentFocus.test.id
@@ -50,9 +47,11 @@ class ReportPage extends Component {
       method: 'GET',
       timeout: 1000,
       success: (data, textStatus, jqXHR) => {
-        // this.state.reportImages = data;
+
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
+
+        this.componentDidMount();
       }
     })
   };
@@ -68,6 +67,8 @@ class ReportPage extends Component {
     }.bind(this));
 
     this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+
+    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
@@ -123,7 +124,7 @@ class ReportPage extends Component {
         });
       });
       window.renderHeatmap();
-    }, 900);
+    }, 1500);
 
     $(document).keypress('h', (event) => {
       console.log(event.which);
