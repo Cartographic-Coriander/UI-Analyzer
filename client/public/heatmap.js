@@ -12,6 +12,10 @@ window.heatdata = window.heatdata || [];
 
 // create heatmap with configuration
 window.renderHeatmap = function(){
+  $('#app').wrap("<div id='heatmapContainer'></div>")
+  $('#heatmapContainer').css('height', $('#critiqueImage').height());
+  $('#heatmapContainer').css('width', $('#critiqueImage').width());
+
   var heatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
     radius: 13,
@@ -23,4 +27,9 @@ window.renderHeatmap = function(){
     max: 15,
     data: window.heatdata
   }); 
+};
+
+window.removeHeatmap = function(){
+  $('#app').unwrap();
+  $('.heatmap-canvas').remove();
 };

@@ -20,6 +20,7 @@ class ReportPage extends Component {
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
         if (this.state.reportImages[this.state.currentIndex + 1] !== undefined) {
+          window.removeHeatmap();
           this.componentDidMount();
           var currentIndx = this.state.currentIndex;
           this.setState({ currentIndex: currentIndx + 1 });
@@ -27,7 +28,7 @@ class ReportPage extends Component {
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
           this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
-          $('.heatmap-canvas').remove();
+          window.removeHeatmap();
           this.setState({ currentIndex: 0 });
           this.props.dispatch(pageState('authenticated'));
           $(document).off('keydown');
@@ -40,7 +41,7 @@ class ReportPage extends Component {
         this.props.dispatch(pageState('authenticated'))
         $(document).off('keydown');
         $(document).off('keypress');
-        $('.heatmap-canvas').remove();
+        window.removeHeatmap();
       }
     });
 
@@ -106,7 +107,7 @@ class ReportPage extends Component {
 
   setTimeout(() =>  {
       window.heatdata = [];
-      $('.heatmap-canvas').remove();
+      window.removeHeatmap();
       this.props.mouseTrackings.list.forEach(function (cursorData) {
         var path = JSON.parse(cursorData.data);
         path.forEach(function (datapoint) {
