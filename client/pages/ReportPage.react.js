@@ -15,7 +15,9 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+    // setTimeout(function () {
+    //   this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+    // }.bind(this), 1000)
 
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
@@ -30,14 +32,12 @@ class ReportPage extends Component {
         } else { //at the end of the array
           window.removeHeatmap();
           this.setState({ currentIndex: 0 });
-          this.props.dispatch(pageState('authenticated'));
           $(document).off('keydown');
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+          this.props.dispatch(pageState('authenticated'));
         }
       }
     });
-
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const findImages = {
       testId : this.props.currentFocus.test.id
@@ -67,7 +67,13 @@ class ReportPage extends Component {
       }
     }.bind(this));
 
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+    setTimeout(function (){
+      this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+    }.bind(this), 200);
+
+    setTimeout(function () {
+      this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+    }.bind(this), 1000)
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
@@ -123,7 +129,7 @@ class ReportPage extends Component {
         });
       });
       window.renderHeatmap();
-    }, 900);
+    }, 1500);
 
     $(document).keypress('h', (event) => {
       console.log(event.which);
@@ -140,6 +146,7 @@ class ReportPage extends Component {
 
     $(document).keypress((event) => {
       if (event.which === 4 && event.ctrlKey) {
+        console.log('sdbfkjsbdf')
         this.setState({ currentIndex: 0 });
         console.log('event which: ', event.which);
         this.props.dispatch(pageState('authenticated'))
