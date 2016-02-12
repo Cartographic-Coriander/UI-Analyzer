@@ -177,6 +177,9 @@ export function comments (state = commentsInitialState, action) {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
+    case 'IMAGE_CLEAR':
+      newState.list = [];
+      return newState;
     case 'GET_COMMENT':
       newState.list = action.data;
       return newState;

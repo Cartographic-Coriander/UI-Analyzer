@@ -19,8 +19,10 @@ export default class DashboardPage extends Component {
     }, 100)
   }
 
-  handleClick () {
-    // this.props.dispatch(showImagePage('show_image'));
+  componentDidMount(){
+    setTimeout(() => {
+      window.removeHeatmap();
+    }, 1200)
   }
 
   render () {
@@ -34,7 +36,6 @@ export default class DashboardPage extends Component {
         </Navbar>
         <SidebarNavigation />
         <Content />
-        {/* <button onClick={ this.handleClick.bind(this) }>make image appear</button> */}
       </div>
     )
   }

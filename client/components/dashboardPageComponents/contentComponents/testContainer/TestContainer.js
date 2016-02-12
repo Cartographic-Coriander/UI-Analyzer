@@ -30,8 +30,13 @@ class TestContainer extends Component {
     this.props.dispatch(getsImage(test));
     // this.props.dispatch(contentState('Reports'));
     this.props.dispatch(setFocus('test', test))
-    this.props.dispatch(pageState('reportView'));
+    setTimeout(function(){
+      this.props.dispatch(pageState('reportView'));
+    }.bind(this), 500);
   };
+
+  componentWillUnmount () {    
+  }
 
   //adding new tests
   addTest (test) {

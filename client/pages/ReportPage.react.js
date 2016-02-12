@@ -29,9 +29,11 @@ class ReportPage extends Component {
         } else { //at the end of the array
           this.setState({ currentIndex: 0 });
           $(document).off('keydown');
+          $(document).off('keypress');
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(pageState('authenticated'));
           window.removeHeatmap();
+          this.props.dispatch(getsComment('clear'));
         }
       }
     });
@@ -51,10 +53,15 @@ class ReportPage extends Component {
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
 
-        this.componentDidMount();
+        this.renderCommentsMousetracking();
       }
     })
   };
+
+  renderCommentsMousetracking() {
+    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+  }
 
   componentDidMount () {
     $(document).off('keypress');
@@ -66,9 +73,6 @@ class ReportPage extends Component {
       }
     }.bind(this));
 
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
@@ -105,10 +109,9 @@ class ReportPage extends Component {
       });
     };
 
+    setTimeout(mouseReplay, 1000);
 
-    setTimeout(mouseReplay, 1500);
-
-    setTimeout(() =>  {
+    setTimeout(() => {
 
       window.heatdata = [];
       window.removeHeatmap();
@@ -124,7 +127,8 @@ class ReportPage extends Component {
         });
       });
       window.renderHeatmap();
-    }, 1500);
+      window.toggleHeatmap();
+    }, 1000);
 
     $(document).keypress('h', (event) => {
       console.log(event.which);
@@ -148,6 +152,7 @@ class ReportPage extends Component {
         $(document).off('keypress');
         window.removeHeatmap();
         this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+        this.props.dispatch(getsComment('clear'));
       }
     });
   };
