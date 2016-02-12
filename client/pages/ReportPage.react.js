@@ -37,18 +37,6 @@ class ReportPage extends Component {
       }
     });
 
-    $(document).keypress((event) => {
-      if (event.which === 4 && event.ctrlKey) {
-        this.setState({ currentIndex: 0 });
-        console.log('event which: ', event.which);
-        this.props.dispatch(pageState('authenticated'))
-        $(document).off('keydown');
-        $(document).off('keypress');
-        window.removeHeatmap();
-        this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
-      }
-    });
-
     this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const findImages = {
@@ -71,7 +59,7 @@ class ReportPage extends Component {
 
   componentDidMount () {
     $(document).off('keypress');
-    
+
     $(window).bind('beforeunload', function(){
       if(this.props.stateRouter.pageState === 'reportView'){ 
         this.setState({ currentIndex: 0 });
@@ -147,6 +135,18 @@ class ReportPage extends Component {
     $(document).keypress('p', (event) => {
       if (event.which === 16 && event.ctrlKey && this.props.stateRouter.pageState === 'reportView') {
         mouseReplay();
+      }
+    });
+
+    $(document).keypress((event) => {
+      if (event.which === 4 && event.ctrlKey) {
+        this.setState({ currentIndex: 0 });
+        console.log('event which: ', event.which);
+        this.props.dispatch(pageState('authenticated'))
+        $(document).off('keydown');
+        $(document).off('keypress');
+        window.removeHeatmap();
+        this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
       }
     });
   };
