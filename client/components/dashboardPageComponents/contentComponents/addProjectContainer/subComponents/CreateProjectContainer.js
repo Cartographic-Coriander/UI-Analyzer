@@ -35,7 +35,7 @@ class CreateProjectContainer extends Component {
             {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
           </div>
           <div>
-            <Button type="submit" disabled={submitting}>
+            <Button type="submit" className="btn-primary" disabled={submitting}>
               {submitting ? <i/> : <i/>} Create Project
             </Button>
             <Button type="button" onClick= { this.props.hideVisibility }>

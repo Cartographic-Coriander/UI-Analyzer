@@ -44,18 +44,20 @@ html, body {
 }
 
 .productExampleContainer {
+  margin-top: 50px;
   display: -webkit-flex; /* Safari */
   display: flex;
   -webkit-flex-direction: row; /* Safari */
   flex-direction:         row;
   -webkit-justify-content: space-around; /* Safari */
   justify-content:         space-around;
+  text-align: center
 }
 
 
 .productExample {
-  width: 400px;
-  height: 300px;
+  width: 350px;
+  height: 200px;
 }
 
 .aboutUs {

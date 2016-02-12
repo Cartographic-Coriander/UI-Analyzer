@@ -118,7 +118,7 @@ class TestContainer extends Component {
             <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" /><br />
             <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" /><br />
             <span className = "createTestSpan">test prompt: </span><textarea onChange = { this.newTestPrompt.bind(this) } type = "textarea" /><br />
-            <Button onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+            <Button onClick = { this.addTest.bind(this) } className="btn-primary" type = "button">submit</Button>
             <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
           </form>
         </Modal>
