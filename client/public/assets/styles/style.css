@@ -175,10 +175,9 @@ input:-webkit-autofill {
 }
 
 .projectEntryComponent, .testEntryComponent {
-  padding: 5px 22px;
+  /*padding: 5px 22px;*/
   text-align: center;
-  border: 1px solid blue;
-  margin-left: 3%;
+  /*margin-left: 3%;*/
 }
 
 .projectEntryButtonContainer, .testEntryButtonContainer {
@@ -190,16 +189,20 @@ input:-webkit-autofill {
 }
 
 .testContent, .projectContent {
-  border: 1px solid #ffa31a;
+  /*border: 1px solid #ffa31a;*/
+  /*background-color: #5D6B79;*/
+  border: 1px solid rgba(0, 0, 0, 0.17);
+  background-color: rgba(255, 255, 255, 0.5);
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-  min-height: 43px;
+  min-height: 42px;
 }
 
 .testRow {
-  margin: 5px 0;
+  margin: 0;
+  position: relative;
 }
 
 .testLeftSideLabel {
@@ -249,10 +252,10 @@ input:-webkit-autofill {
   width: 80px;
 }
 
-.testUrl {
+/*.testUrl {
   margin-top: -15px;
   color: #b3b3b3;
-}
+}*/
 
 .cursor {
   border-radius: 50%;
@@ -269,4 +272,37 @@ input:-webkit-autofill {
   left: 0;
   top: 0;
   z-index: 0;
+}
+
+.btn-block {
+  margin: 0;
+}
+
+.col-md-offset-3 {
+  margin-left: 0;
+}
+
+.panel {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.panel h3 {
+  margin: 0;
+}
+
+.navbar {
+  border-radius: 0px;
+  border-left-style: none;
+  border-right-style: none;
+}
+
+.testRow h5 {
+  position: relative;
+  top: 2px;
+}
+
+.well {
+  padding-bottom: 5px;
+  padding-top: 25px;
 }

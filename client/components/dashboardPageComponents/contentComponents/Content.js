@@ -21,9 +21,15 @@ class Content extends Component {
                 }
               })
               return (
-                <div>
-                  <h3>{ currentProject }</h3>
-                  <h4>{ currentDescription }</h4>
+                <div className = "col-md-9">
+                  <div className = "panel panel-default">
+                    <div className = "panel-body">
+                      <h3>{ currentProject }</h3>
+                    </div>
+                    <div className = "panel-footer">
+                      <h4>{ currentDescription }</h4>
+                    </div>
+                  </div>
                 </div>
               )
             }
