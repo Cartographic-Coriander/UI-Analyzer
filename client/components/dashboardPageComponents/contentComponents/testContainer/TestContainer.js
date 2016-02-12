@@ -18,6 +18,7 @@ class TestContainer extends Component {
   //editing existing tests
   updateTest (test) {
     this.props.dispatch(updatesTest(test));
+    // this.props.dispatch(getsImage({ testId: }))
   };
 
   deleteTest (test) {
