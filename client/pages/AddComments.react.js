@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
+import Welcome from '../components/testingPageComponents/welcomeToComments.js';
 
 class AddNotes extends Component {
   constructor (props) {
@@ -42,14 +43,14 @@ class AddNotes extends Component {
           $(document).off('keydown');
           this.props.dispatch(pageState('authenticated'));
         }
-      } 
+      }
     }.bind(this));
 
     $(document).keypress('d', function (event) {
       if (event.ctrlKey) {
         this.handleSendingNotes();
+        $(document).off('keypress');
       }
-      $(document).off('keypress');
     }.bind(this));
 
     const findImage = {
@@ -87,14 +88,12 @@ class AddNotes extends Component {
         text.style.top = cursorY - offset.top + "px";
         text.style.left = cursorX - offset.left + "px";
         text.style.position = "absolute";
-        text.innerHTML = "<div class='feedback'> <span id='feedbackText'>Leave Feedback</span><br>" +
-                            "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
-                              "<label for='radio1'>LIKE</label>" +
-                            "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
-                              "<label for='radio2'>DISLIKE</label></br>" +
-                            "<input id='inputText' type='text' />" +
-                              "<button id='leaveCommentButton' type='button'>send</button>" +
-                          "</div>";
+        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
+                            "<label for='radio1'>Like</label>" +
+                          "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
+                            "<label id='radioLabel' for='radio2'>Dislike</label></br>" +
+                          "<input id='inputText' type='text' />" +
+                            "<button id='leaveCommentButton' type='button'>send</button>";
         document.getElementById('critiqueImage').appendChild(text);
         document.getElementById('inputText').focus();
         {/*need to attach a function to be run whenever the input button is clicked*/}
@@ -150,10 +149,7 @@ class AddNotes extends Component {
         { (() => {
           if (this.state.showLanding) {
             return (
-              <div>
-                <h3>Please leave feedback</h3>
-                <h5>press ctrl+d to exit</h5>
-              </div>
+              <Welcome />
             )
           } else {
             return (
