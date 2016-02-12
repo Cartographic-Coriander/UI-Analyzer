@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import ReactHeatmap from 'react-heatmap';
+import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
 import Note from '../components/testingPageComponents/notesView/Note';
 {/*Note is a shared component and can be placed in a shared component place*/}
@@ -15,7 +15,6 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
@@ -28,25 +27,14 @@ class ReportPage extends Component {
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
           this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
-          window.removeHeatmap();
           this.setState({ currentIndex: 0 });
-          this.props.dispatch(pageState('authenticated'));
           $(document).off('keydown');
+          this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+          this.props.dispatch(pageState('authenticated'));
+          window.removeHeatmap();
         }
       }
     });
-
-    $(document).keypress((event) => {
-      if (event.which === 4 && event.ctrlKey) {
-        console.log('event which: ', event.which);
-        this.props.dispatch(pageState('authenticated'))
-        $(document).off('keydown');
-        $(document).off('keypress');
-        window.removeHeatmap();
-      }
-    });
-
-    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const findImages = {
       testId : this.props.currentFocus.test.id
@@ -59,36 +47,50 @@ class ReportPage extends Component {
       method: 'GET',
       timeout: 1000,
       success: (data, textStatus, jqXHR) => {
-        // this.state.reportImages = data;
+
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
+
+        this.componentDidMount();
       }
     })
   };
 
   componentDidMount () {
+    $(document).off('keypress');
+
+    $(window).bind('beforeunload', function(){
+      if (this.props.stateRouter.pageState === 'reportView') {
+        this.setState({ currentIndex: 0 });
+        this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+      }
+    }.bind(this));
+
     this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-    //this is done twice, if once, wrong comments appear occasionally
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+
+    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
         var i = 0;
         var timeInterval;
         var length = path.length;
+
         var move = function () {
           var position = path[i];
+
           cursor.css({
             top: position.y,
             left: position.x
           });
-          if (i > 1){
+
+          if (i > 1 && path[i + 1]){
             timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
           } else {
             timeInterval = 0;
           }
           i++;
-          if ( i === length) {
+          if (i === length) {
             return;
           } else {
             setTimeout(move, timeInterval);
@@ -98,6 +100,7 @@ class ReportPage extends Component {
       };
 
       let path = JSON.parse(this.props.mouseTrackings.list[0].data);
+
       this.props.mouseTrackings.list.forEach((cursorData) => {
         console.log('cursorData: ', cursorData);
         var cursor = '#' + cursorData.id;
@@ -106,10 +109,10 @@ class ReportPage extends Component {
       });
     };
 
-
     setTimeout(mouseReplay, 1500);
 
     setTimeout(() =>  {
+
       window.heatdata = [];
       window.removeHeatmap();
       this.props.mouseTrackings.list.forEach(function (cursorData) {
@@ -136,6 +139,18 @@ class ReportPage extends Component {
     $(document).keypress('p', (event) => {
       if (event.which === 16 && event.ctrlKey && this.props.stateRouter.pageState === 'reportView') {
         mouseReplay();
+      }
+    });
+
+    $(document).keypress((event) => {
+      if (event.which === 4 && event.ctrlKey) {
+        this.setState({ currentIndex: 0 });
+        console.log('event which: ', event.which);
+        this.props.dispatch(pageState('authenticated'))
+        $(document).off('keydown');
+        $(document).off('keypress');
+        window.removeHeatmap();
+        this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
       }
     });
   };
@@ -192,7 +207,7 @@ function mapStateToProps(state) {
     comments: state.comments,
     currentFocus: state.currentFocus,
     stateRouter: state.stateRouter
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(ReportPage);

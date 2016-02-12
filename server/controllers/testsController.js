@@ -57,7 +57,9 @@ var retrieveTest = function (test) {
   })
   .then(function (result) {
     if (result.length === 0) {
-      throw (new Error ('Error! Test does not exist!'));
+      var error = new Error ('Error! Test does not exist!');
+      error.name = 'emptyResults';
+      throw (error);
     } else {
       return result;
     }
@@ -117,6 +119,7 @@ var deleteTest = function (test) {
     }]
   })
   .then(function (result) {
+    console.log('')
     if (result.project.users[0].projectUser.get('role') === 'owner') {
       var params = { id: test.testId };
 
@@ -131,7 +134,10 @@ var deleteTest = function (test) {
         }
       });
     } else {
-      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
+      console.log('permissions error')
+      var error = new Error ('Error! Insufficient permissions to modify this entry!');
+      error.name = 'unauthorized';
+      throw (error);
     }
   });
 };

@@ -19,6 +19,7 @@ class TestContainer extends Component {
   //editing existing tests
   updateTest (test) {
     this.props.dispatch(updatesTest(test));
+    // this.props.dispatch(getsImage({ testId: }))
   };
 
   deleteTest (test) {
@@ -42,6 +43,7 @@ class TestContainer extends Component {
       url: testUrl,
       prompt: this.state.addTestPrompt
     };
+
     this.hideModal();
     this.props.dispatch(postsTest(newTest));
   };
@@ -88,7 +90,7 @@ class TestContainer extends Component {
 
   render () {
     return (
-      <div className = "Tests">
+      <div>
         <div>
           { this.props.tests.list.map((test, index) => {
               console.log(index)
@@ -108,7 +110,9 @@ class TestContainer extends Component {
             })
           }
         </div>
-
+        <div className = "col-md-9">
+        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn btn-primary btn-md pull-right" type= "button">add test</Button>
+        </div>
         <Modal show = { this.state.testModalDisplay }>
           <form>
             <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" /><br />
@@ -118,7 +122,6 @@ class TestContainer extends Component {
             <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
           </form>
         </Modal>
-        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton" type= "button">add test</Button>
       </div>
     );
   };
