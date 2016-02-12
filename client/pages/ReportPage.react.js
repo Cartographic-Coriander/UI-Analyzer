@@ -141,7 +141,6 @@ class ReportPage extends Component {
 
     $(document).keypress((event) => {
       if (event.which === 4 && event.ctrlKey) {
-        console.log('sdbfkjsbdf')
         this.setState({ currentIndex: 0 });
         console.log('event which: ', event.which);
         this.props.dispatch(pageState('authenticated'))
