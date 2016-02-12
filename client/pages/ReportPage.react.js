@@ -98,7 +98,7 @@ class ReportPage extends Component {
             top: position.y,
             left: position.x
           });
-          if (i > 1){
+          if (i > 1 && path[i + 1]){
             timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
           } else {
             timeInterval = 0;
