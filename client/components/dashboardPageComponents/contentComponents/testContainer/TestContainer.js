@@ -110,7 +110,7 @@ class TestContainer extends Component {
           }
         </div>
         <div className = "col-md-9">
-        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn btn-default btn-lg" type= "button">add test</Button>
+        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn btn-primary btn-md pull-right" type= "button">add test</Button>
         </div>
         <Modal show = { this.state.testModalDisplay }>
           <form>

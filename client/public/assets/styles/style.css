@@ -121,16 +121,17 @@ html, body {
   float: left;
   /*height: 100%;*/
   width: 200px;
-  background-color: #df691a;
+  /*background-color: #848484;*/
+  background-color: #2780E3;
   margin: 0 0 0 0;
 }
 
 .SidebarNavigation h3 {
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
-  padding-top: 5px;
-  height: 39px;
-  background-color: #df691a;
+  padding-top: 10px;
+  height: 43px;
+  /*background-color: #848484;*/
 }
 /*
 .react-sanfona-item-body {
@@ -148,7 +149,7 @@ html, body {
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
-  background-color : #FFFFFF; 
+  background-color : #FFFFFF;
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
@@ -159,8 +160,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #FFFFFF inset;
 }
-
-
 
 /*styling the settings and test pages on the dashboard*/
 
@@ -190,7 +189,9 @@ input:-webkit-autofill {
 
 .testContent, .projectContent {
   /*border: 1px solid #ffa31a;*/
-  background-color: #5D6B79;
+  /*background-color: #5D6B79;*/
+  background-color: #E7E7E7;
+  border: 1px solid #CCCCCC;
   /*border: 1px solid rgba(0, 0, 0, 0.17);*/
   /*background-color: rgba(255, 255, 255, 0.5);*/
   border-top-left-radius: 0.5em;
@@ -233,10 +234,6 @@ input:-webkit-autofill {
 
 .addTestInput[type="text"]:focus {
   width: 290px;
-}
-
-.testButtons, .projectButtons {
-  text-align: center;
 }
 
 #editName {
@@ -310,4 +307,71 @@ input:-webkit-autofill {
 .well {
   padding-bottom: 20px;
   padding-top: 25px;
+}
+
+/*.MyDashboardButton, */
+.react-sanfona-item-title {
+  color: white;
+  /*background-color: #848484;*/
+  background-color: #2780e3;
+  font-weight: 400;
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+/*.MyDashboardButton:hover, */
+.react-sanfona-item-title:hover {
+  color: white;
+  /*background-color: #2780e3;*/
+  font-weight: 400;
+  /*background-color: #757575;*/
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: #ffffff;
+  background-color: #1967be;
+  border-color: #1862b5;
+}
+
+.testButtons, .projectButtons {
+  text-align: center;
+}
+
+.TestButton, .SettingsButton, .InviteTestersButton {
+  color: #222222;
+  background-color: #F5F5F5;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:hover, .SettingsButton:hover, .InviteTestersButton:hover {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:focus, .SettingsButton:focus, .InviteTestersButton:focus {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:active, .SettingsButton:active, .InviteTestersButton:active {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }

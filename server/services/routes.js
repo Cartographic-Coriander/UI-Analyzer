@@ -43,13 +43,18 @@ module.exports = function (app, express) {
       port: port
     };
 
+    var decrementPort = function () {
+      port = port - 2;
+      console.log(port);
+    };
+
     res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
     require('./proxy')(express, params, function () {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
-    });
+    }, decrementPort);
   });
 
   app.route('/api/invitation')
