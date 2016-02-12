@@ -365,7 +365,7 @@ module.exports = function (app, express) {
       //   testId: req.query.testId,
       //   projectId: req.query.projectId
       // };
-
+      console.log('deleting params teste', params)
       testsController.deleteTest(params)
         .then(function (result) {
           res.json(result);
