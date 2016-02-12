@@ -15,9 +15,6 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
-    // setTimeout(function () {
-    //   this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
-    // }.bind(this), 1000)
 
     $(document).on('keydown', (event) => {
       if (this.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
@@ -50,11 +47,10 @@ class ReportPage extends Component {
       method: 'GET',
       timeout: 1000,
       success: (data, textStatus, jqXHR) => {
-        // this.state.reportImages = data;
+
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
-        // this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-        // this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+
         this.componentDidMount();
       }
     })
@@ -70,13 +66,9 @@ class ReportPage extends Component {
       }
     }.bind(this));
 
-    // setTimeout(function (){
-      this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-    // }.bind(this), 200);
+    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
 
-    // setTimeout(function () {
-      this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
-    // }.bind(this), 1000)
+    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
