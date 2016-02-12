@@ -3,7 +3,7 @@ import MyProjects from './myProjects/MyProjects';
 
 export default class extends Component {
   componentDidMount () {
-    $('.SidebarNavigation').css('height', $(document).height() + 30);
+    $('.SidebarNavigation').css('height', $(document).height());
   }
 
   render () {

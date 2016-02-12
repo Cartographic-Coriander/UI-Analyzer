@@ -79,7 +79,7 @@ class MyProjects extends Component {
   render () {
     return (
       <div>
-        <Button className="MyDashboardButton btn-primary btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
+        <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
         <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
             { this.props.projects.list.map((project) => {
                 return (

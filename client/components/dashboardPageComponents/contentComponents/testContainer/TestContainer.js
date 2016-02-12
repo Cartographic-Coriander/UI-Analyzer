@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestContainerEntry from './subComponents/TestContainerEntry';
 import { deletesTest, updatesTest, postsTest, setFocus, pageState, getsImage, contentState } from '../../../../redux/actions';
-import { Modal } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 class TestContainer extends Component {
   constructor (props) {
@@ -109,16 +108,38 @@ class TestContainer extends Component {
             })
           }
         </div>
-        <div className = "col-md-9">
-        <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn btn-primary btn-md pull-right" type= "button">add test</Button>
-        </div>
+        <Row>
+          <Col xs = { 12 } md = { 9 }>
+            <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn-primary btn-md pull-right" type= "button">add test</Button>
+          </Col>
+        </Row>
+
         <Modal show = { this.state.testModalDisplay }>
           <form>
-            <span className = "createTestSpan">test name: </span><input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" /><br />
-            <span className = "createTestSpan">test url: </span><input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" /><br />
-            <span className = "createTestSpan">test prompt: </span><textarea onChange = { this.newTestPrompt.bind(this) } type = "textarea" /><br />
-            <Button onClick = { this.addTest.bind(this) } type = "button">submit</Button>
-            <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
+            <Row>
+              <Col xs = { 2 } md = { 2 }>Test Name</Col>
+              <Col xs = { 12 } md = { 10 }>
+                <Input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs = { 2 } md = { 2 }>Test Url</Col>
+              <Col xs = { 12 } md = { 10 }>
+                <Input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs = { 2 } md = { 2 }>Test Prompt</Col>
+              <Col xs = { 12 } md = { 10 }>
+                <Input onChange = { this.newTestPrompt.bind(this) } type = "textarea" />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs = { 12 } md = { 12 }>
+                <Button className = "btn-primary" onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+                <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
+              </Col>
+            </Row>
           </form>
         </Modal>
       </div>

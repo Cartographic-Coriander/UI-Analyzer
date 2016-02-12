@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { Modal } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 export const fields = ['emailField', 'passwordField'];
+import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 const validate = values => {
   const errors = {};
@@ -16,37 +15,35 @@ const validate = values => {
   return errors;
 };
 
-class LoginForm extends Component{
+class LoginForm extends Component {
   render () {
-  const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
+    const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal show={ this.props.showLoginModal } className="LoginForm">
-      <form onSubmit={ handleSubmit }>
-        <div>
-          <label>e-mail</label>
-          <div>
-            <input type="email" {...emailField}/>
-          </div>
-          {emailField.touched && emailField.error && <div>{emailField.error}</div>}
-        </div>
-        <div>
-          <label>password</label>
-          <div>
-            <input type="password" {...passwordField}/>
-          </div>
-          {passwordField.touched && passwordField.error && <div>{passwordField.error}</div>}
-        </div>
-        <div>
-          <Button className="login-button btn-primary" type="submit" disabled={submitting}>
-            {submitting ? <i/> : <i/>} login
-          </Button>
-          <Button className="login-cancel-button" onClick={ this.props.hideLogin } type="button">
-            cancel
-          </Button>
-        </div>
-      </form>
-    </Modal>
-    )
+      <Modal show={ this.props.showLoginModal }>
+        <form onSubmit={ handleSubmit }>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>e-mail</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type = "email" placeholder = "email address" { ...emailField }/>
+            </Col>
+            { emailField.touched && emailField.error && <Col xs = { 2 } md = { 2 }>{ emailField.error }</Col> }
+          </Row>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>password</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type = "password" placeholder = "password" { ...passwordField }/>
+            </Col>
+            { passwordField.touched && passwordField.error && <Col xs = { 2 } md = { 2 }>{ passwordField.error }</Col> }
+          </Row>
+          <Row>
+            <Col xs = { 12 } md = { 12 }>
+              <Button className = "login-button btn-primary" type = "submit" disabled = { submitting }> { submitting ? <i/> : <i/> } login </Button>
+              <Button className = "login-cancel-button" onClick = { this.props.hideLogin } type = "button">cancel</Button>
+            </Col>
+          </Row>
+        </form>
+      </Modal>
+    );
   }
 }
 
