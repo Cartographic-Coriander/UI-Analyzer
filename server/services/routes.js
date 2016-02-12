@@ -5,7 +5,6 @@ var commentsController = require('../controllers/commentsController');
 var imagesController = require('../controllers/imagesController');
 var mousetrackingController = require('../controllers/mousetrackingController');
 var invitationController = require('../controllers/invitationController');
-var usersController = require('../controllers/usersController.js');
 var Promise = require("bluebird");
 var fs = require('fs');
 var nodemailer = require('nodemailer');
@@ -42,11 +41,7 @@ module.exports = function (app, express) {
       prompt: req.query.prompt,
       port: port
     };
-
-    var decrementPort = function () {
-      port = port - 2;
-      console.log(port);
-    };
+    console.log('Test starting.... params:', params);
 
     res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
 
@@ -54,7 +49,7 @@ module.exports = function (app, express) {
     // after a given period of inactivity the server will spin down
     require('./proxy')(express, params, function () {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
-    }, decrementPort);
+    });
   });
 
   app.route('/api/invitation')
@@ -84,49 +79,31 @@ module.exports = function (app, express) {
         token: req.invitationToken
       };
 
-      usersController.retrieveUser({ email: params.email })
-        .then(function (result) {
-          var params = {
-            projectId: req.body.projectId,
-            userId: result.id,
-            role: 'tester'
-          };
+      var mailOptions = {
+          from: 'Scrutinize App <scrutinizeApp@gmail.com>',
+          to: params.email,
+          subject: 'Invitation to Scrutinize App',
+          text: 'Please go to:' + 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+          html: 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
+      };
 
-          invitationController.createTester(params)
-            .then(function (result) {
-              res.end();
-            })
-            .catch(function (error) {
-              console.log('/api/invitation POST Error!', error);
+      invitationController.createInvitation(params)
+        .then(function (result) {
+          var transporter = nodemailer.createTransport(mailAuth);
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
               res.status(500).end(error);
-            })
+            }
+
+            console.log('Message sent: ' + info.response);
+            res.end();
+          });
         })
         .catch(function (error) {
-          var mailOptions = {
-              from: 'Scrutinize App <scrutinizeApp@gmail.com>',
-              to: params.email,
-              subject: 'Invitation to Scrutinize App',
-              text: 'Please go to:' + 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
-              html: 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
-          };
-
-          invitationController.createInvitation(params)
-            .then(function (result) {
-              var transporter = nodemailer.createTransport(mailAuth);
-
-              transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                  console.log('/api/invitation POST Error! Mail transporter error!', error);
-                  res.status(500).end(error);
-                }
-
-                res.end();
-              });
-            })
-            .catch(function (error) {
-              console.log('/api/invitation POST Error!', error);
-              res.status(500).end('Invitation error!');
-            });
+          console.log('/api/invitation POST Error!', error);
+          res.status(500).end('Invitation error!');
         });
     });
 
@@ -142,6 +119,7 @@ module.exports = function (app, express) {
     })
 
     .post(auth.decodeInvitation, auth.createUser, auth.authenticate, function (req, res) {
+      console.log(req.body, req.userToken);
       var params = {
         userId: req.userToken.user.id,
         projectId: req.invitationToken.iss.projectId,
@@ -182,9 +160,6 @@ module.exports = function (app, express) {
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'emptyResults') {
-            res.status(550).end('Project GET Error! Results Empty');
-          }
           console.log('/api/project GET Error!', error);
           res.status(500).end('No projects found.');
         });
@@ -249,9 +224,6 @@ module.exports = function (app, express) {
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'unauthorized') {
-            res.status(403).end('Project DELETE Error! Unauthorized!');
-          }
           console.log('/api/project DELETE Error!', error);
           res.status(500).end('Project DELETE Error!');
         });
@@ -269,6 +241,8 @@ module.exports = function (app, express) {
       //   projectId: req.query.projectId
       // };
 
+      console.log('get tests params:', params);
+
       testsController.retrieveTest(params)
         .then(function (results) {
           return results.reduce(function (previous, current) {
@@ -285,12 +259,10 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          console.log('test get result', result)
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'emptyResults') {
-            res.status(550).end('Test GET Error! Results Empty');
-          }
           console.log('/api/test GET Error!', error);
           res.status(500).end('Test GET Error!');
         });
@@ -371,9 +343,6 @@ module.exports = function (app, express) {
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'unauthorized') {
-            res.status(403).end('Test DELETE Error! Unauthorized!');
-          }
           console.log('/api/test DELETE Error!', error);
           res.status(500).end('Test DELETE Error!');
         });
@@ -409,12 +378,10 @@ module.exports = function (app, express) {
           }, []);
         })
         .then(function (result) {
+          console.log(result)
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'emptyResults') {
-            res.status(550).end('Comments GET Error! Results Empty');
-          }
           console.log('/api/comment GET Error!', error);
           res.status(500).end('Test GET Error!');
         });
@@ -474,8 +441,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) {
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        commentId: req.query.commentId
+        imageId: req.body.imageId,
+        commentId: req.body.commentId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -528,9 +495,6 @@ module.exports = function (app, express) {
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'emptyResults') {
-            res.status(550).end('Image GET Error! Results Empty');
-          }
           console.log('/api/image GET Error!', error);
           res.status(500).end('Image GET Error!');
         });
@@ -586,8 +550,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        testId: req.query.testId,
+        imageId: req.body.imageId,
+        testId: req.body.testId,
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
@@ -612,6 +576,7 @@ module.exports = function (app, express) {
         userId: req.decoded.iss,
         imageId: req.query.imageId
       };
+      // console.log('!!!!!!!!!!!!!!PARAMS', params)
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
       //   imageId: req.query.imageId
@@ -635,9 +600,6 @@ module.exports = function (app, express) {
           res.json(result);
         })
         .catch(function (error) {
-          if (error.name === 'emptyResults') {
-            res.status(550).end('MouseTracking GET Error! Results Empty');
-          }
           console.log('/api/mousetracking GET Error!', error);
           res.status(500).end('Mousetracking GET Error!');
         });
@@ -692,8 +654,8 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        imageId: req.query.imageId,
-        mouseTrackingId: req.query.mouseTrackingId
+        imageId: req.body.imageId,
+        mouseTrackingId: req.body.mouseTrackingId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,

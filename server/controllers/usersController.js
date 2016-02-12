@@ -38,7 +38,7 @@ var createUser = function (user) {
 };
 
 // input should be of the following format:
-// { email: 'abc@abc.com' }
+// { email: 'abc@abc.com'}
 // output shall be of the following format:
 // { id: 123, email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', company: 'abc' (optional), firstname: 'abc' (optional), surname: 'abc' (optional) }
 var retrieveUser = function (user) {

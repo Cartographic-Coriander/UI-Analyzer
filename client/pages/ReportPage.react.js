@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactHeatmap from 'react-heatmap';
+// import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
 import Note from '../components/testingPageComponents/notesView/Note';
 {/*Note is a shared component and can be placed in a shared component place*/}
@@ -29,9 +29,11 @@ class ReportPage extends Component {
         } else { //at the end of the array
           this.setState({ currentIndex: 0 });
           $(document).off('keydown');
+          $(document).off('keypress');
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(pageState('authenticated'));
           window.removeHeatmap();
+          this.props.dispatch(getsComment('clear'));
         }
       }
     });
@@ -50,23 +52,26 @@ class ReportPage extends Component {
 
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
-
-        this.componentDidMount();
+        this.renderCommentsMousetracking();
       }
     })
   };
+
+  renderCommentsMousetracking() {
+    this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+  }
 
   componentDidMount () {
     $(document).off('keypress');
 
     $(window).bind('beforeunload', function(){
-      if (this.props.stateRouter.pageState === 'reportView') {
+      if(this.props.stateRouter.pageState === 'reportView'){ 
         this.setState({ currentIndex: 0 });
         this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
       }
     }.bind(this));
 
-    this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
 
     this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
 
@@ -75,22 +80,19 @@ class ReportPage extends Component {
         var i = 0;
         var timeInterval;
         var length = path.length;
-
         var move = function () {
           var position = path[i];
-
           cursor.css({
             top: position.y,
             left: position.x
           });
-
           if (i > 1 && path[i + 1]){
             timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
           } else {
             timeInterval = 0;
           }
           i++;
-          if (i === length) {
+          if ( i === length) {
             return;
           } else {
             setTimeout(move, timeInterval);
@@ -100,7 +102,6 @@ class ReportPage extends Component {
       };
 
       let path = JSON.parse(this.props.mouseTrackings.list[0].data);
-
       this.props.mouseTrackings.list.forEach((cursorData) => {
         console.log('cursorData: ', cursorData);
         var cursor = '#' + cursorData.id;
@@ -109,9 +110,9 @@ class ReportPage extends Component {
       });
     };
 
-    setTimeout(mouseReplay, 1500);
+    setTimeout(mouseReplay, 1000);
 
-    setTimeout(() =>  {
+    setTimeout(() => {
 
       window.heatdata = [];
       window.removeHeatmap();
@@ -127,7 +128,8 @@ class ReportPage extends Component {
         });
       });
       window.renderHeatmap();
-    }, 1500);
+      window.toggleHeatmap();
+    }, 1000);
 
     $(document).keypress('h', (event) => {
       console.log(event.which);
@@ -151,6 +153,7 @@ class ReportPage extends Component {
         $(document).off('keypress');
         window.removeHeatmap();
         this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
+        this.props.dispatch(getsComment('clear'));
       }
     });
   };
@@ -207,7 +210,7 @@ function mapStateToProps(state) {
     comments: state.comments,
     currentFocus: state.currentFocus,
     stateRouter: state.stateRouter
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps)(ReportPage);

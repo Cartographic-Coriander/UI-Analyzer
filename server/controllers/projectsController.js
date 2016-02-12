@@ -48,9 +48,7 @@ var retrieveProject = function (project) {
   })
   .then(function (result) {
     if (result.length === 0) {
-      var error = new Error ('Error! Projects do not exist!');
-      error.name = 'emptyResults';
-      throw (error);
+      throw (new Error ('Error! Projects do not exist!'));
     } else {
       return result;
     }
@@ -120,9 +118,7 @@ var deleteProject = function (project) {
         }
       });
     } else {
-      var error = new Error ('Error! Insufficient permissions to modify this entry!');
-      error.name = 'unauthorized';
-      throw (error);
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 

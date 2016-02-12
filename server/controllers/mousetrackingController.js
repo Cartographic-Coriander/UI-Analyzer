@@ -51,10 +51,10 @@ var retrieveMouseTracking = function (mouseTracking) {
         where: { imageId: mouseTracking.imageId }
       })
       .then(function (result) {
+        return result;
+        // console.log(result[0])
         if (result.length === 0) {
-          var error = new Error ('Error! Mouse tracking does not exist!');
-          error.name = 'emptyResults';
-          throw (error);
+          throw (new Error ('Error! Mouse tracking does not exist!'));
         } else {
           console.log('result from mousetracking controller: ', result);
           return result;

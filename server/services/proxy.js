@@ -1,4 +1,4 @@
-module.exports = function (express, session, callback, decrementPort) {
+module.exports = function (express, session, callback) {
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
@@ -44,6 +44,8 @@ module.exports = function (express, session, callback, decrementPort) {
     var resolution = [req.body.resolution[0] + 'x' + req.body.resolution[1]];
     var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
     var dir = path.resolve(__dirname, '../data/screenshots/', session.testId) + '/';
+
+    console.log('directory', directory, 'dir', dir, 'dirname', __dirname)
 
     var slug = function (input) {
       return input
@@ -98,10 +100,9 @@ module.exports = function (express, session, callback, decrementPort) {
   });
 
   proxyServer.get('/api/endtest', auth.decode, function (req, res) {
-    console.log('test ended', session.callbackUrl);
+    console.log('test ended', session.callbackUrl)
     res.send(session.callbackUrl);
     newServer.close();
-    decrementPort();
   })
 
   newServer = proxyServer.listen(session.port, function() {
