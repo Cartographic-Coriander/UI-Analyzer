@@ -14,7 +14,7 @@ export default React.createClass({
           </video>
           <div id="landingPageText">
             <h1>Inspiration from Users, for Users</h1>
-            <p>Scrutinize tracks, aggregates and reports user behavior on your website.</p>
+            <p>Scrutinize tracks, aggregates and reports user behavior for your website.</p>
             <p>Gain insights into your users to optimize UI/UX.</p>
             <p><Button className="btn-primary btn-lg getStartedBtn-lg" onClick = { this.props.showRegistration } >Get Started</Button></p>
           </div>
@@ -23,19 +23,27 @@ export default React.createClass({
         <div className="productExampleContainer">
           <div className="productExample">
             <h4>Track User Behavior</h4>
-            <p>Lorem ipsum sit amet</p>
+            <p>Stop guessing what your users want.</p>
+            <p>Track the actual user behavior on your website</p>
+            <p>and understand what your users really need.</p>
           </div>
           <div className="productExample">
-            <h4>Gather Visual Feedback</h4>
-            <p>Lorem ipsum sit amet</p>
+            <h4>Gather User Feedback</h4>
+            <p>User feedback complements user behavior data.</p>
+            <p>After completing a test session, </p>
+            <p>users can provide feedback for your website.</p>
           </div>
           <div className="productExample">
             <h4>Analyze Project Result</h4>
-            <p>Lorem ipsum sit amet</p>
+            <p>Using heatmap, mouse replay and visual feedback,</p>
+            <p>Scrutinize generates project reports</p>
+            <p>that provide deeper insights into your website.</p>
           </div>
           <div className="productExample">
             <h4>Take Action</h4>
-            <p>Lorem ipsum sit amet</p>
+            <p>Imporve your website based on the test results.</p>
+            <p>You can create another test for your updated website</p>
+            <p>to improve the UI/UX iteratively.</p>
           </div>
         </div>
       </div>
