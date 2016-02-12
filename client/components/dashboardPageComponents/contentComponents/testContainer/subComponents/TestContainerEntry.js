@@ -122,8 +122,8 @@ export default class TestContinerEntry extends Component {
           <Row className = "testEntryButtonContainer">
             <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
             <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
-            <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
-            <Button onClick = { viewReport.bind(this) } className = "testEntryButton" type = "button">view report</Button>
+            <Button onClick = { startTest.bind(this) } className = "testEntryButton btn-primary" type = "button">start test</Button>
+            <Button onClick = { viewReport.bind(this) } className = "testEntryButton btn-info" type = "button">view report</Button>
           </Row>
           <br />
 
