@@ -126,7 +126,6 @@ export default class TestContinerEntry extends Component {
               <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
               <Button onClick = { viewReport.bind(this) } className = "testEntryButton" type = "button">view report</Button>
             </Row>
-            <br />
           </div>
 
           <Modal show = { this.state.modalVisbility }>

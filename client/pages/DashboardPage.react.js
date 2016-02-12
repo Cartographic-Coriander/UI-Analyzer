@@ -26,7 +26,7 @@ export default class DashboardPage extends Component {
   render () {
     return (
       <div className = "DashboardPage">
-        <Navbar className="navbar navbar-default">
+        <Navbar className="navbar navbar-inverse">
           <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
             <NavItem onClick={ () => { this.handleLogout('leaving') } } href = "#"> Log Out </NavItem>

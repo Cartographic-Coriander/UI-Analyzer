@@ -190,9 +190,9 @@ input:-webkit-autofill {
 
 .testContent, .projectContent {
   /*border: 1px solid #ffa31a;*/
-  /*background-color: #5D6B79;*/
-  border: 1px solid rgba(0, 0, 0, 0.17);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #5D6B79;
+  /*border: 1px solid rgba(0, 0, 0, 0.17);*/
+  /*background-color: rgba(255, 255, 255, 0.5);*/
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
@@ -249,13 +249,13 @@ input:-webkit-autofill {
 }
 
 .addTestButton {
-  width: 80px;
+  width: 150px;
 }
 
-/*.testUrl {
+.testUrl {
   margin-top: -15px;
   color: #b3b3b3;
-}*/
+}
 
 .cursor {
   border-radius: 50%;
@@ -282,6 +282,10 @@ input:-webkit-autofill {
   margin-left: 0;
 }
 
+.col-md-9 button {
+  margin-left: 0;
+}
+
 .panel {
   margin-top: 20px;
   text-align: center;
@@ -295,6 +299,7 @@ input:-webkit-autofill {
   border-radius: 0px;
   border-left-style: none;
   border-right-style: none;
+  margin-bottom: 0px;
 }
 
 .testRow h5 {
@@ -303,6 +308,6 @@ input:-webkit-autofill {
 }
 
 .well {
-  padding-bottom: 5px;
+  padding-bottom: 20px;
   padding-top: 25px;
 }

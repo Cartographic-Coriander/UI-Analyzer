@@ -65,21 +65,22 @@ class ProjectEntryComponent extends Component {
 
     return (
       <Col className = "projectEntryComponent" xs={12} md={9}>
-        <Row className = "testRow" >
-          <Col className = "testLeftSideLabel" xs={6} md={3} ><h5> name </h5></Col>
-          <Col xs={12} md={6} className = "projectContent" ><h5>{ this.props.name }</h5></Col>
-        </Row>
-        <hr />
-        <Row className = "testRow">
-          <Col className = "testLeftSideLabel" xs={6} md={3}><h5> prompt </h5></Col>
-          <Col xs={12} md={9}className = "projectContent" ><h5>{ this.props.description }</h5></Col>
-        </Row>
-        <hr />
-        <Row className = "testRow">
-          <Button className = "projectEntryButton" onClick = { toggleModal.bind(this) } type = "button">edit project</Button>
-          <Button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</Button>
-        </Row>
-        <br />
+        <div className = "well bs-component">
+          <Row className = "testRow" >
+            <Col className = "testLeftSideLabel" xs={6} md={3} ><h5> name </h5></Col>
+            <Col xs={12} md={8} className = "projectContent" ><h5>{ this.props.name }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Col className = "testLeftSideLabel" xs={6} md={3}><h5> prompt </h5></Col>
+            <Col xs={12} md={8}className = "projectContent" ><h5>{ this.props.description }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Button className = "projectEntryButton" onClick = { toggleModal.bind(this) } type = "button">edit project</Button>
+            <Button className = "projectEntryButton" onClick = { deleteProject.bind(this) } type="button">delete project</Button>
+          </Row>
+        </div>
 
         <Modal show = { this.state.modalVisibility }>
           <form className = "settingsForm" onSubmit = { updateProject.bind(this) } >
