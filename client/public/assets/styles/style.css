@@ -119,9 +119,10 @@ html, body {
 .SidebarNavigation {
   text-align: center;
   float: left;
-  height: 100%;
+  /*height: 100%;*/
   width: 200px;
   background-color: #df691a;
+  margin: 0 0 0 0;
 }
 
 .SidebarNavigation h3 {
