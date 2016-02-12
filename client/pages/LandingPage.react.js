@@ -6,7 +6,7 @@ import ProductDescription from '../components/landingPageComponents/ProductDescr
 import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 import LoginForm from '../components/landingPageComponents/LoginForm';
-import { showLoginModal, showSignupModal, getsUser, postsUser } from '../redux/actions';
+import { showLoginModal, showSignupModal, getsUser, postsUser, pageState } from '../redux/actions';
 
 class LandingPage extends Component {
   onLogin (user) {
@@ -17,6 +17,7 @@ class LandingPage extends Component {
   onRegister (user) {
     this.props.dispatch(postsUser(user));
     this.props.dispatch(showSignupModal(false));
+    this.props.dispatch(pageState('authenticated'));
   }
 
   showLoginModal () {

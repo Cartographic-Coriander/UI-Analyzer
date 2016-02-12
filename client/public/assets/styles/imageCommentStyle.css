@@ -102,6 +102,10 @@ p + label {
   display: block;
 }
 
+blockquote:hover {
+  display: block;
+}
+
 .greenPin {
   background: #00ff99;
 }
