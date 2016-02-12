@@ -19,10 +19,16 @@ export default class DashboardPage extends Component {
     }, 100)
   }
 
+  componentDidMount(){
+    setTimeout(() => {
+      window.removeHeatmap();
+    }, 1200)
+  }
+
   render () {
     return (
       <div className = "DashboardPage">
-        <Navbar className="navbar navbar-default">
+        <Navbar className="navbar-inverse dashboardPageHeader">
           <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
             <NavItem onClick={ () => { this.handleLogout('leaving') } } href = "#"> Log Out </NavItem>
@@ -30,7 +36,6 @@ export default class DashboardPage extends Component {
         </Navbar>
         <SidebarNavigation />
         <Content />
-        {/* <button onClick={ this.handleClick.bind(this) }>make image appear</button> */}
       </div>
     )
   }
