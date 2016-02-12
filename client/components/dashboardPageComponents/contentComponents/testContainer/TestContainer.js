@@ -42,6 +42,7 @@ class TestContainer extends Component {
       url: testUrl,
       prompt: this.state.addTestPrompt
     };
+
     this.hideModal();
     this.props.dispatch(postsTest(newTest));
   };

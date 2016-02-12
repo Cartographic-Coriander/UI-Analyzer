@@ -45,7 +45,9 @@ var retrieveComment = function (comment) {
       })
       .then(function (result) {
         if (result.length === 0) {
-          throw (new Error ('Error! Comment does not exist!'));
+          var error = new Error ('Error! Comments do not exist!');
+          error.name = 'emptyResults';
+          throw (error);
         } else {
           return result;
         }

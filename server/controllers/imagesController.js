@@ -41,7 +41,9 @@ var retrieveImage = function (image) {
   })
   .then(function (result) {
     if (result.length === 0) {
-      throw (new Error ('Error! Image does not exist!'));
+      var error = new Error ('Error! Images do not exist!');
+      error.name = 'emptyResults';
+      throw (error);
     } else {
       return result;
     }

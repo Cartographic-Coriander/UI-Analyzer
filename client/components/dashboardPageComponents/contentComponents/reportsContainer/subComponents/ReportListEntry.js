@@ -9,8 +9,6 @@ export default class extends Component {
     this.props.reportDetails(params);
   };
 
-
-
   render () {
     return (
       <div>
