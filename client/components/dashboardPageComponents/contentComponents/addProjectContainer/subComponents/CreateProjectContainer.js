@@ -18,33 +18,33 @@ class CreateProjectContainer extends Component {
   render () {
     const { fields: { projectName, projectDescription }, handleSubmit, submitting } = this.props;
     return (
-      <Modal show = { this.props.visibility }>
+      <Modal show = { this.props.visibility } >
         <form onSubmit={ handleSubmit }>
-          <Modal.Header closeButton>
-            <Modal.Title><h4>Create a Project</h4></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Row>
-              <Col xs = { 2 } md = { 2 }>Name</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
-              </Col>
-              {projectName.touched && projectName.error && <div>{projectName.error}</div>}
-            </Row>
-            <Row>
-              <Col xs = { 2 } md = { 2 }>Description</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input type = "textarea" placeholder="Project Description..." {...projectDescription}/>
-              </Col>
-              {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
-            </Row>
-            <Row>
-              <Col xs = { 12 } md = { 12 }>
-                <Button className = "btn-primary pull-right" type = "submit" disabled={ submitting}>{submitting ? <i/> : <i/> } Create Project</Button>
-                <Button className = "pull-right" type = "button" onClick= { this.props.hideVisibility }>cancel</Button>
-              </Col>
-            </Row>
-          </Modal.Body>
+          <Row>
+            <Col xs = { 12 } md = { 12 }>
+              <h4>Create a Project</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>Name</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
+            </Col>
+            {projectName.touched && projectName.error && <div>{projectName.error}</div>}
+          </Row>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>Description</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type = "textarea" placeholder="Project Description..." {...projectDescription}/>
+            </Col>
+            {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
+          </Row>
+          <Row>
+            <Col xs = { 12 } md = { 12 }>
+              <Button className = "btn-primary pull-right" type = "submit" disabled={ submitting}>{submitting ? <i/> : <i/> } Create Project</Button>
+              <Button className = "pull-right" type = "button" onClick= { this.props.hideVisibility }>cancel</Button>
+            </Col>
+          </Row>
         </form>
       </Modal>
     );

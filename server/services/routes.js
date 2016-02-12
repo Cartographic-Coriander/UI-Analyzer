@@ -43,8 +43,8 @@ module.exports = function (app, express) {
       port: port
     };
 
-    // res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
