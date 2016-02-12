@@ -27,12 +27,6 @@ class ReportPage extends Component {
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
           this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-        } else { //at the end of the array
-          window.removeHeatmap();
-          this.setState({ currentIndex: 0 });
-          this.props.dispatch(pageState('authenticated'));
-          $(document).off('keydown');
-          this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
         }
       }
     });
@@ -45,7 +39,7 @@ class ReportPage extends Component {
         $(document).off('keypress');
         window.removeHeatmap();
       }
-    }
+    });
 
     $(document).keypress('d', (event) => {
       if (event.ctrlKey) {
