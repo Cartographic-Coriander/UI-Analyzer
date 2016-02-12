@@ -4,11 +4,9 @@ import MyProjects from './myProjects/MyProjects';
 
 export default class extends Component {
   componentDidMount () {
-    console.log('it did mount');
-    console.log($('.SidebarNavigation'));
     $('.SidebarNavigation').css('height', $(document).height());
   }
-  
+
   render () {
     this.componentDidMount()
     return (
