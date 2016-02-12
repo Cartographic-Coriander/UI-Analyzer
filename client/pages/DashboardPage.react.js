@@ -12,17 +12,24 @@ export default class DashboardPage extends Component {
   handleLogout () {
     this.props.dispatch(signsOut());
     if (this.props.projects.list) {
-      this.props.dispatch(setFocus({project: this.props.projects.list[0]}));
+      this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
     }
     setTimeout(() => {
       localStorage.removeItem('Scrutinize.saved.state');
-    }, 100)
+    }, 250)
+  }
+
+  componentDidMount () {
+    if (this.props.projects.list.length > 0) {
+      this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
+      this.props.dispatch(setFocus('test', this.props.projects.list[this.props.projects.length - 1].id));
+    }
   }
 
   render () {
     return (
       <div className = "DashboardPage">
-        <Navbar className="navbar navbar-default">
+        <Navbar className="navbar navbar-inverse">
           <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
             <NavItem onClick={ () => { this.handleLogout('leaving') } } href = "#"> Log Out </NavItem>

@@ -124,7 +124,9 @@ html, body {
   /*height: 100%;*/
   width: 200px;
   /*background-color: #848484;*/
-  background-color: #2780E3;
+  background-color: #222222;
+  /*border-right: 1px solid #0B57AB;*/
+  outline: 1px solid rgba(109, 123, 134, 0.39);
   margin: 0 0 0 0;
 }
 
@@ -249,11 +251,12 @@ input:-webkit-autofill {
 
 .addTestButton {
   width: 150px;
+  margin-right: 7px;
 }
 
 .testUrl {
   margin-top: -15px;
-  color: #b3b3b3;
+  /*color: #b3b3b3;*/
 }
 
 .cursor {
@@ -315,12 +318,14 @@ input:-webkit-autofill {
 .react-sanfona-item-title {
   color: white;
   /*background-color: #848484;*/
-  background-color: #2780e3;
+  background-color: #222222;
   font-weight: 400;
   /*border-bottom: #757575 solid 1px;*/
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 1px solid #000000;
+  /*border-right: 1px solid #0B57AB;*/
 }
 
 /*.MyDashboardButton:hover, */
@@ -334,8 +339,23 @@ input:-webkit-autofill {
   border-left: none;
   border-right: none;
   color: #ffffff;
-  background-color: #1967be;
-  border-color: #1862b5;
+  background-color: #090909;
+  /*border-color: #1862b5;*/
+}
+
+.react-sanfona-item-title:active {
+  color: white;
+  /*background-color: #2780e3;*/
+  font-weight: 400;
+  /*background-color: #757575;*/
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: #ffffff;
+  background-color: #090909;
+  /*border-color: #1862b5;*/
+  outline: none;
 }
 
 .testButtons, .projectButtons {
@@ -376,4 +396,22 @@ input:-webkit-autofill {
   border-top: none;
   border-left: none;
   border-right: none;
+}
+
+.MyDashboardButton {
+  border-bottom: 1px solid #000000;
+  /*border-right: 1px solid #0B57AB;*/
+}
+
+.react-sanfona-item-expanded .react-sanfona-item-title {
+  background-color: #464F58;
+}
+
+.form-control:focus {
+  border-color: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: none;
+  background-color: white;
+  border-color: #cccccc;
 }

@@ -129,11 +129,11 @@ export default class TestContinerEntry extends Component {
           </div>
 
           <Modal show = { this.state.modalVisbility }>
-            <form onSubmit = { updateTest.bind(this) } className = "testForm" >
+            <form onSubmit = { updateTest.bind(this) }>
               <Row>
                 <Col xs={2} md={2}>name</Col>
-                <Col  xs={12} md={10}>
-                  <Input onChange = { handleNameInput.bind(this) } id = "editName" type = "text" placeholder = { this.props.name } />
+                <Col xs={12} md={10}>
+                  <Input onChange = { handleNameInput.bind(this) }  type = "text" placeholder = { this.props.name } />
                 </Col>
               </Row>
               <Row>
@@ -149,10 +149,12 @@ export default class TestContinerEntry extends Component {
                 </Col>
               </Row>
             </form>
-            <Col className = "testButtons">
-              <Button onClick = { updateTest.bind(this) } className = "testEntryButton" type = "button">save changes</Button>
-              <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">cancel</Button>
-            </Col>
+            <Row>
+              <Col xs = { 12 } md = { 12 }>
+                <Button className = "btn btn-primary" onClick = { updateTest.bind(this) } type = "button">save changes</Button>
+                <Button onClick = { toggleModal.bind(this) } type = "button">cancel</Button>
+              </Col>
+            </Row>
           </Modal>
         </Col>
     );

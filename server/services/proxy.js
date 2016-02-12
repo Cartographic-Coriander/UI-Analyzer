@@ -1,4 +1,4 @@
-module.exports = function (express, session, callback, decrementPort) {
+module.exports = function (express, session, callback) {
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
@@ -101,7 +101,6 @@ module.exports = function (express, session, callback, decrementPort) {
     console.log('test ended', session.callbackUrl);
     res.send(session.callbackUrl);
     newServer.close();
-    decrementPort();
   })
 
   newServer = proxyServer.listen(session.port, function() {
