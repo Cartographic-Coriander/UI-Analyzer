@@ -329,15 +329,15 @@ module.exports = function (app, express) {
     // .delete(function (req, res) { /* for testing purposes */
       var params = {
         userId: req.decoded.iss,
-        testId: req.body.testId,
-        projectId: req.body.projectId
+        testId: req.query.testId,
+        projectId: req.query.projectId
       };
       // var params = { /* for testing purposes */
       //   userId: req.query.userId,
       //   testId: req.query.testId,
       //   projectId: req.query.projectId
       // };
-
+      console.log('deleting params teste', params)
       testsController.deleteTest(params)
         .then(function (result) {
           res.json(result);

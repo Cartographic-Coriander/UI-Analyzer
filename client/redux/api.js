@@ -139,7 +139,7 @@ export function deleteTest (test) {
     projectId: test.projectId
   }
 
-  return instance.delete('/api/test', params);
+  return instance.delete('/api/test', { params: params });
 }
 
 export function getComment (comment) {
