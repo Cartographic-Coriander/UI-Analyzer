@@ -33,10 +33,7 @@ class ReportPage extends Component {
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(pageState('authenticated'));
           window.removeHeatmap();
-<<<<<<< HEAD
           this.props.dispatch(getsComment('clear'));
-=======
->>>>>>> fb8b3239f05eca9e1258ef60828969c54db96c86
         }
       }
     });
@@ -55,12 +52,7 @@ class ReportPage extends Component {
 
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
-
-<<<<<<< HEAD
         this.renderCommentsMousetracking();
-=======
-        this.componentDidMount();
->>>>>>> fb8b3239f05eca9e1258ef60828969c54db96c86
       }
     })
   };
