@@ -26,10 +26,21 @@ window.renderHeatmap = function(){
   heatmap.setData({
     max: 15,
     data: window.heatdata
-  }); 
+  });
+  window.heatmapVisible = true;
 };
 
 window.removeHeatmap = function(){
   $('#app').unwrap();
   $('.heatmap-canvas').remove();
+};
+
+window.toggleHeatmap = function(){
+  if (window.heatmapVisible) {
+    $('.heatmap-canvas').hide();
+    window.heatmapVisible = false;
+  } else {
+    $('.heatmap-canvas').show();
+    window.heatmapVisible = true;
+  }
 };

@@ -36,8 +36,9 @@ class ReportPage extends Component {
       }
     });
 
-    $(document).keypress('d', (event) => {
-      if (event.ctrlKey) {
+    $(document).keypress((event) => {
+      if (event.which === 4 && event.ctrlKey) {
+        console.log('event which: ', event.which);
         this.props.dispatch(pageState('authenticated'))
         $(document).off('keydown');
         $(document).off('keypress');
@@ -70,8 +71,8 @@ class ReportPage extends Component {
     //this is done twice, if once, wrong comments appear occasionally
     this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
 
-    setTimeout(() => {
-      let replay = function (cursor, path) {
+    const mouseReplay = () => {
+      const replay = function (cursor, path) {
         var i = 0;
         var timeInterval;
         var length = path.length;
@@ -103,9 +104,12 @@ class ReportPage extends Component {
         var path = JSON.parse(cursorData.data);
         replay($(cursor), path);
       });
-   }, 1500);
+    };
 
-  setTimeout(() =>  {
+
+    setTimeout(mouseReplay, 1500);
+
+    setTimeout(() =>  {
       window.heatdata = [];
       window.removeHeatmap();
       this.props.mouseTrackings.list.forEach(function (cursorData) {
@@ -119,10 +123,21 @@ class ReportPage extends Component {
           window.heatdata.push(heatdataPoint);
         });
       });
+      window.renderHeatmap();
+    }, 1500);
 
-    console.log('heatdata: ', heatdata);
-    window.renderHeatmap();
-      }, 1500);
+    $(document).keypress('h', (event) => {
+      console.log(event.which);
+      if (event.which === 8 && event.ctrlKey && this.props.stateRouter.pageState === 'reportView') {
+        window.toggleHeatmap();
+      }
+    });
+
+    $(document).keypress('p', (event) => {
+      if (event.which === 16 && event.ctrlKey && this.props.stateRouter.pageState === 'reportView') {
+        mouseReplay();
+      }
+    });
   };
 
   render () {
