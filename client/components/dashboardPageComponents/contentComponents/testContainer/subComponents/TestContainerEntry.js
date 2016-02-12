@@ -104,28 +104,29 @@ export default class TestContinerEntry extends Component {
 
     return (
         <Col className = "testEntryComponent" xs={12} md={9}>
-          <Row className = "testRow">
-            <Col xs={6} md={3} ><h5> name </h5></Col>
-            <Col xs={12} md={6} className = "testContent" ><h5>{ this.props.name }</h5></Col>
-          </Row>
-          <hr />
-          <Row className = "testRow">
-            <Col xs={6} md={3}><h5> url </h5></Col>
-            <Col xs={12} md={9} className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
-          </Row>
-          <hr />
-          <Row className = "testRow">
-            <Col xs={6} md={3}><h5> prompt </h5></Col>
-            <Col xs={12} md={9}className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
-          </Row>
-          <hr />
-          <Row className = "testEntryButtonContainer">
-            <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
-            <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
-            <Button onClick = { startTest.bind(this) } className = "testEntryButton" type = "button">start test</Button>
-            <Button onClick = { viewReport.bind(this) } className = "testEntryButton" type = "button">view report</Button>
-          </Row>
-          <br />
+          <div className = "well bs-component">
+            <Row className = "testRow">
+              <Col xs={6} md={3} ><h5> name </h5></Col>
+              <Col xs={12} md={8} className = "testContent" ><h5>{ this.props.name }</h5></Col>
+            </Row>
+            <hr />
+            <Row className = "testRow">
+              <Col xs={6} md={3}><h5> url </h5></Col>
+              <Col xs={12} md={8} className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
+            </Row>
+            <hr />
+            <Row className = "testRow">
+              <Col xs={6} md={3}><h5> prompt </h5></Col>
+              <Col xs={12} md={8}className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
+            </Row>
+            <hr />
+            <Row className = "testEntryButtonContainer">
+              <Button onClick = { toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
+              <Button onClick = { deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
+              <Button onClick = { startTest.bind(this) } className = "btn btn-primary testEntryButton" type = "button">start test</Button>
+              <Button onClick = { viewReport.bind(this) } className = "btn btn-primary testEntryButton" type = "button">view report</Button>
+            </Row>
+          </div>
 
           <Modal show = { this.state.modalVisbility }>
             <form onSubmit = { updateTest.bind(this) } className = "testForm" >

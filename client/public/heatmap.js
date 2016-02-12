@@ -27,6 +27,7 @@ window.renderHeatmap = function(){
     max: 15,
     data: window.heatdata
   });
+
   window.heatmapVisible = true;
 };
 

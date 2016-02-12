@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import ReactHeatmap from 'react-heatmap';
+import ReactHeatmap from 'react-heatmap';
 import { setFocus, pageState, getsMouseTracking, getsComment } from '../redux/actions';
 import Note from '../components/testingPageComponents/notesView/Note';
 {/*Note is a shared component and can be placed in a shared component place*/}
@@ -60,7 +60,7 @@ class ReportPage extends Component {
     $(document).off('keypress');
 
     $(window).bind('beforeunload', function(){
-      if(this.props.stateRouter.pageState === 'reportView'){ 
+      if (this.props.stateRouter.pageState === 'reportView') {
         this.setState({ currentIndex: 0 });
         this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
       }
@@ -75,19 +75,22 @@ class ReportPage extends Component {
         var i = 0;
         var timeInterval;
         var length = path.length;
+
         var move = function () {
           var position = path[i];
+
           cursor.css({
             top: position.y,
             left: position.x
           });
+
           if (i > 1 && path[i + 1]){
             timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
           } else {
             timeInterval = 0;
           }
           i++;
-          if ( i === length) {
+          if (i === length) {
             return;
           } else {
             setTimeout(move, timeInterval);
@@ -97,6 +100,7 @@ class ReportPage extends Component {
       };
 
       let path = JSON.parse(this.props.mouseTrackings.list[0].data);
+
       this.props.mouseTrackings.list.forEach((cursorData) => {
         console.log('cursorData: ', cursorData);
         var cursor = '#' + cursorData.id;
@@ -104,7 +108,6 @@ class ReportPage extends Component {
         replay($(cursor), path);
       });
     };
-
 
     setTimeout(mouseReplay, 1500);
 
@@ -204,7 +207,7 @@ function mapStateToProps(state) {
     comments: state.comments,
     currentFocus: state.currentFocus,
     stateRouter: state.stateRouter
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(ReportPage);

@@ -137,7 +137,7 @@ export function deleteTest (test) {
   const params = {
     testId: test.testId,
     projectId: test.projectId
-  }
+  };
 
   return instance.delete('/api/test', { params: params });
 }
@@ -173,7 +173,7 @@ export function deleteComment (comment) {
     commentId: comment.commentId
   }
 
-  return instance.delete('/api/comment', params);
+  return instance.delete('/api/comment', { params: params });
 }
 
 export function getImage (image) {
@@ -211,7 +211,7 @@ export function deleteImage (image) {
     testId: image.testId,
   }
 
-  return instance.delete('/api/image', params);
+  return instance.delete('/api/image', { params: params });
 }
 
 export function getMouseTracking (mouseTracking) {
@@ -247,5 +247,5 @@ export function deleteMouseTracking (mouseTracking) {
     mouseTrackingId: mouseTracking.mouseTrackingId
   }
 
-  return instance.delete('/api/mousetracking', params);
+  return instance.delete('/api/mousetracking', { params: params });
 }

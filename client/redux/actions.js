@@ -226,10 +226,17 @@ export function getsTest (test) {
         dispatch(params);
       })
       .catch((error) => {
-        var params = {
-          type: 'ERROR_TEST',
-          data: error
-        };
+        if (error.status === 550) {
+          var params = {
+            type: 'GET_TEST',
+            data: []
+          };
+        } else {
+          var params = {
+            type: 'ERROR_TEST',
+            data: error
+          };
+        }
 
         dispatch(params);
       });
@@ -316,10 +323,17 @@ export function getsComment (comment) {
         dispatch(params);
       })
       .catch((error) => {
-        var params = {
-          type: 'ERROR_COMMENT',
-          data: error
-        };
+        if (error.status === 550) {
+          var params = {
+            type: 'GET_COMMENT',
+            data: []
+          };
+        } else {
+          var params = {
+            type: 'ERROR_COMMENT',
+            data: error
+          };
+        }
 
         dispatch(params);
       });
@@ -406,10 +420,17 @@ export function getsImage (image) {
         dispatch(params);
       })
       .catch((error) => {
-        var params = {
-          type: 'ERROR_IMAGE',
-          data: error
-        };
+        if (error.status === 550) {
+          var params = {
+            type: 'GET_IMAGE',
+            data: []
+          };
+        } else {
+          var params = {
+            type: 'ERROR_IMAGE',
+            data: error
+          };
+        }
 
         dispatch(params);
       });
@@ -488,7 +509,6 @@ export function getsMouseTracking (mouseTracking) {
   return (dispatch) => {
     return getMouseTracking(mouseTracking)
       .then((response) => {
-        console.log('response from getsMouseTracking: ', response);
         var params = {
           type: 'GET_MOUSETRACKING',
           data: response.data
@@ -497,10 +517,17 @@ export function getsMouseTracking (mouseTracking) {
         dispatch(params);
       })
       .catch((error) => {
-        var params = {
-          type: 'ERROR_MOUSETRACKING',
-          data: error
-        };
+        if (error.status === 550) {
+          var params = {
+            type: 'GET_MOUSETRACKING',
+            data: []
+          };
+        } else {
+          var params = {
+            type: 'ERROR_MOUSETRACKING',
+            data: error
+          };
+        }
 
         dispatch(params);
       });

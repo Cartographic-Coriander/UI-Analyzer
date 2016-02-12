@@ -37,7 +37,8 @@ var createInvitation = function (invitation) {
     }
   });
 };
-
+// input should be of the following format:
+// { userId: 123, projectId: 123, role: 'owner' || 'tester' }
 var createTester = function (user) {
   return model.ProjectUser.create(user)
     .then(function (result) {

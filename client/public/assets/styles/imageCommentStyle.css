@@ -8,8 +8,13 @@ input[type=radio] {
   display: none;
 }
 
+#feedbackText {
+  color: black;
+}
+
+
 /*for changing label colors if they are for the selected radio button*/
-input[type=radio]:checked + span + label, input[type=radio]:checked + p + label { 
+input[type=radio]:checked + span + label, input[type=radio]:checked + p + label {
   background-image: none;
   margin-bottom: 0;
   font-size: 12.5px;
@@ -23,7 +28,7 @@ input[type=radio]:checked + span + label {
   background-color:#00ff99;
 }
 
-input[type=radio]:checked + p + label { 
+input[type=radio]:checked + p + label {
   background-color:#ff9900;
 }
 
@@ -48,16 +53,27 @@ span + label, p + label {
 
 span + label {
   background-color: #00e68a;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 p + label {
   background-color: #cc7a00;
+}
+
+button {
+  margin-left: 5px;
 }
 /*end setting initial colors for critique buttons*/
 
 /*styling the comment that is left on the page*/
 .quote-container {
   position: relative;
+}
+
+.feedback {
+  padding: 8px;
+  background-color: #CCCCCC;
 }
 
 .note {
@@ -323,6 +339,7 @@ blockquote:hover {
             transform: translate(0);
   }
 }
+
 .link {
   line-height: 1em;
   position: absolute;
@@ -357,5 +374,3 @@ blockquote:hover {
 #testEndRequest-text{
   margin-top: 75px;
 }
-
-
