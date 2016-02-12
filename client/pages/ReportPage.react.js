@@ -30,11 +30,11 @@ class ReportPage extends Component {
           this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
           this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
         } else { //at the end of the array
-          window.removeHeatmap();
           this.setState({ currentIndex: 0 });
           $(document).off('keydown');
           this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
           this.props.dispatch(pageState('authenticated'));
+          window.removeHeatmap();
         }
       }
     });
@@ -53,6 +53,9 @@ class ReportPage extends Component {
         // this.state.reportImages = data;
         this.setState({ reportImages : data });
         this.props.dispatch(setFocus('image', this.state.reportImages[0]));
+        // this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
+        // this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
+        this.componentDidMount();
       }
     })
   };
@@ -67,13 +70,13 @@ class ReportPage extends Component {
       }
     }.bind(this));
 
-    setTimeout(function (){
+    // setTimeout(function (){
       this.props.dispatch(getsComment({ imageId: this.props.currentFocus.image.id }));
-    }.bind(this), 200);
+    // }.bind(this), 200);
 
-    setTimeout(function () {
+    // setTimeout(function () {
       this.props.dispatch(getsMouseTracking({ imageId: this.props.currentFocus.image.id }));
-    }.bind(this), 1000)
+    // }.bind(this), 1000)
 
     const mouseReplay = () => {
       const replay = function (cursor, path) {
