@@ -66,7 +66,7 @@ class ReportPage extends Component {
     $(document).off('keypress');
 
     $(window).bind('beforeunload', function(){
-      if(this.props.stateRouter.pageState === 'reportView'){ 
+      if (this.props.stateRouter.pageState === 'reportView') { 
         this.setState({ currentIndex: 0 });
         this.props.dispatch(setFocus('image', this.state.reportImages[this.state.currentIndex]));
       }
@@ -92,7 +92,7 @@ class ReportPage extends Component {
             timeInterval = 0;
           }
           i++;
-          if ( i === length) {
+          if (i === length) {
             return;
           } else {
             setTimeout(move, timeInterval);
