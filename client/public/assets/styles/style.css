@@ -254,7 +254,7 @@ input:-webkit-autofill {
 
 .testUrl {
   margin-top: -15px;
-  color: #b3b3b3;
+  /*color: #b3b3b3;*/
 }
 
 .cursor {

@@ -132,8 +132,8 @@ export default class TestContinerEntry extends Component {
             <form onSubmit = { updateTest.bind(this) }>
               <Row>
                 <Col xs={2} md={2}>name</Col>
-                <Col  xs={12} md={10}>
-                  <Input onChange = { handleNameInput.bind(this) } id = "editName" type = "text" placeholder = { this.props.name } />
+                <Col xs={12} md={10}>
+                  <Input onChange = { handleNameInput.bind(this) }  type = "text" placeholder = { this.props.name } />
                 </Col>
               </Row>
               <Row>
