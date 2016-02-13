@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 export const fields = [ 'projectName', 'projectDescription' ];
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Col, Modal, Row, Input, H5 } from 'react-bootstrap';
 
 const validate = values => {
   const errors = {};
@@ -18,35 +18,38 @@ class CreateProjectContainer extends Component {
   render () {
     const { fields: { projectName, projectDescription }, handleSubmit, submitting } = this.props;
     return (
-      <Modal show = { this.props.visibility }>
+      <Modal show = { this.props.visibility } >
         <form onSubmit={ handleSubmit }>
-          <div>
-            <label>Project Name</label>
-            <div>
-              <input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
-            </div>
+          <Row>
+            <Col xs = { 12 } md = { 12 }>
+              <h4>Create a Project</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>Name</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
+            </Col>
             {projectName.touched && projectName.error && <div>{projectName.error}</div>}
-          </div>
-          <div>
-            <label>Project Description</label>
-            <div>
-              <textarea placeholder="Project Description..." {...projectDescription}/>
-            </div>
+          </Row>
+          <Row>
+            <Col xs = { 2 } md = { 2 }>Description</Col>
+            <Col xs = { 12 } md = { 10 }>
+              <Input type = "textarea" placeholder="Project Description..." {...projectDescription}/>
+            </Col>
             {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
-          </div>
-          <div>
-            <Button type="submit" className="btn-primary" disabled={submitting}>
-              {submitting ? <i/> : <i/>} Create Project
-            </Button>
-            <Button type="button" onClick= { this.props.hideVisibility }>
-              cancel
-            </Button>
-          </div>
+          </Row>
+          <Row>
+            <Col xs = { 12 } md = { 12 }>
+              <Button className = "btn-primary pull-right" type = "submit" disabled={ submitting}>{submitting ? <i/> : <i/> } Create Project</Button>
+              <Button className = "pull-right" type = "button" onClick= { this.props.hideVisibility }>cancel</Button>
+            </Col>
+          </Row>
         </form>
       </Modal>
     );
   }
-}
+};
 
 CreateProjectContainer.propTypes = {
   fields: PropTypes.object.isRequired,
