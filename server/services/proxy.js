@@ -44,6 +44,7 @@ module.exports = function (express, session, callback) {
     var resolution = [req.body.resolution[0] + 'x' + req.body.resolution[1]];
     var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
     var dir = path.resolve(__dirname, '../data/screenshots/', session.testId) + '/';
+    console.log('image save location:', dir, directory)
 
     var slug = function (input) {
       return input
