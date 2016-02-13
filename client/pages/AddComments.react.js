@@ -58,7 +58,7 @@ class AddNotes extends Component {
     }
 
     $.ajax({
-      url: 'http://localhost:8000/api/image',
+      url: 'http://' + process.env.IP_ADDRESS + ':8000/api/image',
       data: findImage,
       headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
       method: 'GET',

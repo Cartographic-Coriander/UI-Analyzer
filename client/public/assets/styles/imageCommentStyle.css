@@ -165,7 +165,7 @@ blockquote:hover {
   top: 200px;
   height: 200px;
   width: 420px;
-  background-color: #df691a;
+  background-color: #2780e3;
   padding: 30px 30px 30px 30px;
   z-index: 10;
   margin: auto;
@@ -356,22 +356,23 @@ blockquote:hover {
   text-align: right;
 }
 
-.link > a {
+.link > a, #testStartPrompt, #testPrompt {
+  text-align: center;
   text-decoration: none;
-  color: #FF0;
+  color: #FFFFFF;
+  font-family: "Open Sans", "Roboto", Arial, sans-serif;
 }
-
 
 #startTestButton, #testviewLoading {
   margin-top: 20px;
-  text-align: center; 
+  text-align: center;
 }
 
 #testview-veil {
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: #4e5d6c;
+  background-color: #e7e7e7;
   opacity: 0.7;
   z-index: 0;
 }
