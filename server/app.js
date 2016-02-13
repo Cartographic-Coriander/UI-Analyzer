@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 require('./db/model').init();
 
+console.log(process.env);
+
 // configure our server with all the middleware and routing
 require('./services/middleware.js')(app, express);
 require('./services/routes.js')(app, express);
