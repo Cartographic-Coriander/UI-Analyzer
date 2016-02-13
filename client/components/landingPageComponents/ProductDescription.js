@@ -41,7 +41,7 @@ export default React.createClass({
           </div>
           <div className="productExample">
             <h4>Take Action</h4>
-            <p>Imporve your website based on the test results.</p>
+            <p>Improve your website based on the test results.</p>
             <p>You can create another test for your updated website</p>
             <p>to improve the UI/UX iteratively.</p>
           </div>

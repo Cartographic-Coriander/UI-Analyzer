@@ -312,6 +312,11 @@ export function deletesTest (test) {
 /* COMMENT API ACTIONS */
 
 export function getsComment (comment) {
+  if (comment === 'clear') {
+    return {
+      type: 'IMAGE_CLEAR'
+    }
+  };
   return (dispatch) => {
     return getComment(comment)
       .then((response) => {
