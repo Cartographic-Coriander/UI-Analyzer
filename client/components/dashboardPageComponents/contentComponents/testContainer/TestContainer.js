@@ -62,7 +62,7 @@ class TestContainer extends Component {
   //for showing and hiding modals
   toggleModal () {
     this.setState({
-      testModalDisplay: this.state.testModalDisplay === true ? false : true
+      testModalDisplay: !this.state.testModalDisplay
     })
   }
 

@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import App from './App.js';
 import thunk from 'redux-thunk';
+import { Router, Route, browserHistory } from 'react-router'
+import { syncHistory, routeReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form';
-import * as storage from 'redux-storage';
-import createEngine from 'redux-storage/engines/localStorage';
-import { recallState } from './redux/api';
 import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
-import { signsOut } from './redux/actions';
+import { recallState } from './redux/api';
+import LandingPage from './pages/LandingPage.react';
+import DashboardPage from './pages/DashboardPage.react';
+import AddCommentsPage from './pages/AddCommentsPage.react';
+import ReportPage from './pages/ReportPage.react';
 
 const reducers = {
   user: user,
@@ -22,34 +24,25 @@ const reducers = {
   currentFocus: currentFocus,
   stateRouter: stateRouter,
   modalState: modalState,
-  form: formReducer
+  form: formReducer,
+  routing: routeReducer
 };
-const combinedReducers = combineReducers(reducers);
-//combined reducer is wrapped for saving state
-const reducer = storage.reducer(combinedReducers);
-const engine = createEngine('Scrutinize.saved.state');
-const middleware = storage.createMiddleware(engine);
+const reducer = combineReducers(reducers);
+const reduxRouterMiddleware = syncHistory(browserHistory)
+const createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore);
+const store = createStoreWithMiddleware(reducer);
 
-let createStoreWithMiddleware = applyMiddleware(thunk, middleware)(createStore);
-let store = createStoreWithMiddleware(reducer);
-const load = storage.createLoader(engine);
+// reduxRouterMiddleware.listenForReplays(store);
 
-const app = () => {
-  ReactDOM.render(
-    <Provider store = { store }>
-      <App />
-    </Provider>,
-    document.getElementById('app')
-  )
-};
-
-load(store)
-  .then((newState) => {
-    console.log('state reloaded', newState);
-    recallState();
-    app();
-  })
-  .catch(() => {
-    console.log('failed to load previous state')
-    app();
-  })
+ReactDOM.render(
+  <Provider store = { store }>
+    <Router history = { browserHistory }>
+      <Route path = '/' component = { LandingPage }>
+        <Route path = 'dashboard' component = { DashboardPage }/>
+        <Route path = 'addcomments' component = { AddCommentsPage }/>
+        <Route path = 'report' component = { ReportPage }/>
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('app')
+);

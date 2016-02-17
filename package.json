@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/jotakwak/UI-Analyzer.git"
   },
-  "author": "Egan Tamashiro, Max Cudich, Youngjun Kwak",
+  "author": "Egan Tamashiro, Maximo Cudich-Sieburger, Youngjun Kwak",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Cartographic-Coriander/UI-Analyzer"
@@ -24,12 +24,13 @@
     "connect-ensure-login": "^0.1.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "http-proxy-middleware": "^0.10.0",
     "jwt-simple": "^0.4.1",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
     "mysql": "^2.10.2",
     "nodemailer": "^2.1.0",
-    "pageres": "^4.0.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
@@ -38,13 +39,13 @@
     "react-dom": "^0.14.6",
     "react-heatmap": "^1.0.6",
     "react-redux": "^4.1.2",
+    "react-router": "^2.0.0",
+    "react-router-redux": "^3.0.0",
     "react-sanfona": "0.0.8",
     "redux": "^3.1.7",
     "redux-form": "^4.1.5",
-    "redux-storage": "^2.1.0",
     "redux-thunk": "^1.0.3",
     "sequelize": "^3.18.0",
-    "server-destroy": "^1.0.1",
     "webshot": "^0.17.0"
   },
   "devDependencies": {

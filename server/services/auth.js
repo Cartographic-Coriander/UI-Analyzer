@@ -70,9 +70,9 @@ passport.deserializeUser(function (email, callback) {
 
 // USER AUTHENTICATION JWT TOKENS
 
-var authenticate = function(req, res, next) {
+var authenticate = function (req, res, next) {
   //user has authenticated correctly thus we create a JWT token
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
     }

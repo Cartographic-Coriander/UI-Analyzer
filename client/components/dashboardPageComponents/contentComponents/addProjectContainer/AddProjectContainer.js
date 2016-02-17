@@ -30,22 +30,24 @@ class AddProjectContainer extends Component {
   }
 
   hideProjectModal () {
-    this.setState = { addProjectModalVisibility : false }
+    this.setState({ addProjectModalVisibility : false })
+  }
+
+  renderConfirmation () {
+    if (this.state.confirm.projectName !== null) {
+      return <ProjectConfirmation project = { this.state.confirm } confirmProject = { this.onConfirm.bind(this) }/>
+    }
   }
 
   render () {
     return (
       <div className = 'AddProject'>
-        <h3>I am the add project container component</h3>
         <CreateProjectContainer visibility = { this.state.addProjectModalVisibility } hideModal = { this.hideProjectModal.bind(this) } onSubmit = { this.onSubmit.bind(this) }/>
-        { (() => {
-          if (this.state.confirm.projectName !== null) {
-            return <ProjectConfirmation project = { this.state.confirm } confirmProject = { this.onConfirm.bind(this) }/>
-          }
-        })() }
+        { this.renderConfirmation() }
       </div>
     )
   }
+
 }
 
 const select = (state) => state

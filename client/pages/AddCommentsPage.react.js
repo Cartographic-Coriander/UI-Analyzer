@@ -4,7 +4,7 @@ import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
 import Welcome from '../components/testingPageComponents/welcomeToComments.js';
 
-class AddNotes extends Component {
+class AddCommentsPage extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -167,6 +167,7 @@ class AddNotes extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     comments: state.comments.list,
     image: state.images,
@@ -174,4 +175,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(AddNotes);
+export default connect(mapStateToProps)(AddCommentsPage);

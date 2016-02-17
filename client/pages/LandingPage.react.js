@@ -6,6 +6,8 @@ import ProductDescription from '../components/landingPageComponents/ProductDescr
 import Footer from '../components/landingPageComponents/Footer';
 import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 import LoginForm from '../components/landingPageComponents/LoginForm';
+import { Link } from 'react-router'
+import { routeActions } from 'react-router-redux'
 import { showLoginModal, showSignupModal, getsUser, postsUser, pageState } from '../redux/actions';
 
 class LandingPage extends Component {
@@ -39,17 +41,20 @@ class LandingPage extends Component {
   render () {
     return (
       <div className = "LandingPage">
-        <Header showLogin = { this.showLoginModal.bind(this) } showSignup = { this.showRegisterModal.bind(this) }/>
-        <LoginForm onSubmit = { this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login }  hideLogin={ this.hideLoginModal.bind(this) }  />
-        <Registration onSubmit = { this.onRegister.bind(this) } showRegistrationModal={ this.props.modalState.getStarted } hideRegModal={ this.hideRegistrationModal.bind(this) } />
+        <Header showLogin = { this.showLoginModal.bind(this) } showSignup = { this.showRegisterModal.bind(this) } />
+        <LoginForm onSubmit = { this.onLogin.bind(this) } showLoginModal = { this.props.modalState.login } hideLogin = { this.hideLoginModal.bind(this) } />
+        <Registration onSubmit = { this.onRegister.bind(this) } showRegistrationModal = { this.props.modalState.getStarted } hideRegistrationModal = { this.hideRegistrationModal.bind(this) } />
         <ProductDescription showRegistration = { this.showRegisterModal.bind(this) } />
         <AboutUs />
         <Footer />
       </div>
-    )
+    );
   }
+};
+
+const select = (state, ownProps) => {
+  console.log(ownProps, state);
+  return state;
 }
 
-const select = (state) => state
-
-export default connect(select)(LandingPage)
+export default connect(select, routeActions)(LandingPage)
