@@ -31,6 +31,13 @@ export function getsUser (user) {
         dispatch(userParams);
       })
       .then(() => {
+        let params = {
+          type: 'SIGNIN_USER'
+        };
+
+        dispatch(params);
+      })
+      .then(() => {
         return getProject()
           .then((projects) => {
             var params = {

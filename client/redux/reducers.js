@@ -300,7 +300,7 @@ export function stateRouter (state = stateRouterInitialState, action) {
     case 'CONTENT_STATE':
       newState.contentState = action.target;
       return newState;
-    case 'GET_USER':
+    case 'SIGNIN_USER':
       newState.pageState = 'authenticated';
       return newState;
     case 'SIGNOUT_USER':
