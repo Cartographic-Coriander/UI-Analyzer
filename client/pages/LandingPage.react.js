@@ -17,7 +17,6 @@ class LandingPage extends Component {
   onRegister (user) {
     this.props.dispatch(postsUser(user));
     this.props.dispatch(showSignupModal(false));
-    this.props.dispatch(pageState('authenticated'));
   }
 
   showLoginModal () {
