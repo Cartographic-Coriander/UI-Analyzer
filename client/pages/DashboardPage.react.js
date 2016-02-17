@@ -7,6 +7,8 @@ import { Navbar } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { signsOut, setFocus } from '../redux/actions';
+import { Link } from 'react-router'
+import { routeActions } from 'react-router-redux'
 
 export default class DashboardPage extends Component {
   handleLogout () {
@@ -26,13 +28,14 @@ export default class DashboardPage extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount () {
     setTimeout(() => {
       window.removeHeatmap();
     }, 1200)
   }
 
   render () {
+  console.log(this.props, Link)
     return (
       <div className = "DashboardPage">
         <Navbar className="navbar navbar-inverse">
@@ -48,6 +51,12 @@ export default class DashboardPage extends Component {
   }
 }
 
-const select = (state) => state
+function mapStateToProps(state, ownProps) {
+  return {
+    props: state,
+    id: ownProps.params.id,
+    filter: ownProps.location.query.filter
+  };
+}
 
-export default connect(select)(DashboardPage)
+export default connect(mapStateToProps)(DashboardPage)

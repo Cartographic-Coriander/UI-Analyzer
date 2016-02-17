@@ -14,6 +14,7 @@ class LandingPage extends Component {
   onLogin (user) {
     this.props.dispatch(getsUser(user));
     this.props.dispatch(showLoginModal(false));
+    this.props.dispatch(routeActions.push('/dashboard'))
   }
 
   onRegister (user) {
@@ -39,6 +40,7 @@ class LandingPage extends Component {
   }
 
   render () {
+    console.log(this)
     return (
       <div className = "LandingPage">
         <Header showLogin = { this.showLoginModal.bind(this) } showSignup = { this.showRegisterModal.bind(this) } />
@@ -57,4 +59,4 @@ const select = (state, ownProps) => {
   return state;
 }
 
-export default connect(select, routeActions)(LandingPage)
+export default connect(select)(LandingPage)
