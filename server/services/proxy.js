@@ -26,13 +26,14 @@ module.exports = function (express, session, callback) {
     var proxy = proxyMiddleware(context, options);
 
     proxyServer.use(proxy);
-    fs.readFile(__dirname + '/../../client/public/testview/testview.html', 'utf8', function (err, data) {
-      if (err) {
-        throw (new Error('ERROR! Read file error!', err));
-      } else {
-        res.send(data);
-      }
-    });
+    // fs.readFile(__dirname + '/../../client/public/testview/testview.html', 'utf8', function (err, data) {
+    //   if (err) {
+    //     throw (new Error('ERROR! Read file error!', err));
+    //   } else {
+    //     res.send(data);
+    //   }
+    // });
+    res.sendFile(__dirname + '/../../client/public/testview/testview.html');
   });
 
   proxyServer.get('/api/realUrl', auth.decode, function (req, res) {
