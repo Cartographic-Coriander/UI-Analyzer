@@ -1,0 +1,26 @@
+### NPM ###
+npm-debug.log
+node_modules
+
+
+### Bower ###
+**/bower_components/
+
+### API KEYS ###
+config.js
+
+### Environment Variables ###
+.env
+Dockerfile
+docker-compose.yml
+
+.DS_Store
+
+###ignore the bundle
+client/public/bundle.js
+client/public/*.hot-update.*
+server/data/screenshots/*
+server/services/mail*
+
+##downloaded styles
+client/public/assets/dist
