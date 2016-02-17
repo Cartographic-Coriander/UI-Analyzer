@@ -102,8 +102,8 @@ module.exports = function (app, express) {
               from: 'Scrutinize App <scrutinizeApp@gmail.com>',
               to: params.email,
               subject: 'Invitation to Scrutinize App',
-              text: 'Please go to:' + 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
-              html: 'http://localhost:8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
+              text: 'Please go to:' + 'http://' + process.env.IP_ADDRESS + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+              html: 'http://' + process.env.IP_ADDRESS + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
           };
 
           invitationController.createInvitation(params)
