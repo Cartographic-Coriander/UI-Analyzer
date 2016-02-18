@@ -64,7 +64,7 @@ class SignUpForm extends Component{
         </Row>
         <Row>
           <Col xs = { 12 } md = { 12 }>
-            <Button className = "btn-primary signup-button" type = "submit" disabled = { submitting }>{ submitting ? <i/> : <i/> } sign up</Button>
+            <Button className = "btn-primary signup-button" type = "submit" disabled = { submitting }> sign up</Button>
             <Button type = "button" className = "signup-cancel-button" onClick = { this.props.hideRegModal }>cancel</Button>
           </Col>
         </Row>
