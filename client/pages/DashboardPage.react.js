@@ -24,9 +24,6 @@ export default class DashboardPage extends Component {
       this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
       this.props.dispatch(setFocus('test', this.props.projects.list[this.props.projects.length - 1].id));
     }
-  }
-
-  componentDidMount () {
     setTimeout(() => {
       window.removeHeatmap();
     }, 1200)
@@ -38,7 +35,7 @@ export default class DashboardPage extends Component {
         <Navbar className="navbar navbar-inverse">
           <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
-            <NavItem onClick={ () => { this.handleLogout() } } href = "#"> Log Out </NavItem>
+            <NavItem onClick={ () => { this.handleLogout.bind(this) } } href = "#"> Log Out </NavItem>
           </Nav>
         </Navbar>
         <SidebarNavigation />

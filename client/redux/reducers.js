@@ -316,11 +316,9 @@ export function modalState (state = modalInitialState, action) {
   switch(action.type) {
     case 'SHOW_LOGIN':
       newState.login = true;
-      newState.getStarted = false;
       return newState;
     case 'SHOW_GET_STARTED':
       newState.getStarted = true;
-      newState.login = false;
       return newState;
     case 'MODAL_RESET':
       newState.login = false;

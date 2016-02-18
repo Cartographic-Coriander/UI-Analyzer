@@ -415,3 +415,7 @@ input:-webkit-autofill {
   background-color: white;
   border-color: #cccccc;
 }
+
+.errorMessage {
+  color: red;
+}
