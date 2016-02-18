@@ -49,21 +49,19 @@ export function getsUser (user) {
           });
       })
       .catch((error) => {
-        let data = '';
+        let data = 'user error';
         switch (error.status){
           case 401:
-            data = 'please re-enter password'
+            data = 'please re-enter password';
             break;
           case 500:
-            data = 'unauthorized request'
+            data = 'unauthorized request';
             break;
           case 409: 
-            data = 'username taken'
+            data = 'username taken';
             break;
-          default:
-           data = 'user error'
-           break;
         }
+        
         var params = {
           type: 'ERROR_USER',
           data: data
