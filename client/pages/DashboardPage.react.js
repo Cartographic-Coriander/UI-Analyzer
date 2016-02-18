@@ -26,7 +26,7 @@ export default class DashboardPage extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount () {
     setTimeout(() => {
       window.removeHeatmap();
     }, 1200)
@@ -38,7 +38,7 @@ export default class DashboardPage extends Component {
         <Navbar className="navbar navbar-inverse">
           <a className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
-            <NavItem onClick={ () => { this.handleLogout('leaving') } } href = "#"> Log Out </NavItem>
+            <NavItem onClick={ () => { this.handleLogout() } } href = "#"> Log Out </NavItem>
           </Nav>
         </Navbar>
         <SidebarNavigation />

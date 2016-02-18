@@ -102,8 +102,8 @@ module.exports = function (app, express) {
               from: 'Scrutinize App <scrutinizeApp@gmail.com>',
               to: params.email,
               subject: 'Invitation to Scrutinize App',
-              text: 'Please go to:' + 'http://' + process.env.IP_ADDRESS + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
-              html: 'http://' + process.env.IP_ADDRESS + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
+              text: 'Please go to:' + 'http://' + process.env.IP + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+              html: 'http://' + process.env.IP + ':8000/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
           };
 
           invitationController.createInvitation(params)
@@ -146,7 +146,7 @@ module.exports = function (app, express) {
 
       invitationController.createTester(params)
         .then(function (results) {
-          res.redirect(301, 'http://localhost:8000');
+          res.redirect(301, 'http://' + process.env.IP + ':8000');
         })
         .catch(function (error) {
           console.log('/invitation POST Error!', error);
