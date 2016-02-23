@@ -3,7 +3,6 @@ var testViewRouter = express.Router();
 var auth = require('../auth');
 var port = 2999;
 
-
 testViewRouter.route('/')
   .get(auth.decode, function (req, res) {
     port = port + 2;
