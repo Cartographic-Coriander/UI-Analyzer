@@ -19,7 +19,4 @@ module.exports = function (app, express) {
   app.use('/api/comment', auth.decode, commentRouter);
   app.use('/api/image', auth.decode, imageRouter);
   app.use('/api/mousetracking', auth.decode, mousetrackingRouter);
-  app.get('/*', function (req, res) {
-    res.sendFile('/index.html', { root: __dirname + '/../../client/public', headers: ('Access-Control-Allow-Origin', '*') })
-  });
 };
