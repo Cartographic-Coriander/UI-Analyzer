@@ -27,6 +27,7 @@ class TestContainer extends Component {
 
   getReport (test) {
     this.props.dispatch(getsImage(test));
+    // this.props.dispatch(contentState('Reports'));
     this.props.dispatch(setFocus('test', test))
     this.props.dispatch(pageState('reportView'));
   };
@@ -34,7 +35,7 @@ class TestContainer extends Component {
   //adding new tests
   addTest (test) {
     let urlInput = this.state.addTestUrl;
-    let testUrl = urlInput.substr(0,4) === 'www.' ? 'http://' + urlInput : urlInput;
+    let testUrl = urlInput.substr(0, 4) === 'www.' ? 'http://' + urlInput : urlInput;
     let newTest = {
       projectId: this.props.currentFocus.project.id,
       name: this.state.addTestName,
@@ -61,7 +62,7 @@ class TestContainer extends Component {
   //for showing and hiding modals
   toggleModal () {
     this.setState({
-      testModalDisplay: !this.state.testModalDisplay
+      testModalDisplay: this.state.testModalDisplay === true ? false : true
     })
   }
 
@@ -91,6 +92,7 @@ class TestContainer extends Component {
       <div>
         <div>
           { this.props.tests.list.map((test, index) => {
+              console.log(index)
               return <TestContainerEntry
                 update = { this.updateTest.bind(this) }
                 delete = { this.deleteTest.bind(this) }

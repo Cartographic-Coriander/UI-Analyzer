@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { contentState } from '../../../../../redux/actions';
+import { contentState } from '../../../../redux/actions';
 
 class ProjectButton extends Component {
   handleClick () {
@@ -11,7 +11,7 @@ class ProjectButton extends Component {
     return (
       <a href="#" className = "list-group-item ProjectButton" onClick = { this.handleClick.bind(this) }>
         {this.props.name}
-        <ul className="dropdown-menu"> 
+        <ul className="dropdown-menu">
         </ul>
       </a>
     )

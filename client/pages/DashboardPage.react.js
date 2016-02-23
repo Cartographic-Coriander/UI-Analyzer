@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
+import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/MyProjects';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
 import { authChecker, showImagePage } from '../redux/actions';
@@ -16,9 +16,6 @@ export default class DashboardPage extends Component {
     if (this.props.projects.list) {
       this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
     }
-    setTimeout(() => {
-      localStorage.removeItem('Scrutinize.saved.state');
-    }, 250)
   }
 
   componentDidMount () {

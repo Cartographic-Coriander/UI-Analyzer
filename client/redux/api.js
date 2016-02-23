@@ -1,6 +1,6 @@
 import axios from 'axios';
-
 var instance;
+
 //for creating instance when state is reloaded
 export function recallState () {
   instance = axios.create({
@@ -24,7 +24,7 @@ export function getUser (user) {
       });
 
       return response;
-    })
+    });
 }
 
 export function postUser (user) {
@@ -45,11 +45,11 @@ export function postUser (user) {
       });
 
       return response;
-    })
+    });
 }
 
 export function signOut () {
-  return instance.delete('/api/user/signin')
+  return instance.delete('/api/user/signin');
 }
 
 export function getInvitation (invitation) {
@@ -79,7 +79,7 @@ export function postProject (project) {
   const params = {
     name: project.name,
     description: project.description
-  }
+  };
 
   return instance.post('/api/project', params);
 }
@@ -89,7 +89,9 @@ export function updateProject (project) {
     projectId: project.projectId,
     name: project.name,
     description: project.description
-  }
+  };
+
+  console.log('update project:', params);
 
   return instance.put('/api/project', params);
 }
@@ -97,7 +99,7 @@ export function updateProject (project) {
 export function deleteProject (project) {
   const params = {
     projectId: project.projectId
-  }
+  };
 
   return instance.delete('/api/project', { params: params });
 }
@@ -105,7 +107,7 @@ export function deleteProject (project) {
 export function getTest (test) {
   const params = {
     projectId: test.projectId
-  }
+  };
 
   return instance.get('/api/test', { params: params });
 }
@@ -116,7 +118,7 @@ export function postTest (test) {
     name: test.name,
     url: test.url,
     prompt: test.prompt
-  }
+  };
 
   return instance.post('/api/test', params);
 }
@@ -128,7 +130,9 @@ export function updateTest (test) {
     name: test.name,
     url: test.url,
     prompt: test.prompt
-  }
+  };
+
+  console.log('update test:', params)
 
   return instance.put('/api/test', params);
 }
@@ -145,7 +149,7 @@ export function deleteTest (test) {
 export function getComment (comment) {
   const params = {
     imageId: comment.imageId
-  }
+  };
 
   return instance.get('/api/comment', { params: params });
 }
@@ -162,7 +166,7 @@ export function updateComment (comment) {
     commentText: comment.commentText,
     x: comment.x,
     y: comment.y
-  }
+  };
 
   return instance.put('/api/comment', params);
 }
@@ -171,7 +175,7 @@ export function deleteComment (comment) {
   const params = {
     imageId: comment.imageId,
     commentId: comment.commentId
-  }
+  };
 
   return instance.delete('/api/comment', { params: params });
 }
@@ -179,7 +183,7 @@ export function deleteComment (comment) {
 export function getImage (image) {
   const params = {
     testId: image.testId
-  }
+  };
 
   return instance.get('/api/image', { params: params });
 }
@@ -189,7 +193,7 @@ export function postImage (image) {
     testId: image.testId,
     image: image.image,
     url: image.url
-  }
+  };
 
   return instance.post('/api/image', params);
 }
@@ -200,7 +204,7 @@ export function updateImage (image) {
     testId: image.testId,
     image: image.image,
     url: image.url
-  }
+  };
 
   return instance.put('/api/image', params);
 }
@@ -209,7 +213,7 @@ export function deleteImage (image) {
   const params = {
     imageId: image.imageId,
     testId: image.testId,
-  }
+  };
 
   return instance.delete('/api/image', { params: params });
 }
@@ -217,7 +221,7 @@ export function deleteImage (image) {
 export function getMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId
-  }
+  };
 
   return instance.get('/api/mousetracking', { params: params });
 }
@@ -245,7 +249,7 @@ export function deleteMouseTracking (mouseTracking) {
   const params = {
     imageId: mouseTracking.imageId,
     mouseTrackingId: mouseTracking.mouseTrackingId
-  }
+  };
 
   return instance.delete('/api/mousetracking', { params: params });
 }

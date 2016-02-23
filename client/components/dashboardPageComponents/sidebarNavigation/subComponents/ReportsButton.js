@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { contentState } from '../../../../../redux/actions';
+import { contentState } from '../../../../redux/actions';
 
 class ReportsButton extends Component {
   handleClick () {

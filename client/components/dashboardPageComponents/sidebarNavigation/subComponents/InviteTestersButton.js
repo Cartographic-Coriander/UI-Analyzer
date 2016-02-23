@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { inviteTesters } from '../../../../../redux/actions';
 import { Button } from 'react-bootstrap';
+import inviteTesters from '../../../../redux/actions';
 
 class InviteTestersButton extends Component {
   handleClick () {

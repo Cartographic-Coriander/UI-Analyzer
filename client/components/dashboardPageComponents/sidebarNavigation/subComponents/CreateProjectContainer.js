@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-export const fields = [ 'projectName', 'projectDescription' ];
 import { Button, Col, Modal, Row, Input, H5 } from 'react-bootstrap';
+export const fields = [ 'projectName', 'projectDescription' ];
 
 const validate = values => {
   const errors = {};

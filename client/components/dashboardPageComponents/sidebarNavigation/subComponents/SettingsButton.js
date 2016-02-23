@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { contentState, setFocus } from '../../../../../redux/actions';
+import { contentState, setFocus } from '../../../../redux/actions';
 
 class SettingsButton extends Component {
   handleClick () {

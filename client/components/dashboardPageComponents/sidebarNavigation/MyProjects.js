@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../../redux/actions';
+import { Accordion, AccordionItem } from 'react-sanfona';
+import { Button } from 'react-bootstrap';
+import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../redux/actions';
+import CreateProjectContainer from './subComponents/CreateProjectContainer';
+import InviteTestersModal from './subComponents/inviteTestersModal';
 import ProjectButton from './subComponents/ProjectButton';
 import TestButton from './subComponents/TestButton';
 import ReportsButton from './subComponents/ReportsButton';
 import SettingsButton from './subComponents/SettingsButton';
 import InviteTestersButton from './subComponents/InviteTestersButton';
-import { Accordion, AccordionItem } from 'react-sanfona';
-import { Button } from 'react-bootstrap';
-import CreateProjectContainer from '../../contentComponents/addProjectContainer/subComponents/CreateProjectContainer';
-import InviteTestersModal from './subComponents/inviteTestersModal';
 
 class MyProjects extends Component {
   //setting initial addProject modal visibility to not be shown
@@ -60,7 +60,7 @@ class MyProjects extends Component {
       $('.react-sanfona-item').children('h3').map(function (index, element) {
         return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
       })
-    }, 500);
+    }, 100);
   };
 
   sendInviteInfo (invitee) {
@@ -71,15 +71,18 @@ class MyProjects extends Component {
       projectId: this.props.currentFocus.project.id
     };
 
-    console.log('the invited user ', invitee, 'project id ', this.props.currentFocus.project.id);
     this.props.dispatch(postsInvitation(params))
     this.setState({ inviteTestersModalVisibility : false })
-  }
+  };
+
+  sidebarResize () {
+    $('.SidebarNavigation').css('height', $(document).height());
+  };
 
   render () {
-    console.log(this.props)
+    this.sidebarResize();
     return (
-      <div>
+      <div className="SidebarNavigation list-group sidebar-wrapper">
         <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
         <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
             { this.props.projects.list.map((project) => {
@@ -101,7 +104,7 @@ class MyProjects extends Component {
       </div>
     );
   };
-}
+};
 
 const select = (state) => state
 

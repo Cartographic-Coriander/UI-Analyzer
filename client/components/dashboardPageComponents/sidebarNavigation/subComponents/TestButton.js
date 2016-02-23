@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { contentState, getsTest } from '../../../../../redux/actions';
+import { contentState, getsTest } from '../../../../redux/actions';
 
 class TestButton extends Component {
   handleClick () {
     this.props.dispatch(getsTest({ projectId: this.props.id }))
     this.props.dispatch(contentState('Test'));
-  }
+  };
 
   render () {
     return (
@@ -16,7 +16,7 @@ class TestButton extends Component {
       </Button>
     );
   }
-}
+};
 
 const select = (state) => state
 

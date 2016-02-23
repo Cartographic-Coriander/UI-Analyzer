@@ -15,6 +15,8 @@ const validate = values => {
   return errors;
 };
 
+
+
 class LoginForm extends Component {
   render () {
     const { fields: { emailField, passwordField }, handleSubmit, submitting } = this.props;
@@ -31,10 +33,24 @@ class LoginForm extends Component {
           <Row>
             <Col xs = { 2 } md = { 2 }>password</Col>
             <Col xs = { 12 } md = { 10 }>
-              <Input type = "password" placeholder = "password" { ...passwordField }/>
+              <Input id = "passwordInput" type = "password" placeholder = "password" { ...passwordField } onClick = { this.props.clearError } />
             </Col>
             { passwordField.touched && passwordField.error && <Col xs = { 2 } md = { 2 }>{ passwordField.error }</Col> }
           </Row>
+          {
+             (() => {
+               if(this.props.errorMessage) {
+                 return (
+                   <Row>
+                     <Col xs = { 2 } md = { 2 }></Col>
+                     <Col xs = { 12 } md = { 10 } bsStyle = "danger" className = "errorMessage">
+                       { this.props.errorMessage }
+                     </Col>
+                   </Row>
+                   )
+                 }
+             })()
+           }
           <Row>
             <Col xs = { 12 } md = { 12 }>
               <Button className = "login-button btn-primary" type = "submit" disabled = { submitting }> { submitting ? <i/> : <i/> } login </Button>

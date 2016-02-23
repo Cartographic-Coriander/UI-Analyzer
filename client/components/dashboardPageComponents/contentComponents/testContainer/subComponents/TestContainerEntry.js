@@ -15,6 +15,12 @@ export default class TestContinerEntry extends Component {
     };
   };
 
+  componentDidMount () {
+    this.setState({ newName: this.props.name });
+    this.setState({ newPrompt: this.props.prompt });
+    this.setState({ newUrl: this.props.url });
+  };
+
   render () {
     let editNameStyle = {
       display: this.state.nameDisplay
@@ -29,7 +35,7 @@ export default class TestContinerEntry extends Component {
     };
 
     let toggleModal = () => {
-      this.state.modalVisbility === false ?  this.setState({ modalVisbility: true }) : this.setState({ modalVisbility: false });
+      this.state.modalVisbility === false ? this.setState({ modalVisbility: true }) : this.setState({ modalVisbility: false });
     };
 
     let toggleNameInput = () => {
@@ -46,12 +52,14 @@ export default class TestContinerEntry extends Component {
 
     let updateTest = () => {
       const updatedTest = {
-        id: this.props.id,
+        testId: this.props.id,
         projectId: this.props.projectId,
         name: this.state.newName || this.props.name,
         prompt: this.state.newPrompt || this.props.prompt,
-        url: this.state.newUrl || this.props.url
+        url: this.state.newUrl || this.props.url,
+        index: this.props.index
       };
+
       this.props.update(updatedTest);
       toggleModal();
     };
@@ -133,19 +141,19 @@ export default class TestContinerEntry extends Component {
               <Row>
                 <Col xs={2} md={2}>name</Col>
                 <Col xs={12} md={10}>
-                  <Input onChange = { handleNameInput.bind(this) }  type = "text" placeholder = { this.props.name } />
+                  <Input onChange = { handleNameInput.bind(this) }  type = "text" value = { this.state.newName } />
                 </Col>
               </Row>
               <Row>
                 <Col xs={2} md={2}>url</Col>
                 <Col xs={12} md={10}>
-                  <Input onChange = { handleUrlInput.bind(this) } id = "editUrl" type = "text" placeholder = { this.props.url } />
+                  <Input onChange = { handleUrlInput.bind(this) } id = "editUrl" type = "text" value = { this.state.newUrl } />
                 </Col>
               </Row>
               <Row>
                 <Col xs={2} md={2}>prompt</Col>
                 <Col xs={12} md={10}>
-                  <Input onChange = { handlePromptInput.bind(this) } id = "editDescription" type = "textarea" placeholder = { this.props.prompt } />
+                  <Input onChange = { handlePromptInput.bind(this) } id = "editDescription" type = "textarea" value = { this.state.newPrompt } />
                 </Col>
               </Row>
             </form>
