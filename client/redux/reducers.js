@@ -95,7 +95,6 @@ export function user (state = userInitialState, action) {
 
   switch (action.type) {
     case 'GET_USER':
-      console.log('data from user', action.data)
       newState.firstname = action.data.firstname;
       newState.surname = action.data.surname;
       newState.company = action.data.company;

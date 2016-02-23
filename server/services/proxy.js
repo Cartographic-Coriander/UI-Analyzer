@@ -98,7 +98,7 @@ module.exports = function (express, session, callback) {
     newServer.close();
   })
 
-  newServer = proxyServer.listen(session.port, function() {
+  newServer = proxyServer.listen(session.port, function () {
     callback();
     console.log('Proxy server is running on' + session.location + session.port);
   });

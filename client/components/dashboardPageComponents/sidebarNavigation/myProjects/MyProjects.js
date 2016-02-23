@@ -77,6 +77,7 @@ class MyProjects extends Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <div>
         <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>

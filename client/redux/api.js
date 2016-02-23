@@ -16,7 +16,7 @@ export function getUser (user) {
     password: user.passwordField
   };
 
-  return axios.post('/api/users/signin', params)
+  return axios.post('/api/user/signin', params)
     .then(function (response) {
       instance = axios.create({
         timeout: 1000,
@@ -37,7 +37,7 @@ export function postUser (user) {
     company: user.company
   }
 
-  return axios.post('/api/users/signup', params)
+  return axios.post('/api/user/signup', params)
     .then(function (response) {
       instance = axios.create({
         timeout: 1000,
@@ -49,7 +49,7 @@ export function postUser (user) {
 }
 
 export function signOut () {
-  return instance.delete('/api/users/signin')
+  return instance.delete('/api/user/signin')
 }
 
 export function getInvitation (invitation) {

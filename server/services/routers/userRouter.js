@@ -3,6 +3,7 @@ var userRouter = express.Router();
 var auth = require('../auth');
 
 userRouter.post('/signin', auth.authenticate, function (req, res) {
+  console.log('sign in token:', req.userToken);
   res.json(req.userToken);
 });
 

@@ -19,4 +19,13 @@ module.exports = function (app, express) {
   app.use('/api/comment', auth.decode, commentRouter);
   app.use('/api/image', auth.decode, imageRouter);
   app.use('/api/mousetracking', auth.decode, mousetrackingRouter);
+  app.use(express.static(__dirname + '/../../client/public',
+    {
+      setHeaders: function (res, path, stat) {
+          res.set('Access-Control-Allow-Origin', '*');
+        },
+      fallthrough: true
+    }), function (req, res) {
+    res.sendFile('index.html', { root: __dirname + '../../../client/public/' });
+  });
 };

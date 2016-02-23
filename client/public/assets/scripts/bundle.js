@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "708196f9605df2e33606"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b8f26d12936d97f35db6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -37068,7 +37068,6 @@
 
 	  switch (action.type) {
 	    case 'GET_USER':
-	      console.log('data from user', action.data);
 	      newState.firstname = action.data.firstname;
 	      newState.surname = action.data.surname;
 	      newState.company = action.data.company;
@@ -37404,7 +37403,7 @@
 	    password: user.passwordField
 	  };
 
-	  return _axios2.default.post('/api/users/signin', params).then(function (response) {
+	  return _axios2.default.post('/api/user/signin', params).then(function (response) {
 	    instance = _axios2.default.create({
 	      timeout: 1000,
 	      headers: { 'x-access-token': response.data.token }
@@ -37424,7 +37423,7 @@
 	    company: user.company
 	  };
 
-	  return _axios2.default.post('/api/users/signup', params).then(function (response) {
+	  return _axios2.default.post('/api/user/signup', params).then(function (response) {
 	    instance = _axios2.default.create({
 	      timeout: 1000,
 	      headers: { 'x-access-token': response.data.token }
@@ -37435,7 +37434,7 @@
 	}
 
 	function signOut() {
-	  return instance.delete('/api/users/signin');
+	  return instance.delete('/api/user/signin');
 	}
 
 	function getInvitation(invitation) {
@@ -57189,7 +57188,7 @@
 	    value: function render() {
 	      var _this2 = this;
 
-	      console.log(this.props, _reactRouter.Link);
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'DashboardPage' },
@@ -57207,7 +57206,7 @@
 	            _react2.default.createElement(
 	              _reactBootstrap.NavItem,
 	              { onClick: function onClick() {
-	                  _this2.handleLogout('leaving');
+	                  _this2.handleLogout();
 	                }, href: '#' },
 	              ' Log Out '
 	            )
@@ -57441,6 +57440,7 @@
 	    value: function render() {
 	      var _this2 = this;
 
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
