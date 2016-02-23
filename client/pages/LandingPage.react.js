@@ -57,6 +57,6 @@ class LandingPage extends Component {
 const select = (state, ownProps) => {
   console.log(ownProps, state);
   return state;
-}
+};
 
 export default connect(select)(LandingPage)

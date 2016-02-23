@@ -27,7 +27,6 @@ class TestContainer extends Component {
 
   getReport (test) {
     this.props.dispatch(getsImage(test));
-    // this.props.dispatch(contentState('Reports'));
     this.props.dispatch(setFocus('test', test))
     this.props.dispatch(pageState('reportView'));
   };
@@ -92,7 +91,6 @@ class TestContainer extends Component {
       <div>
         <div>
           { this.props.tests.list.map((test, index) => {
-              console.log(index)
               return <TestContainerEntry
                 update = { this.updateTest.bind(this) }
                 delete = { this.deleteTest.bind(this) }

@@ -1,8 +1,11 @@
+var express = require('express');
+var testViewRouter = express.Router();
 var auth = require('../auth');
 var port = 2999;
 
-module.exports = function (app, express) {
-  app.get('/testview', auth.decode, function (req, res) {
+
+testViewRouter.route('/')
+  .get(auth.decode, function (req, res) {
     port = port + 2;
     var params = {
       url: req.query.url,
@@ -22,4 +25,5 @@ module.exports = function (app, express) {
       res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
     });
   });
-};
+
+module.exports = testViewRouter;

@@ -1,11 +1,10 @@
 var express = require('express');
-var router = express.Router();
+var projectRouter = express.Router();
 var projectsController = require('../../controllers/projectsController');
 
-module.exports = function () {
-  router.get(function (req, res) {
+projectRouter.route('/')
+  .get(function (req, res) {
     var params = { userId: req.decoded.iss };
-    console.log('project router!!!!!')
 
     projectsController.retrieveProject(params)
       .then(function (results) {
@@ -31,9 +30,9 @@ module.exports = function () {
         console.log('/api/project GET Error!', error);
         res.status(500).end('No projects found.');
       });
-  });
+  })
 
-  router.post(function (req, res) {
+  .post(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       name: req.body.name,
@@ -48,9 +47,9 @@ module.exports = function () {
         console.log('/api/project POST Error!', error);
         res.status(500).end('Project already exists');
       });
-  });
+  })
 
-  router.put(function (req, res) {
+  .put(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.body.projectId,
@@ -68,9 +67,9 @@ module.exports = function () {
         console.log('/api/project PUT Error!', error);
         res.status(500).end('Project PUT Error!');
       });
-  });
+  })
 
-  router.delete(function (req, res) {
+  .delete(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.query.projectId
@@ -88,4 +87,5 @@ module.exports = function () {
         res.status(500).end('Project DELETE Error!');
       });
   });
-};
+
+module.exports = projectRouter;

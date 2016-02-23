@@ -1,13 +1,15 @@
+var express = require('express');
+var userRouter = express.Router();
 var auth = require('../auth');
 
-module.exports = function(app, express) {
-  app.post('/api/users/signin', auth.authenticate, function (req, res) {
-    res.json(req.userToken);
-  });
+userRouter.post('/signin', auth.authenticate, function (req, res) {
+  res.json(req.userToken);
+});
 
-  app.post('/api/users/signup', auth.createUser, auth.authenticate, function (req, res) {
-    res.json(req.userToken);
-  });
+userRouter.post('/signup', auth.createUser, auth.authenticate, function (req, res) {
+  res.json(req.userToken);
+});
 
-  app.delete('/api/users/signin', auth.signout);
-};
+userRouter.delete('/signin', auth.signout);
+
+module.exports = userRouter;

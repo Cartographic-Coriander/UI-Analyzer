@@ -1,9 +1,9 @@
 var express = require('express');
-var router = express.Router();
+var commentRouter = express.Router();
 var commentsController = require('../../controllers/commentsController');
 
-module.exports = function () {
-  router.get(function (req, res) {
+commentRouter.route('/')
+  .get(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId
@@ -36,9 +36,9 @@ module.exports = function () {
         console.log('/api/comment GET Error!', error);
         res.status(500).end('Test GET Error!');
       });
-  });
+  })
 
-  router.post(function (req, res) {
+  .post(function (req, res) {
     Promise.map(req.body, function(comment) {
       delete comment.id;
       comment.userId = req.decoded.iss;
@@ -54,9 +54,9 @@ module.exports = function () {
           res.status(500).end('Test POST Error!');
         });
     })
-  });
+  })
 
-  router.put(function (req, res) {
+  .put(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.body.imageId,
@@ -77,9 +77,9 @@ module.exports = function () {
         console.log('/api/comment PUT Error!', error);
         res.status(500).end('Test PUT Error!');
       });
-  });
+  })
 
-  router.delete(function (req, res) {
+  .delete(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId,
@@ -95,4 +95,5 @@ module.exports = function () {
         res.status(500).end('Test DELETE Error!');
       });
   });
-};
+
+module.exports = commentRouter;

@@ -1,11 +1,11 @@
 var express = require('express');
-var router = express.Router();
+var imageRouter = express.Router();
 var imagesController = require('../../controllers/imagesController');
 var Promise = require('bluebird');
 var fs = require('fs');
 
-module.exports = function () {
-  router.get(function (req, res) {
+imageRouter.route('/')
+  .get(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       testId: req.query.testId
@@ -38,9 +38,9 @@ module.exports = function () {
         console.log('/api/image GET Error!', error);
         res.status(500).end('Image GET Error!');
       });
-  });
+  })
 
-  router.post(function (req, res) {
+  .post(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       testId: req.body.testId,
@@ -56,9 +56,9 @@ module.exports = function () {
         console.log('/api/image POST Error!', error);
         res.status(500).end('Image POST Error!');
       });
-  });
+  })
 
-  router.put(function (req, res) {
+  .put(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.body.imageId,
@@ -77,9 +77,9 @@ module.exports = function () {
         console.log('/api/image PUT Error!', error);
         res.status(500).end('Image PUT Error!');
       });
-  });
+  })
 
-  router.delete(function (req, res) {
+  .delete(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId,
@@ -95,4 +95,5 @@ module.exports = function () {
         res.status(500).end('Image DELETE Error!');
       });
   });
-};
+
+module.exports = imageRouter;

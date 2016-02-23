@@ -38,9 +38,15 @@ ReactDOM.render(
   <Provider store = { store }>
     <Router history = { browserHistory }>
       <Route path = '/' component = { LandingPage }>
+<<<<<<< Updated upstream
         <IndexRoute component={ LandingPage }/>
         <Route path = 'addcomments' component = { AddCommentsPage }/>
         <Route path = 'report' component = { ReportPage }/>
+=======
+        <Route path = '/dashboard' component = { DashboardPage }/>
+        <Route path = '/addcomments' component = { AddCommentsPage }/>
+        <Route path = '/report' component = { ReportPage }/>
+>>>>>>> Stashed changes
       </Route>
       <Route path = '/dashboard' component = { DashboardPage }>
         <IndexRoute component={ DashboardPage }/>

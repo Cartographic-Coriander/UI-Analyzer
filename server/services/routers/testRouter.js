@@ -1,9 +1,9 @@
 var express = require('express');
-var router = express.Router();
+var testRouter = express.Router();
 var testsController = require('../../controllers/testsController');
 
-module.exports = function () {
-  router.get(function (req, res) {
+testRouter.route('/')
+  .get(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.query.projectId
@@ -34,9 +34,9 @@ module.exports = function () {
         console.log('/api/test GET Error!', error);
         res.status(500).end('Test GET Error!');
       });
-  });
+  })
 
-  router.post(function (req, res) {
+  .post(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.body.projectId,
@@ -53,9 +53,9 @@ module.exports = function () {
         console.log('/api/test POST Error!', error);
         res.status(500).end('Test POST Error!');
       });
-  });
+  })
 
-  router.put(function (req, res) {
+  .put(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       testId: req.body.testId,
@@ -75,9 +75,9 @@ module.exports = function () {
         console.log('/api/test PUT Error!', error);
         res.status(500).end('Test PUT Error!');
       });
-  });
+  })
 
-  router.delete(function (req, res) {
+  .delete(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       testId: req.query.testId,
@@ -96,4 +96,5 @@ module.exports = function () {
         res.status(500).end('Test DELETE Error!');
       });
   });
-};
+
+module.exports = testRouter;

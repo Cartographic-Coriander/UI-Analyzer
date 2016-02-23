@@ -1,9 +1,9 @@
 var express = require('express');
-var router = express.Router();
+var mouseTrackingRouter = express.Router();
 var mousetrackingController = require('../../controllers/mousetrackingController');
 
-module.exports = function () {
-  router.get(function (req, res) {
+mouseTrackingRouter.route('/')
+  .get(function (req, res)
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId
@@ -33,9 +33,9 @@ module.exports = function () {
         console.log('/api/mousetracking GET Error!', error);
         res.status(500).end('Mousetracking GET Error!');
       });
-  });
+  })
 
-  router.post(function (req, res) {
+  .post(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.body.imageId,
@@ -50,9 +50,9 @@ module.exports = function () {
         console.log('/api/mousetracking POST Error!', error);
         res.status(500).end('Mousetracking POST Error!');
       });
-  });
+  })
 
-  router.put(function (req, res) {
+  .put(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.body.imageId,
@@ -72,9 +72,9 @@ module.exports = function () {
         console.log('/api/mousetracking PUT Error!', error);
         res.status(500).end('Mousetracking PUT Error!');
       });
-  });
+  })
 
-  router.delete(function (req, res) {
+  .delete(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId,
@@ -90,4 +90,5 @@ module.exports = function () {
         res.status(500).end('Mousetracking DELETE Error!');
       });
   });
-};
+
+module.exports = mouseTrackingRouter;
