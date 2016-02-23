@@ -38,7 +38,6 @@ module.exports = function (express, session, callback) {
     var resolution = [req.body.resolution[0] + 'x' + req.body.resolution[1]];
     var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
     var dir = path.resolve(__dirname, '../data/screenshots/', session.testId) + '/';
-    console.log('image save location:', dir, directory)
 
     var slug = function (input) {
       return input
@@ -64,13 +63,12 @@ module.exports = function (express, session, callback) {
       }
     };
 
-    webshot(url, dir + slug(url) + '.jpg', options, function(err) {
+    webshot(url, dir + slug(url) + '.jpg', options, function (err) {
       var params = {
         testId: session.testId,
         url: url,
         image: dir + slug(url) + '.jpg'
       };
-      console.log('image params:', params);
 
       return imagesController.createImage(params)
         .then(function (result) {

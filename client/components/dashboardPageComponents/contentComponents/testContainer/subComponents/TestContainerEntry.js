@@ -111,21 +111,21 @@ export default class TestContinerEntry extends Component {
     };
 
     return (
-        <Col className = "testEntryComponent" xs={12} md={9}>
+        <Col className = "testEntryComponent" xs = { 12 } md = { 9 }>
           <div className = "well bs-component">
             <Row className = "testRow">
-              <Col xs={6} md={3} ><h5> name </h5></Col>
-              <Col xs={12} md={8} className = "testContent" ><h5>{ this.props.name }</h5></Col>
+              <Col xs = { 6 } md = { 3 } ><h5> name </h5></Col>
+              <Col xs = { 12 } md = { 8 } className = "testContent" ><h5>{ this.props.name }</h5></Col>
             </Row>
             <hr />
             <Row className = "testRow">
-              <Col xs={6} md={3}><h5> url </h5></Col>
-              <Col xs={12} md={8} className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
+              <Col xs = { 6 } md = { 3 }><h5> url </h5></Col>
+              <Col xs = { 12 } md = { 8 } className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
             </Row>
             <hr />
             <Row className = "testRow">
-              <Col xs={6} md={3}><h5> prompt </h5></Col>
-              <Col xs={12} md={8}className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
+              <Col xs = { 6 } md = { 3 }><h5> prompt </h5></Col>
+              <Col xs = { 12 } md = { 8 }className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
             </Row>
             <hr />
             <Row className = "testEntryButtonContainer">
@@ -139,20 +139,20 @@ export default class TestContinerEntry extends Component {
           <Modal show = { this.state.modalVisbility }>
             <form onSubmit = { updateTest.bind(this) }>
               <Row>
-                <Col xs={2} md={2}>name</Col>
-                <Col xs={12} md={10}>
+                <Col xs = { 2 } md = { 2 }>name</Col>
+                <Col xs = { 12 } md = { 10 }>
                   <Input onChange = { handleNameInput.bind(this) }  type = "text" value = { this.state.newName } />
                 </Col>
               </Row>
               <Row>
-                <Col xs={2} md={2}>url</Col>
-                <Col xs={12} md={10}>
+                <Col xs = { 2 } md = { 2 }>url</Col>
+                <Col xs = { 12 } md = { 10 }>
                   <Input onChange = { handleUrlInput.bind(this) } id = "editUrl" type = "text" value = { this.state.newUrl } />
                 </Col>
               </Row>
               <Row>
-                <Col xs={2} md={2}>prompt</Col>
-                <Col xs={12} md={10}>
+                <Col xs = { 2 } md = { 2 }>prompt</Col>
+                <Col xs = { 12 } md = { 10 }>
                   <Input onChange = { handlePromptInput.bind(this) } id = "editDescription" type = "textarea" value = { this.state.newPrompt } />
                 </Col>
               </Row>
