@@ -19,6 +19,7 @@ docker-compose.yml
 ###ignore the bundle
 client/public/bundle.js
 client/public/*.hot-update.*
+client/public/assets/scripts/*.hot-update.*
 server/data/screenshots/*
 server/services/mailAuth*
 
