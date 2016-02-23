@@ -1,12 +1,5 @@
 var model = require('../db/model');
 
-// var MouseTracking = sequelize.define('mousetracking', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   movement: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   clicks: { type: Sequelize.STRING, notNull: true },
-//   urlchange: { type: Sequelize.STRING, notNull: true }
-// }, { timestamps: false });
-
 // input should be of the following format:
 // { movement: 'abc', clicks: 'abc', urlchange: 'abc', userId: 123, imageId: 123 }
 // output shall be of the following format:

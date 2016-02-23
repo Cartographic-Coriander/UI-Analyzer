@@ -1,15 +1,5 @@
 var model = require('../db/model');
 
-// var User = sequelize.define('user', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
-//   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   salt: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   firstname: { type: Sequelize.STRING },
-//   surname: { type: Sequelize.STRING },
-//   company: { type: Sequelize.STRING }
-// }, { timestamps: false });
-
 // input should be of the following format:
 // { email: 'abc@abc.com', password: '32kj3r2kjsdnkjsd', salt: '23423asfdsafsd', company: 'abc' || NULL, firstname: 'abc' || NULL, surname: 'abc' || NULL }
 // output shall be of the following format:
@@ -96,17 +86,3 @@ module.exports = {
   updateUser: updateUser,
   deleteUser: deleteUser
 };
-
-// TEST AREA
-// model.init()
-// createUser({ email: 'max@max.com', password: 'abc123', salt: 'salty', firstname: null, surname: null, company: null })
-// // retrieveUser({ email: 'max@max.com' })
-//   .then(function(test) {
-//     console.log(test.get())
-//   })
-//   .then(function () {
-//     return deleteUser({email: 'max@max.com'})
-//       .then(function(deleted) {
-//         console.log(deleted)
-//       })
-//   })
