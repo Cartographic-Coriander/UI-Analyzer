@@ -3,7 +3,7 @@ var mouseTrackingRouter = express.Router();
 var mousetrackingController = require('../../controllers/mousetrackingController');
 
 mouseTrackingRouter.route('/')
-  .get(function (req, res)
+  .get(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       imageId: req.query.imageId
