@@ -87,7 +87,8 @@ class TestContainer extends Component {
 
   render () {
     return (
-      <div>
+      <div className = "Tests">
+        { this.props.children }
         <div>
           { this.props.tests.list.map((test, index) => {
               return <TestContainerEntry
@@ -106,6 +107,7 @@ class TestContainer extends Component {
             })
           }
         </div>
+
         <Row>
           <Col xs = { 12 } md = { 9 }>
             <Button onClick = { this.toggleModal.bind(this) } className = "addTestButton btn-primary btn-md pull-right" type= "button">add test</Button>

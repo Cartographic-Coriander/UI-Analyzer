@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "348c4223e950aa99c852"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f8c2ff2f1f2787ed7618"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -38903,7 +38903,8 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'Tests' },
+	        this.props.children,
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -56893,6 +56894,8 @@
 
 	var _reactRedux = __webpack_require__(244);
 
+	var _reactRouter = __webpack_require__(253);
+
 	var _reactBootstrap = __webpack_require__(374);
 
 	var _actions = __webpack_require__(616);
@@ -56914,184 +56917,148 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsContainer).call(this, props));
 
 	    _this.state = {
-	      nameDisplay: "none",
-	      newName: null,
-	      descriptionStyle: "none",
-	      newDescription: null,
+	      id: null,
+	      name: null,
+	      description: null,
 	      modalVisibility: false
 	    };
 	    return _this;
 	  }
 
 	  _createClass(SettingsContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ newDescription: this.props.currentFocus.project.description });
-	      this.setState({ newName: this.props.currentFocus.project.name });
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.dispatch((0, _actions.getsProject)());
+	      this.setState({ id: this.props.projects.list[this.props.params.index].id });
+	      this.setState({ description: this.props.projects.list[this.props.params.index].description });
+	      this.setState({ name: this.props.projects.list[this.props.params.index].name });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 
-	      var editNameStyle = {
-	        display: this.state.nameDisplay
-	      };
-
-	      var editDiscriptionStyle = {
-	        display: this.state.descriptionStyle
-	      };
-
-	      var toggleNameInput = function toggleNameInput() {
-	        _this2.state.nameDisplay === "inline-block" ? _this2.setState({ nameDisplay: "none" }) : _this2.setState({ nameDisplay: "inline-block" });
-	      };
-
-	      var toggleDescriptionInput = function toggleDescriptionInput() {
-	        _this2.state.descriptionStyle === "inline-block" ? _this2.setState({ descriptionStyle: "none" }) : _this2.setState({ descriptionStyle: "inline-block" });
-	      };
-
 	      var toggleModal = function toggleModal() {
-	        _this2.state.modalVisibility === false ? _this2.setState({ modalVisibility: true }) : _this2.setState({ modalVisibility: false });
+	        _this2.setState({ modalVisibility: !_this2.state.modalVisibility });
 	      };
 
 	      var updateProject = function updateProject() {
 	        var params = {
-	          projectId: _this2.props.currentFocus.project.id,
-	          name: _this2.state.newName || _this2.props.currentFocus.project.name,
-	          description: _this2.state.newDescription || _this2.props.currentFocus.project.description
+	          projectId: _this2.state.id,
+	          name: _this2.state.name,
+	          description: _this2.state.description
 	        };
 
 	        _this2.props.dispatch((0, _actions.updatesProject)(params));
-	        _this2.props.dispatch((0, _actions.getsProject)());
-	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: _this2.props.currentFocus.project.id, name: _this2.state.newName, description: _this2.state.newDescription }));
 	        toggleModal();
 	      };
 
 	      var deleteProject = function deleteProject() {
-	        var deletedProject = {
-	          projectId: _this2.props.currentFocus.project.id
+	        var params = {
+	          projectId: _this2.state.id
 	        };
 
 	        _this2.props.dispatch((0, _actions.deletesProject)(params));
-	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: null, name: null, description: null }));
-	        _this2.props.dispatch((0, _actions.setFocus)('test', { id: null, name: null, projectId: null, prompt: null, url: null }));
+	        _reactRouter.browserHistory.push('/dashboard');
 	      };
 
 	      var handleNameInput = function handleNameInput(event) {
-	        _this2.setState({ newName: event.target.value });
+	        _this2.setState({ name: event.target.value });
 	      };
 
 	      var handleDescriptionInput = function handleDescriptionInput(event) {
-	        _this2.setState({ newDescription: event.target.value });
+	        _this2.setState({ description: event.target.value });
 	      };
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'Settings' },
 	        this.props.children,
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'Settings' },
+	          _reactBootstrap.Col,
+	          { className: 'projectEntryComponent', xs: 12, md: 9 },
 	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { className: 'projectEntryComponent', xs: 12, md: 9 },
+	            'div',
+	            { className: 'well bs-component' },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'well bs-component' },
+	              _reactBootstrap.Row,
+	              { className: 'testRow' },
 	              _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                { className: 'testRow' },
+	                _reactBootstrap.Col,
+	                { className: 'testLeftSideLabel', xs: 6, md: 3 },
 	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { className: 'testLeftSideLabel', xs: 6, md: 3 },
-	                  _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    ' name '
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 8, className: 'projectContent' },
-	                  _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    this.props.currentFocus.project.name
-	                  )
+	                  'h5',
+	                  null,
+	                  ' name '
 	                )
 	              ),
-	              _react2.default.createElement('hr', null),
 	              _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                { className: 'testRow' },
+	                _reactBootstrap.Col,
+	                { xs: 12, md: 8, className: 'projectContent' },
 	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { className: 'testLeftSideLabel', xs: 6, md: 3 },
-	                  _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    ' description '
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 8, className: 'projectContent' },
-	                  _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    this.props.currentFocus.project.description
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement('hr', null),
-	              _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                { className: 'testRow' },
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { className: 'btn-primary', onClick: toggleModal.bind(this), type: 'button' },
-	                  'edit project'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { className: 'btn-default', onClick: deleteProject.bind(this), type: 'button' },
-	                  'delete project'
+	                  'h5',
+	                  null,
+	                  this.state.name
 	                )
 	              )
 	            ),
+	            _react2.default.createElement('hr', null),
 	            _react2.default.createElement(
-	              _reactBootstrap.Modal,
-	              { show: this.state.modalVisibility },
+	              _reactBootstrap.Row,
+	              { className: 'testRow' },
 	              _react2.default.createElement(
-	                'form',
-	                { className: 'settingsForm', onSubmit: updateProject.bind(this) },
+	                _reactBootstrap.Col,
+	                { className: 'testLeftSideLabel', xs: 6, md: 3 },
 	                _react2.default.createElement(
-	                  _reactBootstrap.Row,
+	                  'h5',
 	                  null,
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Col,
-	                    { xs: 2, md: 2 },
-	                    'name'
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Col,
-	                    { xs: 12, md: 10 },
-	                    _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), id: 'editName', type: 'text', value: this.state.newName })
-	                  )
+	                  ' description '
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 12, md: 8, className: 'projectContent' },
+	                _react2.default.createElement(
+	                  'h5',
+	                  null,
+	                  this.state.description
+	                )
+	              )
+	            ),
+	            _react2.default.createElement('hr', null),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              { className: 'testRow' },
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'btn-primary', onClick: toggleModal.bind(this), type: 'button' },
+	                'edit project'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'btn-default', onClick: deleteProject.bind(this), type: 'button' },
+	                'delete project'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal,
+	            { show: this.state.modalVisibility },
+	            _react2.default.createElement(
+	              'form',
+	              { className: 'settingsForm', onSubmit: updateProject.bind(this) },
+	              _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 2, md: 2 },
+	                  'name'
 	                ),
 	                _react2.default.createElement(
-	                  _reactBootstrap.Row,
-	                  null,
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Col,
-	                    { xs: 2, md: 2 },
-	                    'description'
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Col,
-	                    { xs: 12, md: 10 },
-	                    _react2.default.createElement(_reactBootstrap.Input, { onChange: handleDescriptionInput.bind(this), id: 'editDescription', type: 'textarea', value: this.state.newDescription })
-	                  )
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 10 },
+	                  _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), id: 'editName', type: 'text', value: this.state.name })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -57099,17 +57066,31 @@
 	                null,
 	                _react2.default.createElement(
 	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 12 },
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { className: 'btn-primary', onClick: updateProject.bind(this), type: 'button' },
-	                    'save changes'
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { onClick: toggleModal.bind(this), className: 'btn-default', type: 'button' },
-	                    'cancel'
-	                  )
+	                  { xs: 2, md: 2 },
+	                  'description'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 10 },
+	                  _react2.default.createElement(_reactBootstrap.Input, { onChange: handleDescriptionInput.bind(this), id: 'editDescription', type: 'textarea', value: this.state.description })
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 12, md: 12 },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { className: 'btn-primary', onClick: updateProject.bind(this), type: 'button' },
+	                  'save changes'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { onClick: toggleModal.bind(this), className: 'btn-default', type: 'button' },
+	                  'cancel'
 	                )
 	              )
 	            )
@@ -57123,11 +57104,7 @@
 	}(_react.Component);
 
 	var select = function select(state) {
-	  return {
-	    projects: state.projects,
-	    currentFocus: state.currentFocus,
-	    tests: state.tests
-	  };
+	  return state;
 	};
 
 	exports.default = (0, _reactRedux.connect)(select)(SettingsContainer);
@@ -59450,20 +59427,20 @@
 	  _createClass(ProjectHeader, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log('header:', this);
 	      return _react2.default.createElement(
 	        _reactBootstrap.Col,
 	        { md: 9, mdOffset: 3 },
 	        _react2.default.createElement(
-	          _reactBootstrap.Panel,
-	          null,
+	          'div',
+	          { className: 'panel panel-default' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'panel-body' },
 	            _react2.default.createElement(
 	              'h3',
 	              null,
-	              this.props.projects.list[this.props.params.index].name,
-	              ' blah blah blah'
+	              this.props.projects.list[this.props.params.index].name
 	            )
 	          ),
 	          _react2.default.createElement(

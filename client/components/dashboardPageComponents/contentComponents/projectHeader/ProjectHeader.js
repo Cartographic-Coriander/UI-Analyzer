@@ -4,21 +4,22 @@ import { Col, Panel } from 'react-bootstrap';
 
 class ProjectHeader extends Component {
   render () {
+    console.log('header:', this)
     return (
       <Col md = { 9 } mdOffset = { 3 }>
-        <Panel>
+        <div className = "panel panel-default">
           <div className = "panel-body">
-            <h3>{ this.props.projects.list[this.props.params.index].name } blah blah blah</h3>
+            <h3>{ this.props.projects.list[this.props.params.index].name }</h3>
           </div>
           <div className = "panel-footer">
             <h4>{ this.props.projects.list[this.props.params.index].description }</h4>
           </div>
-        </Panel>
+        </div>
       </Col>
-    )
+    );
   }
 }
 
-const select = (state) => state
+const select = (state) => state;
 
-export default connect(select)(ProjectHeader)
+export default connect(select)(ProjectHeader);
