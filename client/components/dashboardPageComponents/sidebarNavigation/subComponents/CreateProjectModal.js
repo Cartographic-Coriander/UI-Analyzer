@@ -21,26 +21,26 @@ class CreateProjectContainer extends Component {
       <Modal show = { this.props.visibility } >
         <form onSubmit={ handleSubmit }>
           <Row>
-            <Col xs = { 12 } md = { 12 }>
+            <Col xs = { 5 } md = { 12 }>
               <h4>Create a Project</h4>
             </Col>
           </Row>
           <Row>
             <Col xs = { 2 } md = { 2 }>Name</Col>
-            <Col xs = { 12 } md = { 10 }>
-              <Input type="text" className = "addTestInput" placeholder="Project Name" {...projectName}/>
+            <Col xs = { 5 } md = { 12 }>
+              <Input type="text" placeholder="Project Name" {...projectName}/>
             </Col>
             {projectName.touched && projectName.error && <div>{projectName.error}</div>}
           </Row>
           <Row>
             <Col xs = { 2 } md = { 2 }>Description</Col>
-            <Col xs = { 12 } md = { 10 }>
+            <Col xs = { 5 } md = { 12 }>
               <Input type = "textarea" placeholder="Project Description..." {...projectDescription}/>
             </Col>
             {projectDescription.touched && projectDescription.error && <div>{projectDescription.error}</div>}
           </Row>
           <Row>
-            <Col xs = { 12 } md = { 12 }>
+            <Col xs = { 5 } md = { 12 }>
               <Button className = "btn-primary pull-right" type = "submit" disabled={ submitting}>{submitting ? <i/> : <i/> } Create Project</Button>
               <Button className = "pull-right" type = "button" onClick= { this.props.hideVisibility }>cancel</Button>
             </Col>

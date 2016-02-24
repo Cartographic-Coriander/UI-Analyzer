@@ -8,10 +8,15 @@ import { syncHistory, routeReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form';
 import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
 import { recallState } from './redux/api';
+import TestContainer from './components/dashboardPageComponents/contentComponents/testContainer/TestContainer';
+import SettingsContainer from './components/dashboardPageComponents/contentComponents/settingsContainer/SettingsContainer';
 import LandingPage from './pages/LandingPage.react';
 import DashboardPage from './pages/DashboardPage.react';
 import AddCommentsPage from './pages/AddCommentsPage.react';
 import ReportPage from './pages/ReportPage.react';
+import ProjectHeader from './components/dashboardPageComponents/contentComponents/projectHeader/ProjectHeader';
+import Content from './components/dashboardPageComponents/contentComponents/Content';
+import DashboardDefault from './components/dashboardPageComponents/contentComponents/dashboardContainer/DashboardContainer';
 
 const reducers = {
   user: user,
@@ -38,12 +43,17 @@ ReactDOM.render(
   <Provider store = { store }>
     <Router history = { browserHistory }>
       <Route path = '/' component = { LandingPage }>
-        <IndexRoute component={ LandingPage }/>
         <Route path = 'addcomments' component = { AddCommentsPage }/>
         <Route path = 'report' component = { ReportPage }/>
       </Route>
       <Route path = '/dashboard' component = { DashboardPage }>
-        <IndexRoute component={ DashboardPage }/>
+        <IndexRoute component = { Content }/>
+        <Route path = 'settings/:index' component = { SettingsContainer }>
+          <IndexRoute component = { ProjectHeader }/>
+        </Route>
+        <Route path = 'tests/:index' component = { TestContainer }>
+          <IndexRoute component = { ProjectHeader }/>
+        </Route>
       </Route>
     </Router>
   </Provider>,

@@ -115,17 +115,17 @@ export default class TestContinerEntry extends Component {
           <div className = "well bs-component">
             <Row className = "testRow">
               <Col xs = { 6 } md = { 3 } ><h5> name </h5></Col>
-              <Col xs = { 12 } md = { 8 } className = "testContent" ><h5>{ this.props.name }</h5></Col>
+              <Col xs = { 5 } md = { 8 } className = "testContent" ><h5>{ this.props.name }</h5></Col>
             </Row>
             <hr />
             <Row className = "testRow">
               <Col xs = { 6 } md = { 3 }><h5> url </h5></Col>
-              <Col xs = { 12 } md = { 8 } className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
+              <Col xs = { 5 } md = { 8 } className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
             </Row>
             <hr />
             <Row className = "testRow">
               <Col xs = { 6 } md = { 3 }><h5> prompt </h5></Col>
-              <Col xs = { 12 } md = { 8 }className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
+              <Col xs = { 5 } md = { 8 }className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
             </Row>
             <hr />
             <Row className = "testEntryButtonContainer">
@@ -140,27 +140,27 @@ export default class TestContinerEntry extends Component {
             <form onSubmit = { updateTest.bind(this) }>
               <Row>
                 <Col xs = { 2 } md = { 2 }>name</Col>
-                <Col xs = { 12 } md = { 10 }>
+                <Col xs = { 5 } md = { 12 }>
                   <Input onChange = { handleNameInput.bind(this) }  type = "text" value = { this.state.newName } />
                 </Col>
               </Row>
               <Row>
                 <Col xs = { 2 } md = { 2 }>url</Col>
-                <Col xs = { 12 } md = { 10 }>
-                  <Input onChange = { handleUrlInput.bind(this) } id = "editUrl" type = "text" value = { this.state.newUrl } />
+                <Col xs = { 5 } md = { 12 }>
+                  <Input onChange = { handleUrlInput.bind(this) } type = "text" value = { this.state.newUrl } />
                 </Col>
               </Row>
               <Row>
                 <Col xs = { 2 } md = { 2 }>prompt</Col>
-                <Col xs = { 12 } md = { 10 }>
-                  <Input onChange = { handlePromptInput.bind(this) } id = "editDescription" type = "textarea" value = { this.state.newPrompt } />
+                <Col xs = { 5 } md = { 12 }>
+                  <Input onChange = { handlePromptInput.bind(this) } type = "textarea" value = { this.state.newPrompt } />
                 </Col>
               </Row>
             </form>
             <Row>
-              <Col xs = { 12 } md = { 12 }>
-                <Button className = "btn btn-primary" onClick = { updateTest.bind(this) } type = "button">save changes</Button>
-                <Button onClick = { toggleModal.bind(this) } type = "button">cancel</Button>
+              <Col xs = { 5 } md = { 12 }>
+                <Button className = "btn btn-primary pull-right" onClick = { updateTest.bind(this) } type = "button">save changes</Button>
+                <Button className = "pull-right" onClick = { toggleModal.bind(this) } type = "button">cancel</Button>
               </Col>
             </Row>
           </Modal>

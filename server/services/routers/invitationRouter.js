@@ -6,7 +6,7 @@ var mailService = require('../mail');
 var auth = require('../auth');
 
 invitationRouter.route('/')
-  .get(auth.decode, function (req, res) {
+  .get(function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.query.projectId
@@ -22,7 +22,7 @@ invitationRouter.route('/')
       });
   })
 
-  .post(auth.decode, auth.encodeInvitation, function (req, res) {
+  .post(auth.encodeInvitation, function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.body.projectId,

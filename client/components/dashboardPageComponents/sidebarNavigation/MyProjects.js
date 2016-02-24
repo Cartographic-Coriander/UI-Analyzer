@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
 import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../redux/actions';
-import CreateProjectContainer from './subComponents/CreateProjectContainer';
-import InviteTestersModal from './subComponents/inviteTestersModal';
-import ProjectButton from './subComponents/ProjectButton';
-import TestButton from './subComponents/TestButton';
-import ReportsButton from './subComponents/ReportsButton';
-import SettingsButton from './subComponents/SettingsButton';
-import InviteTestersButton from './subComponents/InviteTestersButton';
+import CreateProjectModal from './subComponents/CreateProjectModal';
+import InviteTestersModal from './subComponents/InviteTestersModal';
 
 class MyProjects extends Component {
   //setting initial addProject modal visibility to not be shown
@@ -43,9 +39,9 @@ class MyProjects extends Component {
     this.componentDidMount();
   };
 
-  handleClick (project) {
+  handleClick (project, index) {
+    browserHistory.push(`/dashboard/tests/${ index }`)
     this.props.dispatch(getsTest({ projectId: project.id }));
-    this.props.dispatch(setFocus('project', project));
     this.props.dispatch(contentState('Test'));
   };
 
@@ -58,9 +54,9 @@ class MyProjects extends Component {
   // this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
     setTimeout(() => {
       $('.react-sanfona-item').children('h3').map(function (index, element) {
-        return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
+        return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index], index));
       })
-    }, 100);
+    }, 1000);
   };
 
   sendInviteInfo (invitee) {
@@ -68,7 +64,7 @@ class MyProjects extends Component {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
       surname: invitee.surnameField,
-      projectId: this.props.currentFocus.project.id
+      projectId: this.props.projects.list[this.params.index]
     };
 
     this.props.dispatch(postsInvitation(params))
@@ -84,28 +80,28 @@ class MyProjects extends Component {
     return (
       <div className="SidebarNavigation list-group sidebar-wrapper">
         <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
-        <Accordion className = "ProjectAccordion" activeItems = { this.props.projects.list.length - 1 } >
-            { this.props.projects.list.map((project) => {
-                return (
-                  <AccordionItem key = { project } title = { project.name } >
-                    <div>
-                      <ul className = "projectAccordionItems">
-                       <li><TestButton id = { project.id }/></li>
-                       <li><SettingsButton id = { project.id } name = { project.name } description = { project.description } /></li>
-                       <li><InviteTestersButton toggleInviteModal = { this.toggleInviteModal.bind(this) } /></li>
-                      </ul>
-                    </div>
-                  </AccordionItem>
-                );
-            })}
+        <Accordion activeItems = { this.props.projects.list.length - 1 } >
+          { this.props.projects.list.map((project, index) => {
+              return (
+                <AccordionItem key = { index } title = { project.name } >
+                  <div>
+                    <ul className = "accordionItems">
+                      <li><Button onClick = { () => browserHistory.push(`/dashboard/tests/${ index }`) } className = "TestButton btn-block" >Tests</Button></li>
+                      <li><Button onClick = { () => browserHistory.push(`/dashboard/settings/${ index }`) } className = "TestButton btn-block">Settings</Button></li>
+                      <li><Button onClick = { () => this.toggleInviteModal() } className = "TestButton btn-block">Invite Testers</Button></li>
+                    </ul>
+                  </div>
+                </AccordionItem>
+              );
+          })}
         </Accordion>
         <InviteTestersModal onSubmit = { this.sendInviteInfo.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
-        <CreateProjectContainer onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
+        <CreateProjectModal onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
       </div>
     );
   };
 };
 
-const select = (state) => state
+const select = (state) => state;
 
 export default connect(select)(MyProjects)

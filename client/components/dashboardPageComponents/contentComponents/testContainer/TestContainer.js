@@ -18,7 +18,6 @@ class TestContainer extends Component {
   //editing existing tests
   updateTest (test) {
     this.props.dispatch(updatesTest(test));
-    // this.props.dispatch(getsImage({ testId: }))
   };
 
   deleteTest (test) {
@@ -27,7 +26,6 @@ class TestContainer extends Component {
 
   getReport (test) {
     this.props.dispatch(getsImage(test));
-    // this.props.dispatch(contentState('Reports'));
     this.props.dispatch(setFocus('test', test))
     this.props.dispatch(pageState('reportView'));
   };
@@ -92,7 +90,6 @@ class TestContainer extends Component {
       <div>
         <div>
           { this.props.tests.list.map((test, index) => {
-              console.log(index)
               return <TestContainerEntry
                 update = { this.updateTest.bind(this) }
                 delete = { this.deleteTest.bind(this) }
@@ -118,27 +115,27 @@ class TestContainer extends Component {
         <Modal show = { this.state.testModalDisplay }>
           <form>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Name</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" />
+              <Col xs = { 2 } md = { 5 }>Test Name</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.newTestName.bind(this) } type = "text" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Url</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" />
+              <Col xs = { 2 } md = { 5 }>Test Url</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.newTestUrl.bind(this) } type = "text" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Prompt</Col>
-              <Col xs = { 12 } md = { 10 }>
+              <Col xs = { 2 } md = { 5 }>Test Prompt</Col>
+              <Col xs = { 5 } md = { 12 }>
                 <Input onChange = { this.newTestPrompt.bind(this) } type = "textarea" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 12 } md = { 12 }>
-                <Button className = "btn-primary" onClick = { this.addTest.bind(this) } type = "button">submit</Button>
-                <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
+              <Col xs = { 5 } md = { 12 }>
+                <Button className = "btn-primary pull-right" onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+                <Button className = "pull-right" onClick = { this.hideModal.bind(this) } type = "button">cancel</Button>
               </Col>
             </Row>
           </form>
@@ -148,6 +145,6 @@ class TestContainer extends Component {
   };
 }
 
-const select = (state) => state
+const select = (state) => state;
 
 export default connect(select)(TestContainer)

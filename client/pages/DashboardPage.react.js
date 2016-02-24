@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { NavItem, Navbar, Nav } from 'react-bootstrap';
+import { signsOut, setFocus } from '../redux/actions';
 import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/MyProjects';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
-import { connect } from 'react-redux';
-import { authChecker, showImagePage } from '../redux/actions';
-import { Navbar } from 'react-bootstrap';
-import { NavItem } from 'react-bootstrap';
-import { Nav } from 'react-bootstrap';
-import { signsOut, setFocus } from '../redux/actions';
-import { Link } from 'react-router'
-import { routeActions } from 'react-router-redux'
 
 export default class DashboardPage extends Component {
   handleLogout () {
@@ -32,7 +27,7 @@ export default class DashboardPage extends Component {
   }
 
   render () {
-  console.log(this.props)
+  console.log(this)
     return (
       <div className = "DashboardPage">
         <Navbar className="navbar navbar-inverse">
@@ -42,18 +37,12 @@ export default class DashboardPage extends Component {
           </Nav>
         </Navbar>
         <SidebarNavigation />
-        <Content />
+        { this.props.children }
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    props: state,
-    id: ownProps.params.id,
-    filter: ownProps.location.query.filter
-  };
-}
+const select = (state) => state;
 
-export default connect(mapStateToProps)(DashboardPage)
+export default connect(select)(DashboardPage)

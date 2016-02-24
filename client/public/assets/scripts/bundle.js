@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a18f32d7b73b5862bd57"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "348c4223e950aa99c852"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8049,21 +8049,41 @@
 
 	var _api = __webpack_require__(354);
 
-	var _LandingPage = __webpack_require__(372);
+	var _TestContainer = __webpack_require__(372);
+
+	var _TestContainer2 = _interopRequireDefault(_TestContainer);
+
+	var _SettingsContainer = __webpack_require__(617);
+
+	var _SettingsContainer2 = _interopRequireDefault(_SettingsContainer);
+
+	var _LandingPage = __webpack_require__(618);
 
 	var _LandingPage2 = _interopRequireDefault(_LandingPage);
 
-	var _DashboardPage = __webpack_require__(623);
+	var _DashboardPage = __webpack_require__(626);
 
 	var _DashboardPage2 = _interopRequireDefault(_DashboardPage);
 
-	var _AddCommentsPage = __webpack_require__(645);
+	var _AddCommentsPage = __webpack_require__(640);
 
 	var _AddCommentsPage2 = _interopRequireDefault(_AddCommentsPage);
 
-	var _ReportPage = __webpack_require__(648);
+	var _ReportPage = __webpack_require__(643);
 
 	var _ReportPage2 = _interopRequireDefault(_ReportPage);
+
+	var _ProjectHeader = __webpack_require__(639);
+
+	var _ProjectHeader2 = _interopRequireDefault(_ProjectHeader);
+
+	var _Content = __webpack_require__(638);
+
+	var _Content2 = _interopRequireDefault(_Content);
+
+	var _DashboardContainer = __webpack_require__(644);
+
+	var _DashboardContainer2 = _interopRequireDefault(_DashboardContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8097,14 +8117,23 @@
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/', component: _LandingPage2.default },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _LandingPage2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'addcomments', component: _AddCommentsPage2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'report', component: _ReportPage2.default })
 	    ),
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/dashboard', component: _DashboardPage2.default },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _DashboardPage2.default })
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _Content2.default }),
+	      _react2.default.createElement(
+	        _reactRouter.Route,
+	        { path: 'settings/:index', component: _SettingsContainer2.default },
+	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _ProjectHeader2.default })
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Route,
+	        { path: 'tests/:index', component: _TestContainer2.default },
+	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _ProjectHeader2.default })
+	      )
 	    )
 	  )
 	), document.getElementById('app'));
@@ -38749,35 +38778,13 @@
 
 	var _reactRedux = __webpack_require__(244);
 
-	var _Header = __webpack_require__(373);
+	var _TestContainerEntry = __webpack_require__(373);
 
-	var _Header2 = _interopRequireDefault(_Header);
+	var _TestContainerEntry2 = _interopRequireDefault(_TestContainerEntry);
 
-	var _Registration = __webpack_require__(616);
+	var _actions = __webpack_require__(616);
 
-	var _Registration2 = _interopRequireDefault(_Registration);
-
-	var _ProductDescription = __webpack_require__(617);
-
-	var _ProductDescription2 = _interopRequireDefault(_ProductDescription);
-
-	var _Footer = __webpack_require__(618);
-
-	var _Footer2 = _interopRequireDefault(_Footer);
-
-	var _AboutUs = __webpack_require__(619);
-
-	var _AboutUs2 = _interopRequireDefault(_AboutUs);
-
-	var _LoginForm = __webpack_require__(621);
-
-	var _LoginForm2 = _interopRequireDefault(_LoginForm);
-
-	var _reactRouter = __webpack_require__(253);
-
-	var _reactRouterRedux = __webpack_require__(309);
-
-	var _actions = __webpack_require__(622);
+	var _reactBootstrap = __webpack_require__(374);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38787,77 +38794,228 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var LandingPage = function (_Component) {
-	  _inherits(LandingPage, _Component);
+	var TestContainer = function (_Component) {
+	  _inherits(TestContainer, _Component);
 
-	  function LandingPage() {
-	    _classCallCheck(this, LandingPage);
+	  function TestContainer(props) {
+	    _classCallCheck(this, TestContainer);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LandingPage).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TestContainer).call(this, props));
+
+	    _this.state = {
+	      testModalDisplay: false,
+	      addTestName: null,
+	      addTestPrompt: null,
+	      addTestUrl: null
+	    };
+	    return _this;
 	  }
 
-	  _createClass(LandingPage, [{
-	    key: 'onLogin',
-	    value: function onLogin(user) {
-	      this.props.dispatch((0, _actions.getsUser)(user));
-	      this.props.dispatch((0, _actions.showLoginModal)(false));
-	      this.props.dispatch(_reactRouterRedux.routeActions.push('/dashboard'));
+	  _createClass(TestContainer, [{
+	    key: 'updateTest',
+
+	    //editing existing tests
+	    value: function updateTest(test) {
+	      this.props.dispatch((0, _actions.updatesTest)(test));
 	    }
 	  }, {
-	    key: 'onRegister',
-	    value: function onRegister(user) {
-	      this.props.dispatch((0, _actions.postsUser)(user));
-	      this.props.dispatch((0, _actions.showSignupModal)(false));
-	      this.props.dispatch((0, _actions.pageState)('authenticated'));
+	    key: 'deleteTest',
+	    value: function deleteTest(test) {
+	      this.props.dispatch((0, _actions.deletesTest)(test));
 	    }
 	  }, {
-	    key: 'showLoginModal',
-	    value: function showLoginModal() {
-	      this.props.dispatch((0, _actions.showLoginModal)(true));
+	    key: 'getReport',
+	    value: function getReport(test) {
+	      this.props.dispatch((0, _actions.getsImage)(test));
+	      this.props.dispatch((0, _actions.setFocus)('test', test));
+	      this.props.dispatch((0, _actions.pageState)('reportView'));
 	    }
 	  }, {
-	    key: 'hideLoginModal',
-	    value: function hideLoginModal() {
-	      this.props.dispatch((0, _actions.showLoginModal)(false));
+	    key: 'addTest',
+
+	    //adding new tests
+	    value: function addTest(test) {
+	      var urlInput = this.state.addTestUrl;
+	      var testUrl = urlInput.substr(0, 4) === 'www.' ? 'http://' + urlInput : urlInput;
+	      var newTest = {
+	        projectId: this.props.currentFocus.project.id,
+	        name: this.state.addTestName,
+	        url: testUrl,
+	        prompt: this.state.addTestPrompt
+	      };
+
+	      this.hideModal();
+	      this.props.dispatch((0, _actions.postsTest)(newTest));
 	    }
 	  }, {
-	    key: 'showRegisterModal',
-	    value: function showRegisterModal() {
-	      this.props.dispatch((0, _actions.showSignupModal)(true));
+	    key: 'newTestName',
+	    value: function newTestName(event) {
+	      this.setState({ addTestName: event.target.value });
 	    }
 	  }, {
-	    key: 'hideRegistrationModal',
-	    value: function hideRegistrationModal() {
-	      this.props.dispatch((0, _actions.showSignupModal)(false));
+	    key: 'newTestPrompt',
+	    value: function newTestPrompt(event) {
+	      this.setState({ addTestPrompt: event.target.value });
+	    }
+	  }, {
+	    key: 'newTestUrl',
+	    value: function newTestUrl(event) {
+	      this.setState({ addTestUrl: event.target.value });
+	    }
+	  }, {
+	    key: 'toggleModal',
+
+	    //for showing and hiding modals
+	    value: function toggleModal() {
+	      this.setState({
+	        testModalDisplay: this.state.testModalDisplay === true ? false : true
+	      });
+	    }
+	  }, {
+	    key: 'hideModal',
+	    value: function hideModal() {
+	      this.setState({
+	        testModalDisplay: false
+	      });
+	    }
+
+	    //to get to the proxy server
+
+	  }, {
+	    key: 'startTest',
+	    value: function startTest(test) {
+	      var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+	      var location = window.location.origin.slice(0, -portLength);
+
+	      //sending user to image commenting page
+	      this.props.dispatch((0, _actions.pageState)('imageView'));
+
+	      //sending user to mouse tracking page
+	      var newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '&prompt=' + test.prompt;
+	      this.props.dispatch((0, _actions.setFocus)('test', this.props.tests.list[test.index]));
+
+	      window.location = newUrl;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this);
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'LandingPage' },
-	        _react2.default.createElement(_Header2.default, { showLogin: this.showLoginModal.bind(this), showSignup: this.showRegisterModal.bind(this) }),
-	        _react2.default.createElement(_LoginForm2.default, { onSubmit: this.onLogin.bind(this), showLoginModal: this.props.modalState.login, hideLogin: this.hideLoginModal.bind(this) }),
-	        _react2.default.createElement(_Registration2.default, { onSubmit: this.onRegister.bind(this), showRegistrationModal: this.props.modalState.getStarted, hideRegistrationModal: this.hideRegistrationModal.bind(this) }),
-	        _react2.default.createElement(_ProductDescription2.default, { showRegistration: this.showRegisterModal.bind(this) }),
-	        _react2.default.createElement(_AboutUs2.default, null),
-	        _react2.default.createElement(_Footer2.default, null)
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.tests.list.map(function (test, index) {
+	            return _react2.default.createElement(_TestContainerEntry2.default, {
+	              update: _this2.updateTest.bind(_this2),
+	              'delete': _this2.deleteTest.bind(_this2),
+	              startTest: _this2.startTest.bind(_this2),
+	              viewReport: _this2.getReport.bind(_this2),
+	              key: test.id,
+	              index: index,
+	              name: test.name,
+	              prompt: test.prompt,
+	              id: test.id,
+	              projectId: test.projectId,
+	              url: test.url
+	            });
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 12, md: 9 },
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { onClick: this.toggleModal.bind(this), className: 'addTestButton btn-primary btn-md pull-right', type: 'button' },
+	              'add test'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal,
+	          { show: this.state.testModalDisplay },
+	          _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 5 },
+	                'Test Name'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestName.bind(this), type: 'text' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 5 },
+	                'Test Url'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestUrl.bind(this), type: 'text' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 5 },
+	                'Test Prompt'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestPrompt.bind(this), type: 'textarea' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { className: 'btn-primary pull-right', onClick: this.addTest.bind(this), type: 'button' },
+	                  'submit'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { className: 'pull-right', onClick: this.hideModal.bind(this), type: 'button' },
+	                  'cancel'
+	                )
+	              )
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
 
-	  return LandingPage;
+	  return TestContainer;
 	}(_react.Component);
 
-	;
-
-	var select = function select(state, ownProps) {
-	  console.log(ownProps, state);
+	var select = function select(state) {
 	  return state;
 	};
 
-	exports.default = (0, _reactRedux.connect)(select)(LandingPage);
+	exports.default = (0, _reactRedux.connect)(select)(TestContainer);
 
 /***/ },
 /* 373 */
@@ -38885,56 +39043,309 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Header = function (_Component) {
-	  _inherits(Header, _Component);
+	var TestContinerEntry = function (_Component) {
+	  _inherits(TestContinerEntry, _Component);
 
-	  function Header() {
-	    _classCallCheck(this, Header);
+	  function TestContinerEntry(props) {
+	    _classCallCheck(this, TestContinerEntry);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TestContinerEntry).call(this, props));
+
+	    _this.state = {
+	      nameDisplay: "none",
+	      newName: null,
+	      promptDisplay: "none",
+	      newPrompt: null,
+	      urlDisplay: "none",
+	      newUrl: null,
+	      modalVisbility: false
+	    };
+	    return _this;
 	  }
 
-	  _createClass(Header, [{
+	  _createClass(TestContinerEntry, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.setState({ newName: this.props.name });
+	      this.setState({ newPrompt: this.props.prompt });
+	      this.setState({ newUrl: this.props.url });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 
+	      var editNameStyle = {
+	        display: this.state.nameDisplay
+	      };
+
+	      var editDiscriptionStyle = {
+	        display: this.state.promptDisplay
+	      };
+
+	      var editUrlStyle = {
+	        display: this.state.urlDisplay
+	      };
+
+	      var toggleModal = function toggleModal() {
+	        _this2.state.modalVisbility === false ? _this2.setState({ modalVisbility: true }) : _this2.setState({ modalVisbility: false });
+	      };
+
+	      var toggleNameInput = function toggleNameInput() {
+	        _this2.state.nameDisplay === "inline-block" ? _this2.setState({ nameDisplay: "none" }) : _this2.setState({ nameDisplay: "inline-block" });
+	      };
+
+	      var togglePromptInput = function togglePromptInput() {
+	        _this2.state.promptDisplay === "inline-block" ? _this2.setState({ promptDisplay: "none" }) : _this2.setState({ promptDisplay: "inline-block" });
+	      };
+
+	      var toggleUrlInput = function toggleUrlInput() {
+	        _this2.state.urlDisplay === "inline-block" ? _this2.setState({ urlDisplay: "none" }) : _this2.setState({ urlDisplay: "inline-block" });
+	      };
+
+	      var updateTest = function updateTest() {
+	        var updatedTest = {
+	          testId: _this2.props.id,
+	          projectId: _this2.props.projectId,
+	          name: _this2.state.newName || _this2.props.name,
+	          prompt: _this2.state.newPrompt || _this2.props.prompt,
+	          url: _this2.state.newUrl || _this2.props.url,
+	          index: _this2.props.index
+	        };
+
+	        _this2.props.update(updatedTest);
+	        toggleModal();
+	      };
+
+	      var deleteTest = function deleteTest() {
+	        var deletedTest = {
+	          projectId: _this2.props.projectId,
+	          testId: _this2.props.id
+	        };
+
+	        _this2.props.delete(deletedTest);
+	      };
+
+	      var startTest = function startTest() {
+	        var token = JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token;
+	        var startTest = {
+	          url: _this2.props.url,
+	          index: _this2.props.index,
+	          testId: _this2.props.id,
+	          prompt: _this2.props.prompt,
+	          access_token: token
+	        };
+
+	        _this2.props.startTest(startTest);
+	      };
+
+	      var handleNameInput = function handleNameInput(event) {
+	        _this2.setState({ newName: event.target.value });
+	      };
+
+	      var handlePromptInput = function handlePromptInput(event) {
+	        _this2.setState({ newPrompt: event.target.value });
+	      };
+
+	      var handleUrlInput = function handleUrlInput(event) {
+	        _this2.setState({ newUrl: event.target.value });
+	      };
+
+	      var viewReport = function viewReport() {
+	        var params = {
+	          id: _this2.props.id,
+	          projectId: _this2.props.projectId,
+	          name: _this2.props.name,
+	          prompt: _this2.props.prompt,
+	          url: _this2.props.url
+	        };
+
+	        _this2.props.viewReport(params);
+	      };
+
 	      return _react2.default.createElement(
-	        _reactBootstrap.Navbar,
-	        { className: 'navbar-inverse landingPageHeader main-header' },
+	        _reactBootstrap.Col,
+	        { className: 'testEntryComponent', xs: 12, md: 9 },
 	        _react2.default.createElement(
-	          'a',
-	          { className: 'navbar-brand', href: '#' },
-	          'Scrutinize'
+	          'div',
+	          { className: 'well bs-component' },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'testRow' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, md: 3 },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                ' name '
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 5, md: 8, className: 'testContent' },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                this.props.name
+	              )
+	            )
+	          ),
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'testRow' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, md: 3 },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                ' url '
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 5, md: 8, className: 'testContent' },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'testUrl' },
+	                  ' ',
+	                  this.props.url,
+	                  ' '
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'testRow' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, md: 3 },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                ' prompt '
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 5, md: 8, className: 'testContent' },
+	              _react2.default.createElement(
+	                'h5',
+	                null,
+	                this.props.prompt
+	              )
+	            )
+	          ),
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'testEntryButtonContainer' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { onClick: toggleModal.bind(this), className: 'testEntryButton', type: 'button' },
+	              'edit test'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { onClick: deleteTest.bind(this), className: 'testEntryButton', type: 'button' },
+	              'delete test'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { onClick: startTest.bind(this), className: 'btn btn-primary testEntryButton', type: 'button' },
+	              'start test'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { onClick: viewReport.bind(this), className: 'btn btn-primary testEntryButton', type: 'button' },
+	              'view report'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          _reactBootstrap.Nav,
-	          { className: 'navbar-nav navbar-right' },
+	          _reactBootstrap.Modal,
+	          { show: this.state.modalVisbility },
 	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            { onClick: function onClick() {
-	                return _this2.props.showSignup(true);
-	              } },
-	            ' Get Started '
+	            'form',
+	            { onSubmit: updateTest.bind(this) },
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 2 },
+	                'name'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), type: 'text', value: this.state.newName })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 2 },
+	                'url'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handleUrlInput.bind(this), type: 'text', value: this.state.newUrl })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 2, md: 2 },
+	                'prompt'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 5, md: 12 },
+	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handlePromptInput.bind(this), type: 'textarea', value: this.state.newPrompt })
+	              )
+	            )
 	          ),
 	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            { onClick: function onClick() {
-	                return _this2.props.showLogin(true);
-	              } },
-	            ' Log In '
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 5, md: 12 },
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'btn btn-primary pull-right', onClick: updateTest.bind(this), type: 'button' },
+	                'save changes'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'pull-right', onClick: toggleModal.bind(this), type: 'button' },
+	                'cancel'
+	              )
+	            )
 	          )
 	        )
 	      );
 	    }
 	  }]);
 
-	  return Header;
+	  return TestContinerEntry;
 	}(_react.Component);
 
+	exports.default = TestContinerEntry;
 	;
-
-	exports.default = Header;
 
 /***/ },
 /* 374 */
@@ -55795,668 +56206,6 @@
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.fields = undefined;
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reduxForm = __webpack_require__(310);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var fields = exports.fields = ['firstName', 'lastName', 'company', 'emailField', 'passwordField'];
-
-	var validate = function validate(values) {
-	  var errors = {};
-	  if (!values.emailField) {
-	    errors.emailField = 'Required';
-	  }
-	  if (!values.passwordField) {
-	    errors.passwordField = 'Required';
-	  }
-	  if (!values.firstName) {
-	    errors.firstName = 'Required';
-	  }
-	  if (!values.lastName) {
-	    errors.lastName = 'Required';
-	  }
-	  return errors;
-	};
-
-	var SignUpForm = function (_Component) {
-	  _inherits(SignUpForm, _Component);
-
-	  function SignUpForm() {
-	    _classCallCheck(this, SignUpForm);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).apply(this, arguments));
-	  }
-
-	  _createClass(SignUpForm, [{
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var _props$fields = _props.fields;
-	      var firstName = _props$fields.firstName;
-	      var lastName = _props$fields.lastName;
-	      var company = _props$fields.company;
-	      var emailField = _props$fields.emailField;
-	      var passwordField = _props$fields.passwordField;
-	      var handleSubmit = _props.handleSubmit;
-	      var submitting = _props.submitting;
-
-	      return _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { show: this.props.showRegistrationModal },
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: handleSubmit },
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'First Name'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'First Name' }, firstName))
-	            ),
-	            firstName.touched && firstName.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              firstName.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'Surname'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'Surname' }, lastName))
-	            ),
-	            lastName.touched && lastName.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              lastName.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'Company'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'Company' }, company))
-	            ),
-	            company.touched && company.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              company.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'e-mail'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'email', placeholder: 'email' }, emailField))
-	            ),
-	            emailField.touched && emailField.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              emailField.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'Password'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'password', placeholder: 'Password' }, passwordField))
-	            ),
-	            passwordField.touched && passwordField.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              passwordField.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 12 },
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'btn-primary signup-button', type: 'submit', disabled: submitting },
-	                ' sign up'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { type: 'button', className: 'signup-cancel-button', onClick: this.props.hideRegModal },
-	                'cancel'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return SignUpForm;
-	}(_react.Component);
-
-	SignUpForm.propTypes = {
-	  fields: _react.PropTypes.object.isRequired,
-	  handleSubmit: _react.PropTypes.func.isRequired,
-	  submitting: _react.PropTypes.bool.isRequired
-	};
-
-	exports.default = (0, _reduxForm.reduxForm)({
-	  form: 'SignUpForm',
-	  fields: fields,
-	  validate: validate
-	})(SignUpForm);
-
-/***/ },
-/* 617 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _reactRedux = __webpack_require__(244);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'ProductDescription',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'productDescription' },
-	      _react2.default.createElement(
-	        _reactBootstrap.Jumbotron,
-	        { className: 'landingPage-Jumbotron' },
-	        _react2.default.createElement('video', { className: 'landingPageVideo', 'z-index': '-50', autoPlay: true, mute: true, loop: true, src: 'https://s3-us-west-1.amazonaws.com/scrutinize/landingPageVideo.mp4' }),
-	        _react2.default.createElement(
-	          'div',
-	          { id: 'landingPageText' },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Inspiration from Users, for Users'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Scrutinize tracks, aggregates and reports user behavior for your website.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Gain insights into your users to optimize UI/UX.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { className: 'btn-primary btn-lg getStartedBtn-lg', onClick: this.props.showRegistration },
-	              'Get Started'
-	            )
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'productExampleContainer' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'productExample' },
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Track User Behavior'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Stop guessing what your users want.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Track the actual user behavior on your website'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'and understand what your users really need.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'productExample' },
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Gather User Feedback'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'User feedback complements user behavior data.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'After completing a test session, '
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'users can provide feedback for your website.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'productExample' },
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Analyze Project Result'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Using heatmap, mouse replay and visual feedback,'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Scrutinize generates project reports'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'that provide deeper insights into your website.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'productExample' },
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Take Action'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Improve your website based on the test results.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'You can create another test for your updated website'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'to improve the UI/UX iteratively.'
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return state;
-	};
-
-/***/ },
-/* 618 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//footer is not going to change much, does not need state
-	var Footer = function Footer() {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "footer" },
-	    _react2.default.createElement(
-	      "div",
-	      null,
-	      _react2.default.createElement(
-	        "p",
-	        null,
-	        "© 2016 Cartographic Coriander. All rights reserved.",
-	        _react2.default.createElement("br", null),
-	        "Made with Love, Camaderie and a Good Sense of Humor"
-	      )
-	    )
-	  );
-	};
-
-	exports.default = Footer;
-
-/***/ },
-/* 619 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _GroupMember = __webpack_require__(620);
-
-	var _GroupMember2 = _interopRequireDefault(_GroupMember);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var corianderMembers = [{ name: 'Max Cudich', description: 'Max resume personal' }, { name: 'Youngjun "Jota" Kwak', description: 'Jota resume personal' }, { name: 'Egan Tamashiro', description: 'Egan resume personal' }];
-
-	var groupMembers = corianderMembers.map(function (member) {
-	  return _react2.default.createElement(_GroupMember2.default, { key: member.name, name: member.name, description: member.description });
-	});
-
-	var AboutUs = _react2.default.createClass({
-	  displayName: 'AboutUs',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'aboutUs' },
-	      groupMembers
-	    );
-	  }
-	});
-
-	exports.default = AboutUs;
-
-/***/ },
-/* 620 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var GroupMember = function GroupMember(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'panel panel-primary authorProfile' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'panel-heading' },
-	      _react2.default.createElement(
-	        'a',
-	        { className: 'memberName panel-title' },
-	        props.name
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'panel-body' },
-	      props.description
-	    )
-	  );
-	};
-
-	exports.default = GroupMember;
-
-/***/ },
-/* 621 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.fields = undefined;
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reduxForm = __webpack_require__(310);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var fields = exports.fields = ['emailField', 'passwordField'];
-
-	var validate = function validate(values) {
-	  var errors = {};
-	  if (!values.emailField) {
-	    errors.emailField = 'Required';
-	  }
-	  if (!values.passwordField) {
-	    errors.passwordField = 'Required';
-	  }
-	  return errors;
-	};
-
-	var LoginForm = function (_Component) {
-	  _inherits(LoginForm, _Component);
-
-	  function LoginForm() {
-	    _classCallCheck(this, LoginForm);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginForm).apply(this, arguments));
-	  }
-
-	  _createClass(LoginForm, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      var _props = this.props;
-	      var _props$fields = _props.fields;
-	      var emailField = _props$fields.emailField;
-	      var passwordField = _props$fields.passwordField;
-	      var handleSubmit = _props.handleSubmit;
-	      var submitting = _props.submitting;
-
-	      return _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { show: this.props.showLoginModal },
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: handleSubmit },
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'e-mail'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'email', placeholder: 'email address' }, emailField))
-	            ),
-	            emailField.touched && emailField.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              emailField.error
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              'password'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ id: 'passwordInput', type: 'password', placeholder: 'password' }, passwordField, { onClick: this.props.clearError }))
-	            ),
-	            passwordField.touched && passwordField.error && _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, md: 2 },
-	              passwordField.error
-	            )
-	          ),
-	          function () {
-	            if (_this2.props.errorMessage) {
-	              return _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                null,
-	                _react2.default.createElement(_reactBootstrap.Col, { xs: 2, md: 2 }),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 10, bsStyle: 'danger', className: 'errorMessage' },
-	                  _this2.props.errorMessage
-	                )
-	              );
-	            }
-	          }(),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 12 },
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'login-button btn-primary', type: 'submit', disabled: submitting },
-	                ' ',
-	                submitting ? _react2.default.createElement('i', null) : _react2.default.createElement('i', null),
-	                ' login '
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'login-cancel-button', onClick: this.props.hideLogin, type: 'button' },
-	                'cancel'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return LoginForm;
-	}(_react.Component);
-
-	LoginForm.propTypes = {
-	  fields: _react.PropTypes.object.isRequired,
-	  handleSubmit: _react.PropTypes.func.isRequired,
-	  submitting: _react.PropTypes.bool.isRequired
-	};
-
-	exports.default = (0, _reduxForm.reduxForm)({
-	  form: 'LoginForm',
-	  fields: fields,
-	  validate: validate
-	})(LoginForm);
-
-/***/ },
-/* 622 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -57127,7 +56876,7 @@
 	}
 
 /***/ },
-/* 623 */
+/* 617 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57142,23 +56891,1142 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _MyProjects = __webpack_require__(624);
+	var _reactRedux = __webpack_require__(244);
 
-	var _MyProjects2 = _interopRequireDefault(_MyProjects);
+	var _reactBootstrap = __webpack_require__(374);
 
-	var _Content = __webpack_require__(640);
+	var _actions = __webpack_require__(616);
 
-	var _Content2 = _interopRequireDefault(_Content);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SettingsContainer = function (_Component) {
+	  _inherits(SettingsContainer, _Component);
+
+	  function SettingsContainer(props) {
+	    _classCallCheck(this, SettingsContainer);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsContainer).call(this, props));
+
+	    _this.state = {
+	      nameDisplay: "none",
+	      newName: null,
+	      descriptionStyle: "none",
+	      newDescription: null,
+	      modalVisibility: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(SettingsContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.setState({ newDescription: this.props.currentFocus.project.description });
+	      this.setState({ newName: this.props.currentFocus.project.name });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var editNameStyle = {
+	        display: this.state.nameDisplay
+	      };
+
+	      var editDiscriptionStyle = {
+	        display: this.state.descriptionStyle
+	      };
+
+	      var toggleNameInput = function toggleNameInput() {
+	        _this2.state.nameDisplay === "inline-block" ? _this2.setState({ nameDisplay: "none" }) : _this2.setState({ nameDisplay: "inline-block" });
+	      };
+
+	      var toggleDescriptionInput = function toggleDescriptionInput() {
+	        _this2.state.descriptionStyle === "inline-block" ? _this2.setState({ descriptionStyle: "none" }) : _this2.setState({ descriptionStyle: "inline-block" });
+	      };
+
+	      var toggleModal = function toggleModal() {
+	        _this2.state.modalVisibility === false ? _this2.setState({ modalVisibility: true }) : _this2.setState({ modalVisibility: false });
+	      };
+
+	      var updateProject = function updateProject() {
+	        var params = {
+	          projectId: _this2.props.currentFocus.project.id,
+	          name: _this2.state.newName || _this2.props.currentFocus.project.name,
+	          description: _this2.state.newDescription || _this2.props.currentFocus.project.description
+	        };
+
+	        _this2.props.dispatch((0, _actions.updatesProject)(params));
+	        _this2.props.dispatch((0, _actions.getsProject)());
+	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: _this2.props.currentFocus.project.id, name: _this2.state.newName, description: _this2.state.newDescription }));
+	        toggleModal();
+	      };
+
+	      var deleteProject = function deleteProject() {
+	        var deletedProject = {
+	          projectId: _this2.props.currentFocus.project.id
+	        };
+
+	        _this2.props.dispatch((0, _actions.deletesProject)(params));
+	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: null, name: null, description: null }));
+	        _this2.props.dispatch((0, _actions.setFocus)('test', { id: null, name: null, projectId: null, prompt: null, url: null }));
+	      };
+
+	      var handleNameInput = function handleNameInput(event) {
+	        _this2.setState({ newName: event.target.value });
+	      };
+
+	      var handleDescriptionInput = function handleDescriptionInput(event) {
+	        _this2.setState({ newDescription: event.target.value });
+	      };
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.children,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'Settings' },
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { className: 'projectEntryComponent', xs: 12, md: 9 },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'well bs-component' },
+	              _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { className: 'testRow' },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { className: 'testLeftSideLabel', xs: 6, md: 3 },
+	                  _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    ' name '
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 8, className: 'projectContent' },
+	                  _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    this.props.currentFocus.project.name
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement('hr', null),
+	              _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { className: 'testRow' },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { className: 'testLeftSideLabel', xs: 6, md: 3 },
+	                  _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    ' description '
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 8, className: 'projectContent' },
+	                  _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    this.props.currentFocus.project.description
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement('hr', null),
+	              _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { className: 'testRow' },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { className: 'btn-primary', onClick: toggleModal.bind(this), type: 'button' },
+	                  'edit project'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { className: 'btn-default', onClick: deleteProject.bind(this), type: 'button' },
+	                  'delete project'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Modal,
+	              { show: this.state.modalVisibility },
+	              _react2.default.createElement(
+	                'form',
+	                { className: 'settingsForm', onSubmit: updateProject.bind(this) },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Row,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 2, md: 2 },
+	                    'name'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 12, md: 10 },
+	                    _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), id: 'editName', type: 'text', value: this.state.newName })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Row,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 2, md: 2 },
+	                    'description'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 12, md: 10 },
+	                    _react2.default.createElement(_reactBootstrap.Input, { onChange: handleDescriptionInput.bind(this), id: 'editDescription', type: 'textarea', value: this.state.newDescription })
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 12 },
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Button,
+	                    { className: 'btn-primary', onClick: updateProject.bind(this), type: 'button' },
+	                    'save changes'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Button,
+	                    { onClick: toggleModal.bind(this), className: 'btn-default', type: 'button' },
+	                    'cancel'
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SettingsContainer;
+	}(_react.Component);
+
+	var select = function select(state) {
+	  return {
+	    projects: state.projects,
+	    currentFocus: state.currentFocus,
+	    tests: state.tests
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(SettingsContainer);
+
+/***/ },
+/* 618 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRedux = __webpack_require__(244);
 
-	var _actions = __webpack_require__(622);
+	var _Header = __webpack_require__(619);
 
-	var _reactBootstrap = __webpack_require__(374);
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _Registration = __webpack_require__(620);
+
+	var _Registration2 = _interopRequireDefault(_Registration);
+
+	var _ProductDescription = __webpack_require__(621);
+
+	var _ProductDescription2 = _interopRequireDefault(_ProductDescription);
+
+	var _Footer = __webpack_require__(622);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _AboutUs = __webpack_require__(623);
+
+	var _AboutUs2 = _interopRequireDefault(_AboutUs);
+
+	var _LoginForm = __webpack_require__(625);
+
+	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
 	var _reactRouter = __webpack_require__(253);
 
 	var _reactRouterRedux = __webpack_require__(309);
+
+	var _actions = __webpack_require__(616);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LandingPage = function (_Component) {
+	  _inherits(LandingPage, _Component);
+
+	  function LandingPage() {
+	    _classCallCheck(this, LandingPage);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LandingPage).apply(this, arguments));
+	  }
+
+	  _createClass(LandingPage, [{
+	    key: 'onLogin',
+	    value: function onLogin(user) {
+	      this.props.dispatch((0, _actions.getsUser)(user));
+	      this.props.dispatch((0, _actions.showLoginModal)(false));
+	      this.props.dispatch(_reactRouterRedux.routeActions.push('/dashboard'));
+	    }
+	  }, {
+	    key: 'onRegister',
+	    value: function onRegister(user) {
+	      this.props.dispatch((0, _actions.postsUser)(user));
+	      this.props.dispatch((0, _actions.showSignupModal)(false));
+	      this.props.dispatch((0, _actions.pageState)('authenticated'));
+	    }
+	  }, {
+	    key: 'showLoginModal',
+	    value: function showLoginModal() {
+	      this.props.dispatch((0, _actions.showLoginModal)(true));
+	    }
+	  }, {
+	    key: 'hideLoginModal',
+	    value: function hideLoginModal() {
+	      this.props.dispatch((0, _actions.showLoginModal)(false));
+	    }
+	  }, {
+	    key: 'showRegisterModal',
+	    value: function showRegisterModal() {
+	      this.props.dispatch((0, _actions.showSignupModal)(true));
+	    }
+	  }, {
+	    key: 'hideRegistrationModal',
+	    value: function hideRegistrationModal() {
+	      this.props.dispatch((0, _actions.showSignupModal)(false));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log(this);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'LandingPage' },
+	        _react2.default.createElement(_Header2.default, { showLogin: this.showLoginModal.bind(this), showSignup: this.showRegisterModal.bind(this) }),
+	        _react2.default.createElement(_LoginForm2.default, { onSubmit: this.onLogin.bind(this), showLoginModal: this.props.modalState.login, hideLogin: this.hideLoginModal.bind(this) }),
+	        _react2.default.createElement(_Registration2.default, { onSubmit: this.onRegister.bind(this), showRegistrationModal: this.props.modalState.getStarted, hideRegistrationModal: this.hideRegistrationModal.bind(this) }),
+	        _react2.default.createElement(_ProductDescription2.default, { showRegistration: this.showRegisterModal.bind(this) }),
+	        _react2.default.createElement(_AboutUs2.default, null),
+	        _react2.default.createElement(_Footer2.default, null)
+	      );
+	    }
+	  }]);
+
+	  return LandingPage;
+	}(_react.Component);
+
+	;
+
+	var select = function select(state) {
+	  return state;
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(LandingPage);
+
+/***/ },
+/* 619 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Header = function (_Component) {
+	  _inherits(Header, _Component);
+
+	  function Header() {
+	    _classCallCheck(this, Header);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+	  }
+
+	  _createClass(Header, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        _reactBootstrap.Navbar,
+	        { className: 'navbar-inverse landingPageHeader main-header' },
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'navbar-brand', href: '#' },
+	          'Scrutinize'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Nav,
+	          { className: 'navbar-nav navbar-right' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            { onClick: function onClick() {
+	                return _this2.props.showSignup(true);
+	              } },
+	            ' Get Started '
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            { onClick: function onClick() {
+	                return _this2.props.showLogin(true);
+	              } },
+	            ' Log In '
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Header;
+	}(_react.Component);
+
+	;
+
+	exports.default = Header;
+
+/***/ },
+/* 620 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fields = undefined;
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reduxForm = __webpack_require__(310);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var fields = exports.fields = ['firstName', 'lastName', 'company', 'emailField', 'passwordField'];
+
+	var validate = function validate(values) {
+	  var errors = {};
+	  if (!values.emailField) {
+	    errors.emailField = 'Required';
+	  }
+	  if (!values.passwordField) {
+	    errors.passwordField = 'Required';
+	  }
+	  if (!values.firstName) {
+	    errors.firstName = 'Required';
+	  }
+	  if (!values.lastName) {
+	    errors.lastName = 'Required';
+	  }
+	  return errors;
+	};
+
+	var SignUpForm = function (_Component) {
+	  _inherits(SignUpForm, _Component);
+
+	  function SignUpForm() {
+	    _classCallCheck(this, SignUpForm);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).apply(this, arguments));
+	  }
+
+	  _createClass(SignUpForm, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var _props$fields = _props.fields;
+	      var firstName = _props$fields.firstName;
+	      var lastName = _props$fields.lastName;
+	      var company = _props$fields.company;
+	      var emailField = _props$fields.emailField;
+	      var passwordField = _props$fields.passwordField;
+	      var handleSubmit = _props.handleSubmit;
+	      var submitting = _props.submitting;
+
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.props.showRegistrationModal },
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: handleSubmit },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'First Name'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'First Name' }, firstName))
+	            ),
+	            firstName.touched && firstName.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              firstName.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'Surname'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'Surname' }, lastName))
+	            ),
+	            lastName.touched && lastName.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              lastName.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'Company'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'Company' }, company))
+	            ),
+	            company.touched && company.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              company.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'e-mail'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'email', placeholder: 'email' }, emailField))
+	            ),
+	            emailField.touched && emailField.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              emailField.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'Password'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'password', placeholder: 'Password' }, passwordField))
+	            ),
+	            passwordField.touched && passwordField.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              passwordField.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 12 },
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'btn-primary signup-button', type: 'submit', disabled: submitting },
+	                ' sign up'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { type: 'button', className: 'signup-cancel-button', onClick: this.props.hideRegModal },
+	                'cancel'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SignUpForm;
+	}(_react.Component);
+
+	SignUpForm.propTypes = {
+	  fields: _react.PropTypes.object.isRequired,
+	  handleSubmit: _react.PropTypes.func.isRequired,
+	  submitting: _react.PropTypes.bool.isRequired
+	};
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'SignUpForm',
+	  fields: fields,
+	  validate: validate
+	})(SignUpForm);
+
+/***/ },
+/* 621 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	var _reactRedux = __webpack_require__(244);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'ProductDescription',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'productDescription' },
+	      _react2.default.createElement(
+	        _reactBootstrap.Jumbotron,
+	        { className: 'landingPage-Jumbotron' },
+	        _react2.default.createElement('video', { className: 'landingPageVideo', 'z-index': '-50', autoPlay: true, mute: true, loop: true, src: 'https://s3-us-west-1.amazonaws.com/scrutinize/landingPageVideo.mp4' }),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'landingPageText' },
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Inspiration from Users, for Users'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Scrutinize tracks, aggregates and reports user behavior for your website.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Gain insights into your users to optimize UI/UX.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { className: 'btn-primary btn-lg getStartedBtn-lg', onClick: this.props.showRegistration },
+	              'Get Started'
+	            )
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'productExampleContainer' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'productExample' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Track User Behavior'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Stop guessing what your users want.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Track the actual user behavior on your website'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'and understand what your users really need.'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'productExample' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Gather User Feedback'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'User feedback complements user behavior data.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'After completing a test session, '
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'users can provide feedback for your website.'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'productExample' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Analyze Project Result'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Using heatmap, mouse replay and visual feedback,'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Scrutinize generates project reports'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'that provide deeper insights into your website.'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'productExample' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Take Action'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Improve your website based on the test results.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'You can create another test for your updated website'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'to improve the UI/UX iteratively.'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return state;
+	};
+
+/***/ },
+/* 622 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//footer is not going to change much, does not need state
+	var Footer = function Footer() {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "footer" },
+	    _react2.default.createElement(
+	      "div",
+	      null,
+	      _react2.default.createElement(
+	        "p",
+	        null,
+	        "© 2016 Cartographic Coriander. All rights reserved.",
+	        _react2.default.createElement("br", null),
+	        "Made with Love, Camaderie and a Good Sense of Humor"
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Footer;
+
+/***/ },
+/* 623 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _GroupMember = __webpack_require__(624);
+
+	var _GroupMember2 = _interopRequireDefault(_GroupMember);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var corianderMembers = [{ name: 'Max Cudich', description: 'Max resume personal' }, { name: 'Youngjun "Jota" Kwak', description: 'Jota resume personal' }, { name: 'Egan Tamashiro', description: 'Egan resume personal' }];
+
+	var groupMembers = corianderMembers.map(function (member) {
+	  return _react2.default.createElement(_GroupMember2.default, { key: member.name, name: member.name, description: member.description });
+	});
+
+	var AboutUs = _react2.default.createClass({
+	  displayName: 'AboutUs',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'aboutUs' },
+	      groupMembers
+	    );
+	  }
+	});
+
+	exports.default = AboutUs;
+
+/***/ },
+/* 624 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var GroupMember = function GroupMember(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'panel panel-primary authorProfile' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'panel-heading' },
+	      _react2.default.createElement(
+	        'a',
+	        { className: 'memberName panel-title' },
+	        props.name
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'panel-body' },
+	      props.description
+	    )
+	  );
+	};
+
+	exports.default = GroupMember;
+
+/***/ },
+/* 625 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fields = undefined;
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reduxForm = __webpack_require__(310);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var fields = exports.fields = ['emailField', 'passwordField'];
+
+	var validate = function validate(values) {
+	  var errors = {};
+	  if (!values.emailField) {
+	    errors.emailField = 'Required';
+	  }
+	  if (!values.passwordField) {
+	    errors.passwordField = 'Required';
+	  }
+	  return errors;
+	};
+
+	var LoginForm = function (_Component) {
+	  _inherits(LoginForm, _Component);
+
+	  function LoginForm() {
+	    _classCallCheck(this, LoginForm);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginForm).apply(this, arguments));
+	  }
+
+	  _createClass(LoginForm, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var _props = this.props;
+	      var _props$fields = _props.fields;
+	      var emailField = _props$fields.emailField;
+	      var passwordField = _props$fields.passwordField;
+	      var handleSubmit = _props.handleSubmit;
+	      var submitting = _props.submitting;
+
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.props.showLoginModal },
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: handleSubmit },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'e-mail'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'email', placeholder: 'email address' }, emailField))
+	            ),
+	            emailField.touched && emailField.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              emailField.error
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              'password'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 10 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ id: 'passwordInput', type: 'password', placeholder: 'password' }, passwordField, { onClick: this.props.clearError }))
+	            ),
+	            passwordField.touched && passwordField.error && _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, md: 2 },
+	              passwordField.error
+	            )
+	          ),
+	          function () {
+	            if (_this2.props.errorMessage) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(_reactBootstrap.Col, { xs: 2, md: 2 }),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Col,
+	                  { xs: 12, md: 10, bsStyle: 'danger', className: 'errorMessage' },
+	                  _this2.props.errorMessage
+	                )
+	              );
+	            }
+	          }(),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12, md: 12 },
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'login-button btn-primary', type: 'submit', disabled: submitting },
+	                ' ',
+	                submitting ? _react2.default.createElement('i', null) : _react2.default.createElement('i', null),
+	                ' login '
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { className: 'login-cancel-button', onClick: this.props.hideLogin, type: 'button' },
+	                'cancel'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return LoginForm;
+	}(_react.Component);
+
+	LoginForm.propTypes = {
+	  fields: _react.PropTypes.object.isRequired,
+	  handleSubmit: _react.PropTypes.func.isRequired,
+	  submitting: _react.PropTypes.bool.isRequired
+	};
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'LoginForm',
+	  fields: fields,
+	  validate: validate
+	})(LoginForm);
+
+/***/ },
+/* 626 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactBootstrap = __webpack_require__(374);
+
+	var _actions = __webpack_require__(616);
+
+	var _MyProjects = __webpack_require__(627);
+
+	var _MyProjects2 = _interopRequireDefault(_MyProjects);
+
+	var _Content = __webpack_require__(638);
+
+	var _Content2 = _interopRequireDefault(_Content);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57205,7 +58073,7 @@
 	    value: function render() {
 	      var _this2 = this;
 
-	      console.log(this.props);
+	      console.log(this);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'DashboardPage' },
@@ -57230,7 +58098,7 @@
 	          )
 	        ),
 	        _react2.default.createElement(_MyProjects2.default, null),
-	        _react2.default.createElement(_Content2.default, null)
+	        this.props.children
 	      );
 	    }
 	  }]);
@@ -57240,18 +58108,14 @@
 
 	exports.default = DashboardPage;
 
-	function mapStateToProps(state, ownProps) {
-	  return {
-	    props: state,
-	    id: ownProps.params.id,
-	    filter: ownProps.location.query.filter
-	  };
-	}
+	var select = function select(state) {
+	  return state;
+	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(DashboardPage);
+	exports.default = (0, _reactRedux.connect)(select)(DashboardPage);
 
 /***/ },
-/* 624 */
+/* 627 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57266,41 +58130,23 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(253);
+
 	var _reactRedux = __webpack_require__(244);
 
-	var _reactSanfona = __webpack_require__(625);
+	var _reactSanfona = __webpack_require__(628);
 
 	var _reactBootstrap = __webpack_require__(374);
 
-	var _actions = __webpack_require__(622);
+	var _actions = __webpack_require__(616);
 
-	var _CreateProjectContainer = __webpack_require__(633);
+	var _CreateProjectModal = __webpack_require__(636);
 
-	var _CreateProjectContainer2 = _interopRequireDefault(_CreateProjectContainer);
+	var _CreateProjectModal2 = _interopRequireDefault(_CreateProjectModal);
 
-	var _inviteTestersModal = __webpack_require__(634);
+	var _InviteTestersModal = __webpack_require__(637);
 
-	var _inviteTestersModal2 = _interopRequireDefault(_inviteTestersModal);
-
-	var _ProjectButton = __webpack_require__(635);
-
-	var _ProjectButton2 = _interopRequireDefault(_ProjectButton);
-
-	var _TestButton = __webpack_require__(636);
-
-	var _TestButton2 = _interopRequireDefault(_TestButton);
-
-	var _ReportsButton = __webpack_require__(637);
-
-	var _ReportsButton2 = _interopRequireDefault(_ReportsButton);
-
-	var _SettingsButton = __webpack_require__(638);
-
-	var _SettingsButton2 = _interopRequireDefault(_SettingsButton);
-
-	var _InviteTestersButton = __webpack_require__(639);
-
-	var _InviteTestersButton2 = _interopRequireDefault(_InviteTestersButton);
+	var _InviteTestersModal2 = _interopRequireDefault(_InviteTestersModal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57358,9 +58204,9 @@
 	    }
 	  }, {
 	    key: 'handleClick',
-	    value: function handleClick(project) {
+	    value: function handleClick(project, index) {
+	      _reactRouter.browserHistory.push('/dashboard/tests/' + index);
 	      this.props.dispatch((0, _actions.getsTest)({ projectId: project.id }));
-	      this.props.dispatch((0, _actions.setFocus)('project', project));
 	      this.props.dispatch((0, _actions.contentState)('Test'));
 	    }
 	  }, {
@@ -57375,9 +58221,9 @@
 	      // this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
 	      setTimeout(function () {
 	        $('.react-sanfona-item').children('h3').map(function (index, element) {
-	          return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index]));
+	          return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index], index));
 	        });
-	      }, 100);
+	      }, 1000);
 	    }
 	  }, {
 	    key: 'sendInviteInfo',
@@ -57386,7 +58232,7 @@
 	        email: invitee.emailField,
 	        firstname: invitee.firstNameField,
 	        surname: invitee.surnameField,
-	        projectId: this.props.currentFocus.project.id
+	        projectId: this.props.projects.list[this.params.index]
 	      };
 
 	      this.props.dispatch((0, _actions.postsInvitation)(params));
@@ -57413,39 +58259,57 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactSanfona.Accordion,
-	          { className: 'ProjectAccordion', activeItems: this.props.projects.list.length - 1 },
-	          this.props.projects.list.map(function (project) {
+	          { activeItems: this.props.projects.list.length - 1 },
+	          this.props.projects.list.map(function (project, index) {
 	            return _react2.default.createElement(
 	              _reactSanfona.AccordionItem,
-	              { key: project, title: project.name },
+	              { key: index, title: project.name },
 	              _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(
 	                  'ul',
-	                  { className: 'projectAccordionItems' },
+	                  { className: 'accordionItems' },
 	                  _react2.default.createElement(
 	                    'li',
 	                    null,
-	                    _react2.default.createElement(_TestButton2.default, { id: project.id })
+	                    _react2.default.createElement(
+	                      _reactBootstrap.Button,
+	                      { onClick: function onClick() {
+	                          return _reactRouter.browserHistory.push('/dashboard/tests/' + index);
+	                        }, className: 'TestButton btn-block' },
+	                      'Tests'
+	                    )
 	                  ),
 	                  _react2.default.createElement(
 	                    'li',
 	                    null,
-	                    _react2.default.createElement(_SettingsButton2.default, { id: project.id, name: project.name, description: project.description })
+	                    _react2.default.createElement(
+	                      _reactBootstrap.Button,
+	                      { onClick: function onClick() {
+	                          return _reactRouter.browserHistory.push('/dashboard/settings/' + index);
+	                        }, className: 'TestButton btn-block' },
+	                      'Settings'
+	                    )
 	                  ),
 	                  _react2.default.createElement(
 	                    'li',
 	                    null,
-	                    _react2.default.createElement(_InviteTestersButton2.default, { toggleInviteModal: _this2.toggleInviteModal.bind(_this2) })
+	                    _react2.default.createElement(
+	                      _reactBootstrap.Button,
+	                      { onClick: function onClick() {
+	                          return _this2.toggleInviteModal();
+	                        }, className: 'TestButton btn-block' },
+	                      'Invite Testers'
+	                    )
 	                  )
 	                )
 	              )
 	            );
 	          })
 	        ),
-	        _react2.default.createElement(_inviteTestersModal2.default, { onSubmit: this.sendInviteInfo.bind(this), visibility: this.state.inviteTestersModalVisibility, toggle: this.toggleInviteModal.bind(this) }),
-	        _react2.default.createElement(_CreateProjectContainer2.default, { onSubmit: this.sendNewProject.bind(this), visibility: this.state.addProjectModalVisibility, hideVisibility: this.toggleModalVisibility.bind(this) })
+	        _react2.default.createElement(_InviteTestersModal2.default, { onSubmit: this.sendInviteInfo.bind(this), visibility: this.state.inviteTestersModalVisibility, toggle: this.toggleInviteModal.bind(this) }),
+	        _react2.default.createElement(_CreateProjectModal2.default, { onSubmit: this.sendNewProject.bind(this), visibility: this.state.addProjectModalVisibility, hideVisibility: this.toggleModalVisibility.bind(this) })
 	      );
 	    }
 	  }]);
@@ -57462,7 +58326,7 @@
 	exports.default = (0, _reactRedux.connect)(select)(MyProjects);
 
 /***/ },
-/* 625 */
+/* 628 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57471,11 +58335,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _Accordion = __webpack_require__(626);
+	var _Accordion = __webpack_require__(629);
 
 	var _Accordion2 = _interopRequireDefault(_Accordion);
 
-	var _AccordionItem = __webpack_require__(627);
+	var _AccordionItem = __webpack_require__(630);
 
 	var _AccordionItem2 = _interopRequireDefault(_AccordionItem);
 
@@ -57483,7 +58347,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 626 */
+/* 629 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57598,7 +58462,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 627 */
+/* 630 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57613,7 +58477,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _classnames = __webpack_require__(628);
+	var _classnames = __webpack_require__(631);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -57625,15 +58489,15 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _uuid = __webpack_require__(629);
+	var _uuid = __webpack_require__(632);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _AccordionItemBody = __webpack_require__(631);
+	var _AccordionItemBody = __webpack_require__(634);
 
 	var _AccordionItemBody2 = _interopRequireDefault(_AccordionItemBody);
 
-	var _AccordionItemTitle = __webpack_require__(632);
+	var _AccordionItemTitle = __webpack_require__(635);
 
 	var _AccordionItemTitle2 = _interopRequireDefault(_AccordionItemTitle);
 
@@ -57755,7 +58619,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 628 */
+/* 631 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -57809,7 +58673,7 @@
 
 
 /***/ },
-/* 629 */
+/* 632 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//     uuid.js
@@ -57820,7 +58684,7 @@
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var _rng = __webpack_require__(630);
+	var _rng = __webpack_require__(633);
 
 	// Maps for number <-> hex string conversion
 	var _byteToHex = [];
@@ -57998,7 +58862,7 @@
 
 
 /***/ },
-/* 630 */
+/* 633 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -58036,7 +58900,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 631 */
+/* 634 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58096,7 +58960,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 632 */
+/* 635 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58153,7 +59017,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 633 */
+/* 636 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58227,7 +59091,7 @@
 	            null,
 	            _react2.default.createElement(
 	              _reactBootstrap.Col,
-	              { xs: 12, md: 12 },
+	              { xs: 5, md: 12 },
 	              _react2.default.createElement(
 	                'h4',
 	                null,
@@ -58245,8 +59109,8 @@
 	            ),
 	            _react2.default.createElement(
 	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
-	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', className: 'addTestInput', placeholder: 'Project Name' }, projectName))
+	              { xs: 5, md: 12 },
+	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'text', placeholder: 'Project Name' }, projectName))
 	            ),
 	            projectName.touched && projectName.error && _react2.default.createElement(
 	              'div',
@@ -58264,7 +59128,7 @@
 	            ),
 	            _react2.default.createElement(
 	              _reactBootstrap.Col,
-	              { xs: 12, md: 10 },
+	              { xs: 5, md: 12 },
 	              _react2.default.createElement(_reactBootstrap.Input, _extends({ type: 'textarea', placeholder: 'Project Description...' }, projectDescription))
 	            ),
 	            projectDescription.touched && projectDescription.error && _react2.default.createElement(
@@ -58278,7 +59142,7 @@
 	            null,
 	            _react2.default.createElement(
 	              _reactBootstrap.Col,
-	              { xs: 12, md: 12 },
+	              { xs: 5, md: 12 },
 	              _react2.default.createElement(
 	                _reactBootstrap.Button,
 	                { className: 'btn-primary pull-right', type: 'submit', disabled: submitting },
@@ -58315,7 +59179,7 @@
 	})(CreateProjectContainer);
 
 /***/ },
-/* 634 */
+/* 637 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58476,202 +59340,6 @@
 	})(inviteTesters);
 
 /***/ },
-/* 635 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ProjectButton = function (_Component) {
-	  _inherits(ProjectButton, _Component);
-
-	  function ProjectButton() {
-	    _classCallCheck(this, ProjectButton);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ProjectButton).apply(this, arguments));
-	  }
-
-	  _createClass(ProjectButton, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      // this.props.dispatch(toggleAccordian());
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'a',
-	        { href: '#', className: 'list-group-item ProjectButton', onClick: this.handleClick.bind(this) },
-	        this.props.name,
-	        _react2.default.createElement('ul', { className: 'dropdown-menu' })
-	      );
-	    }
-	  }]);
-
-	  return ProjectButton;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(ProjectButton);
-
-/***/ },
-/* 636 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TestButton = function (_Component) {
-	  _inherits(TestButton, _Component);
-
-	  function TestButton() {
-	    _classCallCheck(this, TestButton);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TestButton).apply(this, arguments));
-	  }
-
-	  _createClass(TestButton, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      this.props.dispatch((0, _actions.getsTest)({ projectId: this.props.id }));
-	      this.props.dispatch((0, _actions.contentState)('Test'));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { className: 'TestButton btn-block', onClick: this.handleClick.bind(this) },
-	        'Test'
-	      );
-	    }
-	  }]);
-
-	  return TestButton;
-	}(_react.Component);
-
-	;
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(TestButton);
-
-/***/ },
-/* 637 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ReportsButton = function (_Component) {
-	  _inherits(ReportsButton, _Component);
-
-	  function ReportsButton() {
-	    _classCallCheck(this, ReportsButton);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ReportsButton).apply(this, arguments));
-	  }
-
-	  _createClass(ReportsButton, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      this.props.dispatch((0, _actions.contentState)('Reports'));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { className: 'ReportsButton btn-block', onClick: this.handleClick.bind(this) },
-	        'Reports'
-	      );
-	    }
-	  }]);
-
-	  return ReportsButton;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(ReportsButton);
-
-/***/ },
 /* 638 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -58689,155 +59357,21 @@
 
 	var _reactRedux = __webpack_require__(244);
 
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SettingsButton = function (_Component) {
-	  _inherits(SettingsButton, _Component);
-
-	  function SettingsButton() {
-	    _classCallCheck(this, SettingsButton);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsButton).apply(this, arguments));
-	  }
-
-	  _createClass(SettingsButton, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      var params = {
-	        id: this.props.id,
-	        name: this.props.name,
-	        description: this.props.description
-	      };
-
-	      this.props.dispatch((0, _actions.setFocus)('project', params));
-	      this.props.dispatch((0, _actions.contentState)('Settings'));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { className: 'SettingsButton btn-block', onClick: this.handleClick.bind(this) },
-	        'Settings'
-	      );
-	    }
-	  }]);
-
-	  return SettingsButton;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(SettingsButton);
-
-/***/ },
-/* 639 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	var _actions2 = _interopRequireDefault(_actions);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var InviteTestersButton = function (_Component) {
-	  _inherits(InviteTestersButton, _Component);
-
-	  function InviteTestersButton() {
-	    _classCallCheck(this, InviteTestersButton);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(InviteTestersButton).apply(this, arguments));
-	  }
-
-	  _createClass(InviteTestersButton, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      this.props.dispatch((0, _actions2.default)());
-	      this.props.toggleInviteModal();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { className: 'InviteTestersButton btn-block', onClick: this.handleClick.bind(this) },
-	        'Invite Testers'
-	      );
-	    }
-	  }]);
-
-	  return InviteTestersButton;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(InviteTestersButton);
-
-/***/ },
-/* 640 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _ProjectHeader = __webpack_require__(641);
+	var _ProjectHeader = __webpack_require__(639);
 
 	var _ProjectHeader2 = _interopRequireDefault(_ProjectHeader);
 
-	var _SettingsContainer = __webpack_require__(642);
+	var _SettingsContainer = __webpack_require__(617);
 
 	var _SettingsContainer2 = _interopRequireDefault(_SettingsContainer);
 
-	var _TestContainer = __webpack_require__(643);
+	var _TestContainer = __webpack_require__(372);
 
 	var _TestContainer2 = _interopRequireDefault(_TestContainer);
+
+	var _DashboardContainer = __webpack_require__(644);
+
+	var _DashboardContainer2 = _interopRequireDefault(_DashboardContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58859,59 +59393,10 @@
 	  _createClass(Content, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-9 col-md-offset-3 content' },
-	        function () {
-	          if (_this2.props.projects.list) {
-	            var currentProject = undefined,
-	                currentDescription = undefined;
-	            _this2.props.projects.list.forEach(function (project) {
-	              if (_this2.props.currentFocus.project.id === project.id) {
-	                currentProject = project.name;
-	                currentDescription = project.description;
-	              }
-	            });
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'col-md-9' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'panel panel-default' },
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'panel-body' },
-	                  _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    currentProject
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'panel-footer' },
-	                  _react2.default.createElement(
-	                    'h4',
-	                    null,
-	                    currentDescription
-	                  )
-	                )
-	              )
-	            );
-	          }
-	        }(),
-	        function () {
-	          switch (_this2.props.stateRouter.contentState) {
-	            case 'Settings':
-	              return _react2.default.createElement(_SettingsContainer2.default, null);
-	            case 'Test':
-	              return _react2.default.createElement(_TestContainer2.default, null);
-	            default:
-	              return _react2.default.createElement(_TestContainer2.default, null);
-	          }
-	        }()
+	        null,
+	        this.props.children || _react2.default.createElement(_DashboardContainer2.default, null)
 	      );
 	    }
 	  }]);
@@ -58926,7 +59411,7 @@
 	exports.default = (0, _reactRedux.connect)(select)(Content);
 
 /***/ },
-/* 641 */
+/* 639 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58943,6 +59428,8 @@
 
 	var _reactRedux = __webpack_require__(244);
 
+	var _reactBootstrap = __webpack_require__(374);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58954,36 +59441,40 @@
 	var ProjectHeader = function (_Component) {
 	  _inherits(ProjectHeader, _Component);
 
-	  function ProjectHeader(props) {
+	  function ProjectHeader() {
 	    _classCallCheck(this, ProjectHeader);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ProjectHeader).call(this, props));
-
-	    _this.state = {
-	      projectName: null
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ProjectHeader).apply(this, arguments));
 	  }
 
 	  _createClass(ProjectHeader, [{
-	    key: 'updateHeader',
-	    value: function updateHeader() {
-	      this.props.projects.each(function (item) {
-	        return console.log(item);
-	      });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        null,
+	        _reactBootstrap.Col,
+	        { md: 9, mdOffset: 3 },
 	        _react2.default.createElement(
-	          'h3',
+	          _reactBootstrap.Panel,
 	          null,
-	          function () {
-	            return updateHeader();
-	          }
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-body' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              this.props.projects.list[this.props.params.index].name,
+	              ' blah blah blah'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-footer' },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              this.props.projects.list[this.props.params.index].description
+	            )
+	          )
 	        )
 	      );
 	    }
@@ -58999,7 +59490,7 @@
 	exports.default = (0, _reactRedux.connect)(select)(ProjectHeader);
 
 /***/ },
-/* 642 */
+/* 640 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59016,855 +59507,13 @@
 
 	var _reactRedux = __webpack_require__(244);
 
-	var _reactBootstrap = __webpack_require__(374);
-
-	var _actions = __webpack_require__(622);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SettingsContainer = function (_Component) {
-	  _inherits(SettingsContainer, _Component);
-
-	  function SettingsContainer(props) {
-	    _classCallCheck(this, SettingsContainer);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsContainer).call(this, props));
-
-	    _this.state = {
-	      nameDisplay: "none",
-	      newName: null,
-	      descriptionStyle: "none",
-	      newDescription: null,
-	      modalVisibility: false
-	    };
-	    return _this;
-	  }
-
-	  _createClass(SettingsContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ newDescription: this.props.currentFocus.project.description });
-	      this.setState({ newName: this.props.currentFocus.project.name });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      var editNameStyle = {
-	        display: this.state.nameDisplay
-	      };
-
-	      var editDiscriptionStyle = {
-	        display: this.state.descriptionStyle
-	      };
-
-	      var toggleNameInput = function toggleNameInput() {
-	        _this2.state.nameDisplay === "inline-block" ? _this2.setState({ nameDisplay: "none" }) : _this2.setState({ nameDisplay: "inline-block" });
-	      };
-
-	      var toggleDescriptionInput = function toggleDescriptionInput() {
-	        _this2.state.descriptionStyle === "inline-block" ? _this2.setState({ descriptionStyle: "none" }) : _this2.setState({ descriptionStyle: "inline-block" });
-	      };
-
-	      var toggleModal = function toggleModal() {
-	        _this2.state.modalVisibility === false ? _this2.setState({ modalVisibility: true }) : _this2.setState({ modalVisibility: false });
-	      };
-
-	      var updateProject = function updateProject() {
-	        var params = {
-	          projectId: _this2.props.currentFocus.project.id,
-	          name: _this2.state.newName || _this2.props.currentFocus.project.name,
-	          description: _this2.state.newDescription || _this2.props.currentFocus.project.description
-	        };
-
-	        _this2.props.dispatch((0, _actions.updatesProject)(params));
-	        _this2.props.dispatch((0, _actions.getsProject)());
-	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: _this2.props.currentFocus.project.id, name: _this2.state.newName, description: _this2.state.newDescription }));
-	        toggleModal();
-	      };
-
-	      var deleteProject = function deleteProject() {
-	        var deletedProject = {
-	          projectId: _this2.props.currentFocus.project.id
-	        };
-
-	        _this2.props.dispatch((0, _actions.deletesProject)(params));
-	        _this2.props.dispatch((0, _actions.setFocus)('project', { id: null, name: null, description: null }));
-	        _this2.props.dispatch((0, _actions.setFocus)('test', { id: null, name: null, projectId: null, prompt: null, url: null }));
-	      };
-
-	      var handleNameInput = function handleNameInput(event) {
-	        _this2.setState({ newName: event.target.value });
-	      };
-
-	      var handleDescriptionInput = function handleDescriptionInput(event) {
-	        _this2.setState({ newDescription: event.target.value });
-	      };
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'Settings' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { className: 'projectEntryComponent', xs: 12, md: 9 },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'well bs-component' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              { className: 'testRow' },
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { className: 'testLeftSideLabel', xs: 6, md: 3 },
-	                _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  ' name '
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 8, className: 'projectContent' },
-	                _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  this.props.currentFocus.project.name
-	                )
-	              )
-	            ),
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              { className: 'testRow' },
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { className: 'testLeftSideLabel', xs: 6, md: 3 },
-	                _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  ' description '
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 8, className: 'projectContent' },
-	                _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  this.props.currentFocus.project.description
-	                )
-	              )
-	            ),
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              { className: 'testRow' },
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'btn-primary', onClick: toggleModal.bind(this), type: 'button' },
-	                'edit project'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'btn-default', onClick: deleteProject.bind(this), type: 'button' },
-	                'delete project'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal,
-	            { show: this.state.modalVisibility },
-	            _react2.default.createElement(
-	              'form',
-	              { className: 'settingsForm', onSubmit: updateProject.bind(this) },
-	              _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                null,
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 2, md: 2 },
-	                  'name'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 10 },
-	                  _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), id: 'editName', type: 'text', value: this.state.newName })
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Row,
-	                null,
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 2, md: 2 },
-	                  'description'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Col,
-	                  { xs: 12, md: 10 },
-	                  _react2.default.createElement(_reactBootstrap.Input, { onChange: handleDescriptionInput.bind(this), id: 'editDescription', type: 'textarea', value: this.state.newDescription })
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 12 },
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { className: 'btn-primary', onClick: updateProject.bind(this), type: 'button' },
-	                  'save changes'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { onClick: toggleModal.bind(this), className: 'btn-default', type: 'button' },
-	                  'cancel'
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return SettingsContainer;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return {
-	    projects: state.projects,
-	    currentFocus: state.currentFocus,
-	    tests: state.tests
-	  };
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(SettingsContainer);
-
-/***/ },
-/* 643 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _TestContainerEntry = __webpack_require__(644);
-
-	var _TestContainerEntry2 = _interopRequireDefault(_TestContainerEntry);
-
-	var _actions = __webpack_require__(622);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TestContainer = function (_Component) {
-	  _inherits(TestContainer, _Component);
-
-	  function TestContainer(props) {
-	    _classCallCheck(this, TestContainer);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TestContainer).call(this, props));
-
-	    _this.state = {
-	      testModalDisplay: false,
-	      addTestName: null,
-	      addTestPrompt: null,
-	      addTestUrl: null
-	    };
-	    return _this;
-	  }
-
-	  _createClass(TestContainer, [{
-	    key: 'updateTest',
-
-	    //editing existing tests
-	    value: function updateTest(test) {
-	      this.props.dispatch((0, _actions.updatesTest)(test));
-	      // this.props.dispatch(getsImage({ testId: }))
-	    }
-	  }, {
-	    key: 'deleteTest',
-	    value: function deleteTest(test) {
-	      this.props.dispatch((0, _actions.deletesTest)(test));
-	    }
-	  }, {
-	    key: 'getReport',
-	    value: function getReport(test) {
-	      this.props.dispatch((0, _actions.getsImage)(test));
-	      // this.props.dispatch(contentState('Reports'));
-	      this.props.dispatch((0, _actions.setFocus)('test', test));
-	      this.props.dispatch((0, _actions.pageState)('reportView'));
-	    }
-	  }, {
-	    key: 'addTest',
-
-	    //adding new tests
-	    value: function addTest(test) {
-	      var urlInput = this.state.addTestUrl;
-	      var testUrl = urlInput.substr(0, 4) === 'www.' ? 'http://' + urlInput : urlInput;
-	      var newTest = {
-	        projectId: this.props.currentFocus.project.id,
-	        name: this.state.addTestName,
-	        url: testUrl,
-	        prompt: this.state.addTestPrompt
-	      };
-
-	      this.hideModal();
-	      this.props.dispatch((0, _actions.postsTest)(newTest));
-	    }
-	  }, {
-	    key: 'newTestName',
-	    value: function newTestName(event) {
-	      this.setState({ addTestName: event.target.value });
-	    }
-	  }, {
-	    key: 'newTestPrompt',
-	    value: function newTestPrompt(event) {
-	      this.setState({ addTestPrompt: event.target.value });
-	    }
-	  }, {
-	    key: 'newTestUrl',
-	    value: function newTestUrl(event) {
-	      this.setState({ addTestUrl: event.target.value });
-	    }
-	  }, {
-	    key: 'toggleModal',
-
-	    //for showing and hiding modals
-	    value: function toggleModal() {
-	      this.setState({
-	        testModalDisplay: this.state.testModalDisplay === true ? false : true
-	      });
-	    }
-	  }, {
-	    key: 'hideModal',
-	    value: function hideModal() {
-	      this.setState({
-	        testModalDisplay: false
-	      });
-	    }
-
-	    //to get to the proxy server
-
-	  }, {
-	    key: 'startTest',
-	    value: function startTest(test) {
-	      var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
-	      var location = window.location.origin.slice(0, -portLength);
-
-	      //sending user to image commenting page
-	      this.props.dispatch((0, _actions.pageState)('imageView'));
-
-	      //sending user to mouse tracking page
-	      var newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '&prompt=' + test.prompt;
-	      this.props.dispatch((0, _actions.setFocus)('test', this.props.tests.list[test.index]));
-
-	      window.location = newUrl;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.props.tests.list.map(function (test, index) {
-	            console.log(index);
-	            return _react2.default.createElement(_TestContainerEntry2.default, {
-	              update: _this2.updateTest.bind(_this2),
-	              'delete': _this2.deleteTest.bind(_this2),
-	              startTest: _this2.startTest.bind(_this2),
-	              viewReport: _this2.getReport.bind(_this2),
-	              key: test.id,
-	              index: index,
-	              name: test.name,
-	              prompt: test.prompt,
-	              id: test.id,
-	              projectId: test.projectId,
-	              url: test.url
-	            });
-	          })
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 12, md: 9 },
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { onClick: this.toggleModal.bind(this), className: 'addTestButton btn-primary btn-md pull-right', type: 'button' },
-	              'add test'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal,
-	          { show: this.state.testModalDisplay },
-	          _react2.default.createElement(
-	            'form',
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'Test Name'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestName.bind(this), className: 'addTestInput', type: 'text' })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'Test Url'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestUrl.bind(this), className: 'addTestInput', type: 'text' })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'Test Prompt'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: this.newTestPrompt.bind(this), type: 'textarea' })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 12 },
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { className: 'btn-primary', onClick: this.addTest.bind(this), type: 'button' },
-	                  'submit'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { onClick: this.hideModal.bind(this), type: 'button' },
-	                  'cancel'
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TestContainer;
-	}(_react.Component);
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(TestContainer);
-
-/***/ },
-/* 644 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(374);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TestContinerEntry = function (_Component) {
-	  _inherits(TestContinerEntry, _Component);
-
-	  function TestContinerEntry(props) {
-	    _classCallCheck(this, TestContinerEntry);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TestContinerEntry).call(this, props));
-
-	    _this.state = {
-	      nameDisplay: "none",
-	      newName: null,
-	      promptDisplay: "none",
-	      newPrompt: null,
-	      urlDisplay: "none",
-	      newUrl: null,
-	      modalVisbility: false
-	    };
-	    return _this;
-	  }
-
-	  _createClass(TestContinerEntry, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ newName: this.props.name });
-	      this.setState({ newPrompt: this.props.prompt });
-	      this.setState({ newUrl: this.props.url });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      var editNameStyle = {
-	        display: this.state.nameDisplay
-	      };
-
-	      var editDiscriptionStyle = {
-	        display: this.state.promptDisplay
-	      };
-
-	      var editUrlStyle = {
-	        display: this.state.urlDisplay
-	      };
-
-	      var toggleModal = function toggleModal() {
-	        _this2.state.modalVisbility === false ? _this2.setState({ modalVisbility: true }) : _this2.setState({ modalVisbility: false });
-	      };
-
-	      var toggleNameInput = function toggleNameInput() {
-	        _this2.state.nameDisplay === "inline-block" ? _this2.setState({ nameDisplay: "none" }) : _this2.setState({ nameDisplay: "inline-block" });
-	      };
-
-	      var togglePromptInput = function togglePromptInput() {
-	        _this2.state.promptDisplay === "inline-block" ? _this2.setState({ promptDisplay: "none" }) : _this2.setState({ promptDisplay: "inline-block" });
-	      };
-
-	      var toggleUrlInput = function toggleUrlInput() {
-	        _this2.state.urlDisplay === "inline-block" ? _this2.setState({ urlDisplay: "none" }) : _this2.setState({ urlDisplay: "inline-block" });
-	      };
-
-	      var updateTest = function updateTest() {
-	        var updatedTest = {
-	          testId: _this2.props.id,
-	          projectId: _this2.props.projectId,
-	          name: _this2.state.newName || _this2.props.name,
-	          prompt: _this2.state.newPrompt || _this2.props.prompt,
-	          url: _this2.state.newUrl || _this2.props.url,
-	          index: _this2.props.index
-	        };
-
-	        _this2.props.update(updatedTest);
-	        toggleModal();
-	      };
-
-	      var deleteTest = function deleteTest() {
-	        var deletedTest = {
-	          projectId: _this2.props.projectId,
-	          testId: _this2.props.id
-	        };
-
-	        _this2.props.delete(deletedTest);
-	      };
-
-	      var startTest = function startTest() {
-	        var token = JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token;
-	        var startTest = {
-	          url: _this2.props.url,
-	          index: _this2.props.index,
-	          testId: _this2.props.id,
-	          prompt: _this2.props.prompt,
-	          access_token: token
-	        };
-
-	        _this2.props.startTest(startTest);
-	      };
-
-	      var handleNameInput = function handleNameInput(event) {
-	        _this2.setState({ newName: event.target.value });
-	      };
-
-	      var handlePromptInput = function handlePromptInput(event) {
-	        _this2.setState({ newPrompt: event.target.value });
-	      };
-
-	      var handleUrlInput = function handleUrlInput(event) {
-	        _this2.setState({ newUrl: event.target.value });
-	      };
-
-	      var viewReport = function viewReport() {
-	        var params = {
-	          id: _this2.props.id,
-	          projectId: _this2.props.projectId,
-	          name: _this2.props.name,
-	          prompt: _this2.props.prompt,
-	          url: _this2.props.url
-	        };
-
-	        _this2.props.viewReport(params);
-	      };
-
-	      return _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { className: 'testEntryComponent', xs: 12, md: 9 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'well bs-component' },
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            { className: 'testRow' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 6, md: 3 },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                ' name '
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 8, className: 'testContent' },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                this.props.name
-	              )
-	            )
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            { className: 'testRow' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 6, md: 3 },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                ' url '
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 8, className: 'testContent' },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'testUrl' },
-	                  ' ',
-	                  this.props.url,
-	                  ' '
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            { className: 'testRow' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 6, md: 3 },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                ' prompt '
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 8, className: 'testContent' },
-	              _react2.default.createElement(
-	                'h5',
-	                null,
-	                this.props.prompt
-	              )
-	            )
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            { className: 'testEntryButtonContainer' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { onClick: toggleModal.bind(this), className: 'testEntryButton', type: 'button' },
-	              'edit test'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { onClick: deleteTest.bind(this), className: 'testEntryButton', type: 'button' },
-	              'delete test'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { onClick: startTest.bind(this), className: 'btn btn-primary testEntryButton', type: 'button' },
-	              'start test'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { onClick: viewReport.bind(this), className: 'btn btn-primary testEntryButton', type: 'button' },
-	              'view report'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal,
-	          { show: this.state.modalVisbility },
-	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: updateTest.bind(this) },
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'name'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handleNameInput.bind(this), type: 'text', value: this.state.newName })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'url'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handleUrlInput.bind(this), id: 'editUrl', type: 'text', value: this.state.newUrl })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Row,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 2, md: 2 },
-	                'prompt'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 12, md: 10 },
-	                _react2.default.createElement(_reactBootstrap.Input, { onChange: handlePromptInput.bind(this), id: 'editDescription', type: 'textarea', value: this.state.newPrompt })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12, md: 12 },
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { className: 'btn btn-primary', onClick: updateTest.bind(this), type: 'button' },
-	                'save changes'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { onClick: toggleModal.bind(this), type: 'button' },
-	                'cancel'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TestContinerEntry;
-	}(_react.Component);
-
-	exports.default = TestContinerEntry;
-	;
-
-/***/ },
-/* 645 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _Note = __webpack_require__(646);
+	var _Note = __webpack_require__(641);
 
 	var _Note2 = _interopRequireDefault(_Note);
 
-	var _actions = __webpack_require__(622);
+	var _actions = __webpack_require__(616);
 
-	var _welcomeToComments = __webpack_require__(647);
+	var _welcomeToComments = __webpack_require__(642);
 
 	var _welcomeToComments2 = _interopRequireDefault(_welcomeToComments);
 
@@ -60065,7 +59714,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(AddCommentsPage);
 
 /***/ },
-/* 646 */
+/* 641 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60123,7 +59772,7 @@
 	exports.default = Note;
 
 /***/ },
-/* 647 */
+/* 642 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -60199,7 +59848,7 @@
 	exports.default = WelcomeToComments;
 
 /***/ },
-/* 648 */
+/* 643 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60216,9 +59865,9 @@
 
 	var _reactRedux = __webpack_require__(244);
 
-	var _actions = __webpack_require__(622);
+	var _actions = __webpack_require__(616);
 
-	var _Note = __webpack_require__(646);
+	var _Note = __webpack_require__(641);
 
 	var _Note2 = _interopRequireDefault(_Note);
 
@@ -60469,6 +60118,61 @@
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ReportPage);
+
+/***/ },
+/* 644 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(244);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DashboardContainer = function (_Component) {
+	  _inherits(DashboardContainer, _Component);
+
+	  function DashboardContainer() {
+	    _classCallCheck(this, DashboardContainer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardContainer).apply(this, arguments));
+	  }
+
+	  _createClass(DashboardContainer, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'Dashboard' },
+	        'This is the Dashboard Container component'
+	      );
+	    }
+	  }]);
+
+	  return DashboardContainer;
+	}(_react.Component);
+
+	var select = function select(state) {
+	  return state;
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(DashboardContainer);
 
 /***/ }
 /******/ ]);

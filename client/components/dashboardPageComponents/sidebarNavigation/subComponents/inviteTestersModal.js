@@ -15,7 +15,7 @@ class inviteTesters extends Component {
   render () {
   const { fields: { firstNameField, surnameField,  emailField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal show={ this.props.visibility } className="inviteForm">
+    <Modal show = { this.props.visibility } className="inviteForm">
       <form onSubmit={ handleSubmit }>
         <div>
           <label>first name</label>
