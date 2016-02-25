@@ -3,7 +3,7 @@
 
 1. [Usage](#Usage)
 1. [Development](#development)
-1. [Team](#Team)
+1. [Team](#team)
 1. [Contributing](#contributing)
 
 ## Usage
@@ -41,9 +41,9 @@
 
 
 ## Team
-- __Product Owner__: Youngjun Kwak__
-- __Scrum Master__: Max Cudich__
-- __Development Team Members__: Egan Tamashiro, Max Cudich, Youngjun Kwak__
+- __Product Owner__: Youngjun Kwak
+- __Scrum Master__: Max Cudich
+- __Development Team Members__: Egan Tamashiro, Max Cudich, Youngjun Kwak
 
 
 ## Contributing
