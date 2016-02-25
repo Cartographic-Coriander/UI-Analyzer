@@ -41,10 +41,9 @@
 
 
 ## Team
-
-  - __Product Owner__: Youngjun Kwak
-  - __Scrum Master__: Max Cudich
-  - __Development Team Members__: Egan Tamashiro
+- __Product Owner__: Youngjun Kwak__
+- __Scrum Master__: Max Cudich__
+- __Development Team Members__: Egan Tamashiro, Max Cudich, Youngjun Kwak__
 
 
 ## Contributing
