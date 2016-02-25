@@ -1,30 +1,9 @@
-From within the root directory
-npm install
-webpack --watch
-
-architecture
-
-Scrutinize uses mail, screenshot, heat map, mouse tracking, ... services. Regarding the proxy server, upon hitting /testview, a user is redirected an instance of the proxy server. 
-
-api basics
-
-
-
-
-# Scrutinize
-
-> A UI/UX tool that reveals how a website is used.
-
-## Team
-
-  - __Product Owner__: Youngjun Kwak
-  - __Scrum Master__: Max Cudich
-  - __Development Team Members__: Egan Tamashiro
 
 ## Table of Contents
 
 1. [Usage](#Usage)
 1. [Development](#development)
+1. [Team](#Team)
 1. [Contributing](#contributing)
 
 ## Usage
@@ -58,6 +37,14 @@ api basics
 
 ### Installing Dependencies
 - __npm install__
+- __make sure to run webpack__
+
+
+## Team
+
+  - __Product Owner__: Youngjun Kwak
+  - __Scrum Master__: Max Cudich
+  - __Development Team Members__: Egan Tamashiro
 
 
 ## Contributing
