@@ -22,10 +22,6 @@ export function getUser (user) {
 
   return axios.post('/api/user/signin', params)
     .then(function (response) {
-      // instance = axios.create({
-      //   timeout: 1000,
-      //   headers: { 'x-access-token': response.data.token }
-      // });
       setToken(response.data.token);
 
       return response;
@@ -44,10 +40,6 @@ export function postUser (user) {
 
   return axios.post('/api/user/signup', params)
     .then(function (response) {
-      // instance = axios.create({
-      //   timeout: 1000,
-      //   headers: { 'x-access-token': response.data.token }
-      // });
       setToken(response.data.token);
 
       return response;
@@ -146,6 +138,10 @@ export function deleteTest (test) {
   };
 
   return instance.delete('/api/test', { params: params });
+}
+
+export function postTestView () {
+  return instance.post('/testview');
 }
 
 export function getComment (comment) {

@@ -2,7 +2,7 @@ import {
   getUser, postUser, signOut,
   getInvitation, postInvitation,
   getProject, postProject, updateProject, deleteProject,
-  getTest, postTest, updateTest, deleteTest,
+  getTest, postTest, updateTest, deleteTest, testViewPreFlight,
   getComment, postComment, updateComment, deleteComment,
   getImage, postImage, updateImage, deleteImage,
   getMouseTracking, postMouseTracking, updateMouseTracking, deleteMouseTracking
@@ -67,6 +67,29 @@ export function postsUser (user, browserHistory) {
         dispatch(response);
         dispatch(params);
         browserHistory.push('/dashboard');
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_USER',
+          data: error
+        };
+
+        dispatch(params);
+      });
+  };
+}
+
+export function signsOut (browserHistory) {
+  return (dispatch) => {
+    return signOut()
+      .then((response) => {
+        var params = {
+          type: 'SIGNOUT_USER'
+        };
+
+        browserHistory.push('/');
+        window.localStorage.removeItem('Scrutinize.JWT.token');
+        dispatch(params);
       })
       .catch((error) => {
         var params = {
@@ -222,6 +245,23 @@ export function deletesProject (project, browserHistory) {
 }
 
 /* TEST API ACTIONS */
+
+export function postsTestView (location) {
+  return (dispatch) => {
+    return postTestView()
+      .then((response) => {
+        window.location = location;
+      })
+      .catch((error) => {
+        var params = {
+          type: 'ERROR_TESTVIEW',
+          data: error
+        };
+
+        dispatch(params);
+      });
+  };
+}
 
 export function getsTest (test, browserHistory, index) {
   return (dispatch) => {
@@ -617,29 +657,6 @@ export function deletesMouseTracking (mouseTracking) {
   };
 }
 
-export function signsOut (browserHistory) {
-  return (dispatch) => {
-    return signOut()
-      .then((response) => {
-        var params = {
-          type: 'SIGNOUT_USER'
-        };
-
-        browserHistory.push('/');
-        window.localStorage.removeItem('Scrutinize.JWT.token');
-        dispatch(params);
-      })
-      .catch((error) => {
-        var params = {
-          type: 'ERROR_USER',
-          data: error
-        };
-
-        dispatch(params);
-      });
-  };
-}
-
 /* END API ACTIONS */
 
 export function setFocus (key, value) {
@@ -664,38 +681,7 @@ export function contentState (target) {
   };
 }
 
-export function inviteTesters () {
-  return {
-    type: 'TOGGLE_INVITE_USER'
-  };
-}
-
-/* MODAL ACTIONS */
-
-export function showLoginModal (bool) {
-  var visibility = bool ? 'SHOW_LOGIN' : 'MODAL_RESET';
-
-  return {
-    type: visibility
-  };
-}
-
-export function showSignupModal (bool) {
-  var visibility = bool ? 'SHOW_GET_STARTED' : 'MODAL_RESET';
-
-  return {
-    type: visibility
-  };
-}
-
 /*END MODAL ACTIONS */
-
-export function addProject (project) {
-  return {
-    type: 'ADD_PROJECT',
-    data: project
-  };
-}
 
 export function resetError () {
   return {

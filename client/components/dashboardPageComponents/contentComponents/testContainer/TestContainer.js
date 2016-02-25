@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, setFocus, pageState, getsImage, contentState, getsTest, getsProject } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, getsImage, getsTest, getsProject } from '../../../../redux/actions';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 class TestContainer extends Component {
@@ -30,7 +30,7 @@ class TestContainer extends Component {
     let location = window.location.origin.slice(0, -portLength);
 
     //sending user to mouse tracking page
-    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + `/addcomments/${ test.testId }` + '&prompt=' + test.prompt;
+    let newUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
     window.location = newUrl;
   };
 
@@ -46,7 +46,7 @@ class TestContainer extends Component {
   //adding new tests
   addTest (test) {
     let urlInput = this.state.addTestUrl;
-    let testUrl = urlInput.substr(0, 4) === 'www.' ? 'http://' + urlInput : urlInput;
+    let testUrl = urlInput.substr(0, 4) === 'www.' ? `http://${ urlInput }` : urlInput;
     let newTest = {
       projectId: this.props.projects.list[this.props.params.projectIndex].id,
       name: this.state.addTestName,

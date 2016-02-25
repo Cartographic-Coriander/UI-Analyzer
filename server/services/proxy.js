@@ -1,6 +1,6 @@
-var proxy = function (session, callback) {
+var proxy = function (session) {
   var express = require('express');
-  var fs = require('fs');
+  var app = express();
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
   var webshot = require('webshot');
@@ -9,9 +9,7 @@ var proxy = function (session, callback) {
   var auth = require('./auth');
   var imagesController = require('../controllers/imagesController');
   var mousetrackingController = require('../controllers/mousetrackingController');
-  var app = express();
-  var newServer;
-  console.log(session)
+
   //proxy middleware
   app.use(parser.json());
   app.use(parser.urlencoded({ extended: true }));
@@ -51,8 +49,8 @@ var proxy = function (session, callback) {
         .replace(/[\s]+/g, '-'); // Swap whitespace for single hyphen
     }
 
-    mkdirp(directory, function (err) {
-      if (err) {
+    mkdirp(directory, function (error) {
+      if (error) {
         throw (new Error('ERROR! Directory creation error!'));
       }
     })
@@ -64,7 +62,7 @@ var proxy = function (session, callback) {
       }
     };
 
-    webshot(url, dir + slug(url) + '.jpg', options, function (err) {
+    webshot(url, dir + slug(url) + '.jpg', options, function (error) {
       var params = {
         testId: session.testId,
         url: url,
@@ -98,10 +96,8 @@ var proxy = function (session, callback) {
   })
 
   app.listen(session.port, function () {
-    // callback();
     console.log('Proxy server is running on' + session.location + session.port);
   });
 };
-console.log('hi')
 
-proxy(JSON.parse(process.argv[2]), process.argv[3]);
+proxy(JSON.parse(process.argv[2]));

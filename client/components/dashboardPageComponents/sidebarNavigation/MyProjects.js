@@ -12,14 +12,14 @@ class MyProjects extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      addProjectModalVisibility : false,
+      projectModalVisibility : false,
       inviteTestersModalVisibility: false
     };
   };
 
   //toggle add project modal visibilty
   toggleProjectModal () {
-    this.setState({ addProjectModalVisibility: !this.state.addProjectModalVisibility });
+    this.setState({ projectModalVisibility: !this.state.projectModalVisibility });
   };
 
   //toggle invite modal visibility
@@ -39,16 +39,15 @@ class MyProjects extends Component {
     this.componentDidMount();
   };
 
-  handleClick (project, index) {
+  onProjectClick (project, index) {
     this.props.dispatch(getsTest({ projectId: project.id }, browserHistory, index));
   };
 
   componentDidMount () {
     var that = this;
-  // this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
     setTimeout(() => {
       $('.react-sanfona-item').children('h3').map(function (index, element) {
-        return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index], index));
+        return $(element).on('click', that.onProjectClick.bind(that, that.props.projects.list[index], index));
       })
     }, 1000);
   };
@@ -58,10 +57,10 @@ class MyProjects extends Component {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
       surname: invitee.surnameField,
-      projectId: this.props.projects.list[this.params.index]
+      projectId: this.props.projects.list[this.params.projectIndex]
     };
 
-    this.props.dispatch(postsInvitation(params))
+    this.props.dispatch(postsInvitation(params));
     this.toggleInviteModal();
   };
 
@@ -90,7 +89,7 @@ class MyProjects extends Component {
           })}
         </Accordion>
         <InviteTestersModal onSubmit = { this.addInvite.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
-        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
+        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.state.projectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
       </div>
     );
   };
@@ -98,4 +97,4 @@ class MyProjects extends Component {
 
 const select = (state) => state;
 
-export default connect(select)(MyProjects)
+export default connect(select)(MyProjects);

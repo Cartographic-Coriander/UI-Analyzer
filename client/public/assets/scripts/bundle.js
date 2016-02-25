@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bf2bf7a07fcb20919959"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "43dff93f48e135e8d74c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -36994,15 +36994,9 @@
 	exports.errorState = errorState;
 	exports.currentFocus = currentFocus;
 	exports.stateRouter = stateRouter;
-	exports.modalState = modalState;
 	var stateRouterInitialState = {
 	  pageState: 'not_authenticated',
 	  contentState: 'Dashboard'
-	};
-
-	var modalInitialState = {
-	  login: false,
-	  getStarted: false
 	};
 
 	var userInitialState = {
@@ -37292,6 +37286,9 @@
 	    case 'ERROR_TEST':
 	      newState.testError = action.data;
 	      return newState;
+	    case 'ERROR_TESTVIEW':
+	      newState.testError = action.data;
+	      return newState;
 	    case 'ERROR_COMMENT':
 	      newState.commentError = action.data;
 	      return newState;
@@ -37342,29 +37339,6 @@
 	      return newState;
 	    case 'SIGNOUT_USER':
 	      newState.pageState = 'not_authenticated';
-	      return newState;
-	  }
-	  return state;
-	};
-
-	function modalState() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? modalInitialState : arguments[0];
-	  var action = arguments[1];
-
-	  var newState = Object.assign({}, state);
-
-	  switch (action.type) {
-	    case 'SHOW_LOGIN':
-	      newState.login = true;
-	      newState.getStarted = false;
-	      return newState;
-	    case 'SHOW_GET_STARTED':
-	      newState.getStarted = true;
-	      newState.login = false;
-	      return newState;
-	    case 'MODAL_RESET':
-	      newState.login = false;
-	      newState.getStarted = false;
 	      return newState;
 	  }
 	  return state;
@@ -37442,7 +37416,7 @@
 	      var location = window.location.origin.slice(0, -portLength);
 
 	      //sending user to mouse tracking page
-	      var newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + ('/addcomments/' + test.testId) + '&prompt=' + test.prompt;
+	      var newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '/addcomments/' + test.testId + '&prompt=' + test.prompt;
 	      window.location = newUrl;
 	    }
 	  }, {
@@ -54802,12 +54776,14 @@
 	});
 	exports.getsUser = getsUser;
 	exports.postsUser = postsUser;
+	exports.signsOut = signsOut;
 	exports.getsInvitation = getsInvitation;
 	exports.postsInvitation = postsInvitation;
 	exports.getsProject = getsProject;
 	exports.postsProject = postsProject;
 	exports.updatesProject = updatesProject;
 	exports.deletesProject = deletesProject;
+	exports.postsTestView = postsTestView;
 	exports.getsTest = getsTest;
 	exports.postsTest = postsTest;
 	exports.updatesTest = updatesTest;
@@ -54824,14 +54800,9 @@
 	exports.postsMouseTracking = postsMouseTracking;
 	exports.updatesMouseTracking = updatesMouseTracking;
 	exports.deletesMouseTracking = deletesMouseTracking;
-	exports.signsOut = signsOut;
 	exports.setFocus = setFocus;
 	exports.pageState = pageState;
 	exports.contentState = contentState;
-	exports.inviteTesters = inviteTesters;
-	exports.showLoginModal = showLoginModal;
-	exports.showSignupModal = showSignupModal;
-	exports.addProject = addProject;
 	exports.resetError = resetError;
 
 	var _api = __webpack_require__(599);
@@ -54890,6 +54861,27 @@
 	      dispatch(response);
 	      dispatch(params);
 	      browserHistory.push('/dashboard');
+	    }).catch(function (error) {
+	      var params = {
+	        type: 'ERROR_USER',
+	        data: error
+	      };
+
+	      dispatch(params);
+	    });
+	  };
+	}
+
+	function signsOut(browserHistory) {
+	  return function (dispatch) {
+	    return (0, _api.signOut)().then(function (response) {
+	      var params = {
+	        type: 'SIGNOUT_USER'
+	      };
+
+	      browserHistory.push('/');
+	      window.localStorage.removeItem('Scrutinize.JWT.token');
+	      dispatch(params);
 	    }).catch(function (error) {
 	      var params = {
 	        type: 'ERROR_USER',
@@ -55031,6 +55023,21 @@
 	}
 
 	/* TEST API ACTIONS */
+
+	function postsTestView(location) {
+	  return function (dispatch) {
+	    return postTestView().then(function (response) {
+	      window.location = location;
+	    }).catch(function (error) {
+	      var params = {
+	        type: 'ERROR_TESTVIEW',
+	        data: error
+	      };
+
+	      dispatch(params);
+	    });
+	  };
+	}
 
 	function getsTest(test, browserHistory, index) {
 	  return function (dispatch) {
@@ -55394,27 +55401,6 @@
 	  };
 	}
 
-	function signsOut(browserHistory) {
-	  return function (dispatch) {
-	    return (0, _api.signOut)().then(function (response) {
-	      var params = {
-	        type: 'SIGNOUT_USER'
-	      };
-
-	      browserHistory.push('/');
-	      window.localStorage.removeItem('Scrutinize.JWT.token');
-	      dispatch(params);
-	    }).catch(function (error) {
-	      var params = {
-	        type: 'ERROR_USER',
-	        data: error
-	      };
-
-	      dispatch(params);
-	    });
-	  };
-	}
-
 	/* END API ACTIONS */
 
 	function setFocus(key, value) {
@@ -55439,38 +55425,7 @@
 	  };
 	}
 
-	function inviteTesters() {
-	  return {
-	    type: 'TOGGLE_INVITE_USER'
-	  };
-	}
-
-	/* MODAL ACTIONS */
-
-	function showLoginModal(bool) {
-	  var visibility = bool ? 'SHOW_LOGIN' : 'MODAL_RESET';
-
-	  return {
-	    type: visibility
-	  };
-	}
-
-	function showSignupModal(bool) {
-	  var visibility = bool ? 'SHOW_GET_STARTED' : 'MODAL_RESET';
-
-	  return {
-	    type: visibility
-	  };
-	}
-
 	/*END MODAL ACTIONS */
-
-	function addProject(project) {
-	  return {
-	    type: 'ADD_PROJECT',
-	    data: project
-	  };
-	}
 
 	function resetError() {
 	  return {
@@ -55501,6 +55456,7 @@
 	exports.postTest = postTest;
 	exports.updateTest = updateTest;
 	exports.deleteTest = deleteTest;
+	exports.postTestView = postTestView;
 	exports.getComment = getComment;
 	exports.postComment = postComment;
 	exports.updateComment = updateComment;
@@ -55542,10 +55498,6 @@
 	  };
 
 	  return _axios2.default.post('/api/user/signin', params).then(function (response) {
-	    // instance = axios.create({
-	    //   timeout: 1000,
-	    //   headers: { 'x-access-token': response.data.token }
-	    // });
 	    setToken(response.data.token);
 
 	    return response;
@@ -55563,10 +55515,6 @@
 	  };
 
 	  return _axios2.default.post('/api/user/signup', params).then(function (response) {
-	    // instance = axios.create({
-	    //   timeout: 1000,
-	    //   headers: { 'x-access-token': response.data.token }
-	    // });
 	    setToken(response.data.token);
 
 	    return response;
@@ -55665,6 +55613,10 @@
 	  };
 
 	  return instance.delete('/api/test', { params: params });
+	}
+
+	function postTestView() {
+	  return instance.post('/testview');
 	}
 
 	function getComment(comment) {
@@ -58165,7 +58117,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MyProjects).call(this, props));
 
 	    _this.state = {
-	      addProjectModalVisibility: false,
+	      projectModalVisibility: false,
 	      inviteTestersModalVisibility: false
 	    };
 	    return _this;
@@ -58176,7 +58128,7 @@
 
 	    //toggle add project modal visibilty
 	    value: function toggleProjectModal() {
-	      this.setState({ addProjectModalVisibility: !this.state.addProjectModalVisibility });
+	      this.setState({ projectModalVisibility: !this.state.projectModalVisibility });
 	    }
 	  }, {
 	    key: 'toggleInviteModal',
@@ -58201,18 +58153,17 @@
 	      this.componentDidMount();
 	    }
 	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(project, index) {
+	    key: 'onProjectClick',
+	    value: function onProjectClick(project, index) {
 	      this.props.dispatch((0, _actions.getsTest)({ projectId: project.id }, _reactRouter.browserHistory, index));
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      // this.props.dispatch(getsComment({id: this.props.currentFocus.image.id}))
 	      setTimeout(function () {
 	        $('.react-sanfona-item').children('h3').map(function (index, element) {
-	          return $(element).on('click', that.handleClick.bind(that, that.props.projects.list[index], index));
+	          return $(element).on('click', that.onProjectClick.bind(that, that.props.projects.list[index], index));
 	        });
 	      }, 1000);
 	    }
@@ -58223,7 +58174,7 @@
 	        email: invitee.emailField,
 	        firstname: invitee.firstNameField,
 	        surname: invitee.surnameField,
-	        projectId: this.props.projects.list[this.params.index]
+	        projectId: this.props.projects.list[this.params.projectIndex]
 	      };
 
 	      this.props.dispatch((0, _actions.postsInvitation)(params));
@@ -58300,7 +58251,7 @@
 	          })
 	        ),
 	        _react2.default.createElement(_InviteTestersModal2.default, { onSubmit: this.addInvite.bind(this), visibility: this.state.inviteTestersModalVisibility, toggle: this.toggleInviteModal.bind(this) }),
-	        _react2.default.createElement(_CreateProjectModal2.default, { onSubmit: this.addProject.bind(this), visibility: this.state.addProjectModalVisibility, hideVisibility: this.toggleProjectModal.bind(this) })
+	        _react2.default.createElement(_CreateProjectModal2.default, { onSubmit: this.addProject.bind(this), visibility: this.state.projectModalVisibility, hideVisibility: this.toggleProjectModal.bind(this) })
 	      );
 	    }
 	  }]);
@@ -59346,20 +59297,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(244);
-
-	var _ProjectHeader = __webpack_require__(639);
-
-	var _ProjectHeader2 = _interopRequireDefault(_ProjectHeader);
-
-	var _SettingsContainer = __webpack_require__(617);
-
-	var _SettingsContainer2 = _interopRequireDefault(_SettingsContainer);
-
-	var _TestContainer = __webpack_require__(354);
-
-	var _TestContainer2 = _interopRequireDefault(_TestContainer);
-
 	var _DashboardContainer = __webpack_require__(640);
 
 	var _DashboardContainer2 = _interopRequireDefault(_DashboardContainer);
@@ -59395,11 +59332,7 @@
 	  return Content;
 	}(_react.Component);
 
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(Content);
+	exports.default = Content;
 
 /***/ },
 /* 639 */

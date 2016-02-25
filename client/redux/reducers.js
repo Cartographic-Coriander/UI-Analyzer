@@ -3,11 +3,6 @@ const stateRouterInitialState = {
   contentState: 'Dashboard'
 }
 
-const modalInitialState = {
-  login: false,
-  getStarted: false
-}
-
 const userInitialState = {
   firstname: null,
   surname: null,
@@ -260,6 +255,9 @@ export function errorState (state = errorInitialState, action) {
     case 'ERROR_TEST':
       newState.testError = action.data;
       return newState;
+    case 'ERROR_TESTVIEW':
+      newState.testError = action.data;
+      return newState;
     case 'ERROR_COMMENT':
       newState.commentError = action.data;
       return newState;
@@ -308,24 +306,3 @@ export function stateRouter (state = stateRouterInitialState, action) {
   }
   return state;
 };
-
-export function modalState (state = modalInitialState, action) {
-  var newState = Object.assign({}, state);
-
-  switch(action.type) {
-    case 'SHOW_LOGIN':
-      newState.login = true;
-      newState.getStarted = false;
-      return newState;
-    case 'SHOW_GET_STARTED':
-      newState.getStarted = true;
-      newState.login = false;
-      return newState;
-    case 'MODAL_RESET':
-      newState.login = false;
-      newState.getStarted = false;
-      return newState;
-  }
-  return state;
-};
-
