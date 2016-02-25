@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class WelcomeToComments extends Component {
+export default class addCommentsSplash extends Component {
   render () {
     return (
       <div id="testStartPrompt">
@@ -17,8 +17,6 @@ class WelcomeToComments extends Component {
           <div className="testPrompt">loading...</div>
         </div>
       </div>
-    )
+    );
   }
-}
-
-export default WelcomeToComments;
+};

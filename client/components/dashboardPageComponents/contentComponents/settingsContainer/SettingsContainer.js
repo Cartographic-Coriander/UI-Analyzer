@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { routeActions } from 'react-router-redux';
+import { browserHistory } from 'react-router';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 import { updatesProject, deletesProject, getsProject, setFocus } from '../../../../redux/actions';
 
 class SettingsContainer extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       id: null,
       name : null,
@@ -16,48 +17,57 @@ class SettingsContainer extends Component {
   };
 
   componentWillMount () {
-    this.props.dispatch(getsProject());
-    this.setState({ id: this.props.projects.list[this.props.params.index].id });
-    this.setState({ description: this.props.projects.list[this.props.params.index].description });
-    this.setState({ name: this.props.projects.list[this.props.params.index].name });
+    this.props.dispatch(getsProject(this.setInitialState.bind(this)));
+  };
+
+  setInitialState () {
+    this.setState({ id: this.props.projects.list[this.props.params.projectIndex].id });
+    this.setState({ description: this.props.projects.list[this.props.params.projectIndex].description });
+    this.setState({ name: this.props.projects.list[this.props.params.projectIndex].name });
+    this.render();
+  };
+
+  updateProject () {
+    let params = {
+      projectId: this.state.id,
+      name: this.state.name,
+      description: this.state.description,
+      index: this.props.params.index
+    };
+
+    this.props.dispatch(updatesProject(params));
+    this.toggleModal();
+  };
+
+  deleteProject () {
+    let params = {
+      projectId : this.state.id
+    };
+
+    this.props.dispatch(deletesProject(params, browserHistory));
+  };
+
+  handleNameInput (event) {
+    this.setState({ name : event.target.value });
+  };
+
+  handleDescriptionInput (event) {
+    this.setState({ description : event.target.value });
+  };
+
+  toggleModal () {
+    this.setState({ modalVisibility: !this.state.modalVisibility });
   };
 
   render () {
-    let toggleModal = () => {
-      this.setState({ modalVisibility: !this.state.modalVisibility });
-    };
-
-    let updateProject = () => {
-      let params = {
-        projectId: this.state.id,
-        name: this.state.name,
-        description: this.state.description
-      };
-
-      this.props.dispatch(updatesProject(params));
-      toggleModal();
-    };
-
-    let deleteProject = () => {
-      let params = {
-        projectId : this.state.id
-      };
-
-      this.props.dispatch(deletesProject(params));
-      browserHistory.push('/dashboard');
-    };
-
-    let handleNameInput = (event) => {
-      this.setState({ name : event.target.value });
-    };
-
-    let handleDescriptionInput = (event) => {
-      this.setState({ description : event.target.value });
-    };
-
+    let header = () => {
+      if (this.props.projects.list.length > 0) {
+        return this.props.children;
+      }
+    }
     return (
       <div className = 'Settings'>
-        { this.props.children }
+        { header() }
         <Col className = "projectEntryComponent" xs = { 12 } md = { 9 }>
           <div className = "well bs-component">
             <Row className = "testRow" >
@@ -71,30 +81,30 @@ class SettingsContainer extends Component {
             </Row>
             <hr />
             <Row className = "testRow">
-              <Button className = "btn-primary" onClick = { toggleModal.bind(this) } type = "button">edit project</Button>
-              <Button className = "btn-default" onClick = { deleteProject.bind(this) } type="button">delete project</Button>
+              <Button className = "btn-primary" onClick = { this.toggleModal.bind(this) } type = "button">edit project</Button>
+              <Button className = "btn-default" onClick = { this.deleteProject.bind(this) } type="button">delete project</Button>
             </Row>
           </div>
 
           <Modal show = { this.state.modalVisibility }>
-            <form className = "settingsForm" onSubmit = { updateProject.bind(this) } >
+            <form className = "settingsForm" onSubmit = { this.updateProject.bind(this) } >
               <Row>
                 <Col xs = { 2 } md = { 2 }>name</Col>
                 <Col xs = { 12 } md = { 10 }>
-                  <Input onChange = { handleNameInput.bind(this) } id = "editName" type = "text" value = { this.state.name } />
+                  <Input onChange = { this.handleNameInput.bind(this) } id = "editName" type = "text" value = { this.state.name } />
                 </Col>
               </Row>
               <Row>
                 <Col xs = { 2 } md = { 2 }>description</Col>
                 <Col xs = { 12 } md = { 10 }>
-                  <Input onChange = { handleDescriptionInput.bind(this) } id = "editDescription" type = "textarea" value = { this.state.description } />
+                  <Input onChange = { this.handleDescriptionInput.bind(this) } id = "editDescription" type = "textarea" value = { this.state.description } />
                 </Col>
               </Row>
             </form>
             <Row>
               <Col xs = { 12 } md = { 12 }>
-                <Button className = "btn-primary" onClick = { updateProject.bind(this) } type = "button">save changes</Button>
-                <Button onClick = { toggleModal.bind(this) } className = "btn-default" type = "button">cancel</Button>
+                <Button className = "btn-primary" onClick = { this.updateProject.bind(this) } type = "button">save changes</Button>
+                <Button onClick = { this.toggleModal.bind(this) } className = "btn-default" type = "button">cancel</Button>
               </Col>
             </Row>
           </Modal>

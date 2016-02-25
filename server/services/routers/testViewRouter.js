@@ -1,6 +1,7 @@
 var express = require('express');
 var testViewRouter = express.Router();
 var auth = require('../auth');
+var fork = require('child_process').fork;
 var port = 2999;
 
 testViewRouter.route('/')
@@ -20,9 +21,8 @@ testViewRouter.route('/')
 
     // new server must be spun up for every test instance
     // after a given period of inactivity the server will spin down
-    require('./proxy')(express, params, function () {
-      res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
-    });
+    var proxy = fork('server/services/proxy', [JSON.stringify(params), req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token], { timeout: 180000 });
+    res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token)
   });
 
 module.exports = testViewRouter;

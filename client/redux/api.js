@@ -1,13 +1,17 @@
 import axios from 'axios';
 var instance;
 
+if (!!localStorage.getItem('Scrutinize.JWT.token')) {
+  setToken(JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token);
+}
+
 //for creating instance when state is reloaded
-export function recallState () {
+export function setToken (token) {
   instance = axios.create({
     timeout: 1000,
-    headers: {'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token }
+    headers: {'x-access-token': token }
   });
-};
+}
 
 //for signing up from the landing page
 export function getUser (user) {
@@ -18,10 +22,11 @@ export function getUser (user) {
 
   return axios.post('/api/user/signin', params)
     .then(function (response) {
-      instance = axios.create({
-        timeout: 1000,
-        headers: { 'x-access-token': response.data.token }
-      });
+      // instance = axios.create({
+      //   timeout: 1000,
+      //   headers: { 'x-access-token': response.data.token }
+      // });
+      setToken(response.data.token);
 
       return response;
     });
@@ -35,14 +40,15 @@ export function postUser (user) {
     firstName: user.firstName,
     lastName: user.lastName,
     company: user.company
-  }
+  };
 
   return axios.post('/api/user/signup', params)
     .then(function (response) {
-      instance = axios.create({
-        timeout: 1000,
-        headers: { 'x-access-token': response.data.token }
-      });
+      // instance = axios.create({
+      //   timeout: 1000,
+      //   headers: { 'x-access-token': response.data.token }
+      // });
+      setToken(response.data.token);
 
       return response;
     });
@@ -91,8 +97,6 @@ export function updateProject (project) {
     description: project.description
   };
 
-  console.log('update project:', params);
-
   return instance.put('/api/project', params);
 }
 
@@ -131,8 +135,6 @@ export function updateTest (test) {
     url: test.url,
     prompt: test.prompt
   };
-
-  console.log('update test:', params)
 
   return instance.put('/api/test', params);
 }

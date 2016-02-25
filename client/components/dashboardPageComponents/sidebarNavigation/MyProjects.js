@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
@@ -10,7 +10,7 @@ import InviteTestersModal from './subComponents/InviteTestersModal';
 class MyProjects extends Component {
   //setting initial addProject modal visibility to not be shown
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       addProjectModalVisibility : false,
       inviteTestersModalVisibility: false
@@ -18,35 +18,29 @@ class MyProjects extends Component {
   };
 
   //toggle add project modal visibilty
-  toggleModalVisibility () {
-    this.setState({ addProjectModalVisibility: this.state.addProjectModalVisibility ? false : true });
+  toggleProjectModal () {
+    this.setState({ addProjectModalVisibility: !this.state.addProjectModalVisibility });
   };
 
   //toggle invite modal visibility
   toggleInviteModal () {
-    this.state.inviteTestersModalVisibility ? this.setState({ inviteTestersModalVisibility : false }) : this.setState({ inviteTestersModalVisibility : true });
+    this.setState({ inviteTestersModalVisibility: !this.state.inviteTestersModalVisibility });
   }
 
   //sending data from add project form in the modal and hiding the modal
-  sendNewProject (project) {
-    let newProject = {
+  addProject (project) {
+    let params = {
       name: project.projectName,
       description: project.projectDescription
     };
 
-    this.props.dispatch(postsProject(newProject));
-    this.toggleModalVisibility();
+    this.props.dispatch(postsProject(params));
+    this.toggleProjectModal();
     this.componentDidMount();
   };
 
   handleClick (project, index) {
-    browserHistory.push(`/dashboard/tests/${ index }`)
-    this.props.dispatch(getsTest({ projectId: project.id }));
-    this.props.dispatch(contentState('Test'));
-  };
-
-  setContent (context) {
-    this.props.dispatch(contentState(context));
+    this.props.dispatch(getsTest({ projectId: project.id }, browserHistory, index));
   };
 
   componentDidMount () {
@@ -59,7 +53,7 @@ class MyProjects extends Component {
     }, 1000);
   };
 
-  sendInviteInfo (invitee) {
+  addInvite (invitee) {
     var params = {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
@@ -68,7 +62,7 @@ class MyProjects extends Component {
     };
 
     this.props.dispatch(postsInvitation(params))
-    this.setState({ inviteTestersModalVisibility : false })
+    this.toggleInviteModal();
   };
 
   sidebarResize () {
@@ -79,7 +73,7 @@ class MyProjects extends Component {
     this.sidebarResize();
     return (
       <div className="SidebarNavigation list-group sidebar-wrapper">
-        <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleModalVisibility.bind(this) }>Add Project</Button>
+        <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleProjectModal.bind(this) }>Add Project</Button>
         <Accordion activeItems = { this.props.projects.list.length - 1 } >
           { this.props.projects.list.map((project, index) => {
               return (
@@ -95,8 +89,8 @@ class MyProjects extends Component {
               );
           })}
         </Accordion>
-        <InviteTestersModal onSubmit = { this.sendInviteInfo.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
-        <CreateProjectModal onSubmit = { this.sendNewProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleModalVisibility.bind(this) } />
+        <InviteTestersModal onSubmit = { this.addInvite.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
+        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.state.addProjectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
       </div>
     );
   };

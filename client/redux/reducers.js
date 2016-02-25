@@ -127,8 +127,8 @@ export function projects (state = projectsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'UPDATE_PROJECT':
-      var newList = newState.list.map(item => item.id === data.id ? item = data : item);
-      newState.list = newList;
+      newState.list[action.index].name = action.name;
+      newState.list[action.index].description = action.description;
       return newState;
     case 'DELETE_PROJECT':
       var newList = [];

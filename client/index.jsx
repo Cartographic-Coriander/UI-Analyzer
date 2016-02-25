@@ -7,7 +7,6 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistory, routeReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form';
 import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
-import { recallState } from './redux/api';
 import TestContainer from './components/dashboardPageComponents/contentComponents/testContainer/TestContainer';
 import SettingsContainer from './components/dashboardPageComponents/contentComponents/settingsContainer/SettingsContainer';
 import LandingPage from './pages/LandingPage.react';
@@ -33,7 +32,7 @@ const reducers = {
   routing: routeReducer
 };
 const reducer = combineReducers(reducers);
-const reduxRouterMiddleware = syncHistory(browserHistory)
+const reduxRouterMiddleware = syncHistory(browserHistory);
 const createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducer);
 
@@ -43,15 +42,15 @@ ReactDOM.render(
   <Provider store = { store }>
     <Router history = { browserHistory }>
       <Route path = '/' component = { LandingPage }>
-        <Route path = 'addcomments' component = { AddCommentsPage }/>
-        <Route path = 'report' component = { ReportPage }/>
+        <Route path = 'addcomments/:testId' component = { AddCommentsPage }/>
+        <Route path = 'reports/:testId' component = { ReportPage }/>
       </Route>
       <Route path = '/dashboard' component = { DashboardPage }>
         <IndexRoute component = { Content }/>
-        <Route path = 'settings/:index' component = { SettingsContainer }>
+        <Route path = 'settings/:projectIndex' component = { SettingsContainer }>
           <IndexRoute component = { ProjectHeader }/>
         </Route>
-        <Route path = 'tests/:index' component = { TestContainer }>
+        <Route path = 'tests/:projectIndex' component = { TestContainer }>
           <IndexRoute component = { ProjectHeader }/>
         </Route>
       </Route>

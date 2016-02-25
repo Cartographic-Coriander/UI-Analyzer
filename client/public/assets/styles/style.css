@@ -161,7 +161,7 @@ input:-webkit-autofill {
 
 /*styling the settings and test pages on the dashboard*/
 
-.Settings, .Tests {
+.Settings, .Tests, .Dashboard {
   display: flex;
   flex-direction: column;
   min-width: 70%;
@@ -276,6 +276,7 @@ input:-webkit-autofill {
 
 .panel {
   margin-top: 20px;
+  margin-bottom: 21px;
   text-align: center;
 }
 

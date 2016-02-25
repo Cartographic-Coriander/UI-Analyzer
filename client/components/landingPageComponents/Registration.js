@@ -25,7 +25,7 @@ class SignUpForm extends Component{
   render () {
   const { fields: { firstName, lastName, company, emailField, passwordField }, handleSubmit, submitting } = this.props;
     return (
-    <Modal show = { this.props.showRegistrationModal }>
+    <Modal show = { this.props.visibility }>
       <form onSubmit = { handleSubmit }>
         <Row>
           <Col xs = { 2 } md = { 2 }>First Name</Col>
@@ -65,20 +65,20 @@ class SignUpForm extends Component{
         <Row>
           <Col xs = { 12 } md = { 12 }>
             <Button className = "btn-primary signup-button" type = "submit" disabled = { submitting }> sign up</Button>
-            <Button type = "button" className = "signup-cancel-button" onClick = { this.props.hideRegModal }>cancel</Button>
+            <Button type = "button" className = "signup-cancel-button" onClick = { () => this.props.toggleRegisterModal() }>cancel</Button>
           </Col>
         </Row>
       </form>
     </Modal>
-    )
+    );
   }
-}
+};
 
 SignUpForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
-}
+};
 
 export default reduxForm({
   form: 'SignUpForm',

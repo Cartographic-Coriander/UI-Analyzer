@@ -1,4 +1,5 @@
-module.exports = function (express, session, callback) {
+var proxy = function (session, callback) {
+  var express = require('express');
   var fs = require('fs');
   var parser = require('body-parser');
   var proxyMiddleware = require('http-proxy-middleware');
@@ -8,15 +9,15 @@ module.exports = function (express, session, callback) {
   var auth = require('./auth');
   var imagesController = require('../controllers/imagesController');
   var mousetrackingController = require('../controllers/mousetrackingController');
-  var proxyServer = express();
+  var app = express();
   var newServer;
-
+  console.log(session)
   //proxy middleware
-  proxyServer.use(parser.json());
-  proxyServer.use(parser.urlencoded({ extended: true }));
-  proxyServer.use(express.static('testview'));
+  app.use(parser.json());
+  app.use(parser.urlencoded({ extended: true }));
+  app.use(express.static('testview'));
 
-  proxyServer.get('/testview', auth.decode, function (req, res) {
+  app.get('/testview', auth.decode, function (req, res) {
     var context = '/';
     var options = {
       target: session.url, // target host
@@ -25,15 +26,15 @@ module.exports = function (express, session, callback) {
     };
     var proxy = proxyMiddleware(context, options);
 
-    proxyServer.use(proxy);
-    res.sendFile(__dirname + '/../../client/public/testview/testview.html');
+    app.use(proxy);
+    res.sendFile(path.join(__dirname, '/../../client/public/testview/', 'testview.html'));
   });
 
-  proxyServer.get('/api/realUrl', auth.decode, function (req, res) {
+  app.get('/api/realUrl', auth.decode, function (req, res) {
     res.send(session.url);
   });
 
-  proxyServer.post('/api/screenshot', auth.decode, function (req, res) {
+  app.post('/api/screenshot', auth.decode, function (req, res) {
     var url = req.body.url;
     var resolution = [req.body.resolution[0] + 'x' + req.body.resolution[1]];
     var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
@@ -90,14 +91,17 @@ module.exports = function (express, session, callback) {
     })
   });
 
-  proxyServer.get('/api/endtest', auth.decode, function (req, res) {
+  app.get('/api/endtest', auth.decode, function (req, res) {
     console.log('test ended', session.callbackUrl);
     res.send(session.callbackUrl);
-    newServer.close();
+    process.exit();
   })
 
-  newServer = proxyServer.listen(session.port, function () {
-    callback();
+  app.listen(session.port, function () {
+    // callback();
     console.log('Proxy server is running on' + session.location + session.port);
   });
 };
+console.log('hi')
+
+proxy(JSON.parse(process.argv[2]), process.argv[3]);

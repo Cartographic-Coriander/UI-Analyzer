@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Note from '../components/testingPageComponents/notesView/Note';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
-import Welcome from '../components/testingPageComponents/welcomeToComments.js';
+import AddCommentsSplash from '../components/testingPageComponents/AddCommentsSplash';
 
 class AddCommentsPage extends Component {
   constructor (props) {
@@ -149,7 +149,7 @@ class AddCommentsPage extends Component {
         { (() => {
           if (this.state.showLanding) {
             return (
-              <Welcome />
+              <AddCommentsSplash />
             )
           } else {
             return (

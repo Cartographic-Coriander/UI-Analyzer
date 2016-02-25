@@ -6,13 +6,13 @@ import {
   getComment, postComment, updateComment, deleteComment,
   getImage, postImage, updateImage, deleteImage,
   getMouseTracking, postMouseTracking, updateMouseTracking, deleteMouseTracking
-} from './api'
+} from './api';
 
 /* PROJECT API ACTIONS */
 
 /* USER API ACTIONS */
 
-export function getsUser (user) {
+export function getsUser (user, browserHistory) {
   return (dispatch) => {
     return getUser(user)
       .then((response) => {
@@ -39,6 +39,7 @@ export function getsUser (user) {
             };
 
             dispatch(params);
+            browserHistory.push('/dashboard');
           });
       })
       .catch((error) => {
@@ -52,7 +53,7 @@ export function getsUser (user) {
   };
 }
 
-export function postsUser (user) {
+export function postsUser (user, browserHistory) {
   return (dispatch) => {
     return postUser(user)
       .then((response) => {
@@ -65,6 +66,7 @@ export function postsUser (user) {
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
         dispatch(response);
         dispatch(params);
+        browserHistory.push('/dashboard');
       })
       .catch((error) => {
         var params = {
@@ -125,16 +127,19 @@ export function postsInvitation (invitation) {
 
 /* PROJECT API ACTIONS */
 
-export function getsProject (project) {
+export function getsProject (callback) {
   return (dispatch) => {
-    return getProject(project)
+    return getProject()
       .then((response) => {
         var params = {
           type: 'GET_PROJECT',
           data: response.data
         };
 
-        dispatch(params);
+        return dispatch(params);
+      })
+      .then(() => {
+        callback();
       })
       .catch((error) => {
         var params = {
@@ -175,7 +180,9 @@ export function updatesProject (project) {
       .then((response) => {
         var params = {
           type: 'UPDATE_PROJECT',
-          data: response.data
+          name: project.name,
+          description: project.description,
+          index: project.index
         };
 
         dispatch(params);
@@ -191,7 +198,7 @@ export function updatesProject (project) {
   };
 }
 
-export function deletesProject (project) {
+export function deletesProject (project, browserHistory) {
   return (dispatch) => {
     return deleteProject(project)
       .then((response) => {
@@ -199,7 +206,9 @@ export function deletesProject (project) {
           type: 'DELETE_PROJECT',
           data: project.projectId
         };
+
         dispatch(params);
+        browserHistory.push('/dashboard');
       })
       .catch((error) => {
         var params = {
@@ -214,7 +223,7 @@ export function deletesProject (project) {
 
 /* TEST API ACTIONS */
 
-export function getsTest (test) {
+export function getsTest (test, browserHistory, index) {
   return (dispatch) => {
     return getTest(test)
       .then((response) => {
@@ -223,6 +232,7 @@ export function getsTest (test) {
           data: response.data
         };
 
+        browserHistory.push(`/dashboard/tests/${ index }`);
         dispatch(params);
       })
       .catch((error) => {
@@ -271,7 +281,8 @@ export function updatesTest (test) {
       .then((response) => {
         var params = {
           type: 'UPDATE_TEST',
-          data: response.data
+          data: response.data,
+          index: response.index
         };
 
         dispatch(params);
@@ -413,7 +424,7 @@ export function deletesComment (comment) {
 
 /* IMAGE API ACTIONS */
 
-export function getsImage (image) {
+export function getsImage (image, browserHistory) {
   return (dispatch) => {
     return getImage(image)
       .then((response) => {
@@ -422,6 +433,7 @@ export function getsImage (image) {
           data: response.data
         };
 
+        browserHistory.push(`/reports`);
         dispatch(params);
       })
       .catch((error) => {
@@ -605,14 +617,15 @@ export function deletesMouseTracking (mouseTracking) {
   };
 }
 
-export function signsOut () {
+export function signsOut (browserHistory) {
   return (dispatch) => {
     return signOut()
       .then((response) => {
         var params = {
           type: 'SIGNOUT_USER'
-        }
+        };
 
+        browserHistory.push('/');
         window.localStorage.removeItem('Scrutinize.JWT.token');
         dispatch(params);
       })
