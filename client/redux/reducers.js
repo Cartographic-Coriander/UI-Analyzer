@@ -72,8 +72,8 @@ export function projects (state = projectsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'UPDATE_PROJECT':
-      newState.list[action.index].name = action.name;
-      newState.list[action.index].description = action.description;
+      newState.list[action.index].name = action.data.name;
+      newState.list[action.index].description = action.data.description;
       return newState;
     case 'DELETE_PROJECT':
       var newList = [];
@@ -101,9 +101,9 @@ export function tests (state = testsInitialState, action) {
       newState.list = newList;
       return newState;
     case 'UPDATE_TEST':
-      newState.list[action.index].name = action.data.update.name;
-      newState.list[action.index].prompt = action.data.update.prompt;
-      newState.list[action.index].url = aciton.data.update.url;
+      newState.list[action.index].name = action.data.name;
+      newState.list[action.index].prompt = action.data.prompt;
+      newState.list[action.index].url = aciton.data.url;
       return newState;
     case 'DELETE_TEST':
       var newList = [];

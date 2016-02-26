@@ -4,11 +4,11 @@ var auth = require('../auth');
 var fork = require('child_process').fork;
 var ports = [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007];
 var pool = {};
-var uid = 16676887;
+var uid;
 
 var childTimeout = function (uid, port, timeout) {
   setTimeout(function () {
-    if (!!pool[uid]) {
+    if (pool[uid]) {
       pool[uid].kill('SIGTERM');
       console.log('Killing child process!');
     }
@@ -23,11 +23,11 @@ var childTimeout = function (uid, port, timeout) {
 
 testViewRouter.route('/')
   .get(auth.decode, function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', req.query.location + ':' + port);
+    res.setHeader('Access-Control-Allow-Origin', req.query.location);
 
     if (Object.keys(pool).length <= 8) {
       var port = ports.shift();
-      uid = uid + 1;
+      uid = port;
       var params = {
         url: req.query.url,
         testId: req.query.testId,
@@ -43,9 +43,14 @@ testViewRouter.route('/')
       var child = fork('server/services/proxy', [JSON.stringify(params), req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token]);
       pool[uid] = child;
 
-      child.on('message', function (m) {
-        childTimeout(uid, port, 180000);
-        res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
+      child.on('message', function (message) {
+        switch (message.type) {
+          case 'START':
+            childTimeout(uid, port, 180000);
+            res.redirect(301, req.query.location + ':' + port + '/testview?url=' + req.query.url + '&prompt=' + req.query.prompt + '&access_token=' + params.token);
+          case 'DATA':
+            console.log(message.data);
+        }
       });
     } else {
       res.status(500).end('Proxy server overloaded! Try again later.');

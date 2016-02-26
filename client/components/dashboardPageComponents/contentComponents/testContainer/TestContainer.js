@@ -55,8 +55,6 @@ class TestContainer extends Component {
       prompt: this.state.addTestPrompt
     };
 
-    console.log(newTest)
-
     this.props.dispatch(postsTest(newTest));
     this.toggleModal();
   };

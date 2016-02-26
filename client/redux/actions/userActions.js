@@ -10,27 +10,10 @@ export function getsUser (user, browserHistory) {
           type: 'GET_USER',
           data: response.data.user
         };
-        let userParams = {
-          type: 'SET_FOCUS',
-          key: 'user',
-          value: response.data.user
-        };
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
+        browserHistory.push('/dashboard');
         dispatch(params);
-        dispatch(userParams);
-      })
-      .then(() => {
-        return getProject()
-          .then((projects) => {
-            var params = {
-              type: 'GET_PROJECT',
-              data: projects.data
-            };
-
-            dispatch(params);
-            browserHistory.push('/dashboard');
-          });
       })
       .catch((error) => {
         var params = {
@@ -47,16 +30,11 @@ export function postsUser (user, browserHistory) {
   return (dispatch) => {
     return postUser(user)
       .then((response) => {
-        var params = {
-          type: 'PAGE_STATE',
-          auth: 'authenticated'
-        };
         response.type = 'POST_USER';
 
         localStorage.setItem('Scrutinize.JWT.token', JSON.stringify(response.data));
-        dispatch(response);
-        dispatch(params);
         browserHistory.push('/dashboard');
+        dispatch(response);
       })
       .catch((error) => {
         var params = {

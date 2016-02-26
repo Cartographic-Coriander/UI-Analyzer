@@ -11,9 +11,7 @@ export function getsProject (callback) {
           data: response.data
         };
 
-        return dispatch(params);
-      })
-      .then(() => {
+        dispatch(params);
         callback();
       })
       .catch((error) => {
@@ -55,8 +53,7 @@ export function updatesProject (project) {
       .then((response) => {
         var params = {
           type: 'UPDATE_PROJECT',
-          name: project.name,
-          description: project.description,
+          data: response.data.update,
           index: project.index
         };
 
@@ -82,8 +79,8 @@ export function deletesProject (project, browserHistory) {
           data: project.projectId
         };
 
-        dispatch(params);
         browserHistory.push('/dashboard');
+        dispatch(params);
       })
       .catch((error) => {
         var params = {

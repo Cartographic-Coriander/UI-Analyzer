@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { getsMouseTracking, getsComment, resetsComment } from '../redux/actions';
-import Comment from '../components/testingPageComponents/commentView/Comment';
+import Comment from '../components/addCommentsPageComponents/commentView/Comment';
+import ReportSplash from '../components/reportPageComponents/ReportSplash';
 
 class ReportPage extends Component {
   constructor (props) {
     super(props);
     this.state = {
       testImages : [],
-      currentIndex: 0
+      currentIndex: 0,
+      showLanding: true
     };
   };
 
@@ -21,9 +23,15 @@ class ReportPage extends Component {
   };
 
   componentWillMount () {
+    setTimeout(() => {
+      this.setState({ showLanding: false });
+    }, 5000);
+
     $.ajax({
       url: '/api/image',
-      data: { testId : this.props.params.testId },
+      data: {
+        testId : this.props.params.testId
+      },
       headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
       method: 'GET',
       timeout: 1000,
@@ -115,13 +123,11 @@ class ReportPage extends Component {
     $(document).on('keydown', (event) => {
       if (event.keyCode === 72 && event.ctrlKey) {
         window.toggleHeatmap();
-        console.log('heatmap')
       }
     });
 
     $(document).on('keydown', (event) => {
       if (event.keyCode === 82 && event.ctrlKey) {
-        console.log('replay');
         mouseReplay();
       }
     });
@@ -157,7 +163,7 @@ class ReportPage extends Component {
 
     let renderImage = (imageObj) => {
       if ( imageObj.id === this.state.testImages[this.state.currentIndex].id ) {
-        return <img key = { imageObj.url } src = { 'data:image/jpeg;base64,' + imageObj.image } ></img>
+        return <img key = { imageObj.url } src = { 'data:image/jpeg;base64,' + imageObj.image } ></img>;
       }
     };
 
@@ -183,10 +189,22 @@ class ReportPage extends Component {
     };
 
     return (
-      <div id = 'critiqueImage' style = { imageStyle } >
-        { this.state.testImages.map(renderImage) }
-        { this.props.mouseTrackings.list.map(renderCursor) }
-        { this.props.comments.list.map(renderComment) }
+      <div>
+        { (() => {
+          if (this.state.showLanding) {
+            return (
+              <ReportSplash />
+            );
+          } else {
+            return (
+              <div id = 'critiqueImage' style = { imageStyle } >
+                { this.state.testImages.map(renderImage) }
+                { this.props.mouseTrackings.list.map(renderCursor) }
+                { this.props.comments.list.map(renderComment) }
+              </div>
+            );
+          }
+        })() }
       </div>
     );
   };

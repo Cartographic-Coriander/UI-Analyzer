@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import Comment from '../components/testingPageComponents/commentView/Comment';
 import { postsComment, getsImage, pageState, setFocus } from '../redux/actions';
-import AddCommentsSplash from '../components/testingPageComponents/AddCommentsSplash';
+import Comment from '../components/addCommentsPageComponents/commentView/Comment';
+import AddCommentsSplash from '../components/addCommentsPageComponents/AddCommentsSplash';
 
 class AddCommentsPage extends Component {
   constructor (props) {
@@ -54,7 +54,9 @@ class AddCommentsPage extends Component {
 
     $.ajax({
       url: '/api/image',
-      data: { testId : this.props.params.testId },
+      data: {
+        testId : this.props.params.testId
+      },
       headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
       method: 'GET',
       timeout: 10000,
@@ -141,7 +143,7 @@ class AddCommentsPage extends Component {
     // Display only one image at a time
     let renderImage = (imageObj) => {
       if ( imageObj.id === this.state.testImages[this.state.currentIndex].id ) {
-        return <img key = { imageObj.url } src = {'data:image/jpeg;base64,' + imageObj.image } ></img>
+        return <img key = { imageObj.url } src = {'data:image/jpeg;base64,' + imageObj.image } ></img>;
       }
     };
 
