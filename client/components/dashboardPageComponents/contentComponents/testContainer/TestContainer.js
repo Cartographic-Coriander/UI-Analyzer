@@ -25,11 +25,15 @@ class TestContainer extends Component {
   };
 
   startTest (test) {
-    let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
-    let location = window.location.origin.slice(0, -portLength);
+    var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+    if (portLength > 0) {
+      var location = window.location.origin.slice(0, -portLength);
+    } else {
+      var location = window.location.origin;
+    }
 
     // Assembly URL to pass to proxy
-    let testUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
+    var testUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
     this.props.dispatch(postsTestView(testUrl));
   };
 
@@ -50,6 +54,8 @@ class TestContainer extends Component {
       url: testUrl,
       prompt: this.state.addTestPrompt
     };
+
+    console.log(newTest)
 
     this.props.dispatch(postsTest(newTest));
     this.toggleModal();

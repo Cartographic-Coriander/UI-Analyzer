@@ -159,9 +159,7 @@ export function getsProject (callback) {
           data: response.data
         };
 
-        return dispatch(params);
-      })
-      .then(() => {
+        dispatch(params);
         callback();
       })
       .catch((error) => {
@@ -250,6 +248,7 @@ export function postsTestView (location) {
   return (dispatch) => {
     return postTestView()
       .then((response) => {
+        console.log(location)
         window.location = location;
       })
       .catch((error) => {

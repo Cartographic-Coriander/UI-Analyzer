@@ -37,7 +37,6 @@ class LandingPage extends Component {
   };
 
   render () {
-    console.log(this)
     return (
       <div className = "LandingPage">
         <Header toggleLoginModal = { this.toggleLoginModal.bind(this) } toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>

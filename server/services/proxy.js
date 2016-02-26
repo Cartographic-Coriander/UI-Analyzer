@@ -79,7 +79,7 @@ var proxy = function (session) {
 
           return mousetrackingController.createMouseTracking(params)
             .then(function (result) {
-              res.json(result.get())
+              res.end();
             })
             .catch(function (error) {
               console.log('ERROR! Failed to save mousetracking data!', error);
