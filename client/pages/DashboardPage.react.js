@@ -34,8 +34,8 @@ export default class DashboardPage extends Component {
         { this.props.children }
       </div>
     );
-  }
-}
+  };
+};
 
 const select = (state) => state;
 

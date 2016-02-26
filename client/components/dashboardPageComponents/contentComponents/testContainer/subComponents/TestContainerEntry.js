@@ -19,11 +19,11 @@ export default class TestContinerEntry extends Component {
   };
 
   toggleModal () {
-    this.setState({ modalVisibility: !this.state.modalVisibility });
+    this.setState(prev => ({ modalVisibility: !prev.modalVisibility }));
   };
 
   updateTest () {
-    const updatedTest = {
+    const params = {
       testId: this.props.id,
       projectId: this.props.projectId,
       name: this.state.name || this.props.name,
@@ -32,22 +32,22 @@ export default class TestContinerEntry extends Component {
       index: this.props.index
     };
 
-    this.props.update(updatedTest);
+    this.props.update(params);
     this.toggleModal();
   };
 
   deleteTest () {
-    const deletedTest = {
+    const params = {
       projectId : this.props.projectId,
       testId: this.props.id
     };
 
-    this.props.delete(deletedTest);
+    this.props.delete(params);
   };
 
   startTest () {
     let token = JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token;
-    const startTest = {
+    const params = {
       url: this.props.url,
       index: this.props.index,
       testId: this.props.id,
@@ -55,7 +55,7 @@ export default class TestContinerEntry extends Component {
       access_token: token
     };
 
-    this.props.startTest(startTest);
+    this.props.startTest(params);
   };
 
   handleNameInput (event) {
@@ -84,60 +84,60 @@ export default class TestContinerEntry extends Component {
 
   render () {
     return (
-        <Col className = "testEntryComponent" xs = { 12 } md = { 9 }>
-          <div className = "well bs-component">
-            <Row className = "testRow">
-              <Col xs = { 6 } md = { 3 } ><h5> name </h5></Col>
-              <Col xs = { 5 } md = { 8 } className = "testContent" ><h5>{ this.props.name }</h5></Col>
-            </Row>
-            <hr />
-            <Row className = "testRow">
-              <Col xs = { 6 } md = { 3 }><h5> url </h5></Col>
-              <Col xs = { 5 } md = { 8 } className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
-            </Row>
-            <hr />
-            <Row className = "testRow">
-              <Col xs = { 6 } md = { 3 }><h5> prompt </h5></Col>
-              <Col xs = { 5 } md = { 8 }className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
-            </Row>
-            <hr />
-            <Row className = "testEntryButtonContainer">
-              <Button onClick = { this.toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
-              <Button onClick = { this.deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
-              <Button onClick = { this.startTest.bind(this) } className = "btn btn-primary testEntryButton" type = "button">start test</Button>
-              <Button onClick = { this.viewReport.bind(this) } className = "btn btn-primary testEntryButton" type = "button">view report</Button>
-            </Row>
-          </div>
+      <Col className = "testEntryComponent" xs = { 12 } md = { 9 }>
+        <div className = "well bs-component">
+          <Row className = "testRow">
+            <Col xs = { 6 } md = { 3 } ><h5> name </h5></Col>
+            <Col xs = { 5 } md = { 8 } className = "testContent" ><h5>{ this.props.name }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Col xs = { 6 } md = { 3 }><h5> url </h5></Col>
+            <Col xs = { 5 } md = { 8 } className = "testContent" ><h5><span className = "testUrl"> { this.props.url } </span></h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testRow">
+            <Col xs = { 6 } md = { 3 }><h5> prompt </h5></Col>
+            <Col xs = { 5 } md = { 8 }className = "testContent" ><h5>{ this.props.prompt }</h5></Col>
+          </Row>
+          <hr />
+          <Row className = "testEntryButtonContainer">
+            <Button onClick = { this.toggleModal.bind(this) } className = "testEntryButton" type = "button">edit test</Button>
+            <Button onClick = { this.deleteTest.bind(this) } className = "testEntryButton" type = "button">delete test</Button>
+            <Button onClick = { this.startTest.bind(this) } className = "btn btn-primary testEntryButton" type = "button">start test</Button>
+            <Button onClick = { this.viewReport.bind(this) } className = "btn btn-primary testEntryButton" type = "button">view report</Button>
+          </Row>
+        </div>
 
-          <Modal show = { this.state.modalVisbility }>
-            <form onSubmit = { this.updateTest.bind(this) }>
-              <Row>
-                <Col xs = { 2 } md = { 2 }>name</Col>
-                <Col xs = { 5 } md = { 12 }>
-                  <Input onChange = { this.handleNameInput.bind(this) }  type = "text" value = { this.state.name } />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs = { 2 } md = { 2 }>url</Col>
-                <Col xs = { 5 } md = { 12 }>
-                  <Input onChange = { this.handleUrlInput.bind(this) } type = "text" value = { this.state.url } />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs = { 2 } md = { 2 }>prompt</Col>
-                <Col xs = { 5 } md = { 12 }>
-                  <Input onChange = { this.handlePromptInput.bind(this) } type = "textarea" value = { this.state.prompt } />
-                </Col>
-              </Row>
-            </form>
+        <Modal show = { this.state.modalVisibility }>
+          <form onSubmit = { this.updateTest.bind(this) }>
             <Row>
+              <Col xs = { 2 } md = { 2 }>name</Col>
               <Col xs = { 5 } md = { 12 }>
-                <Button className = "btn btn-primary pull-right" onClick = { this.updateTest.bind(this) } type = "button">save changes</Button>
-                <Button className = "pull-right" onClick = { this.toggleModal.bind(this) } type = "button">cancel</Button>
+                <Input onChange = { this.handleNameInput.bind(this) }  type = "text" value = { this.state.name } />
               </Col>
             </Row>
-          </Modal>
-        </Col>
+            <Row>
+              <Col xs = { 2 } md = { 2 }>url</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.handleUrlInput.bind(this) } type = "text" value = { this.state.url } />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs = { 2 } md = { 2 }>prompt</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.handlePromptInput.bind(this) } type = "textarea" value = { this.state.prompt } />
+              </Col>
+            </Row>
+          </form>
+          <Row>
+            <Col xs = { 5 } md = { 12 }>
+              <Button className = "btn btn-primary pull-right" onClick = { this.updateTest.bind(this) } type = "button">save changes</Button>
+              <Button className = "pull-right" onClick = { this.toggleModal.bind(this) } type = "button">cancel</Button>
+            </Col>
+          </Row>
+        </Modal>
+      </Col>
     );
   };
 };

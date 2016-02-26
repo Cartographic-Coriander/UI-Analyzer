@@ -96,6 +96,7 @@ var proxy = function (session) {
   })
 
   app.listen(session.port, function () {
+    process.send({ success: 'proceed' });
     console.log('Proxy server is running on' + session.location + session.port);
   });
 };

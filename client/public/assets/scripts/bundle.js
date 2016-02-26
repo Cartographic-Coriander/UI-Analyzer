@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "43dff93f48e135e8d74c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "441f4ac12f2afe6fb256"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8063,15 +8063,15 @@
 
 	var _DashboardPage2 = _interopRequireDefault(_DashboardPage);
 
-	var _AddCommentsPage = __webpack_require__(641);
+	var _AddCommentsPage = __webpack_require__(640);
 
 	var _AddCommentsPage2 = _interopRequireDefault(_AddCommentsPage);
 
-	var _ReportPage = __webpack_require__(644);
+	var _ReportPage = __webpack_require__(643);
 
 	var _ReportPage2 = _interopRequireDefault(_ReportPage);
 
-	var _ProjectHeader = __webpack_require__(639);
+	var _ProjectHeader = __webpack_require__(644);
 
 	var _ProjectHeader2 = _interopRequireDefault(_ProjectHeader);
 
@@ -8079,7 +8079,7 @@
 
 	var _Content2 = _interopRequireDefault(_Content);
 
-	var _DashboardContainer = __webpack_require__(640);
+	var _DashboardContainer = __webpack_require__(639);
 
 	var _DashboardContainer2 = _interopRequireDefault(_DashboardContainer);
 
@@ -8095,7 +8095,6 @@
 	  errorState: _reducers.errorState,
 	  currentFocus: _reducers.currentFocus,
 	  stateRouter: _reducers.stateRouter,
-	  modalState: _reducers.modalState,
 	  form: _reduxForm.reducer,
 	  routing: _reactRouterRedux.routeReducer
 	};
@@ -8112,12 +8111,9 @@
 	  _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(
-	      _reactRouter.Route,
-	      { path: '/', component: _LandingPage2.default },
-	      _react2.default.createElement(_reactRouter.Route, { path: 'addcomments/:testId', component: _AddCommentsPage2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'reports/:testId', component: _ReportPage2.default })
-	    ),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _LandingPage2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'reports/:testId', component: _ReportPage2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'addcomments/:testId', component: _AddCommentsPage2.default }),
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/dashboard', component: _DashboardPage2.default },
@@ -36992,13 +36988,6 @@
 	exports.images = images;
 	exports.mouseTrackings = mouseTrackings;
 	exports.errorState = errorState;
-	exports.currentFocus = currentFocus;
-	exports.stateRouter = stateRouter;
-	var stateRouterInitialState = {
-	  pageState: 'not_authenticated',
-	  contentState: 'Dashboard'
-	};
-
 	var userInitialState = {
 	  firstname: null,
 	  surname: null,
@@ -37024,51 +37013,6 @@
 
 	var mouseTrackingsInitialState = {
 	  list: []
-	};
-
-	var currentFocusInitialState = {
-	  user: {
-	    id: null,
-	    email: null,
-	    company: null,
-	    firstname: null,
-	    surname: null
-	  },
-	  project: {
-	    id: null,
-	    name: null,
-	    description: null
-	  },
-	  test: {
-	    id: null,
-	    name: null,
-	    url: null,
-	    prompt: null,
-	    projectId: null
-	  },
-	  image: {
-	    id: null,
-	    image: null,
-	    url: null,
-	    testId: null
-	  },
-	  comment: {
-	    id: null,
-	    commentType: null,
-	    commentText: null,
-	    x: null,
-	    y: null,
-	    userId: null,
-	    imageId: null
-	  },
-	  mouseTracking: {
-	    id: null,
-	    movement: null,
-	    clicks: null,
-	    urlchange: null,
-	    userId: null,
-	    imageId: null
-	  }
 	};
 
 	var errorInitialState = {
@@ -37156,10 +37100,9 @@
 	      newState.list = newList;
 	      return newState;
 	    case 'UPDATE_TEST':
-	      var newList = newState.list.map(function (item) {
-	        return item.id === data.id ? item = data : item;
-	      });
-	      newState.list = newList;
+	      newState.list[action.index].name = action.data.update.name;
+	      newState.list[action.index].prompt = action.data.update.prompt;
+	      newState.list[action.index].url = aciton.data.update.url;
 	      return newState;
 	    case 'DELETE_TEST':
 	      var newList = [];
@@ -37181,9 +37124,6 @@
 	  var newState = Object.assign({}, state);
 
 	  switch (action.type) {
-	    case 'IMAGE_CLEAR':
-	      newState.list = [];
-	      return newState;
 	    case 'GET_COMMENT':
 	      newState.list = action.data;
 	      return newState;
@@ -37203,6 +37143,9 @@
 	        return item.id !== data.id;
 	      });
 	      newState.list = newList;
+	      return newState;
+	    case 'RESET_COMMENT':
+	      newState.list = [];
 	      return newState;
 	  }
 	  return state;
@@ -37307,43 +37250,6 @@
 	  return state;
 	};
 
-	function currentFocus() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? currentFocusInitialState : arguments[0];
-	  var action = arguments[1];
-
-	  var newState = Object.assign({}, state);
-
-	  switch (action.type) {
-	    case 'SET_FOCUS':
-	      newState[action.key] = action.value;
-	      return newState;
-	  }
-	  return state;
-	};
-
-	function stateRouter() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? stateRouterInitialState : arguments[0];
-	  var action = arguments[1];
-
-	  var newState = Object.assign({}, state);
-
-	  switch (action.type) {
-	    case 'PAGE_STATE':
-	      newState.pageState = action.target;
-	      return newState;
-	    case 'CONTENT_STATE':
-	      newState.contentState = action.target;
-	      return newState;
-	    case 'GET_USER':
-	      newState.pageState = 'authenticated';
-	      return newState;
-	    case 'SIGNOUT_USER':
-	      newState.pageState = 'not_authenticated';
-	      return newState;
-	  }
-	  return state;
-	};
-
 /***/ },
 /* 354 */
 /***/ function(module, exports, __webpack_require__) {
@@ -37409,20 +37315,16 @@
 	    }
 	  }, {
 	    key: 'startTest',
-
-	    //to get to the proxy server
 	    value: function startTest(test) {
 	      var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
 	      var location = window.location.origin.slice(0, -portLength);
 
-	      //sending user to mouse tracking page
-	      var newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '/addcomments/' + test.testId + '&prompt=' + test.prompt;
-	      window.location = newUrl;
+	      // Assembly URL to pass to proxy
+	      var testUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '/addcomments/' + test.testId + '&prompt=' + test.prompt;
+	      this.props.dispatch((0, _actions.postsTestView)(testUrl));
 	    }
 	  }, {
 	    key: 'updateTest',
-
-	    //editing existing tests
 	    value: function updateTest(test) {
 	      this.props.dispatch((0, _actions.updatesTest)(test));
 	    }
@@ -37433,8 +37335,6 @@
 	    }
 	  }, {
 	    key: 'addTest',
-
-	    //adding new tests
 	    value: function addTest(test) {
 	      var urlInput = this.state.addTestUrl;
 	      var testUrl = urlInput.substr(0, 4) === 'www.' ? 'http://' + urlInput : urlInput;
@@ -37445,8 +37345,8 @@
 	        prompt: this.state.addTestPrompt
 	      };
 
-	      this.toggleModal();
 	      this.props.dispatch((0, _actions.postsTest)(newTest));
+	      this.toggleModal();
 	    }
 	  }, {
 	    key: 'getReport',
@@ -37470,26 +37370,27 @@
 	    }
 	  }, {
 	    key: 'toggleModal',
-
-	    //for showing and hiding modals
 	    value: function toggleModal() {
-	      this.setState({ testModalDisplay: !this.state.testModalDisplay });
+	      this.setState(function (prev) {
+	        return { testModalDisplay: !prev.testModalDisplay };
+	      });
+	    }
+	  }, {
+	    key: 'headerVisibility',
+	    value: function headerVisibility() {
+	      if (this.props.projects.list.length > 0) {
+	        return this.props.children;
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 
-	      var header = function header() {
-	        if (_this2.props.projects.list.length > 0) {
-	          return _this2.props.children;
-	        }
-	      };
-
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'Tests' },
-	        header(),
+	        this.headerVisibility(),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -37597,6 +37498,8 @@
 	  return TestContainer;
 	}(_react.Component);
 
+	;
+
 	var select = function select(state) {
 	  return state;
 	};
@@ -37656,12 +37559,14 @@
 	  }, {
 	    key: 'toggleModal',
 	    value: function toggleModal() {
-	      this.setState({ modalVisibility: !this.state.modalVisibility });
+	      this.setState(function (prev) {
+	        return { modalVisibility: !prev.modalVisibility };
+	      });
 	    }
 	  }, {
 	    key: 'updateTest',
 	    value: function updateTest() {
-	      var updatedTest = {
+	      var params = {
 	        testId: this.props.id,
 	        projectId: this.props.projectId,
 	        name: this.state.name || this.props.name,
@@ -37670,24 +37575,24 @@
 	        index: this.props.index
 	      };
 
-	      this.props.update(updatedTest);
+	      this.props.update(params);
 	      this.toggleModal();
 	    }
 	  }, {
 	    key: 'deleteTest',
 	    value: function deleteTest() {
-	      var deletedTest = {
+	      var params = {
 	        projectId: this.props.projectId,
 	        testId: this.props.id
 	      };
 
-	      this.props.delete(deletedTest);
+	      this.props.delete(params);
 	    }
 	  }, {
 	    key: 'startTest',
 	    value: function startTest() {
 	      var token = JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token;
-	      var startTest = {
+	      var params = {
 	        url: this.props.url,
 	        index: this.props.index,
 	        testId: this.props.id,
@@ -37695,7 +37600,7 @@
 	        access_token: token
 	      };
 
-	      this.props.startTest(startTest);
+	      this.props.startTest(params);
 	    }
 	  }, {
 	    key: 'handleNameInput',
@@ -37836,7 +37741,7 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Modal,
-	          { show: this.state.modalVisbility },
+	          { show: this.state.modalVisibility },
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.updateTest.bind(this) },
@@ -54792,6 +54697,7 @@
 	exports.postsComment = postsComment;
 	exports.updatesComment = updatesComment;
 	exports.deletesComment = deletesComment;
+	exports.resetsComment = resetsComment;
 	exports.getsImage = getsImage;
 	exports.postsImage = postsImage;
 	exports.updatesImage = updatesImage;
@@ -55026,7 +54932,7 @@
 
 	function postsTestView(location) {
 	  return function (dispatch) {
-	    return postTestView().then(function (response) {
+	    return (0, _api.postTestView)().then(function (response) {
 	      window.location = location;
 	    }).catch(function (error) {
 	      var params = {
@@ -55093,8 +54999,9 @@
 	      var params = {
 	        type: 'UPDATE_TEST',
 	        data: response.data,
-	        index: response.index
+	        index: test.index
 	      };
+	      console.log(params);
 
 	      dispatch(params);
 	    }).catch(function (error) {
@@ -55131,11 +55038,6 @@
 	/* COMMENT API ACTIONS */
 
 	function getsComment(comment) {
-	  if (comment === 'clear') {
-	    return {
-	      type: 'IMAGE_CLEAR'
-	    };
-	  };
 	  return function (dispatch) {
 	    return (0, _api.getComment)(comment).then(function (response) {
 	      var params = {
@@ -55222,6 +55124,12 @@
 	  };
 	}
 
+	function resetsComment() {
+	  return {
+	    type: 'RESET_COMMENT'
+	  };
+	}
+
 	/* IMAGE API ACTIONS */
 
 	function getsImage(image, browserHistory) {
@@ -55232,7 +55140,7 @@
 	        data: response.data
 	      };
 
-	      browserHistory.push('/reports');
+	      browserHistory.push('/reports/' + image.id);
 	      dispatch(params);
 	    }).catch(function (error) {
 	      if (error.status === 550) {
@@ -55655,7 +55563,7 @@
 
 	function getImage(image) {
 	  var params = {
-	    testId: image.testId
+	    testId: image.id
 	  };
 
 	  return instance.get('/api/image', { params: params });
@@ -56880,7 +56788,6 @@
 	      this.setState({ id: this.props.projects.list[this.props.params.projectIndex].id });
 	      this.setState({ description: this.props.projects.list[this.props.params.projectIndex].description });
 	      this.setState({ name: this.props.projects.list[this.props.params.projectIndex].name });
-	      this.render();
 	    }
 	  }, {
 	    key: 'updateProject',
@@ -56920,19 +56827,19 @@
 	      this.setState({ modalVisibility: !this.state.modalVisibility });
 	    }
 	  }, {
+	    key: 'headerVisibility',
+	    value: function headerVisibility() {
+	      if (this.props.projects.list.length > 0) {
+	        return this.props.children;
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-
-	      var header = function header() {
-	        if (_this2.props.projects.list.length > 0) {
-	          return _this2.props.children;
-	        }
-	      };
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'Settings' },
-	        header(),
+	        this.headerVisibility(),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { className: 'projectEntryComponent', xs: 12, md: 9 },
@@ -58057,6 +57964,7 @@
 	}(_react.Component);
 
 	exports.default = DashboardPage;
+	;
 
 	var select = function select(state) {
 	  return state;
@@ -58109,8 +58017,6 @@
 	var MyProjects = function (_Component) {
 	  _inherits(MyProjects, _Component);
 
-	  //setting initial addProject modal visibility to not be shown
-
 	  function MyProjects(props) {
 	    _classCallCheck(this, MyProjects);
 
@@ -58126,19 +58032,23 @@
 	  _createClass(MyProjects, [{
 	    key: 'toggleProjectModal',
 
-	    //toggle add project modal visibilty
+	    // Toggle project modal visibilty
 	    value: function toggleProjectModal() {
-	      this.setState({ projectModalVisibility: !this.state.projectModalVisibility });
+	      this.setState(function (prev) {
+	        return { projectModalVisibility: !prev.projectModalVisibility };
+	      });
 	    }
 	  }, {
 	    key: 'toggleInviteModal',
 
-	    //toggle invite modal visibility
+	    // Toggle invite modal visibility
 	    value: function toggleInviteModal() {
-	      this.setState({ inviteTestersModalVisibility: !this.state.inviteTestersModalVisibility });
+	      this.setState(function (prev) {
+	        return { inviteTestersModalVisibility: !prev.inviteTestersModalVisibility };
+	      });
 	    }
 
-	    //sending data from add project form in the modal and hiding the modal
+	    // Post data from project modal form and hides the modal
 
 	  }, {
 	    key: 'addProject',
@@ -58201,7 +58111,7 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactSanfona.Accordion,
-	          { activeItems: this.props.projects.list.length - 1 },
+	          null,
 	          this.props.projects.list.map(function (project, index) {
 	            return _react2.default.createElement(
 	              _reactSanfona.AccordionItem,
@@ -59297,7 +59207,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DashboardContainer = __webpack_require__(640);
+	var _DashboardContainer = __webpack_require__(639);
 
 	var _DashboardContainer2 = _interopRequireDefault(_DashboardContainer);
 
@@ -59336,6 +59246,710 @@
 
 /***/ },
 /* 639 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactBootstrap = __webpack_require__(356);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DashboardContainer = function (_Component) {
+	  _inherits(DashboardContainer, _Component);
+
+	  function DashboardContainer() {
+	    _classCallCheck(this, DashboardContainer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardContainer).apply(this, arguments));
+	  }
+
+	  _createClass(DashboardContainer, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'Dashboard' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 9, mdOffset: 3 },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel panel-default' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'panel-body' },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                'Welcome to Scrutinize'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'panel-footer' },
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Start by adding a project!'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DashboardContainer;
+	}(_react.Component);
+
+	exports.default = DashboardContainer;
+
+	var select = function select(state) {
+	  return state;
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(DashboardContainer);
+
+/***/ },
+/* 640 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactRouter = __webpack_require__(253);
+
+	var _Comment = __webpack_require__(641);
+
+	var _Comment2 = _interopRequireDefault(_Comment);
+
+	var _actions = __webpack_require__(598);
+
+	var _AddCommentsSplash = __webpack_require__(642);
+
+	var _AddCommentsSplash2 = _interopRequireDefault(_AddCommentsSplash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AddCommentsPage = function (_Component) {
+	  _inherits(AddCommentsPage, _Component);
+
+	  function AddCommentsPage(props) {
+	    _classCallCheck(this, AddCommentsPage);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddCommentsPage).call(this, props));
+
+	    _this.state = {
+	      comments: [],
+	      testImages: [],
+	      currentIndex: 0,
+	      showLanding: true
+	    };
+	    return _this;
+	  }
+
+	  _createClass(AddCommentsPage, [{
+	    key: 'endAddComments',
+	    value: function endAddComments() {
+	      this.handlePostComments();
+	      $(document).off('keypress');
+	      _reactRouter.browserHistory.push('/dashboard');
+	    }
+	  }, {
+	    key: 'handlePostComments',
+
+	    // Post array of notes to the server
+	    value: function handlePostComments() {
+	      this.props.dispatch((0, _actions.postsComment)(this.state.comments));
+	      this.setState({ comments: [] });
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      // Display feedback prompt for six seconds
+	      setTimeout(function () {
+	        _this2.setState({ showLanding: false });
+	      }, 5000);
+
+	      $(document).on('keydown', function (event) {
+	        // This is the key code for the right arrow key
+	        if (event.keyCode === 39) {
+	          if (_this2.state.testImages[_this2.state.currentIndex + 1] !== undefined) {
+	            _this2.setState(function (prev) {
+	              return { currentIndex: prev.currentIndex + 1 };
+	            });
+	            _this2.handlePostComments();
+	          } else {
+	            _this2.endAddComments();
+	          }
+	        }
+	      });
+
+	      $(document).keypress('d', function (event) {
+	        if (event.ctrlKey) {
+	          _this2.endAddComments();
+	        }
+	      });
+
+	      $.ajax({
+	        url: '/api/image',
+	        data: { testId: this.props.params.testId },
+	        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+	        method: 'GET',
+	        timeout: 10000,
+	        success: function success(data) {
+	          _this2.setState({ testImages: data });
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'findMousePosAndAddInput',
+
+	    // This is the click handler that runs when the image to critique is clicked on
+	    value: function findMousePosAndAddInput(event) {
+	      var _this3 = this;
+
+	      // Check to see that the click occurs within the image displayed
+	      var cursorX = event.pageX;
+	      var cursorY = event.pageY;
+
+	      // The offset is there so that critiqueImage can be found no matter where it loads on the page, it is used in the logic below
+	      var offset = $('#critiqueImage').offset();
+	      var critiqueImage = document.getElementById('critiqueImage');
+
+	      if (cursorY < critiqueImage.clientHeight + offset.top && cursorX < critiqueImage.clientWidth + offset.left) {
+
+	        // Only render radio and input fields if they do not already exist
+	        if (document.getElementById('inputText') === null) {
+
+	          // Create the div that will be appended over the image and set it's intial values
+	          var text = document.createElement('div');
+	          text.style.top = cursorY - offset.top + "px";
+	          text.style.left = cursorX - offset.left + "px";
+	          text.style.position = "absolute";
+	          text.className = "feedbackContainer";
+	          text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" + "<label id='radioLabel' for='radio1'>Like</label>" + "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" + "<label id='radioLabel' for='radio2'>Dislike</label></br>" + "<input id='inputText' type='text' />" + "<button id='leaveCommentButton' type='button'>send</button>";
+
+	          document.getElementById('critiqueImage').appendChild(text);
+	          document.getElementById('inputText').focus();
+
+	          // Attach a function to be run whenever the input button is clicked
+	          $('#leaveCommentButton').on('click', function () {
+
+	            // Grab the values from the input field / radio field
+	            var critique = $('#inputText').val();
+	            var commentType = $('input[name=sentiment]:checked').val();
+
+	            // Create a new object per server API requirements
+	            var newComment = {
+	              x: cursorX - offset.left,
+	              y: cursorY - offset.top,
+	              commentText: critique,
+	              commentType: commentType,
+	              imageId: _this3.state.testImages[_this3.state.currentIndex].id,
+	              id: _this3.state.comments.length
+	            };
+
+	            var comments = _this3.state.comments;
+	            if (newComment.commentText !== "") {
+	              comments.push(newComment);
+	            }
+
+	            // Add a new comment to image
+	            setTimeout(function () {
+	              $('#critiqueImage').children().last().remove();
+	            }, 5);
+	            _this3.setState({ comments: comments });
+	          });
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      // Test image will come from the server
+	      var imageStyle = {
+	        position: 'relative',
+	        height: '100%',
+	        width: '100%'
+	      };
+
+	      // Each note is mapped to one createItem upon rendering
+	      var renderComment = function renderComment(comment) {
+	        return _react2.default.createElement(_Comment2.default, { key: comment.id, x: comment.x, y: comment.y, commentText: comment.commentText, commentType: comment.commentType });
+	      };
+
+	      // Display only one image at a time
+	      var renderImage = function renderImage(imageObj) {
+	        if (imageObj.id === _this4.state.testImages[_this4.state.currentIndex].id) {
+	          return _react2.default.createElement('img', { key: imageObj.url, src: 'data:image/jpeg;base64,' + imageObj.image });
+	        }
+	      };
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        function () {
+	          if (_this4.state.showLanding) {
+	            return _react2.default.createElement(_AddCommentsSplash2.default, null);
+	          } else {
+	            return _react2.default.createElement(
+	              'div',
+	              { id: 'critiqueImage', style: imageStyle, onClick: _this4.findMousePosAndAddInput.bind(_this4) },
+	              _this4.state.comments.map(renderComment),
+	              _this4.state.testImages.map(renderImage)
+	            );
+	          }
+	        }()
+	      );
+	    }
+	  }]);
+
+	  return AddCommentsPage;
+	}(_react.Component);
+
+	var select = function select(state) {
+	  return {
+	    comments: state.comments.list
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(AddCommentsPage);
+
+/***/ },
+/* 641 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Note = function Note(props) {
+	  var style = {
+	    position: 'absolute',
+	    top: props.y,
+	    left: props.x
+	  };
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'quote-container', style: style },
+	    function () {
+	      if (props.commentType !== "positive") {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('div', { className: 'commentPin redPin' }),
+	          _react2.default.createElement(
+	            'blockquote',
+	            { className: 'note color redcomment' },
+	            props.commentText,
+	            _react2.default.createElement('cite', { className: 'author' })
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('div', { className: 'commentPin greenPin' }),
+	          _react2.default.createElement(
+	            'blockquote',
+	            { className: 'note color greencomment' },
+	            props.commentText,
+	            _react2.default.createElement('cite', { className: 'author' })
+	          )
+	        );
+	      }
+	    }()
+	  );
+	};
+
+	exports.default = Note;
+
+/***/ },
+/* 642 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var addCommentsSplash = function (_Component) {
+	  _inherits(addCommentsSplash, _Component);
+
+	  function addCommentsSplash() {
+	    _classCallCheck(this, addCommentsSplash);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(addCommentsSplash).apply(this, arguments));
+	  }
+
+	  _createClass(addCommentsSplash, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "testStartPrompt" },
+	        _react2.default.createElement("p", { id: "testPrompt" }),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "Use the right arrow to get to the next image."
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "Press Ctrl + D to end the feedback session."
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { id: "testviewLoading" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "bigSqr" },
+	            _react2.default.createElement("div", { className: "square first" }),
+	            _react2.default.createElement("div", { className: "square second" }),
+	            _react2.default.createElement("div", { className: "square third" }),
+	            _react2.default.createElement("div", { className: "square fourth" })
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "testPrompt" },
+	            "loading..."
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return addCommentsSplash;
+	}(_react.Component);
+
+	exports.default = addCommentsSplash;
+	;
+
+/***/ },
+/* 643 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(77);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(244);
+
+	var _reactRouter = __webpack_require__(253);
+
+	var _actions = __webpack_require__(598);
+
+	var _Comment = __webpack_require__(641);
+
+	var _Comment2 = _interopRequireDefault(_Comment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReportPage = function (_Component) {
+	  _inherits(ReportPage, _Component);
+
+	  function ReportPage(props) {
+	    _classCallCheck(this, ReportPage);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReportPage).call(this, props));
+
+	    _this.state = {
+	      testImages: [],
+	      currentIndex: 0
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ReportPage, [{
+	    key: 'endReport',
+	    value: function endReport() {
+	      window.removeHeatmap();
+	      this.props.dispatch((0, _actions.resetsComment)());
+	      $(document).off('keydown');
+	      _reactRouter.browserHistory.push('/dashboard');
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      $.ajax({
+	        url: '/api/image',
+	        data: { testId: this.props.params.testId },
+	        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
+	        method: 'GET',
+	        timeout: 1000,
+	        success: function success(data) {
+	          _this2.setState({ testImages: data }, _this2.getCommentsMousetracking);
+	          _this2.getCommentsMousetracking();
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'getCommentsMousetracking',
+	    value: function getCommentsMousetracking() {
+	      this.props.dispatch((0, _actions.getsMouseTracking)({ imageId: this.state.testImages[this.state.currentIndex].id }));
+	      this.props.dispatch((0, _actions.getsComment)({ imageId: this.state.testImages[this.state.currentIndex].id }));
+	      this.mouseReplay();
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'mouseReplay',
+	    value: function mouseReplay() {
+	      var _this3 = this;
+
+	      $(document).off('keydown');
+
+	      var mouseReplay = function mouseReplay() {
+	        var replay = function replay(cursor, path) {
+	          var i = 0;
+	          var timeInterval;
+	          var length = path.length;
+
+	          var move = function move() {
+	            var position = path[i];
+
+	            cursor.css({
+	              top: position.y,
+	              left: position.x
+	            });
+
+	            if (i > 1 && path[i + 1]) {
+	              timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
+	            } else {
+	              timeInterval = 0;
+	            }
+
+	            i++;
+	            if (i === length) {
+	              return;
+	            } else {
+	              setTimeout(move, timeInterval);
+	            }
+	          };
+	          move();
+	        };
+
+	        var path = JSON.parse(_this3.props.mouseTrackings.list[0].data);
+
+	        _this3.props.mouseTrackings.list.forEach(function (cursorData) {
+	          var cursor = '#' + cursorData.id;
+	          var path = JSON.parse(cursorData.data);
+	          replay($(cursor), path);
+	        });
+	      };
+
+	      setTimeout(mouseReplay, 1000);
+
+	      setTimeout(function () {
+	        window.heatdata = [];
+	        window.removeHeatmap();
+
+	        _this3.props.mouseTrackings.list.forEach(function (cursorData) {
+	          if (cursorData) {
+	            var path = JSON.parse(cursorData.data);
+
+	            path.forEach(function (datapoint) {
+	              var heatdataPoint = {
+	                x: datapoint.x,
+	                y: datapoint.y,
+	                value: 5
+	              };
+
+	              window.heatdata.push(heatdataPoint);
+	            });
+	          }
+	        });
+
+	        window.renderHeatmap();
+	        window.toggleHeatmap();
+	      }, 1500);
+	      var flag = true;
+
+	      $(document).on('keydown', function (event) {
+	        if (event.keyCode === 72 && event.ctrlKey) {
+	          window.toggleHeatmap();
+	          console.log('heatmap');
+	        }
+	      });
+
+	      $(document).on('keydown', function (event) {
+	        if (event.keyCode === 82 && event.ctrlKey) {
+	          console.log('replay');
+	          mouseReplay();
+	        }
+	      });
+
+	      $(document).on('keydown', function (event) {
+	        if (event.keyCode === 68 && event.ctrlKey) {
+	          _this3.endReport();
+	        }
+	      });
+
+	      $(document).on('keydown', function (event) {
+	        if (event.keyCode === 39) {
+	          if (_this3.state.testImages[_this3.state.currentIndex + 1] !== undefined) {
+	            window.removeHeatmap();
+	            _this3.mouseReplay();
+	            _this3.setState(function (prev) {
+	              return { currentIndex: prev.currentIndex + 1 };
+	            });
+	            _this3.getCommentsMousetracking();
+	          } else {
+	            _this3.endReport();
+	          }
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      // Test image will come from the server
+	      var imageStyle = {
+	        position: 'relative',
+	        height: '100%',
+	        width: '100%',
+	        backgroundSize: 'cover'
+	      };
+
+	      var renderImage = function renderImage(imageObj) {
+	        if (imageObj.id === _this4.state.testImages[_this4.state.currentIndex].id) {
+	          return _react2.default.createElement('img', { key: imageObj.url, src: 'data:image/jpeg;base64,' + imageObj.image });
+	        }
+	      };
+
+	      var renderCursor = function renderCursor(data) {
+	        var colorObj = {};
+
+	        _this4.props.mouseTrackings.list.forEach(function (item) {
+	          var color = '#' + function co(lor) {
+	            return (lor += [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'][Math.floor(Math.random() * 16)]) && lor.length == 6 ? lor : co(lor);
+	          }('');
+
+	          colorObj[item.id] = color;
+	        });
+
+	        var cursorColor = { background: colorObj[data.id] };
+
+	        return _react2.default.createElement(
+	          'div',
+	          { key: data.id, id: data.id, className: 'cursor', style: cursorColor },
+	          ' '
+	        );
+	      };
+
+	      // Each note is mapped to one createItem upon rendering
+	      var renderComment = function renderComment(comment) {
+	        return _react2.default.createElement(_Comment2.default, { key: comment.id, x: comment.x, y: comment.y, commentText: comment.commentText, commentType: comment.commentType });
+	      };
+
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'critiqueImage', style: imageStyle },
+	        this.state.testImages.map(renderImage),
+	        this.props.mouseTrackings.list.map(renderCursor),
+	        this.props.comments.list.map(renderComment)
+	      );
+	    }
+	  }]);
+
+	  return ReportPage;
+	}(_react.Component);
+
+	var select = function select(state) {
+	  return {
+	    mouseTrackings: state.mouseTrackings,
+	    comments: state.comments
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(select)(ReportPage);
+
+/***/ },
+/* 644 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59413,721 +60027,6 @@
 	};
 
 	exports.default = (0, _reactRedux.connect)(select)(ProjectHeader);
-
-/***/ },
-/* 640 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _reactBootstrap = __webpack_require__(356);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DashboardContainer = function (_Component) {
-	  _inherits(DashboardContainer, _Component);
-
-	  function DashboardContainer() {
-	    _classCallCheck(this, DashboardContainer);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardContainer).apply(this, arguments));
-	  }
-
-	  _createClass(DashboardContainer, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'Dashboard' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 9, mdOffset: 3 },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'panel panel-default' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'panel-body' },
-	              _react2.default.createElement(
-	                'h3',
-	                null,
-	                'Welcome to Scrutinize'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'panel-footer' },
-	              _react2.default.createElement(
-	                'h4',
-	                null,
-	                'add some projects'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return DashboardContainer;
-	}(_react.Component);
-
-	exports.default = DashboardContainer;
-
-	var select = function select(state) {
-	  return state;
-	};
-
-	exports.default = (0, _reactRedux.connect)(select)(DashboardContainer);
-
-/***/ },
-/* 641 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _Note = __webpack_require__(642);
-
-	var _Note2 = _interopRequireDefault(_Note);
-
-	var _actions = __webpack_require__(598);
-
-	var _AddCommentsSplash = __webpack_require__(643);
-
-	var _AddCommentsSplash2 = _interopRequireDefault(_AddCommentsSplash);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AddCommentsPage = function (_Component) {
-	  _inherits(AddCommentsPage, _Component);
-
-	  function AddCommentsPage(props) {
-	    _classCallCheck(this, AddCommentsPage);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddCommentsPage).call(this, props));
-
-	    _this.state = {
-	      comments: [],
-	      testImages: [],
-	      currentIndex: 0,
-	      showLanding: true
-	    };
-	    return _this;
-	  }
-
-	  _createClass(AddCommentsPage, [{
-	    key: 'handleSendingNotes',
-	    value: function handleSendingNotes() {
-	      //because the button also returns the user to the dashboard page
-	      this.props.dispatch((0, _actions.pageState)('authenticated'));
-	      //for sending array of notes to the server
-	      this.props.dispatch((0, _actions.postsComment)(this.state.comments));
-	    }
-	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
-
-	      //show feedback prompt for six seconds
-	      setTimeout(function () {
-	        _this2.setState({ showLanding: false });
-	      }, 5000);
-
-	      $(document).on('keydown', function (event) {
-	        //this is the right arrow key
-	        if (event.keyCode === 39) {
-	          if (this.state.testImages[this.state.currentIndex + 1] !== undefined) {
-	            var currentInx = this.state.currentIndex;
-	            this.setState({ currentIndex: currentInx + 1 });
-	            this.props.dispatch((0, _actions.setFocus)('image', this.state.testImages[this.state.currentIndex]));
-	            this.props.dispatch((0, _actions.postsComment)(this.state.comments));
-	            this.setState({ comments: [] });
-	          } else {
-	            //at the end of the array
-	            this.props.dispatch((0, _actions.postsComment)(this.state.comments));
-	            this.setState({ comments: [] });
-	            $(document).off('keydown');
-	            this.props.dispatch((0, _actions.pageState)('authenticated'));
-	          }
-	        }
-	      }.bind(this));
-
-	      $(document).keypress('d', function (event) {
-	        if (event.ctrlKey) {
-	          this.handleSendingNotes();
-	          $(document).off('keypress');
-	        }
-	      }.bind(this));
-
-	      var findImage = {
-	        testId: this.props.currentFocus.test.id
-	      };
-
-	      $.ajax({
-	        url: 'http://' + window.location.hostname + ':8000/api/image',
-	        data: findImage,
-	        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
-	        method: 'GET',
-	        timeout: 5000,
-	        success: function (data, textStatus, jqXHR) {
-	          // this.state.testImages = data;
-	          this.setState({ testImages: data });
-	          var firstImage = this.state.testImages[0];
-	          this.props.dispatch((0, _actions.setFocus)('image', { id: firstImage.id, image: firstImage.image, testID: firstImage.testId, url: firstImage.url }));
-	        }.bind(this)
-	      });
-	    }
-
-	    //this is the click handler that runs when the image to critique is clicked on
-
-	  }, {
-	    key: 'findMousePosAndAddInput',
-	    value: function findMousePosAndAddInput(event) {
-	      {/*checking to see that the click occurs within the image displayed*/}
-	      var cursorX = event.pageX;
-	      var cursorY = event.pageY;
-	      {/*the offset is there so that critiqueImage can be found no matter where it loads on the page, it is used in the logic below*/}
-	      var offset = $('#critiqueImage').offset();
-	      var critiqueImage = document.getElementById('critiqueImage');
-	      if (cursorY < critiqueImage.clientHeight + offset.top && cursorX < critiqueImage.clientWidth + offset.left) {
-	        {/*only render radio and input fields if they do not already exist*/}
-	        if (document.getElementById('inputText') === null) {
-	          {/*create the div that will be appended over the image and set it's intial values*/}
-	          var text = document.createElement('div');
-	          text.style.top = cursorY - offset.top + "px";
-	          text.style.left = cursorX - offset.left + "px";
-	          text.style.position = "absolute";
-	          text.className = "feedbackContainer";
-	          text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" + "<label id='radioLabel' for='radio1'>Like</label>" + "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" + "<label id='radioLabel' for='radio2'>Dislike</label></br>" + "<input id='inputText' type='text' />" + "<button id='leaveCommentButton' type='button'>send</button>";
-	          document.getElementById('critiqueImage').appendChild(text);
-	          document.getElementById('inputText').focus();
-	          {/*need to attach a function to be run whenever the input button is clicked*/}
-	          $('#leaveCommentButton').on('click', function () {
-	            {/*grab the values from the input field / radio field*/}
-	            var critique = $('#inputText').val();
-	            var commentType = $('input[name=sentiment]:checked').val();
-	            {/*creates a new object per model specs*/}
-	            var newComment = {
-	              x: cursorX - offset.left,
-	              y: cursorY - offset.top,
-	              commentText: critique,
-	              commentType: commentType,
-	              imageId: this.props.currentFocus.image.id,
-	              id: this.state.comments.length
-	            };
-	            var comments = this.state.comments;
-	            if (newComment.commentText !== "") {
-	              comments.push(newComment);
-	            }
-	            {/*adding new comment to image*/}
-	            {/*TODO THERE HAS TO BE A BETTER WAY THAN SETTIMEOUT. RIGHT NOW, CLICK ON BUTTON REGISTERS AS NEW CLICK NEW INPUT FIELD IS ADDED*/}
-	            setTimeout(function () {
-	              $('#critiqueImage').children().last().remove();
-	            }, 5);
-	            {/*END TODO*/}
-	            this.setState({ comments: comments });
-	          }.bind(this));
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      var divStyle = {
-	        //background image will come from the database
-	        position: 'relative',
-	        height: '100%',
-	        width: '100%'
-	      };
-
-	      {/*each note is mapped to one createItem upon rendering*/}
-	      var createItem = function createItem(comment) {
-	        return _react2.default.createElement(_Note2.default, { key: comment.id, x: comment.x, y: comment.y, commentText: comment.commentText, commentType: comment.commentType });
-	      };
-	      {/*we do not want to show every image at once*/}
-	      var createImage = function (imageObj) {
-	        // console.log(imageObj, this);
-	        if (imageObj.id === this.props.currentFocus.image.id) {
-	          return _react2.default.createElement('img', { key: imageObj.url, src: 'data:image/jpeg;base64,' + imageObj.image });
-	        }
-	      }.bind(this);
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        function () {
-	          if (_this3.state.showLanding) {
-	            return _react2.default.createElement(_AddCommentsSplash2.default, null);
-	          } else {
-	            return _react2.default.createElement(
-	              'div',
-	              { id: 'critiqueImage', style: divStyle, onClick: _this3.findMousePosAndAddInput.bind(_this3) },
-	              _this3.state.comments.map(createItem),
-	              _this3.state.testImages.map(createImage)
-	            );
-	          }
-	        }()
-	      );
-	    }
-	  }]);
-
-	  return AddCommentsPage;
-	}(_react.Component);
-
-	function mapStateToProps(state) {
-	  console.log(state);
-	  return {
-	    comments: state.comments.list,
-	    image: state.images,
-	    currentFocus: state.currentFocus
-	  };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(AddCommentsPage);
-
-/***/ },
-/* 642 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Note = function Note(props) {
-	  var style = {
-	    position: 'absolute',
-	    top: props.y,
-	    left: props.x
-	  };
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'quote-container', style: style },
-	    function () {
-	      if (props.commentType !== "positive") {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement('div', { className: 'commentPin redPin' }),
-	          _react2.default.createElement(
-	            'blockquote',
-	            { className: 'note color redcomment' },
-	            props.commentText,
-	            _react2.default.createElement('cite', { className: 'author' })
-	          )
-	        );
-	      } else {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement('div', { className: 'commentPin greenPin' }),
-	          _react2.default.createElement(
-	            'blockquote',
-	            { className: 'note color greencomment' },
-	            props.commentText,
-	            _react2.default.createElement('cite', { className: 'author' })
-	          )
-	        );
-	      }
-	    }()
-	  );
-	};
-
-	exports.default = Note;
-
-/***/ },
-/* 643 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var addCommentsSplash = function (_Component) {
-	  _inherits(addCommentsSplash, _Component);
-
-	  function addCommentsSplash() {
-	    _classCallCheck(this, addCommentsSplash);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(addCommentsSplash).apply(this, arguments));
-	  }
-
-	  _createClass(addCommentsSplash, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { id: "testStartPrompt" },
-	        _react2.default.createElement("p", { id: "testPrompt" }),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          "Use the right arrow to get to the next image."
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          "Press Ctrl + D to end the feedback session."
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { id: "testviewLoading" },
-	          _react2.default.createElement(
-	            "div",
-	            { className: "bigSqr" },
-	            _react2.default.createElement("div", { className: "square first" }),
-	            _react2.default.createElement("div", { className: "square second" }),
-	            _react2.default.createElement("div", { className: "square third" }),
-	            _react2.default.createElement("div", { className: "square fourth" })
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "testPrompt" },
-	            "loading..."
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return addCommentsSplash;
-	}(_react.Component);
-
-	exports.default = addCommentsSplash;
-	;
-
-/***/ },
-/* 644 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(77);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(244);
-
-	var _actions = __webpack_require__(598);
-
-	var _Note = __webpack_require__(642);
-
-	var _Note2 = _interopRequireDefault(_Note);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import ReactHeatmap from 'react-heatmap';
-
-	{/*Note is a shared component and can be placed in a shared component place*/}
-
-	var ReportPage = function (_Component) {
-	  _inherits(ReportPage, _Component);
-
-	  function ReportPage(props) {
-	    _classCallCheck(this, ReportPage);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReportPage).call(this, props));
-
-	    _this.state = {
-	      reportImages: [],
-	      currentIndex: 0
-	    };
-	    return _this;
-	  }
-
-	  _createClass(ReportPage, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
-
-	      $(document).on('keydown', function (event) {
-	        if (_this2.props.stateRouter.pageState === 'reportView' && event.keyCode === 39) {
-	          if (_this2.state.reportImages[_this2.state.currentIndex + 1] !== undefined) {
-	            window.removeHeatmap();
-	            _this2.componentDidMount();
-	            var currentIndx = _this2.state.currentIndex;
-	            _this2.setState({ currentIndex: currentIndx + 1 });
-	            _this2.props.dispatch((0, _actions.setFocus)('image', _this2.state.reportImages[_this2.state.currentIndex]));
-	            _this2.props.dispatch((0, _actions.getsMouseTracking)({ imageId: _this2.props.currentFocus.image.id }));
-	            _this2.props.dispatch((0, _actions.getsComment)({ imageId: _this2.props.currentFocus.image.id }));
-	          } else {
-	            //at the end of the array
-	            _this2.setState({ currentIndex: 0 });
-	            $(document).off('keydown');
-	            $(document).off('keypress');
-	            _this2.props.dispatch((0, _actions.setFocus)('image', _this2.state.reportImages[_this2.state.currentIndex]));
-	            _this2.props.dispatch((0, _actions.pageState)('authenticated'));
-	            window.removeHeatmap();
-	            _this2.props.dispatch((0, _actions.getsComment)('clear'));
-	          }
-	        }
-	      });
-
-	      var findImages = {
-	        testId: this.props.currentFocus.test.id
-	      };
-
-	      $.ajax({
-	        url: 'http://' + window.location.hostname + ':8000/api/image',
-	        data: findImages,
-	        headers: { 'x-access-token': JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token },
-	        method: 'GET',
-	        timeout: 1000,
-	        success: function success(data, textStatus, jqXHR) {
-
-	          _this2.setState({ reportImages: data });
-	          _this2.props.dispatch((0, _actions.setFocus)('image', _this2.state.reportImages[0]));
-	          _this2.renderCommentsMousetracking();
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'renderCommentsMousetracking',
-	    value: function renderCommentsMousetracking() {
-	      this.props.dispatch((0, _actions.getsMouseTracking)({ imageId: this.props.currentFocus.image.id }));
-	      this.props.dispatch((0, _actions.getsComment)({ imageId: this.props.currentFocus.image.id }));
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-
-	      $(document).off('keypress');
-
-	      $(window).bind('beforeunload', function () {
-	        if (this.props.stateRouter.pageState === 'reportView') {
-	          this.setState({ currentIndex: 0 });
-	          this.props.dispatch((0, _actions.setFocus)('image', this.state.reportImages[this.state.currentIndex]));
-	        }
-	      }.bind(this));
-
-	      this.props.dispatch((0, _actions.getsMouseTracking)({ imageId: this.props.currentFocus.image.id }));
-
-	      var mouseReplay = function mouseReplay() {
-	        var replay = function replay(cursor, path) {
-	          var i = 0;
-	          var timeInterval;
-	          var length = path.length;
-	          var move = function move() {
-	            var position = path[i];
-	            cursor.css({
-	              top: position.y,
-	              left: position.x
-	            });
-	            if (i > 1 && path[i + 1]) {
-	              timeInterval = path[i + 1].timestamp - path[i].timestamp || 0;
-	            } else {
-	              timeInterval = 0;
-	            }
-	            i++;
-	            if (i === length) {
-	              return;
-	            } else {
-	              setTimeout(move, timeInterval);
-	            }
-	          };
-	          move();
-	        };
-
-	        var path = JSON.parse(_this3.props.mouseTrackings.list[0].data);
-	        _this3.props.mouseTrackings.list.forEach(function (cursorData) {
-	          console.log('cursorData: ', cursorData);
-	          var cursor = '#' + cursorData.id;
-	          var path = JSON.parse(cursorData.data);
-	          replay($(cursor), path);
-	        });
-	      };
-
-	      setTimeout(mouseReplay, 1000);
-
-	      setTimeout(function () {
-
-	        window.heatdata = [];
-	        window.removeHeatmap();
-	        _this3.props.mouseTrackings.list.forEach(function (cursorData) {
-	          if (cursorData) {
-	            var path = JSON.parse(cursorData.data);
-	            path.forEach(function (datapoint) {
-	              var heatdataPoint = {
-	                x: datapoint.x,
-	                y: datapoint.y,
-	                value: 5
-	              };
-	              window.heatdata.push(heatdataPoint);
-	            });
-	          }
-	        });
-	        window.renderHeatmap();
-	        window.toggleHeatmap();
-	      }, 1500);
-
-	      $(document).keypress('h', function (event) {
-	        if (event.which === 8 && event.ctrlKey && _this3.props.stateRouter.pageState === 'reportView') {
-	          window.toggleHeatmap();
-	        }
-	      });
-
-	      $(document).keypress('p', function (event) {
-	        if (event.which === 16 && event.ctrlKey && _this3.props.stateRouter.pageState === 'reportView') {
-	          mouseReplay();
-	        }
-	      });
-
-	      $(document).keypress(function (event) {
-	        if (event.which === 4 && event.ctrlKey) {
-	          _this3.setState({ currentIndex: 0 });
-	          console.log('event which: ', event.which);
-	          _this3.props.dispatch((0, _actions.pageState)('authenticated'));
-	          $(document).off('keydown');
-	          $(document).off('keypress');
-	          window.removeHeatmap();
-	          _this3.props.dispatch((0, _actions.setFocus)('image', _this3.state.reportImages[_this3.state.currentIndex]));
-	          _this3.props.dispatch((0, _actions.getsComment)('clear'));
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      var divStyle = {
-	        //background image will come from the database
-	        position: 'relative',
-	        height: '100%',
-	        width: '100%',
-	        backgroundSize: 'cover'
-	      };
-
-	      var createImage = function createImage(imageObj) {
-	        if (imageObj.id === _this4.props.currentFocus.image.id) {
-	          return _react2.default.createElement('img', { key: imageObj.url, src: 'data:image/jpeg;base64,' + imageObj.image });
-	        }
-	      };
-
-	      var colorObj = {};
-	      this.props.mouseTrackings.list.forEach(function (el) {
-	        var color = '#' + function co(lor) {
-	          return (lor += [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'][Math.floor(Math.random() * 16)]) && lor.length == 6 ? lor : co(lor);
-	        }('');
-	        colorObj[el.id] = color;
-	      });
-
-	      var createCursor = function createCursor(data) {
-	        var divStyle = {
-	          background: colorObj[data.id]
-	        };
-	        return _react2.default.createElement(
-	          'div',
-	          { key: data.id, id: data.id, className: 'cursor', style: divStyle },
-	          ' '
-	        );
-	      };
-
-	      {/*each note is mapped to one createItem upon rendering*/}
-	      var createComment = function createComment(comment) {
-	        return _react2.default.createElement(_Note2.default, { key: comment.id, x: comment.x, y: comment.y, commentText: comment.commentText, commentType: comment.commentType });
-	      };
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { id: 'critiqueImage', style: divStyle },
-	          this.state.reportImages.map(createImage),
-	          this.props.mouseTrackings.list.map(createCursor),
-	          this.props.comments.list.map(createComment)
-	        )
-	      );
-	    }
-	  }]);
-
-	  return ReportPage;
-	}(_react.Component);
-
-	function mapStateToProps(state) {
-	  return {
-	    mouseTrackings: state.mouseTrackings,
-	    comments: state.comments,
-	    currentFocus: state.currentFocus,
-	    stateRouter: state.stateRouter
-	  };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ReportPage);
 
 /***/ }
 /******/ ]);

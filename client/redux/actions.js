@@ -2,7 +2,7 @@ import {
   getUser, postUser, signOut,
   getInvitation, postInvitation,
   getProject, postProject, updateProject, deleteProject,
-  getTest, postTest, updateTest, deleteTest, testViewPreFlight,
+  getTest, postTest, updateTest, deleteTest, postTestView,
   getComment, postComment, updateComment, deleteComment,
   getImage, postImage, updateImage, deleteImage,
   getMouseTracking, postMouseTracking, updateMouseTracking, deleteMouseTracking
@@ -322,8 +322,9 @@ export function updatesTest (test) {
         var params = {
           type: 'UPDATE_TEST',
           data: response.data,
-          index: response.index
+          index: test.index
         };
+        console.log(params)
 
         dispatch(params);
       })
@@ -363,11 +364,6 @@ export function deletesTest (test) {
 /* COMMENT API ACTIONS */
 
 export function getsComment (comment) {
-  if (comment === 'clear') {
-    return {
-      type: 'IMAGE_CLEAR'
-    }
-  };
   return (dispatch) => {
     return getComment(comment)
       .then((response) => {
@@ -462,6 +458,12 @@ export function deletesComment (comment) {
   };
 }
 
+export function resetsComment () {
+  return {
+    type: 'RESET_COMMENT'
+  };
+}
+
 /* IMAGE API ACTIONS */
 
 export function getsImage (image, browserHistory) {
@@ -473,7 +475,7 @@ export function getsImage (image, browserHistory) {
           data: response.data
         };
 
-        browserHistory.push(`/reports`);
+        browserHistory.push(`/reports/${ image.id }`);
         dispatch(params);
       })
       .catch((error) => {

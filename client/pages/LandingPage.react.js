@@ -21,20 +21,20 @@ class LandingPage extends Component {
   onLogin (user) {
     this.props.dispatch(getsUser(user, browserHistory));
     this.toggleLoginModal();
-  }
+  };
 
   onRegister (user) {
     this.props.dispatch(postsUser(user, browserHistory));
     this.toggleRegisterModal();
-  }
+  };
 
   toggleLoginModal () {
     this.setState({ loginModalVisibility: !this.state.loginModalVisibility });
-  }
+  };
 
   toggleRegisterModal () {
     this.setState({ registerModalVisibility: !this.state.registerModalVisibility });
-  }
+  };
 
   render () {
     console.log(this)
@@ -48,7 +48,7 @@ class LandingPage extends Component {
         <Footer />
       </div>
     );
-  }
+  };
 };
 
 const select = (state) => state;

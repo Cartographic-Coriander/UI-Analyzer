@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistory, routeReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form';
-import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter, modalState } from './redux/reducers';
+import { user, projects, tests, comments, images, mouseTrackings, errorState, currentFocus, stateRouter } from './redux/reducers';
 import TestContainer from './components/dashboardPageComponents/contentComponents/testContainer/TestContainer';
 import SettingsContainer from './components/dashboardPageComponents/contentComponents/settingsContainer/SettingsContainer';
 import LandingPage from './pages/LandingPage.react';
@@ -27,7 +27,6 @@ const reducers = {
   errorState: errorState,
   currentFocus: currentFocus,
   stateRouter: stateRouter,
-  modalState: modalState,
   form: formReducer,
   routing: routeReducer
 };
@@ -41,10 +40,9 @@ reduxRouterMiddleware.listenForReplays(store);
 ReactDOM.render(
   <Provider store = { store }>
     <Router history = { browserHistory }>
-      <Route path = '/' component = { LandingPage }>
-        <Route path = 'addcomments/:testId' component = { AddCommentsPage }/>
-        <Route path = 'reports/:testId' component = { ReportPage }/>
-      </Route>
+      <Route path = '/' component = { LandingPage }/>
+      <Route path = 'reports/:testId' component = { ReportPage }/>
+      <Route path = 'addcomments/:testId' component = { AddCommentsPage }/>
       <Route path = '/dashboard' component = { DashboardPage }>
         <IndexRoute component = { Content }/>
         <Route path = 'settings/:projectIndex' component = { SettingsContainer }>

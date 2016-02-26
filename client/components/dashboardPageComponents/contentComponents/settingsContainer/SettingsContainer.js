@@ -24,7 +24,6 @@ class SettingsContainer extends Component {
     this.setState({ id: this.props.projects.list[this.props.params.projectIndex].id });
     this.setState({ description: this.props.projects.list[this.props.params.projectIndex].description });
     this.setState({ name: this.props.projects.list[this.props.params.projectIndex].name });
-    this.render();
   };
 
   updateProject () {
@@ -59,15 +58,16 @@ class SettingsContainer extends Component {
     this.setState({ modalVisibility: !this.state.modalVisibility });
   };
 
-  render () {
-    let header = () => {
-      if (this.props.projects.list.length > 0) {
-        return this.props.children;
-      }
+  headerVisibility () {
+    if (this.props.projects.list.length > 0) {
+      return this.props.children;
     }
+  };
+
+  render () {
     return (
       <div className = 'Settings'>
-        { header() }
+        { this.headerVisibility() }
         <Col className = "projectEntryComponent" xs = { 12 } md = { 9 }>
           <div className = "well bs-component">
             <Row className = "testRow" >

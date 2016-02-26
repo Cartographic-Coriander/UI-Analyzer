@@ -11,6 +11,8 @@ imageRouter.route('/')
       testId: req.query.testId
     };
 
+    console.log(params)
+
     imagesController.retrieveImage(params)
       .then(function (results) {
 

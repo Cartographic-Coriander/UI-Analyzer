@@ -12,7 +12,7 @@ export default class DashboardContainer extends Component {
               <h3>Welcome to Scrutinize</h3>
             </div>
             <div className = "panel-footer">
-              <h4>add some projects</h4>
+              <h4>Start by adding a project!</h4>
             </div>
           </div>
         </Col>

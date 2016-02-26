@@ -3,12 +3,11 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
-import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../redux/actions';
+import { getsTest, postsProject, postsInvitation } from '../../../redux/actions';
 import CreateProjectModal from './subComponents/CreateProjectModal';
 import InviteTestersModal from './subComponents/InviteTestersModal';
 
 class MyProjects extends Component {
-  //setting initial addProject modal visibility to not be shown
   constructor (props) {
     super(props);
     this.state = {
@@ -17,17 +16,17 @@ class MyProjects extends Component {
     };
   };
 
-  //toggle add project modal visibilty
+  // Toggle project modal visibilty
   toggleProjectModal () {
-    this.setState({ projectModalVisibility: !this.state.projectModalVisibility });
+    this.setState(prev => ({ projectModalVisibility: !prev.projectModalVisibility }));
   };
 
-  //toggle invite modal visibility
+  // Toggle invite modal visibility
   toggleInviteModal () {
-    this.setState({ inviteTestersModalVisibility: !this.state.inviteTestersModalVisibility });
+    this.setState(prev => ({ inviteTestersModalVisibility: !prev.inviteTestersModalVisibility }));
   }
 
-  //sending data from add project form in the modal and hiding the modal
+  // Post data from project modal form and hides the modal
   addProject (project) {
     let params = {
       name: project.projectName,
@@ -73,7 +72,7 @@ class MyProjects extends Component {
     return (
       <div className="SidebarNavigation list-group sidebar-wrapper">
         <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleProjectModal.bind(this) }>Add Project</Button>
-        <Accordion activeItems = { this.props.projects.list.length - 1 } >
+        <Accordion>
           { this.props.projects.list.map((project, index) => {
               return (
                 <AccordionItem key = { index } title = { project.name } >

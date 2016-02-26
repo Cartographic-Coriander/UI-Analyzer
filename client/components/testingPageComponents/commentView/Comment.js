@@ -21,7 +21,8 @@ const Note = (props) => {
                   <cite className = "author"></cite>
                 </blockquote>
               </div>
-          )} else {
+            );
+          } else {
             return (
               <div>
                 <div className = "commentPin greenPin" >
@@ -31,7 +32,7 @@ const Note = (props) => {
                   <cite className = "author"></cite>
                 </blockquote>
               </div>
-            )
+            );
           }
         })()
       }
