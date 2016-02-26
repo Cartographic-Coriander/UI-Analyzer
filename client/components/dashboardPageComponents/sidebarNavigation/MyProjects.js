@@ -12,7 +12,8 @@ class MyProjects extends Component {
     super(props);
     this.state = {
       projectModalVisibility : false,
-      inviteTestersModalVisibility: false
+      inviteTestersModalVisibility: false,
+      inviteProjectIndex: null
     };
   };
 
@@ -56,7 +57,7 @@ class MyProjects extends Component {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
       surname: invitee.surnameField,
-      projectId: this.props.projects.list[this.params.projectIndex]
+      projectId: this.props.projects.list[this.state.inviteProjectIndex]
     };
 
     this.props.dispatch(postsInvitation(params));
@@ -80,7 +81,7 @@ class MyProjects extends Component {
                     <ul className = "accordionItems">
                       <li><Button onClick = { () => browserHistory.push(`/dashboard/tests/${ index }`) } className = "TestButton btn-block" >Tests</Button></li>
                       <li><Button onClick = { () => browserHistory.push(`/dashboard/settings/${ index }`) } className = "TestButton btn-block">Settings</Button></li>
-                      <li><Button onClick = { () => this.toggleInviteModal() } className = "TestButton btn-block">Invite Testers</Button></li>
+                      <li><Button onClick = { () => { this.toggleInviteModal(); this.setState({ inviteProjectIndex: index }) }  } className = "TestButton btn-block">Invite Testers</Button></li>
                     </ul>
                   </div>
                 </AccordionItem>
