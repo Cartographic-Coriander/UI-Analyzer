@@ -422,9 +422,13 @@ input:-webkit-autofill {
 }
 
 .dashboardLeftContainer button{
-  margin-top: 35%;
+  margin-top: 27%;
 }
 
 .dashboardRightContainer {
   height: 343px;
+}
+
+.firstDashboardPoint {
+  margin-top: 40px;
 }

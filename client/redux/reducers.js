@@ -85,6 +85,10 @@ const errorInitialState = {
   invitationError: null
 };
 
+const modalInitialState = {
+  addProjectModalVisibility: false
+}
+
 export function user (state = userInitialState, action) {
   var newState = Object.assign({}, state);
 
@@ -306,3 +310,14 @@ export function stateRouter (state = stateRouterInitialState, action) {
   }
   return state;
 };
+
+export function modalState (state = modalInitialState, action) {
+  var newState = Object.assign({}, state);
+
+  switch(action.type) {
+    case 'ADD_PROJECT_MODAL':
+      newState.addProjectModalVisibility = action.visibility;
+      return newState;
+  }
+  return state;
+}

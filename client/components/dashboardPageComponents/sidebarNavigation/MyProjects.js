@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
-import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation } from '../../../redux/actions';
+import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation, projectModal } from '../../../redux/actions';
 import CreateProjectModal from './subComponents/CreateProjectModal';
 import InviteTestersModal from './subComponents/InviteTestersModal';
 
@@ -12,14 +12,13 @@ class MyProjects extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      projectModalVisibility : false,
       inviteTestersModalVisibility: false
     };
   };
 
   //toggle add project modal visibilty
   toggleProjectModal () {
-    this.setState({ projectModalVisibility: !this.state.projectModalVisibility });
+    this.props.dispatch(projectModal(!this.props.modalState.addProjectModalVisibility));
   };
 
   //toggle invite modal visibility
@@ -89,7 +88,7 @@ class MyProjects extends Component {
           })}
         </Accordion>
         <InviteTestersModal onSubmit = { this.addInvite.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
-        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.state.projectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
+        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.props.modalState.addProjectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
       </div>
     );
   };

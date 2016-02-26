@@ -681,6 +681,13 @@ export function contentState (target) {
   };
 }
 
+export function projectModal (visibility) {
+  return {
+    type: 'ADD_PROJECT_MODAL',
+    visibility: visibility
+  }
+}
+
 /*END MODAL ACTIONS */
 
 export function resetError () {
