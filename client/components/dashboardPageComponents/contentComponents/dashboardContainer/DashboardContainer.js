@@ -18,14 +18,14 @@ export default class DashboardContainer extends Component {
               <h3>Welcome to Scrutinize</h3>
             </div>
           </div>
-          <Col md = { 6 }>
+          <Col md = { 6 } className = "dashboardLeftComponent">
             <div className = "panel panel-default dashboardLeftContainer">
               <div className = "panel-body dashboardLeft">
                 <Button onClick = { this.toggleProjectModel.bind(this) } className = "btn btn-primary">add project</Button>
               </div>
             </div>
           </Col>
-          <Col md = { 6 }>
+          <Col md = { 6 } className = "dashboardRightComponent">
             <Panel header = "Projects" className = "dashboardRightContainer">
               <Col md = { 12 } className = "firstDashboardPoint">
                 <h5>Use projects collect data on how users interact with your website</h5>

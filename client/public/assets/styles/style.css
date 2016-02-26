@@ -413,10 +413,11 @@ input:-webkit-autofill {
   background-repeat: no-repeat;
   height: 330px;
   max-width: 100%;
+  margin: 8px;
 }
 
 .dashboardLeftContainer {
-  padding: 5px;
+  padding: 0;
   border: 1px dashed #1e1e2f;
   background: #FAFAFA;
 }
@@ -427,8 +428,21 @@ input:-webkit-autofill {
 
 .dashboardRightContainer {
   height: 343px;
+  padding: 0;
 }
 
 .firstDashboardPoint {
   margin-top: 40px;
+}
+
+.dashboardLeftComponent, .dashboardRightComponent {
+  padding: 0;
+}
+
+.dashboardLeftComponent {
+  padding-right: 15px;
+}
+
+.dashboardRightComponent {
+  padding-left: 15px;
 }
