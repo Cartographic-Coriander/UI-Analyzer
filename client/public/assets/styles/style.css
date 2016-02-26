@@ -406,3 +406,25 @@ input:-webkit-autofill {
 .errorMessage {
   color: red;
 }
+
+.dashboardLeft {
+  background-image: url('../images/three_bars.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 330px;
+  max-width: 100%;
+}
+
+.dashboardLeftContainer {
+  padding: 5px;
+  border: 1px dashed #1e1e2f;
+  background: #FAFAFA;
+}
+
+.dashboardLeftContainer button{
+  margin-top: 35%;
+}
+
+.dashboardRightContainer {
+  height: 343px;
+}
