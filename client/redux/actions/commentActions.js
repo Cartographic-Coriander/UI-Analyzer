@@ -3,11 +3,6 @@ import { getComment, postComment, updateComment, deleteComment } from '../api';
 /* COMMENT API ACTIONS */
 
 export function getsComment (comment) {
-  if (comment === 'clear') {
-    return {
-      type: 'IMAGE_CLEAR'
-    }
-  };
   return (dispatch) => {
     return getComment(comment)
       .then((response) => {
@@ -99,5 +94,11 @@ export function deletesComment (comment) {
 
         dispatch(params);
       });
+  };
+}
+
+export function resetsComment () {
+  return {
+    type: 'RESET_COMMENT'
   };
 }
