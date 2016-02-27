@@ -5,6 +5,7 @@ var model = require('../db/model');
 // output shall be of the following format:
 // { id: 123, projectId: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 var createInvitation = function (invitation) {
+  console.log( 'create invitation', invitation)
   return model.Project.findOne({
     where: { id: invitation.projectId },
     include: [{
@@ -14,13 +15,14 @@ var createInvitation = function (invitation) {
     }]
   })
   .then(function (result) {
+    console.log(result)
     if (result.users[0].projectUser.get('role') === 'owner') {
       var params = {
         projectId: invitation.projectId,
         token: invitation.token,
         email: invitation.email
       };
-
+      console.log(params)
       return model.Invitation.create(params)
         .then(function (newInvitation) {
           return newInvitation;

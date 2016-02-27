@@ -23,6 +23,7 @@ window.renderHeatmap = function () {
     minOpacity: 0,
     blur: .75
   });
+
   heatmap.setData({
     max: 15,
     data: window.heatdata

@@ -57,11 +57,11 @@ class MyProjects extends Component {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
       surname: invitee.surnameField,
-      projectId: this.props.projects.list[this.state.inviteProjectIndex]
+      projectId: this.props.projects.list[this.state.inviteProjectIndex].id
     };
 
-    this.props.dispatch(postsInvitation(params));
     this.toggleInviteModal();
+    this.props.dispatch(postsInvitation(params));
   };
 
   sidebarResize () {
