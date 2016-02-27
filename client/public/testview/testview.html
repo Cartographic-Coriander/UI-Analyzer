@@ -9,11 +9,8 @@
       var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
       var prompt = 'Prompt: ' + JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
 
-      console.log('prompt is...', prompt);
-      console.log('cookie is...', cookie);
       localStorage.setItem('Scrutinize.JWT.token', cookie);
 
-      console.log('testview page ready');
       $('#testPrompt').text(prompt);
       $('#testEndRequest').hide();
       $('#startTestButton').hide();
@@ -30,25 +27,6 @@
       $('#startTestButton').on('click', function () {
         $('#testStartPrompt').hide();
         $('iframe').show();
-      });
-
-      $('#testEndNoButton').on('click', function () {
-        $('#testEndRequest').hide();
-        $('iframe').show();
-      });
-
-      $('#testEndYesButton').on('click', function () {
-        // console.log('sending mousetracking info');
-        $.post({
-          url: '/mousetracking',
-          data: {
-            mouseTracking: mouseTracking,
-            access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-          },
-          success: function () {
-            // console.log('mousetracking info successfully posted');
-          }
-        });
       });
 
       // get the real url address to get screenshot
@@ -84,9 +62,7 @@
               resolution: [documentWidth, documentHeight],
               access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
-            success: function () {
-              // console.log('screenshot saved for review');
-            }
+            success: function () {}
           });
         }
 
@@ -120,7 +96,6 @@
               timestamp: timestamp,
               type: "move"
             });
-            // console.log(mouseTracking);
           }
         });
 
@@ -141,11 +116,9 @@
             timestamp: timestamp,
             type: "click"
           });
-          console.log(mouseTracking);
         });
 
         $(document).keypress('d', function (event) {
-          // console.log('test end request document');
           if (event.ctrlKey) {
             $('iframe').hide();
             $('#testEndRequest').show();

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Col, Panel, Button } from 'react-bootstrap';
-import { projectModal } from '../../../../redux/actions.js';
+import { togglesProjectModal } from '../../../../redux/actions.js';
 
 export default class DashboardContainer extends Component {
 
   toggleProjectModel () {
-    this.props.dispatch(projectModal(!this.props.modalState.addProjectModalVisibility));
+    this.props.dispatch(togglesProjectModal(!this.props.modalState.addProjectModalVisibility));
   }
 
   render () {
@@ -16,6 +16,9 @@ export default class DashboardContainer extends Component {
           <div className = "panel panel-default">
             <div className = "panel-body">
               <h3>Welcome to Scrutinize</h3>
+            </div>
+            <div className = "panel-footer">
+              <h4>Start by adding a project!</h4>
             </div>
           </div>
           <Col md = { 6 } className = "dashboardLeftComponent">

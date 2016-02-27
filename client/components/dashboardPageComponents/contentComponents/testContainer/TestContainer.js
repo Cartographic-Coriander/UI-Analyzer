@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, getsImage, getsTest, getsProject } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, getsImage, getsTest, getsProject, postsTestView } from '../../../../redux/actions';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 class TestContainer extends Component {
@@ -24,17 +24,19 @@ class TestContainer extends Component {
     this.props.dispatch(getsTest({ projectId: this.props.projects.list[this.props.params.projectIndex].id }, browserHistory, this.props.params.projectIndex));
   };
 
-  //to get to the proxy server
   startTest (test) {
-    let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
-    let location = window.location.origin.slice(0, -portLength);
+    var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+    if (portLength > 0) {
+      var location = window.location.origin.slice(0, -portLength);
+    } else {
+      var location = window.location.origin;
+    }
 
-    //sending user to mouse tracking page
-    let newUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
-    window.location = newUrl;
+    // Assembly URL to pass to proxy
+    var testUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
+    this.props.dispatch(postsTestView(testUrl));
   };
 
-  //editing existing tests
   updateTest (test) {
     this.props.dispatch(updatesTest(test));
   };
@@ -43,7 +45,6 @@ class TestContainer extends Component {
     this.props.dispatch(deletesTest(test));
   };
 
-  //adding new tests
   addTest (test) {
     let urlInput = this.state.addTestUrl;
     let testUrl = urlInput.substr(0, 4) === 'www.' ? `http://${ urlInput }` : urlInput;
@@ -54,8 +55,8 @@ class TestContainer extends Component {
       prompt: this.state.addTestPrompt
     };
 
-    this.toggleModal();
     this.props.dispatch(postsTest(newTest));
+    this.toggleModal();
   };
 
   getReport (test) {
@@ -74,21 +75,20 @@ class TestContainer extends Component {
     this.setState({ addTestUrl: event.target.value });
   };
 
-  //for showing and hiding modals
   toggleModal () {
-    this.setState({ testModalDisplay: !this.state.testModalDisplay });
+    this.setState(prev => ({ testModalDisplay: !prev.testModalDisplay }));
+  };
+
+  headerVisibility () {
+    if (this.props.projects.list.length > 0) {
+      return this.props.children;
+    }
   };
 
   render () {
-    let header = () => {
-      if (this.props.projects.list.length > 0) {
-        return this.props.children;
-      }
-    };
-
     return (
       <div className = "Tests">
-        { header() }
+        { this.headerVisibility() }
         <div>
           { this.props.tests.list.map((test, index) => {
               return <TestContainerEntry
@@ -144,7 +144,7 @@ class TestContainer extends Component {
       </div>
     );
   };
-}
+};
 
 const select = (state) => state;
 

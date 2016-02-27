@@ -3,30 +3,31 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
-import { contentState, setFocus, getsTest, getsComment, postsProject, postsInvitation, projectModal } from '../../../redux/actions';
+import { getsTest, postsProject, postsInvitation, togglesProjectModal } from '../../../redux/actions';
 import CreateProjectModal from './subComponents/CreateProjectModal';
 import InviteTestersModal from './subComponents/InviteTestersModal';
 
 class MyProjects extends Component {
-  //setting initial addProject modal visibility to not be shown
   constructor (props) {
     super(props);
     this.state = {
-      inviteTestersModalVisibility: false
+      projectModalVisibility : false,
+      inviteTestersModalVisibility: false,
+      inviteProjectIndex: null
     };
   };
 
-  //toggle add project modal visibilty
+  // Toggle project modal visibilty
   toggleProjectModal () {
-    this.props.dispatch(projectModal(!this.props.modalState.addProjectModalVisibility));
+    this.props.dispatch(togglesProjectModal(!this.props.modalState.addProjectModalVisibility));
   };
 
-  //toggle invite modal visibility
+  // Toggle invite modal visibility
   toggleInviteModal () {
-    this.setState({ inviteTestersModalVisibility: !this.state.inviteTestersModalVisibility });
+    this.setState(prev => ({ inviteTestersModalVisibility: !prev.inviteTestersModalVisibility }));
   }
 
-  //sending data from add project form in the modal and hiding the modal
+  // Post data from project modal form and hides the modal
   addProject (project) {
     let params = {
       name: project.projectName,
@@ -56,11 +57,11 @@ class MyProjects extends Component {
       email: invitee.emailField,
       firstname: invitee.firstNameField,
       surname: invitee.surnameField,
-      projectId: this.props.projects.list[this.params.projectIndex]
+      projectId: this.props.projects.list[this.state.inviteProjectIndex].id
     };
 
-    this.props.dispatch(postsInvitation(params));
     this.toggleInviteModal();
+    this.props.dispatch(postsInvitation(params));
   };
 
   sidebarResize () {
@@ -72,7 +73,7 @@ class MyProjects extends Component {
     return (
       <div className="SidebarNavigation list-group sidebar-wrapper">
         <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleProjectModal.bind(this) }>Add Project</Button>
-        <Accordion activeItems = { this.props.projects.list.length - 1 } >
+        <Accordion>
           { this.props.projects.list.map((project, index) => {
               return (
                 <AccordionItem key = { index } title = { project.name } >
@@ -80,7 +81,7 @@ class MyProjects extends Component {
                     <ul className = "accordionItems">
                       <li><Button onClick = { () => browserHistory.push(`/dashboard/tests/${ index }`) } className = "TestButton btn-block" >Tests</Button></li>
                       <li><Button onClick = { () => browserHistory.push(`/dashboard/settings/${ index }`) } className = "TestButton btn-block">Settings</Button></li>
-                      <li><Button onClick = { () => this.toggleInviteModal() } className = "TestButton btn-block">Invite Testers</Button></li>
+                      <li><Button onClick = { () => { this.toggleInviteModal(); this.setState({ inviteProjectIndex: index }) }  } className = "TestButton btn-block">Invite Testers</Button></li>
                     </ul>
                   </div>
                 </AccordionItem>

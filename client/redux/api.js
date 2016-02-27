@@ -180,7 +180,7 @@ export function deleteComment (comment) {
 
 export function getImage (image) {
   const params = {
-    testId: image.testId
+    testId: image.id
   };
 
   return instance.get('/api/image', { params: params });

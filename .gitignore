@@ -17,7 +17,7 @@ docker-compose.yml
 .DS_Store
 
 ###ignore the bundle
-client/public/assets/scripts/bundle.js
+client/public/assets/scripts/bundle*
 client/public/bundle.js
 client/public/assets/scripts/*.hot-update.*
 server/data/screenshots/*

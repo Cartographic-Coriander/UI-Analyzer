@@ -1,9 +1,10 @@
 var express = require('express');
 var invitationRouter = express.Router();
-var usersController = require('../../controllers/usersController');
-var invitationController = require('../../controllers/invitationController')
-var mailService = require('../mail');
+var nodemailer = require('nodemailer');
 var auth = require('../auth');
+var mailAuth = require('../mailAuth');
+var usersController = require('../../controllers/usersController');
+var invitationController = require('../../controllers/invitationController');
 
 invitationRouter.route('/')
   .get(function (req, res) {
@@ -21,8 +22,7 @@ invitationRouter.route('/')
         res.status(500).end('Invitation GET Error!');
       });
   })
-
-  .post(auth.encodeInvitation, function (req, res) {
+  .post(auth.decode, auth.encodeInvitation, function (req, res) {
     var params = {
       userId: req.decoded.iss,
       projectId: req.body.projectId,
@@ -47,19 +47,33 @@ invitationRouter.route('/')
           .catch(function (error) {
             console.log('/api/invitation POST Error!', error);
             res.status(500).end(error);
-          });
+          })
       })
       .catch(function (error) {
         var mailOptions = {
             from: 'Scrutinize App <scrutinizeApp@gmail.com>',
             to: params.email,
             subject: 'Invitation to Scrutinize App',
-            text: 'Please go to:' + 'http://' + process.env.IP + '/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
-            html: 'http://' + process.env.IP + '/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
+            text: 'Please go to: http://www.scrutinize.tk/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : ''),
+            html: 'http://www.scrutinize.tk/invitation?token=' + params.token + (params.firstname ? '&firstname=' + params.firstname : '') + (params.surname ? '&surname=' + params.surname : '')
         };
 
-        req.body.mailOptions = mailOptions;
-        invitationRouter.use(mailService());
+        invitationController.createInvitation(params)
+          .then(function (result) {
+            var transporter = nodemailer.createTransport(mailAuth);
+
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log('/api/invitation POST Error! Mail transporter error!', error);
+                res.status(500).end(error);
+              }
+              res.end();
+            });
+          })
+          .catch(function (error) {
+            console.log('/api/invitation POST Error!', error);
+            res.status(500).end('Invitation error!');
+          });
       });
   });
 

@@ -27,6 +27,7 @@ export function getsTest (test, browserHistory, index) {
           };
         }
 
+        browserHistory.push(`/dashboard/tests/${ index }`);
         dispatch(params);
       });
   };
@@ -60,7 +61,7 @@ export function updatesTest (test) {
       .then((response) => {
         var params = {
           type: 'UPDATE_TEST',
-          data: response.data,
+          data: response.data.update,
           index: response.index
         };
 
@@ -101,7 +102,7 @@ export function deletesTest (test) {
 
 export function postsTestView (location) {
   return (dispatch) => {
-    return testViewPreFlight()
+    return postTestView()
       .then((response) => {
         window.location = location;
       })

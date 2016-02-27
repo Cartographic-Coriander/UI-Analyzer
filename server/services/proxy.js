@@ -9,6 +9,8 @@ var proxy = function (session) {
   var auth = require('./auth');
   var imagesController = require('../controllers/imagesController');
   var mousetrackingController = require('../controllers/mousetrackingController');
+  var utils = require('./utils');
+  require('../db/model').init();
 
   //proxy middleware
   app.use(parser.json());
@@ -38,17 +40,6 @@ var proxy = function (session) {
     var directory = __dirname + '/../data/screenshots/' + session.testId + '/';
     var dir = path.resolve(__dirname, '../data/screenshots/', session.testId) + '/';
 
-    var slug = function (input) {
-      return input
-        .replace(/^http:\/\/www/g, '')
-        .replace(/^http:\/\//g, '')
-        .replace(/^\s\s*/, '') // Trim start
-        .replace(/\s\s*$/, '') // Trim end
-        .toLowerCase() // Camel case is bad
-        .replace(/[^a-z0-9_\-~!\+\s]+/g, '') // Exchange invalid chars
-        .replace(/[\s]+/g, '-'); // Swap whitespace for single hyphen
-    }
-
     mkdirp(directory, function (error) {
       if (error) {
         throw (new Error('ERROR! Directory creation error!'));
@@ -62,24 +53,24 @@ var proxy = function (session) {
       }
     };
 
-    webshot(url, dir + slug(url) + '.jpg', options, function (error) {
-      var params = {
+    webshot(url, dir + utils.slug(url) + '.jpg', options, function (error) {
+      var imageParams = {
         testId: session.testId,
         url: url,
-        image: dir + slug(url) + '.jpg'
+        image: dir + utils.slug(url) + '.jpg'
       };
 
-      return imagesController.createImage(params)
+      return imagesController.createImage(imageParams)
         .then(function (result) {
-          var params = {
+          var mouseTrackingParams = {
             userId: req.decoded.iss,
             imageId: result.get('id'),
             data: req.body.mouseTracking
           };
 
-          return mousetrackingController.createMouseTracking(params)
+          return mousetrackingController.createMouseTracking(mouseTrackingParams)
             .then(function (result) {
-              res.json(result.get())
+              res.end();
             })
             .catch(function (error) {
               console.log('ERROR! Failed to save mousetracking data!', error);
@@ -92,10 +83,13 @@ var proxy = function (session) {
   app.get('/api/endtest', auth.decode, function (req, res) {
     console.log('test ended', session.callbackUrl);
     res.send(session.callbackUrl);
-    process.exit();
+    setTimeout(function () {
+      process.exit();
+    }, 10000)
   })
 
   app.listen(session.port, function () {
+    process.send({ type: 'START', data: null });
     console.log('Proxy server is running on' + session.location + session.port);
   });
 };

@@ -27,9 +27,9 @@ const reducers = {
   errorState: errorState,
   currentFocus: currentFocus,
   stateRouter: stateRouter,
-  modalState: modalState,
   form: formReducer,
-  routing: routeReducer
+  routing: routeReducer,
+  modalState: modalState
 };
 const reducer = combineReducers(reducers);
 const reduxRouterMiddleware = syncHistory(browserHistory);
@@ -41,10 +41,9 @@ reduxRouterMiddleware.listenForReplays(store);
 ReactDOM.render(
   <Provider store = { store }>
     <Router history = { browserHistory }>
-      <Route path = '/' component = { LandingPage }>
-        <Route path = 'addcomments/:testId' component = { AddCommentsPage }/>
-        <Route path = 'reports/:testId' component = { ReportPage }/>
-      </Route>
+      <Route path = '/' component = { LandingPage }/>
+      <Route path = 'reports/:testId' component = { ReportPage }/>
+      <Route path = 'addcomments/:testId' component = { AddCommentsPage }/>
       <Route path = '/dashboard' component = { DashboardPage }>
         <IndexRoute component = { Content }/>
         <Route path = 'settings/:projectIndex' component = { SettingsContainer }>

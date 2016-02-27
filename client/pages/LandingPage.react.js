@@ -21,34 +21,32 @@ class LandingPage extends Component {
   onLogin (user) {
     this.props.dispatch(getsUser(user, browserHistory));
     this.toggleLoginModal();
-  }
+  };
 
   onRegister (user) {
     this.props.dispatch(postsUser(user, browserHistory));
     this.toggleRegisterModal();
-  }
+  };
 
   toggleLoginModal () {
     this.setState({ loginModalVisibility: !this.state.loginModalVisibility });
-  }
+  };
 
   toggleRegisterModal () {
     this.setState({ registerModalVisibility: !this.state.registerModalVisibility });
-  }
+  };
 
   render () {
-    console.log(this)
     return (
       <div className = "LandingPage">
         <Header toggleLoginModal = { this.toggleLoginModal.bind(this) } toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>
         <LoginForm onSubmit = { this.onLogin.bind(this) } visibility = { this.state.loginModalVisibility } toggleLoginModal = { this.toggleLoginModal.bind(this) }/>
         <Registration onSubmit = { this.onRegister.bind(this) } visibility = { this.state.registerModalVisibility } toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>
         <ProductDescription toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>
-        <AboutUs />
         <Footer />
       </div>
     );
-  }
+  };
 };
 
 const select = (state) => state;

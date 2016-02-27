@@ -1,5 +1,6 @@
 var express = require('express');
 var commentRouter = express.Router();
+var Promise = require('bluebird');
 var commentsController = require('../../controllers/commentsController');
 
 commentRouter.route('/')

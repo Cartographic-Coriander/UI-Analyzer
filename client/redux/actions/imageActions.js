@@ -11,7 +11,7 @@ export function getsImage (image, browserHistory) {
           data: response.data
         };
 
-        browserHistory.push(`/reports`);
+        browserHistory.push(`/reports/${ image.id }`);
         dispatch(params);
       })
       .catch((error) => {

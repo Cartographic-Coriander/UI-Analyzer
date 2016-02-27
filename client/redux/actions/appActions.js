@@ -1,4 +1,4 @@
-export function resetError () {
+export function resetsError () {
   return {
     type: 'RESET_ERROR'
   };

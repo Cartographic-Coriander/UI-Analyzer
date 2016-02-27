@@ -2,7 +2,7 @@
  * heatmap.js v2.0.2 | JavaScript Heatmap Library
  *
  * Copyright 2008-2016 Patrick Wied <heatmapjs@patrick-wied.at> - All rights reserved.
- * Dual licensed under MIT and Beerware license 
+ * Dual licensed under MIT and Beerware license
  *
  * :: 2016-02-04 21:25
  */
@@ -11,7 +11,7 @@
 window.heatdata = window.heatdata || [];
 
 // create heatmap with configuration
-window.renderHeatmap = function(){
+window.renderHeatmap = function () {
   $('#app').wrap("<div id='heatmapContainer'></div>")
   $('#heatmapContainer').css('height', $('#critiqueImage').height());
   $('#heatmapContainer').css('width', $('#critiqueImage').width());
@@ -23,6 +23,7 @@ window.renderHeatmap = function(){
     minOpacity: 0,
     blur: .75
   });
+
   heatmap.setData({
     max: 15,
     data: window.heatdata
@@ -31,12 +32,12 @@ window.renderHeatmap = function(){
   window.heatmapVisible = true;
 };
 
-window.removeHeatmap = function(){
+window.removeHeatmap = function () {
   $('#app').unwrap();
   $('.heatmap-canvas').remove();
 };
 
-window.toggleHeatmap = function(){
+window.toggleHeatmap = function () {
   if (window.heatmapVisible) {
     $('.heatmap-canvas').hide();
     window.heatmapVisible = false;
