@@ -11,7 +11,8 @@ class ReportPage extends Component {
     this.state = {
       testImages : [],
       currentIndex: 0,
-      showLanding: true
+      showLanding: true,
+      delay: 5750
     };
   };
 
@@ -46,9 +47,6 @@ class ReportPage extends Component {
     this.props.dispatch(getsMouseTracking({ imageId: this.state.testImages[this.state.currentIndex].id }));
     this.props.dispatch(getsComment({ imageId: this.state.testImages[this.state.currentIndex].id }));
     this.mouseReplay();
-  };
-
-  componentDidMount () {
   };
 
   mouseReplay () {
@@ -93,7 +91,7 @@ class ReportPage extends Component {
       });
     };
 
-    setTimeout(mouseReplay, 1000);
+    setTimeout(mouseReplay, this.state.delay);
 
     setTimeout(() => {
       window.heatdata = [];
@@ -117,12 +115,13 @@ class ReportPage extends Component {
 
       window.renderHeatmap();
       window.toggleHeatmap();
-    }, 1500);
+    }, this.state.delay);
     var flag = true;
 
     $(document).on('keydown', (event) => {
       if (event.keyCode === 72 && event.ctrlKey) {
         window.toggleHeatmap();
+        console.log(window.heatmapVisible)
       }
     });
 
@@ -142,7 +141,7 @@ class ReportPage extends Component {
       if (event.keyCode === 39) {
         if (this.state.testImages[this.state.currentIndex + 1] !== undefined) {
           window.removeHeatmap();
-          this.mouseReplay();
+          // this.mouseReplay();
           this.setState(prev => ({ currentIndex: prev.currentIndex + 1 }));
           this.getCommentsMousetracking();
         } else {
@@ -150,6 +149,8 @@ class ReportPage extends Component {
         }
       }
     });
+
+    this.setState({ delay: 750 });
   };
 
   render () {
