@@ -1,53 +1,42 @@
 import React, { Component } from 'react';
-import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
-import Content from '../components/dashboardPageComponents/contentComponents/Content';
 import { connect } from 'react-redux';
-import { authChecker, showImagePage } from '../redux/actions';
-import { Navbar } from 'react-bootstrap';
-import { NavItem } from 'react-bootstrap';
-import { Nav } from 'react-bootstrap';
-import { signsOut, setFocus } from '../redux/actions';
+import { NavItem, Navbar, Nav } from 'react-bootstrap';
+import { signsOut, getsProject } from '../redux/actions';
+import { browserHistory } from 'react-router';
+import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/MyProjects';
+import Content from '../components/dashboardPageComponents/contentComponents/Content';
 
 export default class DashboardPage extends Component {
   handleLogout () {
-    this.props.dispatch(signsOut());
-    if (this.props.projects.list) {
-      this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
-    }
-    setTimeout(() => {
-      localStorage.removeItem('Scrutinize.saved.state');
-    }, 250)
-  }
+    this.props.dispatch(signsOut(browserHistory));
+  };
+
+  componentWillMount () {
+    this.props.dispatch(getsProject());
+  };
 
   componentDidMount () {
-    if (this.props.projects.list.length > 0) {
-      this.props.dispatch(setFocus('project', this.props.projects.list[this.props.projects.list.length - 1]));
-      this.props.dispatch(setFocus('test', this.props.projects.list[this.props.projects.length - 1].id));
-    }
-  }
-
-  componentDidMount(){
     setTimeout(() => {
       window.removeHeatmap();
-    }, 1200)
-  }
+    }, 1200);
+  };
 
   render () {
     return (
       <div className = "DashboardPage">
         <Navbar className="navbar navbar-inverse">
-          <a className="navbar-brand" href="#">Scrutinize</a>
+          <a onClick = { () => browserHistory.push('/dashboard') }className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
-            <NavItem onClick={ () => { this.handleLogout('leaving') } } href = "#"> Log Out </NavItem>
+            <NavItem onClick={ () => this.handleLogout() } href = "#"> Log Out </NavItem>
           </Nav>
         </Navbar>
         <SidebarNavigation />
-        <Content />
+        { this.props.children }
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
-const select = (state) => state
+const select = (state) => state;
 
-export default connect(select)(DashboardPage)
+export default connect(select)(DashboardPage);

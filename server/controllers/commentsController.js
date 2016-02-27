@@ -1,13 +1,5 @@
 var model = require('../db/model');
 
-// var Comment = sequelize.define('comment', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   commentType: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   commentText: { type: Sequelize.STRING },
-//   x: { type: Sequelize.INTEGER },
-//   y: { type: Sequelize.INTEGER }
-// }, { timestamps: false });
-
 // input should be of the following format:
 // { userId: 123, imageId: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 // output shall be of the following format:

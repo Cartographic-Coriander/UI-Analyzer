@@ -1,12 +1,5 @@
 var model = require('../db/model');
 
-// var Test = sequelize.define('test', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   name: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   url: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   prompt: { type: Sequelize.STRING, notNull: true, notEmpty: true }
-// }, { timestamps: false });
-
 // input should be of the following format:
 // { userId: 123, projectId: 123, name: 'abc', url: 'abc', prompt: 'abc' }
 // output shall be of the following format:

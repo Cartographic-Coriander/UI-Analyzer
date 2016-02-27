@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Col, Panel } from 'react-bootstrap';
 
-class DashboardContainer extends Component {
+export default class DashboardContainer extends Component {
   render () {
     return (
       <div className = 'Dashboard'>
-        This is the Dashboard Container component
+        <Col md = { 9 } mdOffset = { 3 }>
+          <div className = "panel panel-default">
+            <div className = "panel-body">
+              <h3>Welcome to Scrutinize</h3>
+            </div>
+            <div className = "panel-footer">
+              <h4>Start by adding a project!</h4>
+            </div>
+          </div>
+        </Col>
       </div>
-    )
+    );
   }
 }
 
-const select = (state) => state
+const select = (state) => state;
 
-export default connect(select)(DashboardContainer)
+export default connect(select)(DashboardContainer);

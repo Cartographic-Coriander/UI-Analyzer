@@ -9,11 +9,8 @@
       var cookie = JSON.stringify({ token: location.search.split('&access_token=')[1] });
       var prompt = 'Prompt: ' + JSON.stringify({ prompt: location.search.split('&prompt=')[1] }).split('&access_token=')[0].split('"prompt":"')[1].replace(/%20/g, " ");
 
-      console.log('prompt is...', prompt);
-      console.log('cookie is...', cookie);
       localStorage.setItem('Scrutinize.JWT.token', cookie);
 
-      console.log('testview page ready');
       $('#testPrompt').text(prompt);
       $('#testEndRequest').hide();
       $('#startTestButton').hide();
@@ -27,29 +24,9 @@
       var documentWidth;
       var documentHeight;
 
-
       $('#startTestButton').on('click', function () {
         $('#testStartPrompt').hide();
         $('iframe').show();
-      });
-
-      $('#testEndNoButton').on('click', function () {
-        $('#testEndRequest').hide();
-        $('iframe').show();
-      });
-
-      $('#testEndYesButton').on('click', function () {
-        // console.log('sending mousetracking info');
-        $.post({
-          url: '/mousetracking',
-          data: {
-            mouseTracking: mouseTracking,
-            access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
-          },
-          success: function () {
-            // console.log('mousetracking info successfully posted');
-          }
-        });
       });
 
       // get the real url address to get screenshot
@@ -85,9 +62,7 @@
               resolution: [documentWidth, documentHeight],
               access_token: JSON.parse(localStorage.getItem('Scrutinize.JWT.token')).token
             },
-            success: function () {
-              // console.log('screenshot saved for review');
-            }
+            success: function () {}
           });
         }
 
@@ -121,7 +96,6 @@
               timestamp: timestamp,
               type: "move"
             });
-            // console.log(mouseTracking);
           }
         });
 
@@ -142,11 +116,9 @@
             timestamp: timestamp,
             type: "click"
           });
-          console.log(mouseTracking);
         });
 
         $(document).keypress('d', function (event) {
-          // console.log('test end request document');
           if (event.ctrlKey) {
             $('iframe').hide();
             $('#testEndRequest').show();
@@ -456,7 +428,6 @@
     #testEndRequest-text{
       margin-top: 75px;
     }
-
   </style>
 </head>
 <body>
@@ -476,15 +447,8 @@
     </div>
   </div>
   <div id="testEndRequest">
-    <!-- Would you like to end this test session?
-    <button id="testEndYesButton">Yes</button>
-    <button id="testEndNoButton">No</button> -->
     <div id="testEndRequest-text"> Test session ended, please wait... </div>
   </div>
-  <iframe src="http://localhost:8000" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer">
-  </iframe>
-
-
-</div>
+  <iframe src="http://localhost:8000" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:20;" id="testLayer"></iframe>
 </body>
 </html>

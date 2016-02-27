@@ -1,11 +1,5 @@
 var model = require('../db/model');
 
-// var Image = sequelize.define('image', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   image: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
-//   url: { type: Sequelize.STRING, notNull: true, notEmpty: true }
-// }, { timestamps: false });
-
 // input should be of the following format:
 // { userId: 123, testId: 123, image: (stringified png file), url: 'abc' }
 // output shall be of the following format:

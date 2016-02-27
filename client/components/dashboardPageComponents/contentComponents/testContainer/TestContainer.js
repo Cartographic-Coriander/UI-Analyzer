@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import TestContainerEntry from './subComponents/TestContainerEntry';
-import { deletesTest, updatesTest, postsTest, setFocus, pageState, getsImage, contentState } from '../../../../redux/actions';
+import { deletesTest, updatesTest, postsTest, getsImage, getsTest, getsProject, postsTestView } from '../../../../redux/actions';
 import { Button, Col, Modal, Row, Input } from 'react-bootstrap';
 
 class TestContainer extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       testModalDisplay: false,
       addTestName : null,
@@ -15,84 +16,81 @@ class TestContainer extends Component {
     };
   };
 
-  //editing existing tests
+  componentWillMount () {
+    this.props.dispatch(getsProject(this.setInitialState.bind(this)));
+  };
+
+  setInitialState () {
+    this.props.dispatch(getsTest({ projectId: this.props.projects.list[this.props.params.projectIndex].id }, browserHistory, this.props.params.projectIndex));
+  };
+
+  startTest (test) {
+    var portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
+    if (portLength > 0) {
+      var location = window.location.origin.slice(0, -portLength);
+    } else {
+      var location = window.location.origin;
+    }
+
+    // Assembly URL to pass to proxy
+    var testUrl = `${ window.location.origin }/testview?url=${ test.url }&testId=${ test.testId }&access_token=${ test.access_token }&location=${ location }&callbackUrl=${ window.location.origin }/addcomments/${ test.testId }&prompt=${ test.prompt }`;
+    this.props.dispatch(postsTestView(testUrl));
+  };
+
   updateTest (test) {
     this.props.dispatch(updatesTest(test));
-    // this.props.dispatch(getsImage({ testId: }))
   };
 
   deleteTest (test) {
     this.props.dispatch(deletesTest(test));
   };
 
-  getReport (test) {
-    this.props.dispatch(getsImage(test));
-    // this.props.dispatch(contentState('Reports'));
-    this.props.dispatch(setFocus('test', test))
-    this.props.dispatch(pageState('reportView'));
-  };
-
-  //adding new tests
   addTest (test) {
     let urlInput = this.state.addTestUrl;
-    let testUrl = urlInput.substr(0,4) === 'www.' ? 'http://' + urlInput : urlInput;
+    let testUrl = urlInput.substr(0, 4) === 'www.' ? `http://${ urlInput }` : urlInput;
     let newTest = {
-      projectId: this.props.currentFocus.project.id,
+      projectId: this.props.projects.list[this.props.params.projectIndex].id,
       name: this.state.addTestName,
       url: testUrl,
       prompt: this.state.addTestPrompt
     };
 
-    this.hideModal();
     this.props.dispatch(postsTest(newTest));
+    this.toggleModal();
   };
 
-  newTestName (event) {
+  getReport (test) {
+    this.props.dispatch(getsImage(test, browserHistory));
+  };
+
+  handleNameInput (event) {
     this.setState({ addTestName: event.target.value });
   };
 
-  newTestPrompt (event) {
+  handlePromptInput (event) {
     this.setState({ addTestPrompt: event.target.value });
   };
 
-  newTestUrl (event) {
+  handleUrlInput (event) {
     this.setState({ addTestUrl: event.target.value });
   };
 
-  //for showing and hiding modals
   toggleModal () {
-    this.setState({
-      testModalDisplay: this.state.testModalDisplay === true ? false : true
-    })
-  }
+    this.setState(prev => ({ testModalDisplay: !prev.testModalDisplay }));
+  };
 
-  hideModal () {
-    this.setState({
-      testModalDisplay : false
-    })
-  }
-
-  //to get to the proxy server
-  startTest (test) {
-    let portLength = window.location.port.length > 0 ? window.location.port.length + 1 : 0;
-    let location = window.location.origin.slice(0, -portLength);
-
-    //sending user to image commenting page
-    this.props.dispatch(pageState('imageView'));
-
-    //sending user to mouse tracking page
-    let newUrl = window.location.origin + '/testview?url=' + test.url + '&testId=' + test.testId + '&access_token=' + test.access_token + '&location=' + location + '&callbackUrl=' + window.location.origin + '&prompt=' + test.prompt;
-    this.props.dispatch(setFocus('test', this.props.tests.list[test.index]));
-
-    window.location = newUrl;
-  }
+  headerVisibility () {
+    if (this.props.projects.list.length > 0) {
+      return this.props.children;
+    }
+  };
 
   render () {
     return (
-      <div>
+      <div className = "Tests">
+        { this.headerVisibility() }
         <div>
           { this.props.tests.list.map((test, index) => {
-              console.log(index)
               return <TestContainerEntry
                 update = { this.updateTest.bind(this) }
                 delete = { this.deleteTest.bind(this) }
@@ -118,27 +116,27 @@ class TestContainer extends Component {
         <Modal show = { this.state.testModalDisplay }>
           <form>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Name</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input onChange = { this.newTestName.bind(this) } className = "addTestInput" type = "text" />
+              <Col xs = { 2 } md = { 5 }>Test Name</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.handleNameInput.bind(this) } type = "text" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Url</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input onChange = { this.newTestUrl.bind(this) } className = "addTestInput" type = "text" />
+              <Col xs = { 2 } md = { 5 }>Test Url</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.handleUrlInput.bind(this) } type = "text" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 2 } md = { 2 }>Test Prompt</Col>
-              <Col xs = { 12 } md = { 10 }>
-                <Input onChange = { this.newTestPrompt.bind(this) } type = "textarea" />
+              <Col xs = { 2 } md = { 5 }>Test Prompt</Col>
+              <Col xs = { 5 } md = { 12 }>
+                <Input onChange = { this.handlePromptInput.bind(this) } type = "textarea" />
               </Col>
             </Row>
             <Row>
-              <Col xs = { 12 } md = { 12 }>
-                <Button className = "btn-primary" onClick = { this.addTest.bind(this) } type = "button">submit</Button>
-                <Button onClick = { this.hideModal.bind(this) } type= "button">cancel</Button>
+              <Col xs = { 5 } md = { 12 }>
+                <Button className = "btn-primary pull-right" onClick = { this.addTest.bind(this) } type = "button">submit</Button>
+                <Button className = "pull-right" onClick = { this.toggleModal.bind(this) } type = "button">cancel</Button>
               </Col>
             </Row>
           </form>
@@ -146,8 +144,8 @@ class TestContainer extends Component {
       </div>
     );
   };
-}
+};
 
-const select = (state) => state
+const select = (state) => state;
 
-export default connect(select)(TestContainer)
+export default connect(select)(TestContainer);

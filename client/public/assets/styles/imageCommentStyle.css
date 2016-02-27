@@ -12,18 +12,6 @@ input[type=radio] {
   color: black;
 }
 
-
-/*for changing label colors if they are for the selected radio button*/
-/*input[type=radio]:checked + span + label, input[type=radio]:checked + p + label {
-  background-image: none;
-  margin-bottom: 0;
-  font-size: 12.5px;
-  line-height: 17px;
-  color: #333;
-  text-align: center;
-  cursor: pointer;
-}*/
-
 input[type=radio]:checked + span + label {
   background-color:#00ff99;
 
@@ -42,15 +30,6 @@ input[type=radio]:checked + p + label {
 }
 
 /*end changin label colors*/
-
-/*setting initial colors for critique buttons*/
-/*span + label, p + label {
-  display: inline-block;
-  margin: 0px;
-  padding: 4px 11px;
-  outline: 0;
-  color: #1f1f14;
-}*/
 
 span + label {
   background-color: #00e68a;
@@ -119,7 +98,6 @@ button {
 .commentPin:hover + blockquote {
   display: block;
   z-index: 200000000;
-
 }
 
 blockquote:hover {
@@ -163,7 +141,6 @@ blockquote:hover {
 #testStartPrompt, #testEndRequest {
   position: relative;
   top: 200px;
-  height: 200px;
   width: 420px;
   background-color: #2780e3;
   padding: 30px 30px 30px 30px;
