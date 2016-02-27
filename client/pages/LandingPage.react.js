@@ -43,7 +43,6 @@ class LandingPage extends Component {
         <LoginForm onSubmit = { this.onLogin.bind(this) } visibility = { this.state.loginModalVisibility } toggleLoginModal = { this.toggleLoginModal.bind(this) }/>
         <Registration onSubmit = { this.onRegister.bind(this) } visibility = { this.state.registerModalVisibility } toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>
         <ProductDescription toggleRegisterModal = { this.toggleRegisterModal.bind(this) }/>
-        <AboutUs />
         <Footer />
       </div>
     );
