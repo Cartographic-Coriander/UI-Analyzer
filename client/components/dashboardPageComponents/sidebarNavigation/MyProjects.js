@@ -11,7 +11,6 @@ class MyProjects extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      projectModalVisibility : false,
       inviteTestersModalVisibility: false,
       inviteProjectIndex: null
     };
