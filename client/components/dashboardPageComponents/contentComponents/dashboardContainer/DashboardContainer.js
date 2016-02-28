@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Col, Panel, Button } from 'react-bootstrap';
-import { togglesProjectModal } from '../../../../redux/actions.js';
 
 export default class DashboardContainer extends Component {
 

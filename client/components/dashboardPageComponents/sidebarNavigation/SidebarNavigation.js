@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { Button } from 'react-bootstrap';
-import { getsTest, postsProject, postsInvitation, togglesProjectModal } from '../../../redux/actions';
+import { getsTest, postsProject, postsInvitation } from '../../../redux/actions';
 import CreateProjectModal from './subComponents/CreateProjectModal';
 import InviteTestersModal from './subComponents/InviteTestersModal';
 
@@ -14,11 +14,6 @@ class MyProjects extends Component {
       inviteTestersModalVisibility: false,
       inviteProjectIndex: null
     };
-  };
-
-  // Toggle project modal visibilty
-  toggleProjectModal () {
-    this.props.dispatch(togglesProjectModal(!this.props.modalState.addProjectModalVisibility));
   };
 
   // Toggle invite modal visibility
