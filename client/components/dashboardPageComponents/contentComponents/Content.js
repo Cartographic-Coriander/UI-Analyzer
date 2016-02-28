@@ -5,7 +5,7 @@ export default class Content extends Component {
   render () {
     return (
       <div>
-        { this.props.children || <DashboardDefault /> }
+        { this.props.children || <DashboardDefault toggleProjectVisibility = { this.props.toggleProjectVisibility } /> }
       </div>
     )
   }

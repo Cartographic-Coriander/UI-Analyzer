@@ -3,12 +3,23 @@ import { connect } from 'react-redux';
 import { NavItem, Navbar, Nav } from 'react-bootstrap';
 import { signsOut, getsProject } from '../redux/actions';
 import { browserHistory } from 'react-router';
-import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/MyProjects';
+import SidebarNavigation from '../components/dashboardPageComponents/sidebarNavigation/SidebarNavigation';
 import Content from '../components/dashboardPageComponents/contentComponents/Content';
 
 export default class DashboardPage extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      projectModalVisibility : false
+    };
+  };
+
   handleLogout () {
     this.props.dispatch(signsOut(browserHistory));
+  };
+
+  toggleProjectVisibility () {
+    this.setState({ projectModalVisibility : !this.state.projectModalVisibility });
   };
 
   componentWillMount () {
@@ -25,13 +36,13 @@ export default class DashboardPage extends Component {
     return (
       <div className = "DashboardPage">
         <Navbar className="navbar navbar-inverse">
-          <a onClick = { () => browserHistory.push('/dashboard') }className="navbar-brand" href="#">Scrutinize</a>
+          <a onClick = { () => browserHistory.push('/dashboard') } className="navbar-brand" href="#">Scrutinize</a>
           <Nav className="navbar-nav navbar-right">
             <NavItem onClick={ () => this.handleLogout() } href = "#"> Log Out </NavItem>
           </Nav>
         </Navbar>
-        <SidebarNavigation />
-        { this.props.children }
+        <SidebarNavigation visibility = { this.state.projectModalVisibility } toggleProjectVisibility = { this.toggleProjectVisibility.bind(this) }/>
+        { React.cloneElement(this.props.children, { toggleProjectVisibility: this.toggleProjectVisibility.bind(this) }) }
       </div>
     );
   };

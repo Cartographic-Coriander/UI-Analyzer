@@ -6,7 +6,6 @@ import { getsComment, postsComment, updatesComment, deletesComment, resetsCommen
 import { getsMouseTracking, postsMouseTracking, updatesMouseTracking, deletesMouseTracking } from './actions/mousetrackingActions';
 import { getsInvitation, postsInvitation } from './actions/invitationActions';
 import { resetsError } from './actions/appActions';
-import { togglesProjectModal } from './actions/modalActions';
 
 export {
   getsUser, postsUser, signsOut,
@@ -16,6 +15,6 @@ export {
   getsComment, postsComment, updatesComment, deletesComment, resetsComment,
   getsMouseTracking, postsMouseTracking, updatesMouseTracking, deletesMouseTracking,
   getsInvitation, postsInvitation,
-  resetsError, togglesProjectModal
+  resetsError
 };
 

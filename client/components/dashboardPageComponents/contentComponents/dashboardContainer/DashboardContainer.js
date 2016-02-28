@@ -24,7 +24,7 @@ export default class DashboardContainer extends Component {
           <Col md = { 6 } className = "dashboardLeftComponent">
             <div className = "panel panel-default dashboardLeftContainer">
               <div className = "panel-body dashboardLeft">
-                <Button onClick = { this.toggleProjectModel.bind(this) } className = "btn btn-primary">add project</Button>
+                <Button onClick = { this.props.toggleProjectVisibility } className = "btn btn-primary">add project</Button>
               </div>
             </div>
           </Col>

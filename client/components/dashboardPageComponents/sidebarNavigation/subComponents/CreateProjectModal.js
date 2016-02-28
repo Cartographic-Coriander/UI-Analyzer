@@ -42,7 +42,7 @@ class CreateProjectContainer extends Component {
           <Row>
             <Col xs = { 5 } md = { 12 }>
               <Button className = "btn-primary pull-right" type = "submit" disabled={ submitting}>{submitting ? <i/> : <i/> } Create Project</Button>
-              <Button className = "pull-right" type = "button" onClick= { this.props.hideVisibility }>cancel</Button>
+              <Button className = "pull-right" type = "button" onClick= { this.props.toggleVisibility }>cancel</Button>
             </Col>
           </Row>
         </form>

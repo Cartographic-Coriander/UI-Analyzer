@@ -5,7 +5,6 @@ import Header from '../components/landingPageComponents/header/Header';
 import Registration from '../components/landingPageComponents/Registration';
 import ProductDescription from '../components/landingPageComponents/ProductDescription';
 import Footer from '../components/landingPageComponents/Footer';
-import AboutUs from '../components/landingPageComponents/aboutUs/AboutUs';
 import LoginForm from '../components/landingPageComponents/LoginForm';
 import { getsUser, postsUser } from '../redux/actions';
 
