@@ -406,3 +406,43 @@ input:-webkit-autofill {
 .errorMessage {
   color: red;
 }
+
+.dashboardLeft {
+  background-image: url('../images/three_bars.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 330px;
+  max-width: 100%;
+  margin: 8px;
+}
+
+.dashboardLeftContainer {
+  padding: 0;
+  border: 1px dashed #1e1e2f;
+  background: #FAFAFA;
+}
+
+.dashboardLeftContainer button{
+  margin-top: 27%;
+}
+
+.dashboardRightContainer {
+  height: 376px;
+  padding: 0;
+}
+
+.firstDashboardPoint {
+  margin-top: 40px;
+}
+
+.dashboardLeftComponent, .dashboardRightComponent {
+  padding: 0;
+}
+
+.dashboardLeftComponent {
+  padding-right: 15px;
+}
+
+.dashboardRightComponent {
+  padding-left: 15px;
+}

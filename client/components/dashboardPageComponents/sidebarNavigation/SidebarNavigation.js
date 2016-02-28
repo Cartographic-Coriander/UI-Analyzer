@@ -11,15 +11,9 @@ class MyProjects extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      projectModalVisibility : false,
       inviteTestersModalVisibility: false,
       inviteProjectIndex: null
     };
-  };
-
-  // Toggle project modal visibilty
-  toggleProjectModal () {
-    this.setState(prev => ({ projectModalVisibility: !prev.projectModalVisibility }));
   };
 
   // Toggle invite modal visibility
@@ -35,7 +29,7 @@ class MyProjects extends Component {
     };
 
     this.props.dispatch(postsProject(params));
-    this.toggleProjectModal();
+    this.props.toggleProjectVisibility();
     this.componentDidMount();
   };
 
@@ -71,8 +65,8 @@ class MyProjects extends Component {
   render () {
     this.sidebarResize();
     return (
-      <div className="SidebarNavigation list-group sidebar-wrapper">
-        <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.toggleProjectModal.bind(this) }>Add Project</Button>
+      <div className = "SidebarNavigation list-group sidebar-wrapper">
+        <Button className = "MyDashboardButton btn-default btn-block" type = "button" onClick = { this.props.toggleProjectVisibility }>Add Project</Button>
         <Accordion>
           { this.props.projects.list.map((project, index) => {
               return (
@@ -89,7 +83,7 @@ class MyProjects extends Component {
           })}
         </Accordion>
         <InviteTestersModal onSubmit = { this.addInvite.bind(this) } visibility = { this.state.inviteTestersModalVisibility }  toggle = { this.toggleInviteModal.bind(this) }/>
-        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.state.projectModalVisibility } hideVisibility = { this.toggleProjectModal.bind(this) } />
+        <CreateProjectModal onSubmit = { this.addProject.bind(this) } visibility = { this.props.visibility } toggleVisibility = { this.props.toggleProjectVisibility } />
       </div>
     );
   };
