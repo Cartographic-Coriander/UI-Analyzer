@@ -65,8 +65,8 @@ class MyProjects extends Component {
   render () {
     this.sidebarResize();
     return (
-      <div className="SidebarNavigation list-group sidebar-wrapper">
-        <Button className="MyDashboardButton btn-default btn-block" type = "button" onClick = { this.props.toggleProjectVisibility }>Add Project</Button>
+      <div className = "SidebarNavigation list-group sidebar-wrapper">
+        <Button className = "MyDashboardButton btn-default btn-block" type = "button" onClick = { this.props.toggleProjectVisibility }>Add Project</Button>
         <Accordion>
           { this.props.projects.list.map((project, index) => {
               return (

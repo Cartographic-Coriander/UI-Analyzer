@@ -19,7 +19,7 @@ export default class DashboardPage extends Component {
   };
 
   toggleProjectVisibility () {
-    this.setState({ projectModalVisibility : !this.state.projectModalVisibility });
+    this.setState(prev => ({ projectModalVisibility : !prev.projectModalVisibility }));
   };
 
   componentWillMount () {
