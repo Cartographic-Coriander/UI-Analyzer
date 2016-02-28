@@ -11,22 +11,17 @@ export default class DashboardContainer extends Component {
 
   render () {
     return (
-      <div className = 'Dashboard'>
+      <Col className = 'Dashboard'>
         <Col md = { 11 } mdOffset = { 3 }>
-          <div className = "panel panel-default">
-            <div className = "panel-body">
-              <h3>Welcome to Scrutinize</h3>
-            </div>
-            <div className = "panel-footer">
-              <h4>Start by adding a project!</h4>
-            </div>
-          </div>
+          <Panel footer = { <h4>Start by adding a project!</h4> }>
+            <h3>Welcome to Scrutinize</h3>
+          </Panel>
           <Col md = { 6 } className = "dashboardLeftComponent">
-            <div className = "panel panel-default dashboardLeftContainer">
-              <div className = "panel-body dashboardLeft">
+            <Panel className = "dashboardLeftContainer">
+              <Panel className = "dashboardLeft">
                 <Button onClick = { this.props.toggleProjectVisibility } className = "btn btn-primary">add project</Button>
-              </div>
-            </div>
+              </Panel>
+            </Panel>
           </Col>
           <Col md = { 6 } className = "dashboardRightComponent">
             <Panel header = "Projects" className = "dashboardRightContainer">
@@ -37,7 +32,7 @@ export default class DashboardContainer extends Component {
                 <h5>Visualize data with heatmaps</h5>
               </Col>
               <Col md = { 12 }>
-                <h5>record and replay mouse movements</h5>
+                <h5>Record and replay mouse movements</h5>
               </Col>
               <Col md = { 12 }>
                 <h5>Receive direct user feedback</h5>
@@ -45,7 +40,7 @@ export default class DashboardContainer extends Component {
             </Panel>
           </Col>
         </Col>
-      </div>
+      </Col>
     );
   }
 }

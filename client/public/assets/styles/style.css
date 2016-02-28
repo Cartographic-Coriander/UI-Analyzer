@@ -409,7 +409,7 @@ input:-webkit-autofill {
 
 .dashboardLeft {
   background-image: url('../images/three_bars.png');
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   height: 330px;
   max-width: 100%;
@@ -427,7 +427,7 @@ input:-webkit-autofill {
 }
 
 .dashboardRightContainer {
-  height: 343px;
+  height: 376px;
   padding: 0;
 }
 
