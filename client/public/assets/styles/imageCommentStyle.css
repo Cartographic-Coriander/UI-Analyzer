@@ -1,0 +1,367 @@
+input[type=radio] {
+  display: none;
+  margin: 10px;
+}
+
+/*this acts like a span but is not a span, used got changing colors of selected button*/
+#invisibleP {
+  display: none;
+}
+
+#feedbackText {
+  color: black;
+}
+
+input[type=radio]:checked + span + label {
+  background-color:#00ff99;
+
+}
+
+input[type=radio]:checked + p + label {
+  background-color:#ff9900;
+}
+
+#inputText {
+  border: none;
+}
+
+#inputText:focus {
+  outline: none;
+}
+
+/*end changin label colors*/
+
+span + label {
+  background-color: #00e68a;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+p + label {
+  background-color: #cc7a00;
+}
+
+button {
+  margin-left: 5px;
+}
+/*end setting initial colors for critique buttons*/
+
+/*styling the comment that is left on the page*/
+.quote-container {
+  position: relative;
+  z-index: 100000
+}
+
+.feedback {
+  padding: 8px;
+  background-color: #CCCCCC;
+}
+
+.note {
+  color: black;
+  position: relative;
+  width: 200px;
+  height: 0 auto;
+  padding: 20px;
+  word-wrap: break-word;
+  display: none;
+  margin-left: 4px;
+  margin-top: -10px;
+}
+
+.color {
+  background: #b2e6c9;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg)
+}
+
+.feedbackContainer {
+  background: #FFFCA9;
+  padding: 14px;
+}
+
+/*comment pin */
+.commentPin {
+  height: 17px;
+  width: 17px;
+  margin-bottom: 5px;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg)
+}
+
+.commentPin:hover + blockquote {
+  display: block;
+  z-index: 200000000;
+}
+
+blockquote:hover {
+  display: block;
+  z-index: 200000000;
+}
+
+.greenPin {
+  background: #00ff99;
+}
+
+.greencomment {
+  background: #00FF91;
+}
+
+.redPin {
+  background: #ff9900;
+}
+
+.redcomment {
+  background: #FFBC00
+}
+
+/*space between buttons*/
+#radioLabel {
+  margin-left:5px;
+  margin-bottom:10px;
+  padding: 4px 10px;
+}
+
+#leaveCommentButton {
+  margin-left: 5px;
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 2px 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+#removeMedia {
+  float: right;
+  margin-top: -15px;
+  margin-right: -7px;
+  cursor: pointer;
+}
+
+/*the feedback component that is showing up before the add comments section*/
+#testStartPrompt, #testEndRequest {
+  position: relative;
+  top: 200px;
+  width: 420px;
+  background-color: #2780e3;
+  padding: 30px 30px 30px 30px;
+  z-index: 10;
+  margin: auto;
+}
+
+.group {
+  position: relative;
+  display: inline-block;
+  line-height: 16px;
+}
+
+.bigSqr {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+  -webkit-animation: bigSqrShrink 1s linear infinite;
+          animation: bigSqrShrink 1s linear infinite;
+}
+
+.square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FFF;
+}
+
+.first {
+  left: 0px;
+  top: 20px;
+}
+
+.second {
+  left: 20px;
+  top: 20px;
+  -webkit-animation: drop2 1s linear infinite;
+          animation: drop2 1s linear infinite;
+}
+
+.third {
+  left: 0px;
+  top: 0px;
+  -webkit-animation: drop3 1s linear infinite;
+          animation: drop3 1s linear infinite;
+}
+
+.fourth {
+  left: 20px;
+  top: 0px;
+  -webkit-animation: drop4 1s linear infinite;
+          animation: drop4 1s linear infinite;
+}
+
+.text {
+  line-height: 16px;
+  font-family: "Roboto";
+  color: #FFF;
+  display: block;
+  margin: 10px auto;
+  padding: 3px;
+}
+
+@-webkit-keyframes bigSqrShrink {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+}
+
+@keyframes bigSqrShrink {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+}
+@-webkit-keyframes drop2 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  25% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop2 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  25% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@-webkit-keyframes drop3 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  50% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop3 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  50% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@-webkit-keyframes drop4 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  75% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes drop4 {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+  }
+  75% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+
+.link {
+  line-height: 1em;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  width: 300px;
+  height: 50px;
+  font-family: "Open Sans", "Roboto", Arial, sans-serif;
+  text-align: right;
+}
+
+.link > a, #testStartPrompt, #testPrompt {
+  text-align: center;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-family: "Open Sans", "Roboto", Arial, sans-serif;
+}
+
+#startTestButton, #testviewLoading {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#testview-veil {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #e7e7e7;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+#testEndRequest-text{
+  margin-top: 75px;
+}

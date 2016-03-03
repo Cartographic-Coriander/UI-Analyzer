@@ -1,0 +1,21 @@
+{
+  "name": "ui-analyzer",
+  "description": "Track user behavior, receive feedback and optimize your website's UI/UX",
+  "main": "index.js",
+  "authors": [
+    "Egan Tamashiro",
+    "Maximo Cudich-Sieburger",
+    "Youngjun Kwak"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Cartographic-Coriander/UI-Analyzer",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
