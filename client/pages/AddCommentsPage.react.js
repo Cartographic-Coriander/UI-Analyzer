@@ -29,7 +29,7 @@ class AddCommentsPage extends Component {
   };
 
   componentWillMount () {
-    // Display feedback prompt for six seconds
+    // Display feedback prompt for five seconds
     setTimeout(() => {
       this.setState({ showLanding: false });
     }, 5000);
@@ -87,7 +87,8 @@ class AddCommentsPage extends Component {
         text.style.left = cursorX - offset.left + "px";
         text.style.position = "absolute";
         text.className = "feedbackContainer";
-        text.innerHTML = "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
+        text.innerHTML =  "<div id='removeMedia'>x</div>"+
+                          "<input id='radio1' type='radio' name='sentiment' value='positive'><span></span>" +
                             "<label id='radioLabel' for='radio1'>Like</label>" +
                           "<input id='radio2' type='radio' name='sentiment' value='negative'><p id='invisibleP'></p>" +
                             "<label id='radioLabel' for='radio2'>Dislike</label></br>" +
@@ -122,6 +123,11 @@ class AddCommentsPage extends Component {
           // Add a new comment to image
           setTimeout(() => { $('#critiqueImage').children().last().remove() }, 5);
           this.setState({ comments: comments });
+        });
+
+        // Attach a function to be run when comment box 'x' is clicked to remove the element
+        $('#removeMedia').on('click', () => {
+          $('#critiqueImage').children().last().remove();
         });
       }
     }

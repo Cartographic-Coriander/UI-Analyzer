@@ -125,6 +125,7 @@ blockquote:hover {
 #radioLabel {
   margin-left:5px;
   margin-bottom:10px;
+  padding: 4px 10px;
 }
 
 #leaveCommentButton {
@@ -135,6 +136,13 @@ blockquote:hover {
   padding: 2px 8px;
   text-align: center;
   text-decoration: none;
+}
+
+#removeMedia {
+  float: right;
+  margin-top: -15px;
+  margin-right: -7px;
+  cursor: pointer;
 }
 
 /*the feedback component that is showing up before the add comments section*/
