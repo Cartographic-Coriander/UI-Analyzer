@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
-class Header extends Component {
-
+export default class Header extends Component {
   render() {
     return (
-      <div className="headerComponent">
-        <h3>the header component</h3>
-        <button className="getStartedButton" onClick={ () => this.props.authenticateClick('authenticated') }>Get Started</button>
-        <button className="loginButton">Login</button>
-      </div>
-      )
+      <Navbar className = "navbar-inverse landingPageHeader main-header">
+        <a className = "navbar-brand" href="#">Scrutinize</a>
+        <Nav className = "navbar-nav navbar-right">
+          <NavItem onClick = { () => this.props.toggleRegisterModal() }> Get Started </NavItem>
+          <NavItem onClick = { () => this.props.toggleLoginModal() }> Log In </NavItem>
+        </Nav>
+      </Navbar>
+    );
   }
-}; 
-
-export default Header;
-
+};

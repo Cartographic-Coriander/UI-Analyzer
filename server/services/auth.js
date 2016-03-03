@@ -3,13 +3,15 @@
 
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-var ensureAuth= require("connect-ensure-login");
+var ensureAuth = require("connect-ensure-login");
 var bcrypt = require("bcrypt-node");
 var jwt = require('jwt-simple');
+var moment = require('moment');
 var Promise = require("bluebird");
 var usersController = require("../controllers/usersController.js");
 
-var tokenSecret = 'shhhh baby es ok';
+var userTokenSecret = 'shhhh bby es ok';
+var inviteTokenSecret = 'trogdor the burninator';
 
 // this creates our local strategy
 passport.use(new LocalStrategy({ usernameField: 'email' },
@@ -47,47 +49,115 @@ passport.use(new LocalStrategy({ usernameField: 'email' },
 // typical implementation of this is as simple as supplying the user ID when
 // serializing, and querying the user record by ID from the database when
 // deserializing.
-passport.serializeUser(function (user, cb) {
-  cb(null, user.email);
+passport.serializeUser(function (user, callback) {
+  callback(null, user.email);
 });
 
-passport.deserializeUser(function (email, cb) {
+passport.deserializeUser(function (email, callback) {
   usersController.retrieveUser({ email: email })
     .then (function (user) {
       var data = {
         id: user.id,
-        username: user.username,
+        email: user.email,
       };
       // data is set to request.user
-      cb(null, data);
+      callback(null, data);
     })
     .catch(function (error){
-      return cb(error);
+      return callback(error);
     });
 });
 
-var authenticate = function(req, res, next) {
-  passport.authenticate('local',
-    function(err, user, info) {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res.json(401, { error: 'message' });
-      }
+// USER AUTHENTICATION JWT TOKENS
 
-      console.log('user:', user, 'info:', info)
+var authenticate = function (req, res, next) {
+  //user has authenticated correctly thus we create a JWT token
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.json(401, { error: 'message' });
+    }
 
-      //user has authenticated correctly thus we create a JWT token
-      req.token = jwt.encode({ username: user.id }, tokenSecret);
-      next()
-    })(req, res, next);
-  }
+    user.password = null;
+
+    var expires = moment().add('days', 7).valueOf();
+    var token = jwt.encode({
+      iss: user.id,
+      exp: expires
+    }, userTokenSecret);
+
+    req.userToken = {
+      token : token,
+      expires: expires,
+      user: user.toJSON()
+    };
+    next();
+  })(req, res, next);
+};
 
 var decode = function(req, res, next) {
-    req.decoded = jwt.decode(req.body.token, tokenSecret);
-    console.log('req token!!!!!!!!!!!!!!!!',req.decoded);
-    next();
+  var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
+
+  try {
+    try {
+      var decoded = jwt.decode(token, userTokenSecret);
+    } finally {
+      if (decoded.exp <= Date.now()) {
+        throw new Error ('[Error: Token expired]');
+      }
+    }
+  } catch (e) {
+    console.log('Error!:', e);
+    res.status(400).end('Error! Unable to decode token.');
+  }
+
+  console.log('decoded: ', decoded);
+  req.decoded = decoded;
+  next();
+};
+
+// INVITATION JWT TOKENS
+
+var encodeInvitation = function (req, res, next) {
+  var params = {
+    projectId: req.body.projectId,
+    email: req.body.email
+  };
+
+  console.log('invitation params:', params)
+
+  var expires = moment().add('days', 30).valueOf();
+  var token = jwt.encode({
+    iss: params,
+    exp: expires
+  }, inviteTokenSecret);
+
+  req.invitationToken = token;
+  next();
+}
+
+var decodeInvitation = function (req, res, next) {
+  var token = req.body.token;
+
+  try {
+    try {
+      var decoded = jwt.decode(token, inviteTokenSecret);
+    } finally {
+      if (decoded.exp <= Date.now()) {
+        throw new Error ('[Error: Token expired]');
+      }
+    }
+  } catch (e) {
+    console.log('Error!:', e);
+    res.status(400).end('Error! Unable to decode token.');
+  }
+
+  console.log('invitation token decoded: ', decoded);
+  req.invitationToken = decoded;
+  req.body.email = decoded.iss.email;
+  next();
 }
 
 // inputs:
@@ -99,6 +169,7 @@ var decode = function(req, res, next) {
   // in data field:
   //    message: if failure, reason for failure
 var createUser = function (req, res, next) {
+  console.log('create user:', req.body, req.invitationToken)
   var user = {
     email: req.body.email,
     password: req.body.password,
@@ -108,7 +179,7 @@ var createUser = function (req, res, next) {
   };
 
   // hashing is not done by the model, though it probably should
-  Promise.promisify(bcrypt.hash)(user.password,null,null)
+  Promise.promisify(bcrypt.hash)(user.password, null, null)
     .then(function (data) {
       user.password = data;
       return usersController.createUser(user);
@@ -120,24 +191,25 @@ var createUser = function (req, res, next) {
     })
     .catch(function (error) {
       console.log (error);
-      return next();
+      res.status(409).end('Username already exists!');
     });
 };
 
-var signout = function(req, res){
+var signout = function (req, res) {
   // call passport's log out functionality
+  console.log('signout');
   req.logout();
-  res.redirect('/');
+  res.end();
 };
 
 module.exports = {
   passport: passport,
   authenticate: authenticate,
   decode: decode,
-  // ensuredLoggedIn is created by the guy who made Passport
-  // It's not ideal for checking REST API, but it works.
   ensureLoggedIn: ensureAuth.ensureLoggedIn,
   ensureNotLoggedIn: ensureAuth.ensureNotLoggedIn,
   createUser: createUser,
-  signout: signout
+  signout: signout,
+  encodeInvitation: encodeInvitation,
+  decodeInvitation: decodeInvitation
 };

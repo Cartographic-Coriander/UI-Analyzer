@@ -1,65 +1,20 @@
-export function switchVisibility (button) {
-  return {
-    type: 'SWITCH_VISIBILITY',
-    button: button
-  }
-}
+import { getsUser, postsUser, signsOut } from './actions/userActions';
+import { getsProject, postsProject, updatesProject, deletesProject } from './actions/projectActions';
+import { getsTest, postsTest, updatesTest, deletesTest, postsTestView } from './actions/testActions';
+import { getsImage, postsImage, updatesImage, deletesImage } from './actions/imageActions';
+import { getsComment, postsComment, updatesComment, deletesComment, resetsComment } from './actions/commentActions';
+import { getsMouseTracking, postsMouseTracking, updatesMouseTracking, deletesMouseTracking } from './actions/mousetrackingActions';
+import { getsInvitation, postsInvitation } from './actions/invitationActions';
+import { resetsError } from './actions/appActions';
 
-export function toggleContentComponent (targetComponent) {
-  return {
-    type: 'TOGGLE_CONTENT_COMPONENT',
-    targetComponent: targetComponent
-  }
-}
+export {
+  getsUser, postsUser, signsOut,
+  getsProject, postsProject, updatesProject, deletesProject,
+  getsTest, postsTest, updatesTest, deletesTest, postsTestView,
+  getsImage, postsImage, updatesImage, deletesImage,
+  getsComment, postsComment, updatesComment, deletesComment, resetsComment,
+  getsMouseTracking, postsMouseTracking, updatesMouseTracking, deletesMouseTracking,
+  getsInvitation, postsInvitation,
+  resetsError
+};
 
-export function inviteTesters () {
-  type: 'TOGGLE_INVITE_USER'
-}
-
-export function addNote (noteObj) {
-  return {
-    type: 'ADD_NOTE',
-    note: noteObj
-  }
-}
-
-export function addProject (project) {
-  return {
-    type: 'ADD_PROJECT',
-    project: project
-  }
-}
-
-export function confirmProject (project) {
-  return {
-    type: 'CONFIRM_PROJECT',
-    project: project
-  }
-}
-
-export function authChecker (auth) {
-  if (auth === 'authenticated') {
-    console.log(auth);
-    auth = true;
-  } else {
-    auth = false;
-  }
-  return {
-    type: 'AUTHENTICATED_USER',
-    auth: auth
-  }
-}
-
-export function userLogin (user) {
-  return {
-    type : 'USER_LOGIN',
-    user: user
-  }
-}
-
-export function registerUser (user) {
-  return {
-    type: 'REGISTER_USER',
-    user: user
-  }
-}

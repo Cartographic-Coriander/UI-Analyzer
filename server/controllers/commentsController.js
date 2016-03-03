@@ -1,51 +1,51 @@
 var model = require('../db/model');
 
-// var Comment = sequelize.define('comment', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-//   commentType: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-//   commentText: { type: Sequelize.STRING },
-//   x: { type: Sequelize.INTEGER },
-//   y: { type: Sequelize.INTEGER }
-// }, { timestamps: false });
-
 // input should be of the following format:
-// { project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { userId: 123, imageId: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var createComment = function (comment) {
-  return model.Comment.create(comment)
+  return model.Comment.bulkCreate(comment)
     .then(function (newComment) {
       return newComment;
     });
 };
 
 // input should be of the following format:
-// { userId: 123, testId: 123 }
+// { user: { id: 123 (user id) }, image: { imageId: 123 }, imageId: { id: 123 (image id) } }
 // output shall be of the following format:
-// { id: 123, project_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
+// { id: 123, user_id: 123, commentType: 'green', commentText: 'abc', x: 123, y: 123 }
 var retrieveComment = function (comment) {
-  return model.Comment.findAll({
+  return model.Image.findOne({
+    where: { id: comment.imageId },
     include: [{
-      model: User,
-      where: {
-        id: comment.userId
-      },
+      model: model.Test,
       include: [{
-        model: Project,
+        model: model.Project,
         include: [{
-          model: Test,
-          where: {
-            id: comment.testId
-          }
+          model: model.User,
+          where: { id: comment.userId },
+          attributes: [ 'id', 'email' ]
         }]
       }]
     }]
   })
   .then(function (result) {
-    if (result === null) {
-      throw (new Error ('Error! Comment does not exist!'));
+    if (result.test.project.users[0].projectUser.get('role') === 'owner') {
+      return model.Comment.findAll({
+        where: { imageId: comment.imageId }
+      })
+      .then(function (result) {
+        if (result.length === 0) {
+          var error = new Error ('Error! Comments do not exist!');
+          error.name = 'emptyResults';
+          throw (error);
+        } else {
+          return result;
+        }
+      });
     } else {
-      return result;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
   });
 };
@@ -55,18 +55,46 @@ var retrieveComment = function (comment) {
 // output shall be of the following format:
 // { id: 123, project_id: 123, commentType: 'abc', commentType: 'textBox', x: 123, y: 123 }
 var updateComment = function (comment) {
-  var params = { id: comment.id };
+  var params = { id: comment.commentId };
 
-  return model.Comment.update(comment, {
-    where: params
+  return model.Image.findOne({
+    where: { id: comment.imageId },
+    include: [{
+      model: model.Comment,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: comment.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: comment.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .spread(function (updated) {
-    if (updated === 0) {
-      throw (new Error ('Error! Comment update failed!'));
+  .then(function (result) {
+    if (result.comments[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.Comment.update(comment.update, {
+        where: params
+      })
+      .spread(function (updated) {
+        if (updated === 0) {
+          throw (new Error ('Error! Comment update failed!'));
+        } else {
+          return updated;
+        }
+      });
     } else {
-      return comment;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
-  });
+  })
 };
 
 // input should be of the following format:
@@ -74,16 +102,47 @@ var updateComment = function (comment) {
 // output shall be of the following format:
 // 1
 var deleteComment = function (comment) {
-  return model.Comment.destroy({
-    where: comment
+  var params = { id: comment.commentId };
+
+  return model.Image.findOne({
+    where: { id: comment.imageId },
+    include: [{
+      model: model.Comment,
+      where: params,
+      include: [{
+        model: model.User,
+        where: { id: comment.userId },
+        attributes: [ 'id', 'email' ],
+        include: [{
+          model: model.Project,
+          include: [{
+            model: model.Test,
+            include: [{
+              model: model.Image,
+              where: { id: comment.imageId }
+            }]
+          }]
+        }]
+      }]
+    }]
   })
-  .then(function (deleted) {
-    if (deleted === 0) {
-      throw (new Error ('Error! Comment delete failed!'));
+  .then(function (result) {
+    if (result.comments[0].user.projects[0].projectUser.get('role') === 'owner') {
+      return model.Comment.destroy({
+        where: params
+      })
+      .then(function (deleted) {
+        if (deleted === 0) {
+          throw (new Error ('Error! Comment delete failed!'));
+        } else {
+          return deleted;
+        }
+      });
     } else {
-      return deleted;
+      throw (new Error ('Error! Insufficient permissions to modify this entry!'));
     }
-  });
+  })
+
 };
 
 module.exports = {

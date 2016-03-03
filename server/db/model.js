@@ -3,7 +3,7 @@ var sequelize = new Sequelize(process.env.ENV_DB || 'uiAnalyzer', 'root', 'passw
 
 var User = sequelize.define('user', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
+  email: { type: Sequelize.STRING, isEmail: true, unique: true, notNull: true, notEmpty: true },
   password: { type: Sequelize.STRING, notNull: true, notEmpty: true },
   firstname: { type: Sequelize.STRING },
   surname: { type: Sequelize.STRING },
@@ -33,36 +33,62 @@ var Comment = sequelize.define('comment', {
 
 var Image = sequelize.define('image', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  image: { type: Sequelize.STRING, unique: true, notNull: true, notEmpty: true },
-  url: { type: Sequelize.STRING, notNull: true, notEmpty: true }
+  image: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  url: { type: Sequelize.STRING, notNull: true, notEmpty: true, unique: 'compositeOne' },
+  testId: { type: Sequelize.INTEGER, unique: 'compositeOne' }
 }, { timestamps: false });
 
 var MouseTracking = sequelize.define('mousetracking', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  movement: { type: Sequelize.STRING, notNull: true, notEmpty: true },
-  clicks: { type: Sequelize.STRING, notNull: true },
-  urlchange: { type: Sequelize.STRING, notNull: true }
+  data: { type: Sequelize.TEXT, notNull: true, notEmpty: true, length: 'medium' }
 }, { timestamps: false });
 
-var ProjectUser = sequelize.define('project_user', {
+var ProjectUser = sequelize.define('projectUser', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  role: { type: Sequelize.STRING, notNull: true, notEmpty: true },
+  role: { type: Sequelize.STRING, notNull: true, notEmpty: true }
 }, { timestamps: false });
 
-var MouseTrackingTest = sequelize.define('mousetracking_test', {
+var Invitation = sequelize.define('invitation', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  token: { type: Sequelize.STRING, unique: true, notNull: true },
+  email: { type: Sequelize.STRING, unique: true, notNull: true }
 }, { timestamps: false });
 
 var init = function() {
-  User.belongsToMany(Project, { through: 'project_user', foreignKey: 'user_id' });
-  Project.belongsToMany(User, { through: 'project_user', foreignKey: 'project_id' });
-  MouseTracking.belongsToMany(Test, { through: 'mousetracking_test', foreignKey: 'mousetracking_id' });
-  Test.belongsToMany(MouseTracking, { through: 'mousetracking_test', foreignKey: 'test_id' });
-  MouseTracking.belongsTo(User, { foreignKey: 'user_id' });
-  Image.belongsTo(Test, { foreignKey: 'test_id' });
-  Comment.belongsTo(User, { foreignKey: 'user_id' });
-  Test.belongsTo(Project, { foreignKey: 'project_id' });
+  // User:Project m:m Relationship
+  User.belongsToMany(Project, { through: 'projectUser', foreignKey: 'userId' });
+  Project.belongsToMany(User, { through: 'projectUser', foreignKey: 'projectId' });
+
+  // Project:Invitation 1:m Relationship
+  Project.hasMany(Invitation, { foreignKey: 'projectId' });
+  Invitation.belongsTo(Project, { foreignKey: 'projectId' });
+
+  // Project:Test 1:m Relationship
+  Project.hasMany(Test, { foreignKey: 'projectId' });
+  Test.belongsTo(Project, { foreignKey: 'projectId' });
+
+  // Test:Image 1:m Relationship
+  Test.hasMany(Image, { foreignKey: 'testId' });
+  Image.belongsTo(Test, { foreignKey: 'testId' });
+
+  // User:Comment 1:m Relationship
+  User.hasMany(Comment, { foreignKey: 'userId' });
+  Comment.belongsTo(User, { foreignKey: 'userId' });
+
+  // Image:Comment 1:m Relationship
+  Image.hasMany(Comment, { foreignKey: 'imageId' });
+  Comment.belongsTo(Image, { foreignKey: 'imageId' });
+
+  // User:MouseTracking 1:m Relationship
+  User.hasMany(MouseTracking, { foreignKey: 'userId' });
+  MouseTracking.belongsTo(User, { foreignKey: 'userId' });
+
+  // Image:MouseTracking 1:m Relationship
+  Image.hasMany(MouseTracking, { foreignKey: 'imageId' });
+  MouseTracking.belongsTo(Image, { foreignKey: 'imageId' });
+
   sequelize.sync();
+  console.log('Database initialized!');
 };
 
 module.exports = {
@@ -74,6 +100,6 @@ module.exports = {
   Image: Image,
   MouseTracking: MouseTracking,
   ProjectUser: ProjectUser,
-  MouseTrackingTest: MouseTrackingTest,
+  Invitation: Invitation,
   init: init
 };

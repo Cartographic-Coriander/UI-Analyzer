@@ -7,13 +7,13 @@ module.exports = {
     './client/index.jsx'
   ],
   output: {/*find the 'start' specified at entry and write the new bundle.js file to the directory below*/
-    path: __dirname + '/client/public',
-    publicPath: 'client/public',
+    path: __dirname + '/client/public/assets/scripts',
+    publicPath: 'client/public/assets/scripts',
     filename: 'bundle.js'
   },
   devServer: {
     contentBase: './client/public',
-    hot: false
+    hot: true
   },
   module: { /*the below means that webpack will find jsx and js files and process both through babel*/
     loaders: [{
