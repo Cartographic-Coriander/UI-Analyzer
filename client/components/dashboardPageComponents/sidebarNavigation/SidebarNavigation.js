@@ -38,10 +38,9 @@ class MyProjects extends Component {
   };
 
   componentDidMount () {
-    var that = this;
     setTimeout(() => {
-      $('.react-sanfona-item').children('h3').map(function (index, element) {
-        return $(element).on('click', that.onProjectClick.bind(that, that.props.projects.list[index], index));
+      $('.react-sanfona-item').children('h3').map((index, element) => {
+        return $(element).on('click', this.onProjectClick.bind(this, this.props.projects.list[index], index));
       })
     }, 1000);
   };
