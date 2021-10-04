@@ -1,0 +1,447 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.APP {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+/*Landing Page*/
+
+.landingPageHeader, .dashboardPageHeader {
+  margin: 0 0 0 0;
+}
+
+.landingPage-Jumbotron {
+  padding: 0 0 0 0;
+  margin: 0 0 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.getStartedBtn-lg {
+  margin-left: 80%;
+}
+
+.landingPageVideo {
+  position:"fixed";
+  width: 100%;
+  height: 100%;
+  z-index: -50;
+  opacity: 0.15;
+}
+
+#landingPageText {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  padding: 10px 10px 10px 10px;
+}
+
+.productExampleContainer {
+  margin-top: 50px;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+  text-align: center
+}
+
+
+.productExample {
+  width: 350px;
+  height: 200px;
+}
+
+.aboutUs {
+  margin-top: 30px;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.authorProfile {
+  width: 350px;
+  height: 200px;
+}
+
+.footer {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction:         row;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content:         space-around;
+}
+
+.modal-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.login-button, .signup-button {
+  margin-top: 10px;
+}
+
+.login-cancel-button, .signup-cancel-button {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*Dashboard*/
+.DashboardPage {
+  height: 100%;
+}
+
+.dashboardPageHeader {
+  margin-bottom: 0;
+}
+
+.dashboardContent {
+  height: 100%;
+  width: 80%;
+  float: right;
+}
+
+.SidebarNavigation {
+  text-align: center;
+  float: left;
+  /*height: 100%;*/
+  width: 200px;
+  /*background-color: #848484;*/
+  background-color: #222222;
+  /*border-right: 1px solid #0B57AB;*/
+  outline: 1px solid rgba(109, 123, 134, 0.39);
+  margin: 0 0 0 0;
+}
+
+.SidebarNavigation h3 {
+  font-size: 15px;
+  text-align: center;
+  padding-top: 10px;
+  height: 43px;
+  /*background-color: #848484;*/
+}
+/*
+.react-sanfona-item-body {
+  margin-top: 10px;
+}*/
+
+.react-sanfona-item-body .Button{
+  width: 100%;
+}
+
+.accordionItems {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  background-color : #FFFFFF;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  background-color: #f2f2f2;
+}
+
+/*changing background color for autofilled values*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #FFFFFF inset;
+}
+
+/*styling the settings and test pages on the dashboard*/
+
+.Settings, .Tests, .Dashboard {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+}
+
+.settingsForm, .testForm {
+  padding: 10px 15px;
+}
+
+.projectEntryComponent, .testEntryComponent {
+  /*padding: 5px 22px;*/
+  text-align: center;
+  /*margin-left: 3%;*/
+}
+
+.projectEntryButtonContainer, .testEntryButtonContainer {
+  text-align: center;
+}
+
+.floatClear {
+  clear: both;
+}
+
+.testContent, .projectContent {
+  /*border: 1px solid #ffa31a;*/
+  /*background-color: #5D6B79;*/
+  background-color: #E7E7E7;
+  border: 1px solid #CCCCCC;
+  /*border: 1px solid rgba(0, 0, 0, 0.17);*/
+  /*background-color: rgba(255, 255, 255, 0.5);*/
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  min-height: 42px;
+}
+
+.testRow {
+  margin: 0;
+  position: relative;
+}
+
+.testRow button {
+  margin-right: 5px;
+}
+
+.testLeftSideLabel {
+  text-align: center;
+}
+
+.projectEntryButton, .testEntryButton {
+  margin-right: 5px;
+}
+
+.editSpan , .createTestSpan {
+  display: inline-block;
+  width: 140px;
+  margin-left: 5px;
+}
+
+.createTestSpan {
+  height: 31px;
+}
+
+#editName {
+  height: 25px;
+}
+
+.editDiv {
+  margin-bottom: 2px;
+  height: 27px;
+}
+
+.addTestButton {
+  width: 150px;
+  margin-right: 7px;
+}
+
+.testUrl {
+  margin-top: -15px;
+  /*color: #b3b3b3;*/
+}
+
+.cursor {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+#heatmapContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.btn-block {
+  margin: 0;
+}
+
+.col-md-offset-3 {
+  margin-left: 0;
+}
+
+.col-md-9 button {
+  margin-left: 0;
+}
+
+.panel {
+  margin-top: 20px;
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.panel h3 {
+  margin: 0;
+}
+
+.navbar {
+  border-radius: 0px;
+  border-left-style: none;
+  border-right-style: none;
+  margin-bottom: 0px;
+}
+
+.testRow h5 {
+  position: relative;
+  top: 2px;
+}
+
+.well {
+  padding-bottom: 20px;
+  padding-top: 25px;
+}
+
+/*.MyDashboardButton, */
+.react-sanfona-item-title {
+  color: white;
+  /*background-color: #848484;*/
+  background-color: #222222;
+  font-weight: 400;
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #000000;
+  /*border-right: 1px solid #0B57AB;*/
+}
+
+/*.MyDashboardButton:hover, */
+.react-sanfona-item-title:hover {
+  color: white;
+  /*background-color: #2780e3;*/
+  font-weight: 400;
+  /*background-color: #757575;*/
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: #ffffff;
+  background-color: #090909;
+  /*border-color: #1862b5;*/
+}
+
+.react-sanfona-item-title:active {
+  color: white;
+  /*background-color: #2780e3;*/
+  font-weight: 400;
+  /*background-color: #757575;*/
+  /*border-bottom: #757575 solid 1px;*/
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: #ffffff;
+  background-color: #090909;
+  /*border-color: #1862b5;*/
+  outline: none;
+}
+
+.testButtons, .projectButtons {
+  text-align: center;
+}
+
+.TestButton, .SettingsButton, .InviteTestersButton {
+  color: #222222;
+  background-color: #F5F5F5;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:hover, .SettingsButton:hover, .InviteTestersButton:hover {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:focus, .SettingsButton:focus, .InviteTestersButton:focus {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.TestButton:active, .SettingsButton:active, .InviteTestersButton:active {
+  color: #222222;
+  background-color: #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.MyDashboardButton {
+  border-bottom: 1px solid #000000;
+  /*border-right: 1px solid #0B57AB;*/
+}
+
+.react-sanfona-item-expanded .react-sanfona-item-title {
+  background-color: #464F58;
+}
+
+.form-control:focus {
+  border-color: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: none;
+  background-color: white;
+  border-color: #cccccc;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.dashboardLeft {
+  background-image: url('../images/three_bars.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 330px;
+  max-width: 100%;
+  margin: 8px;
+}
+
+.dashboardLeftContainer {
+  padding: 0;
+  background: #FAFAFA;
+}
+
+.dashboardLeftContainer button{
+  margin-top: 27%;
+}
+
+.dashboardRightContainer {
+  height: 376px;
+  padding: 0;
+}
+
+.firstDashboardPoint {
+  margin-top: 40px;
+}
+
+.dashboardLeftComponent, .dashboardRightComponent {
+  padding: 0;
+}
+
+.dashboardLeftComponent {
+  padding-right: 15px;
+}
+
+.dashboardRightComponent {
+  padding-left: 15px;
+}
